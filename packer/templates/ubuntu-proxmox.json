@@ -49,7 +49,7 @@
 
       "ssh_username": "ludovic",
       "ssh_password": "ludovic",
-      "ssh_timeout": "15m",
+      "ssh_timeout": "20m",
 
       "unmount_iso": true,
 

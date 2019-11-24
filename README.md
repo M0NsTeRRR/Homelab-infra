@@ -1,12 +1,12 @@
-This is my Homelab infrastracture.
+This is my Homelab infrastructure.
 
 # Requirements
 
 - Ansible (version >= 2.9.0)
 - Packer (version >= 1.4.5)
 	- [terraform-provider-proxmox](https://github.com/Telmate/terraform-provider-proxmox)
+		- Go (version == 1.13)
 - Terraform (version >= 0.12.15)
-- Go (version == 1.13)
 
 
 # Packer
