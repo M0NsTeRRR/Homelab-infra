@@ -9,6 +9,7 @@ packer validate \
   -var "distribution=debian" \
   -var "version=10.2.0" \
   -var "proxmox_url=https://test.fr:8006/api2/json" \
+  -var "proxmox_username=test" \
   -var "proxmox_password=test" \
   -var "proxmox_node=test" \
   templates/debian-proxmox.json | tee log/packer_validate.log

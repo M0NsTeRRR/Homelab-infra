@@ -3,7 +3,7 @@
     "host_ip": "",
     "version": "",
     "proxmox_url": "",
-    "proxmox_username": "root@pam",
+    "proxmox_username": "",
     "proxmox_password": "",
     "proxmox_node": ""
   },
@@ -24,12 +24,14 @@
           "vlan_tag": "20"
         }
       ],
+      "scsi_controller": "virtio-scsi-pci",
       "disks": [
         {
           "type": "scsi",
           "disk_size": "10G",
-          "storage_pool": "local-lvm",
-          "storage_pool_type": "lvm"
+          "storage_pool": "cephfs",
+          "storage_pool_type": "cephfs",
+          "format": "raw"
         }
       ],
       "memory": 1024,
@@ -45,7 +47,7 @@
 
       "ssh_username": "ludovic",
       "ssh_password": "ludovic",
-      "ssh_timeout": "20m",
+      "ssh_timeout": "60m",
 
       "unmount_iso": true,
 

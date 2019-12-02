@@ -6,8 +6,8 @@ This is my Homelab infrastructure.
 - Packer (version >= 1.4.5)
 	- [terraform-provider-proxmox](https://github.com/Telmate/terraform-provider-proxmox)
 		- Go (version == 1.13)
-- Terraform (version >= 0.12.15)
-
+- Terraform (version >= 0.12.16)
+- Vault (version >= 1.3.0)
 
 # Packer
 `cd packer`
@@ -21,6 +21,16 @@ Supported distributions :
 
 ### Validate syntax template
 `./validate.sh`
+
+# Terraform
+`cd terraform`
+Fill `pm_password` in `main.tf` (will be updated in near feature to avoid plaintext password in file)
+
+### Deploy/update infrastructure
+`terraform apply`
+
+### Generate graph infrastructure
+`terraform graph`
 
 # Credits
 
