@@ -29,14 +29,14 @@
         {
           "type": "scsi",
           "disk_size": "10G",
-          "storage_pool": "cephfs",
-          "storage_pool_type": "cephfs",
+          "storage_pool": "nas",
+          "storage_pool_type": "nfs",
           "format": "raw"
         }
       ],
       "memory": 1024,
 
-      "iso_file": "local:iso/debian-{{ user `version` }}-amd64.iso",
+      "iso_file": "nas:iso/debian-{{ user `version` }}-amd64.iso",
       "http_directory":"preseed",
       "boot_wait": "10s",
       "boot_command": [

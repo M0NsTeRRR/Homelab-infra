@@ -13,8 +13,8 @@ This is my Homelab infrastructure.
 `cd packer`
 
 Supported distributions :
-- Debian (10.2.0) - [iso](http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.3-server-amd64.iso)
-- Ubuntu (18.04.3) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.2.0-amd64-netinst.iso)
+- Debian (10.2.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.2.0-amd64-netinst.iso)
+- Ubuntu (18.04.3) - [iso](http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.3-server-amd64.iso)
 
 ### Create template
 `./build.sh`
@@ -23,7 +23,7 @@ Supported distributions :
 `./validate.sh`
 
 # Terraform
-`cd terraform`
+`cd terraform`\
 Fill `pm_password` in `main.tf` (will be updated in near feature to avoid plaintext password in file)
 
 ### Deploy/update infrastructure

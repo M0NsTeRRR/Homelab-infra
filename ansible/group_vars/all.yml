@@ -1,0 +1,4 @@
+locale: 'fr_FR.UTF-8'
+language: 'fr_FR'
+timezone: 'Europe/Paris'
+ntp_server: 'pool.ntp.org'

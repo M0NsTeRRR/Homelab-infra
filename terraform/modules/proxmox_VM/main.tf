@@ -23,7 +23,7 @@ resource "proxmox_vm_qemu" "rancher2" {
     size         = var.disk_size
     type         = "scsi"
     storage      = "pool"
-    storage_type = "cephfs"
+    storage_type = "rbd"
     iothread     = true
   }
 
