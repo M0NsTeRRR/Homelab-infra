@@ -4,9 +4,9 @@ This is my Homelab infrastructure.
 
 - Ansible (version >= 2.9.0)
 - Packer (version >= 1.4.5)
+- Terraform (version >= 0.12.16)
 	- [terraform-provider-proxmox](https://github.com/Telmate/terraform-provider-proxmox)
 		- Go (version == 1.13)
-- Terraform (version >= 0.12.16)
 - Vault (version >= 1.3.0)
 
 # Packer
