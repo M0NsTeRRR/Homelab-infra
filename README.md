@@ -13,8 +13,8 @@ This is my Homelab infrastructure.
 `cd packer`
 
 Supported distributions :
-- Debian (10.2.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.2.0-amd64-netinst.iso)
-- Ubuntu (18.04.3) - [iso](http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.3-server-amd64.iso)
+- Debian (10.3.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.3.0-amd64-netinst.iso)
+- Ubuntu (18.04.4) - [iso](http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.4-server-amd64.iso)
 
 ### Create template
 `./build.sh`
