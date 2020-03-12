@@ -69,6 +69,11 @@
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/apt-cache.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/ntp.sh"
     }
   ]
 }
