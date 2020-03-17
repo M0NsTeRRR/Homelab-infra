@@ -56,12 +56,17 @@
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/snmp.sh"
+      "script": "scripts/apt-cache.sh"
     },
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/apt-cache.sh"
+      "script": "scripts/dns.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/snmp.sh"
     },
     {
       "type": "shell",
