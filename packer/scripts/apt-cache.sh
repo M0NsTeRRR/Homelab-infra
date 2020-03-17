@@ -10,7 +10,7 @@ EOT
 chmod +x /etc/apt/detect-http-proxy.sh
 
 cat <<EOT >> /etc/apt/apt.conf.d/01proxy
-Acquire::HTTP::ProxyAutoDetect "/etc/apt/detect-http-proxy.sh";
+Acquire::HTTP::Proxy-Auto-Detect "/etc/apt/detect-http-proxy.sh";
 Acquire::HTTPS::Proxy "DIRECT";
 EOT
 
