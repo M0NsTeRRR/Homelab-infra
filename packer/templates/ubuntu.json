@@ -22,7 +22,7 @@
       "datastore": "RAID1",
       "vm_version": 13,
       "guest_os_type": "ubuntu64Guest",
-
+      "convert_to_template": "true",
       
       "CPUs": 1,
       "cpu_cores": 1,
