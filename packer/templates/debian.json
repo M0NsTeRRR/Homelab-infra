@@ -57,12 +57,22 @@
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/fail2ban.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/snmp.sh"
     },
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/ntp.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/motd.sh"
     }
   ]
 }
