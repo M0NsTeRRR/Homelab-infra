@@ -7,7 +7,7 @@ include {
 }
 
 inputs = {
-  vsphere_host = "192.168.40.13"
+  vsphere_host = "server3.unicornafk.fr"
   vm_name      = "etcd3"
   template     = "packer-ubuntu"
 

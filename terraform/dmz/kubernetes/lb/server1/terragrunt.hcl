@@ -7,7 +7,7 @@ include {
 }
 
 inputs = {
-  vsphere_host = "192.168.40.11"
+  vsphere_host = "server1.unicornafk.fr"
   vm_name      = "lb1"
   template     = "packer-ubuntu"
 

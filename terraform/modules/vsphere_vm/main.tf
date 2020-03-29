@@ -2,9 +2,7 @@ terraform {
   required_version = "= 0.12.24"
 
   required_providers {
-    vsphere = {
-      version = "= 1.16.2"
-    }
+    vsphere = "= 1.16.2"
   }
 }
 
