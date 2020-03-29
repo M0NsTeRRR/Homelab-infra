@@ -1,6 +1,6 @@
 $Env:PACKER_CACHE_DIR = "packer_cache"
 
-$vcenter_server = '192.168.40.10'
+$vcenter_server = 'vsphere.unicornafk.fr'
 $username = 'administrator@vsphere.local'
 
 $host_ip = Read-Host -Prompt 'host_ip'
