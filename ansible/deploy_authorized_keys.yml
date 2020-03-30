@@ -1,0 +1,36 @@
+---
+- hosts: all
+  become: true
+  vars:
+    - ansible_user: 'ludovic'
+    - ansible_ssh_pass: 'ludovic'
+    - ansible_become_password: 'ludovic'
+  tasks:
+  - name: Set authorized key taken from file
+    authorized_key:
+      user: "{{ ansible_user }}"
+      state: present
+      key: "{{ lookup('file', './id_rsa.pub') }}"
+
+  - name: Set sshd configuration
+    lineinfile:
+      dest: "/etc/ssh/sshd_config"
+      regexp: "{{ item.regexp }}"
+      line: "{{ item.line }}"
+      state: "present"
+    with_items:
+      - { regexp: '^#?AuthenticationMethods', line: 'AuthenticationMethods publickey' }
+      - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
+      - { regexp: '^#?ChallengeResponseAuthentication', line: 'ChallengeResponseAuthentication no' }
+      - { regexp: '^#?PubkeyAuthentication', line: 'PubkeyAuthentication yes' }
+      - { regexp: '^#?UsePAM', line: 'UsePAM yes' }
+      - { regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
+      - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+    notify:
+      - Restart sshd
+
+  handlers:
+    - name: Restart sshd
+      service:
+        name=sshd
+        state=restarted

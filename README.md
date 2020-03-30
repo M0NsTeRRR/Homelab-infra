@@ -7,6 +7,12 @@ This is my Homelab infrastructure.
 - Terraform (version >= 0.12.24)
 	- Terragrunt (version >= 0.23.2)
 
+# Ansible
+`cd ansible && export ANSIBLE_CONFIG=./ansible.cfg`
+
+### Playbooks to set SSH configuration
+`ansible-playbook -i <host_file> deploy_authorized_keys.yml`
+
 # Packer
 `cd packer`
 
