@@ -1,0 +1,72 @@
+---
+- name: Install Corosync
+  apt:
+    name: corosync
+    state: present
+  notify: enable corosync
+
+- name: Deleting /etc/corosync/authkey
+  file:
+    path: /etc/corosync/authkey
+    state: absent
+  run_once: true
+  when: corosync_force_regenerate_authkey is defined and
+        corosync_force_regenerate_authkey
+
+- name: Checking if /etc/corosync/authkey exists
+  stat:
+    path: /etc/corosync/authkey
+  register: check_authkey_file
+
+- name: Install haveged to increase entropy for corosync-keygen
+  apt:
+    name: haveged
+    state: present
+  run_once: true
+  when: check_authkey_file.stat.exists == False
+
+- name: Generating /etc/corosync/authkey file
+  command: /usr/sbin/corosync-keygen
+  run_once: true
+  when: check_authkey_file.stat.exists == False
+
+- name: Waiting for /etc/corosync/authkey file
+  wait_for:
+    path: /etc/corosync/authkey
+    timeout: 30
+  when: inventory_hostname == play_hosts[0]
+
+- name: Fetching /etc/corosync/authkey to /tmp
+  fetch:
+    src: /etc/corosync/authkey
+    dest: /tmp/authkey
+    flat: yes
+  run_once: true
+  register: authkey
+
+- name: Synchronizing /etc/corosync/authkey everywhere
+  copy:
+    src: /tmp/authkey
+    dest: /etc/corosync/authkey
+    mode: 0400
+  notify: restart corosync
+
+- name: Cleaning /tmp/authkey file for security reason
+  become: no
+  local_action:
+    file
+      path=/tmp/authkey
+      state=absent
+
+- name: Configure corosync
+  template:
+    src: corosync.conf.j2
+    dest: /etc/corosync/corosync.conf
+  notify:
+    - restart corosync
+
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: '5405'
+    proto: udp

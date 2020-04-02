@@ -1,0 +1,15 @@
+---
+- name: Configure Haproxy ressource
+  command: "crm configure primitive HAproxy-rsc ocf:heartbeat:haproxy params conffile=/etc/haproxy/haproxy.cfg op monitor interval=20 timeout=60 on-fail=restart"
+  run_once: true
+  when: '"primitive HAproxy-rsc haproxy \\" not in pacemaker_configuration.stdout_lines'
+
+- name: Configure ressource collocation
+  command: "crm configure colocation loc inf: virtual-IP-rsc HAproxy-rsc"
+  run_once: true
+  when: '"colocation loc inf: virtual-IP-rsc HAproxy-rsc" not in pacemaker_configuration.stdout_lines'
+
+- name: Configure ressource start order
+  command: "crm configure order ord inf: virtual-IP-rsc HAproxy-rsc"
+  run_once: true
+  when: '"order ord inf: virtual-IP-rsc HAproxy-rsc" not in pacemaker_configuration.stdout_lines'

@@ -1,0 +1,10 @@
+---
+- name: restart pacemaker
+  service:
+    name: pacemaker
+    state: restart
+
+- name: enable pacemaker
+  service:
+    name: pacemaker
+    enabled: yes

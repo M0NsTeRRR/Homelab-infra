@@ -1,0 +1,7 @@
+---
+- name: Configure kubernetes loadbalancers
+  hosts: kubernetes:&lb
+  become: yes
+  roles:
+    - pacemaker
+    - haproxy

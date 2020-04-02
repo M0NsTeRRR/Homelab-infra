@@ -1,0 +1,30 @@
+totem {
+	version: 2
+	cluster_name: lb-haproxy-ha
+	secauth: on
+	transport: udpu
+	interface {
+	    bindnetaddr: {{ lookup('dig', lb_ip)}}
+	    ringnumber: 0
+	    mcastport: 5405
+  	}
+}
+
+nodelist {
+	{% for host in ansible_play_hosts %}
+	node {
+		ring0_addr: {{ hostvars[host]['ansible_default_ipv4']['address'] }}
+		nodeid: {{loop.index}}
+		quorum_votes: 1
+	}
+	{% endfor %}
+}
+
+quorum {
+	provider: corosync_votequorum
+}
+
+logging {
+	debug: off
+	to_syslog: yes
+}

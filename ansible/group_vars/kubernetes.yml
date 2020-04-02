@@ -1,0 +1,4 @@
+---
+lb_ip: 'lb.dmz.unicornafk.fr'
+lb_port: 6443
+lb_service_type: 'haproxy'

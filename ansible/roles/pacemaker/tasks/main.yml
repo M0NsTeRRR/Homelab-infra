@@ -1,0 +1,36 @@
+---
+- name: Install Pacemaker and CLI configuration/management
+  apt:
+    pkg: 
+      - pacemaker
+      - crmsh
+    state: present
+  notify: 
+    - restart pacemaker
+    - enable pacemaker
+
+- name: Download haproxy ocf ressource
+  get_url:
+    url: https://raw.githubusercontent.com/M0NsTeRRR/cluster-agents/master/haproxy
+    dest: /usr/lib/ocf/resource.d/heartbeat/haproxy
+    mode: '+x'
+
+- name: Get pacemaker configuration
+  command: "crm configure show"
+  register: pacemaker_configuration
+
+- name: Disable stonith
+  command: "crm configure property stonith-enabled=false"
+  run_once: true
+  when: '"\tstonith-enabled=false \\" not in pacemaker_configuration.stdout_lines'
+
+- name: Configure Virtual IP ressource
+  command: "crm configure primitive virtual-IP-rsc ocf:heartbeat:IPaddr2 params ip='{{ lookup('dig', lb_ip)}}'"
+  run_once: true
+  when: '"primitive virtual-IP-rsc IPaddr2 \\" not in pacemaker_configuration.stdout_lines'
+
+- include_tasks: haproxy.yml
+  tags: [ 'haproxy' ]
+  when: 
+    - lb_service_type is defined
+    - lb_service_type == "haproxy"

@@ -1,0 +1,10 @@
+---
+- name: restart corosync
+  service:
+    name: corosync
+    state: restarted
+
+- name: enable corosync
+  service:
+    name: corosync
+    enabled: true
