@@ -1,16 +1,26 @@
 ---
 - hosts: all
   become: true
+  gather_facts: no
   vars:
     - ansible_user: 'ludovic'
     - ansible_ssh_pass: 'ludovic'
     - ansible_become_password: 'ludovic'
+  vars_prompt:
+    - name: id_rsa_pub
+      prompt: "Absolute/Relative path to public key"
+      private: no
   tasks:
   - name: Set authorized key taken from file
     authorized_key:
       user: "{{ ansible_user }}"
       state: present
-      key: "{{ lookup('file', './id_rsa.pub') }}"
+      key: "{{ lookup('file', id_rsa_pub) }}"
+      exclusive: yes
+    tags:
+      - deploy
+    notify:
+      - Restart sshd
 
   - name: Set sshd configuration
     lineinfile:
@@ -26,11 +36,13 @@
       - { regexp: '^#?UsePAM', line: 'UsePAM yes' }
       - { regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
       - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+    tags:
+      - configuration
     notify:
       - Restart sshd
 
   handlers:
     - name: Restart sshd
       service:
-        name=sshd
-        state=restarted
+        name: sshd
+        state: restarted

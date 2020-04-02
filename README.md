@@ -3,15 +3,26 @@ This is my Homelab infrastructure.
 # Requirements
 
 - Ansible (version >= 2.9.5)
+	- Python3 and Pip
 - Packer (version >= 1.5.4)
 - Terraform (version >= 0.12.24)
 	- Terragrunt (version >= 0.23.2)
 
 # Ansible
-`cd ansible && export ANSIBLE_CONFIG=./ansible.cfg`
+`cd ansible`  
+Install dependencies `pip3 install -r requirements.txt`
 
-### Playbooks to set SSH configuration
-`ansible-playbook -i <host_file> deploy_authorized_keys.yml`
+### Playbooks to add fingerprint on know_hosts
+`ansible-playbook -i <host_file> playbooks/add-ssh-keys.yml`  
+
+### Playbooks to deploy SSH configuration
+`ansible-playbook -i <host_file> playbooks/deploy_authorized_keys.yml`  
+
+### Playbooks to deploy dmz
+`ansible-playbook -i dmz deploy_dmz.yml`
+
+### Playbooks to deploy lab
+`ansible-playbook -i dmz deploy_lab.yml`
 
 # Packer
 `cd packer`
