@@ -5,3 +5,21 @@
   roles:
     - pacemaker
     - haproxy
+
+- name: Configure kubernetes etcd
+  hosts: kubernetes:&etcd
+  become: yes
+  roles:
+    - common-kubernetes
+
+- name: Configure kubernetes master
+  hosts: kubernetes:&master
+  become: yes
+  roles:
+    - common-kubernetes
+
+- name: Configure kubernetes worker
+  hosts: kubernetes:&worker
+  become: yes
+  roles:
+    - common-kubernetes
