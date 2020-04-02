@@ -6,4 +6,4 @@ ufw allow ssh
 
 ufw allow 161
 
-ufw enable
+yes | sudo ufw enable
