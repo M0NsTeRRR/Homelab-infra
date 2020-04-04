@@ -27,3 +27,9 @@
       - docker-ce-cli 
       - containerd.io
     state: present
+
+- name: Setup daemon
+  template:
+    src: daemon.json.j2
+    dest: /etc/docker/daemon.json
+  notify: restart docker

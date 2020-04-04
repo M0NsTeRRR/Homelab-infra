@@ -2,7 +2,7 @@
 - name: restart pacemaker
   service:
     name: pacemaker
-    state: restart
+    state: restarted
 
 - name: enable pacemaker
   service:

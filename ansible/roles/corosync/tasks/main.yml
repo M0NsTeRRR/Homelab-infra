@@ -1,4 +1,10 @@
 ---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: '5405'
+    proto: udp
+
 - name: Install Corosync
   apt:
     name: corosync
@@ -64,9 +70,3 @@
     dest: /etc/corosync/corosync.conf
   notify:
     - restart corosync
-
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: '5405'
-    proto: udp
