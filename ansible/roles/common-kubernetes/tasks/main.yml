@@ -18,6 +18,16 @@
     - { name: 'net.bridge.bridge-nf-call-ip6tables', value: '1' }
     - { name: 'net.bridge.bridge-nf-call-iptables', value: '1' }
 
+- name: Disable SWAP
+  shell: |
+    swapoff -a
+
+- name: Disable SWAP in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+
 - name: Check if br_netfilter module is loaded
   shell: lsmod | grep br_netfilter
   register: status_br_netfilter
