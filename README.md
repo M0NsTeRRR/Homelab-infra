@@ -10,19 +10,20 @@ This is my Homelab infrastructure.
 
 # Ansible
 `cd ansible`  
+
 Install dependencies `pip3 install -r requirements.txt`
 
 ### Playbooks to add fingerprint on know_hosts
-`ansible-playbook -i <host_file> playbooks/add-ssh-keys.yml`  
+`ansible-playbook -i <inventory_file> playbooks/add-ssh-keys.yml`  
 
 ### Playbooks to deploy SSH configuration
-`ansible-playbook -i <host_file> playbooks/deploy_authorized_keys.yml`  
+`ansible-playbook -i <inventory_file> playbooks/deploy_authorized_keys.yml`  
 
 ### Playbooks to deploy dmz
 `ansible-playbook -i dmz deploy_dmz.yml`
 
 ### Playbooks to deploy lab
-`ansible-playbook -i dmz deploy_lab.yml`
+`ansible-playbook -i lab deploy_lab.yml`
 
 # Packer
 `cd packer`
@@ -41,6 +42,7 @@ Windows : `./validate.ps1`
 
 # Terraform
 `cd terraform`  
+
 fill `account.hcl`
 
 Infrastructure is split in 2 parts :  

@@ -13,6 +13,8 @@
   apt_key:
     url: "https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg"
     state: present
+  retries: 3
+  delay: 3
 
 - name: Add Docker Apt repository
   apt_repository:
@@ -33,3 +35,5 @@
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
   notify: restart docker
+
+- meta: flush_handlers

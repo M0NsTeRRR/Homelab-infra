@@ -28,6 +28,6 @@ backend api-backend
     mode tcp
     option tcp-check
     balance roundrobin
-    {% for host in ansible_play_hosts %}
-    server {{ host.split(".")[0] }}  {{ host }}:{{ lb_port }} check
+    {% for host in groups[control_plane_group] %}
+    server {{ host.split(".")[0] }}  {{ host }}:6443 check
     {% endfor %}

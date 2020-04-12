@@ -4,6 +4,7 @@
     rule: allow
     port: "{{ lb_port }}"
     proto: tcp
+    
 - name: Install Haproxy
   apt:
     name: haproxy
