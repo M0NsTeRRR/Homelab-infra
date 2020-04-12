@@ -1,0 +1,78 @@
+---
+- name: Reset Kubernetes component
+  shell: "kubeadm reset --force"
+
+- name: Create directory for each kubeadmcfg on first etcd node
+  file:
+    path: /home/{{ ansible_user }}/{{ item }}
+    state: directory
+    mode: '0755'
+  run_once: true
+  with_items: "{{ ansible_play_hosts }}"
+
+- name: Configure kubeadm
+  template:
+    src: kubeadmcfg.yaml.j2
+    dest: "/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml"
+  vars:
+    host: "{{ item }}"
+  run_once: true
+  with_items: "{{ ansible_play_hosts }}"
+
+- name: Generating certificate authority files
+  shell: kubeadm init phase certs etcd-ca
+  run_once: true
+
+- name: Create certificates for each member
+  shell: |
+    kubeadm init phase certs etcd-server --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
+    kubeadm init phase certs etcd-peer --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
+    kubeadm init phase certs etcd-healthcheck-client --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
+    kubeadm init phase certs apiserver-etcd-client --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
+    cp -R /etc/kubernetes/pki /home/{{ ansible_user }}/{{ item }}/
+    find /home/{{ ansible_user }}/{{ item }} -name ca.key -type f -delete
+  run_once: true
+  with_items: "{{ ansible_play_hosts }}"
+
+- name: Archive configuration files to copy
+  archive:
+    path: "/home/{{ ansible_user }}/{{ item }}"
+    dest: "{{ item }}.tgz"
+  run_once: true
+  with_items: "{{ ansible_play_hosts }}"
+  when: item != play_hosts[0]
+
+- name: Fetch configuration files from first node
+  fetch:
+    src: "/home/{{ ansible_user }}/{{ item }}.tgz"
+    dest: "/tmp/{{ item }}.tgz"
+    flat: yes
+  run_once: true
+  with_items: "{{ ansible_play_hosts }}"
+  when: item != play_hosts[0]
+
+- name: Copy configuration paired files to others nodes
+  unarchive:
+    src: "/tmp/{{ inventory_hostname }}.tgz"
+    dest: "/home/{{ ansible_user }}"
+  when: inventory_hostname != play_hosts[0]
+
+- name: Change pki group and permissions
+  file:
+    path: "/home/{{ ansible_user }}/{{ inventory_hostname }}/pki"
+    owner: root
+    group: root
+
+- name: Move pki to /etc/kubernetes/
+  shell: mv -fi /home/{{ ansible_user }}/{{ inventory_hostname }}/pki /etc/kubernetes/
+
+- name: Create the static pod manifests
+  shell: kubeadm init phase etcd local --config=/home/{{ ansible_user }}/{{ inventory_hostname }}/kubeadmcfg.yaml
+  notify: restart kubelet
+
+- meta: flush_handlers
+
+- name: Wait for port 2379 to become open on the host
+  wait_for:
+    port: 2379
+    delay: 10

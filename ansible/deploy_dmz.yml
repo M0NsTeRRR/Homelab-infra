@@ -10,16 +10,16 @@
   hosts: kubernetes:&etcd
   become: yes
   roles:
-    - common-kubernetes
+    - kubernetes-etcd
 
 - name: Configure kubernetes master
   hosts: kubernetes:&master
   become: yes
   roles:
-    - common-kubernetes
+    - kubernetes-master
 
 - name: Configure kubernetes worker
   hosts: kubernetes:&worker
   become: yes
   roles:
-    - common-kubernetes
+    - kubernetes-worker

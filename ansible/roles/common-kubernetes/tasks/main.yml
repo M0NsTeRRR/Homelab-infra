@@ -47,6 +47,8 @@
   apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
+  retries: 3
+  delay: 3
 
 - name: Add kubernetes Apt repository
   apt_repository:

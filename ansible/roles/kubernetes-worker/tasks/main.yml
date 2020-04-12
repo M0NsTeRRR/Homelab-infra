@@ -1,0 +1,20 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - { "port": "6783", "proto": "any" }
+    - { "port": "6784", "proto": "udp" }
+    - { "port": "10250", "proto": "tcp" }
+    - { "port": "30000:32767", "proto": "tcp" }
+
+- name: Check if kubelet.conf exists
+  stat:
+    path: "/etc/kubernetes/kubelet.conf"
+  register: kubelet_conf
+
+- name: Join to cluster if needed
+  include_tasks: join.yml
+  when: not kubelet_conf.stat.exists

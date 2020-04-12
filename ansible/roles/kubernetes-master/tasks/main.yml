@@ -1,0 +1,46 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - { "port": "6443", "proto": "tcp" }
+    - { "port": "6783", "proto": "any" }
+    - { "port": "6784", "proto": "udp" }
+    - { "port": "2379:2380", "proto": "tcp" }
+    - { "port": "10250:10252", "proto": "tcp" }
+
+- name: Check if kubeadm has already run
+  stat:
+    path: "/etc/kubernetes/pki/ca.crt"
+  register: kubeadm_ca
+
+- name: Init cluster if needed
+  include_tasks: init.yml
+  when: 
+    - not kubeadm_ca.stat.exists
+    - inventory_hostname == play_hosts[0]
+
+- name: Check if kubeadm_admin exists
+  stat:
+    path: "/etc/kubernetes/admin.conf"
+  register: kubeadm_admin
+
+- name: Join master cluster if needed
+  include_tasks: join.yml
+  when:
+    - not kubeadm_admin.stat.exists
+    - inventory_hostname != play_hosts[0]
+
+- name: Create ~/.kube if it does not exist
+  file:
+    path: "/home/{{ ansible_user }}/.kube"
+    state: directory
+    mode: '600'
+
+- name: Symlink the kubectl admin.conf to ~/.kube/conf.
+  file:
+    src: /etc/kubernetes/admin.conf
+    dest: "/home/{{ ansible_user }}/.kube/config"
+    state: link

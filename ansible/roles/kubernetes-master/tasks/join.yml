@@ -1,0 +1,53 @@
+---
+- name: Reset Kubernetes component
+  shell: "kubeadm reset --force"
+
+- name: Create a new bootstrap token
+  shell: kubeadm token create
+  delegate_to: "{{ groups[control_plane_group][0] }}"
+  run_once: true
+  register: token
+
+- name: Get root ca cert fingerprint
+  shell: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+  delegate_to: "{{ groups[control_plane_group][0] }}"
+  run_once: true
+  register: root_ca
+
+- name: Archive configuration files to copy
+  archive:
+    path: 
+      - /etc/kubernetes/pki/ca.crt
+      - /etc/kubernetes/pki/ca.key
+      - /etc/kubernetes/pki/sa.key
+      - /etc/kubernetes/pki/sa.pub
+      - /etc/kubernetes/pki/apiserver-etcd-client.crt
+      - /etc/kubernetes/pki/apiserver-etcd-client.key
+      - /etc/kubernetes/pki/front-proxy-ca.crt
+      - /etc/kubernetes/pki/front-proxy-ca.key
+      - /etc/kubernetes/pki/etcd/ca.crt
+    dest: "/home/{{ ansible_user }}/pki.tgz"
+  run_once: true
+  delegate_to: "{{ groups[control_plane_group][0] }}"
+
+- name: Fetch configuration files from first node
+  fetch:
+    src: "/home/{{ ansible_user }}/pki.tgz"
+    dest: "/tmp/pki.tgz"
+    flat: yes
+  run_once: true
+  delegate_to: "{{ groups[control_plane_group][0] }}"
+
+- name: Create pki directory
+  file:
+    path: /etc/kubernetes/pki
+    state: directory
+    mode: '0600'
+
+- name: Copy configuration paired files to others nodes
+  unarchive:
+    src: "/tmp/pki.tgz"
+    dest: "/etc/kubernetes/pki"
+
+- name: Join control plane cluster
+  shell: "kubeadm join --token {{ token.stdout }} --discovery-token-ca-cert-hash sha256:{{ root_ca.stdout }} --control-plane {{ lb_ip }}:{{ lb_port }}"

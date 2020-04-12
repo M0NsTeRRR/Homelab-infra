@@ -1,0 +1,73 @@
+---
+- name: Reset Kubernetes component
+  shell: "kubeadm reset --force"
+
+- name: Archive certificate to copy
+  archive:
+    path:
+      - /etc/kubernetes/pki/etcd/ca.crt
+      - /etc/kubernetes/pki/apiserver-etcd-client.crt
+      - /etc/kubernetes/pki/apiserver-etcd-client.key
+    dest: "/home/{{ ansible_user }}/pki.tgz"
+  delegate_to: "{{ groups[etcd_group][0] }}"
+
+- name: Fetch certificates from first etcd node
+  fetch:
+    src: "/home/{{ ansible_user }}/pki.tgz"
+    dest: "/tmp/pki.tgz"
+    flat: yes
+  delegate_to: "{{ groups[etcd_group][0] }}"
+
+- name: Copy certificates to first control plane node
+  unarchive:
+    src: "/tmp/pki.tgz"
+    dest: "/home/{{ ansible_user }}"
+
+- name: Create /etc/kubernetes/pki/etcd if it does not exist
+  file:
+    path: /etc/kubernetes/pki/etcd
+    state: directory
+    mode: '600'
+
+- name: Move certificates to first control plane node
+  shell: |
+    mv /home/{{ ansible_user }}/etcd /etc/kubernetes/pki/
+    mv /home/{{ ansible_user }}/apiserver-etcd-client.crt /etc/kubernetes/pki
+    mv /home/{{ ansible_user }}/apiserver-etcd-client.key /etc/kubernetes/pki
+
+- name: Ansible fix permissions on certificates
+  file:
+    path: '{{ item.path }}'
+    owner: root
+    group: root
+    mode: '{{ item.mode }}'
+  with_items:
+    - { 'path': '/etc/kubernetes/pki/etcd/ca.crt', 'mode': '0644'}
+    - { 'path': '/etc/kubernetes/pki/apiserver-etcd-client.crt', 'mode': '0644'}
+    - { 'path': '/etc/kubernetes/pki/apiserver-etcd-client.key', 'mode': '0600'}
+
+- name: Configure control plane node
+  template:
+    src: kubeadm-config.yaml.j2
+    dest: /home/{{ ansible_user }}/kubeadm-config.yaml
+
+- name: Init first control plane node
+  command: "kubeadm init --config /home/{{ ansible_user }}/kubeadm-config.yaml --upload-certs"
+
+- name: Get Kubernetes version for Weave installation
+  shell: kubectl --kubeconfig /etc/kubernetes/admin.conf version | base64 | tr -d '\n'
+  register: cni_version
+
+- name: Configure Weave networking
+  shell: "kubectl apply --kubeconfig /etc/kubernetes/admin.conf -f https://cloud.weave.works/k8s/net?k8s-version={{ cni_version.stdout_lines[0] }}"
+
+- name: Wait for port 10250 to become open on the host
+  wait_for:
+    port: 10250
+    delay: 10
+ 
+- name: Copy admin.conf on localhost
+  fetch:
+    src: "/etc/kubernetes/admin.conf"
+    dest: "/tmp/config"
+    flat: yes

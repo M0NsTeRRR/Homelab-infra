@@ -2,7 +2,7 @@
 - name: Open required ports
   ufw:
     rule: allow
-    port: '2379:2380'
+    port: "2379:2380"
     proto: tcp
 
 - name: Configure etcd service manager
@@ -11,82 +11,13 @@
     dest: /etc/systemd/system/kubelet.service.d/20-etcd-service-manager.conf
   notify: restart kubelet
 
-- name: Create directory for each kubeadmcfg on first etcd node
-  file:
-    path: /home/{{ ansible_user }}/{{ item }}
-    state: directory
-    mode: '0755'
-  run_once: true
-  with_items: "{{ ansible_play_hosts }}"
-
-- name: Configure kubeadm
-  template:
-    src: kubeadmcfg.yaml.j2
-    dest: "/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml"
-  vars:
-    host: "{{ item }}"
-  run_once: true
-  with_items: "{{ ansible_play_hosts }}"
+- meta: flush_handlers
 
 - name: Checking if /etc/kubernetes/pki/etcd/ca.crt
   stat:
     path: /etc/kubernetes/pki/etcd/ca.crt
-  run_once: true
   register: check_ca_crt_file
 
-- name: Checking if /etc/kubernetes/pki/etcd/ca.key
-  stat:
-    path: /etc/kubernetes/pki/etcd/ca.key
-  run_once: true
-  register: check_ca_key_file
-
-- name: Generating certificate authority files
-  shell: kubeadm init phase certs etcd-ca
-  run_once: true
-  when: check_ca_crt_file.stat.exists == False and check_ca_key_file.stat.exists == False
-
-- name: Create certificates for each member
-  shell: |
-    kubeadm init phase certs etcd-server --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
-    kubeadm init phase certs etcd-peer --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
-    kubeadm init phase certs etcd-healthcheck-client --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
-    kubeadm init phase certs apiserver-etcd-client --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
-    cp -R /etc/kubernetes/pki /home/{{ ansible_user }}/{{ item }}/
-    find /home/{{ ansible_user }}/{{ item }} -name ca.key -type f -delete
-  run_once: true
-  with_items: "{{ ansible_play_hosts }}"
-
-- name: Find configuration files to copy
-  archive:
-    path: "/home/{{ ansible_user }}/{{ item }}"
-    dest: "{{ item }}.tgz"
-  run_once: true
-  with_items: "{{ ansible_play_hosts }}"
-  when: item != play_hosts[0]
-
-- name: Fetch configuration files from first node
-  fetch:
-    src: "/home/{{ ansible_user }}/{{ item }}.tgz"
-    dest: "/tmp/{{ item }}.tgz"
-    flat: yes
-  run_once: true
-  with_items: "{{ ansible_play_hosts }}"
-  when: item != play_hosts[0]
-
-- name: Copy configuration paired files to others nodes
-  unarchive:
-    src: "/tmp/{{ inventory_hostname }}.tgz"
-    dest: "/home/{{ ansible_user }}"
-  when: inventory_hostname != play_hosts[0]
-
-- name: Change pki group and permissions
-  file:
-    path: "/home/{{ ansible_user }}/{{ inventory_hostname }}/pki"
-    owner: root
-    group: root
-
-- name: Move pki to /etc/kubernetes/
-  shell: mv -fi /home/{{ ansible_user }}/{{ inventory_hostname }}/pki /etc/kubernetes/
-
-- name: Create the static pod manifests
-  shell: kubeadm init phase etcd local --config=/home/{{ ansible_user }}/{{ inventory_hostname }}/kubeadmcfg.yaml
+- name: Init cluster if needed
+  include_tasks: init.yml
+  when: not check_ca_crt_file.stat.exists
