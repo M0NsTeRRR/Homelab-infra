@@ -1,10 +1,11 @@
 #!/bin/bash
 
-cat <<EOT >> /etc/apt/detect-http-proxy.sh
+cat << 'EOT' >> /etc/apt/detect-http-proxy.sh
 #!/bin/bash
-proxy=192.168.10.51
+IP=apt-proxy.dmz.unicornafk.fr
+PORT=3142
 
-nc -zw1 $proxy 3128 && echo http://$proxy:3128/ || echo DIRECT
+nc -w1 -z ${IP} ${PORT} && echo http://${IP}:${PORT} || echo DIRECT
 EOT
 
 chmod +x /etc/apt/detect-http-proxy.sh
