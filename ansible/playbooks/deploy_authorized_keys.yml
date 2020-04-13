@@ -1,5 +1,6 @@
 ---
-- hosts: all
+- name: Deploy SSH configuration
+  hosts: all
   become: true
   gather_facts: no
   vars:

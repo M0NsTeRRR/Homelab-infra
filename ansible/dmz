@@ -1,5 +1,3 @@
-temp.dmz.unicornafk.fr
-
 [kubernetes:children]
 lb
 etcd

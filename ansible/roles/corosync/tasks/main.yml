@@ -70,3 +70,5 @@
     dest: /etc/corosync/corosync.conf
   notify:
     - restart corosync
+
+- meta: flush_handlers
