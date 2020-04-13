@@ -1,12 +1,3 @@
-terraform {
-  required_version = "= 0.12.24"
-
-  required_providers {
-    vsphere = "= 1.16.2"
-  }
-}
-
-
 data "vsphere_datacenter" "dc" {
   name = var.vsphere_datacenter
 }
