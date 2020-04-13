@@ -42,7 +42,7 @@
   with_items: "{{ ansible_play_hosts }}"
   when: item != play_hosts[0]
 
-- name: Fetch configuration files from first node
+- name: Fetch archive configuration files from first node
   fetch:
     src: "/home/{{ ansible_user }}/{{ item }}.tgz"
     dest: "/tmp/{{ item }}.tgz"
@@ -51,17 +51,11 @@
   with_items: "{{ ansible_play_hosts }}"
   when: item != play_hosts[0]
 
-- name: Copy configuration paired files to others nodes
+- name: Unarchive configuration paired files to others nodes
   unarchive:
     src: "/tmp/{{ inventory_hostname }}.tgz"
     dest: "/home/{{ ansible_user }}"
   when: inventory_hostname != play_hosts[0]
-
-- name: Change pki group and permissions
-  file:
-    path: "/home/{{ ansible_user }}/{{ inventory_hostname }}/pki"
-    owner: root
-    group: root
 
 - name: Move pki to /etc/kubernetes/
   shell: mv -fi /home/{{ ansible_user }}/{{ inventory_hostname }}/pki /etc/kubernetes/

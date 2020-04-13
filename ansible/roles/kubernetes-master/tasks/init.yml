@@ -65,7 +65,23 @@
   wait_for:
     port: 10250
     delay: 10
- 
+
+- name: Clean files
+    file:
+      path: "{{ item.path }}"
+      state: absent
+    delegate_to: "{{ item.host }}"
+    with_items:
+      - { "host": "{{ groups[etcd_group][0] }}", "path": "/home/{{ ansible_user }}/pki.tgz"}
+      - { "host": "{{ inventory_hostname }}", "path": "/home/{{ ansible_user }}/pki.tgz"}
+      - { "host": "{{ inventory_hostname }}", "path": "/home/{{ ansible_user }}/kubeadm-config.yaml"}
+  
+- name: Clean files on localhost
+  file:
+    path: /tmp/pki.tgz
+    state: absent
+  delegate_to: localhost
+
 - name: Copy admin.conf on localhost
   fetch:
     src: "/etc/kubernetes/admin.conf"
