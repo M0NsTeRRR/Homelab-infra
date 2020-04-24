@@ -51,3 +51,10 @@
 
 - name: Join control plane cluster
   shell: "kubeadm join --token {{ token.stdout }} --discovery-token-ca-cert-hash sha256:{{ root_ca.stdout }} --control-plane {{ lb_ip }}:{{ lb_port }}"
+
+- name: Clean files on localhost
+  become: no
+  local_action:
+    file
+      path=/tmp/pki.tgz
+      state=absent
