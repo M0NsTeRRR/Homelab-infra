@@ -30,7 +30,7 @@ Install dependencies `pip3 install -r requirements.txt`
 
 Supported distributions :
 - Debian (10.3.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.3.0-amd64-netinst.iso)  
-- Ubuntu (20.04) - [iso](https://releases.ubuntu.com/20.04/ubuntu-20.04-live-server-amd64.iso)
+- Ubuntu (20.04) - [iso](http://cdimage.ubuntu.com/ubuntu-server/daily/current/focal-legacy-server-amd64.iso)
 
 ### Create template
 Linux : `./build.sh`  

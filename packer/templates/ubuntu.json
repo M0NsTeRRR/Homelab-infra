@@ -34,7 +34,7 @@
       "network_card": "vmxnet3",
       "notes": "ubuntu-{{ user `version` }}, generated on {{ isotime \"2006-01-02T15:04:05Z\" }}",
 
-      "iso_paths": ["[NAS] ISO/ubuntu-{{ user `version` }}-live-server-amd64.iso"],
+      "iso_paths": ["[NAS] ISO/ubuntu-{{ user `version` }}-server-amd64.iso"],
       "http_directory":"preseed",
       "boot_wait": "10s",
       "boot_command": [
