@@ -29,7 +29,7 @@ Install dependencies `pip3 install -r requirements.txt`
 `cd packer`
 
 Supported distributions :
-- Debian (10.3.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.3.0-amd64-netinst.iso)  
+- Debian (10.4.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.4.0-amd64-netinst.iso)  
 - Ubuntu (20.04) - [iso](http://cdimage.ubuntu.com/ubuntu-server/daily/current/focal-legacy-server-amd64.iso)
 
 ### Create template
