@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt install fail2ban -y
+apt install -y fail2ban
 
 cat << EOT >> /etc/fail2ban/jail.d/custom.conf
 [DEFAULT]

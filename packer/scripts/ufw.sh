@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt install ufw -y
+apt install -y ufw
 
 ufw allow ssh
 

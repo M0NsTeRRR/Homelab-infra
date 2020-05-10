@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apt install figlet lolcat -y
+apt install -y figlet lolcat
 
 chmod -x /etc/update-motd.d/*
 
