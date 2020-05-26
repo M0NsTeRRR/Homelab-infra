@@ -56,17 +56,32 @@
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/apt-cache.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/dns.sh"
     },
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/apt-cache.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/fail2ban.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/clamav.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/rkhunter.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/chkrootkit.sh"
     },
     {
       "type": "shell",
@@ -77,6 +92,11 @@
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/ntp.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/auto-update.sh"
     },
     {
       "type": "shell",

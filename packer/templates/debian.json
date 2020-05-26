@@ -62,12 +62,32 @@
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/clamav.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/rkhunter.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/chkrootkit.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/snmp.sh"
     },
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
       "script": "scripts/ntp.sh"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
+      "script": "scripts/auto-update.sh"
     },
     {
       "type": "shell",
