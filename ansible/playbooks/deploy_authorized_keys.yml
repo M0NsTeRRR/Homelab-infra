@@ -30,6 +30,7 @@
       line: "{{ item.line }}"
       state: "present"
     with_items:
+      - { regexp: '^#?PrintMotd', line: 'PrintMotd yes' }
       - { regexp: '^#?AuthenticationMethods', line: 'AuthenticationMethods publickey' }
       - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
       - { regexp: '^#?ChallengeResponseAuthentication', line: 'ChallengeResponseAuthentication no' }
