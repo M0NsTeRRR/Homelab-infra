@@ -11,5 +11,10 @@ output "instance_name" {
 
 output "instance_ip_addr" {
   value       = [vsphere_virtual_machine.vm.clone[*].customize[*].network_interface[*].ipv4_address]
-  description = "The IP address of the VM"
+  description = "The IPv4 address of the VM"
+}
+
+output "instance_ip_addr6" {
+  value       = [vsphere_virtual_machine.vm.clone[*].customize[*].network_interface[*].ipv6_address]
+  description = "The IPv6 address of the VM"
 }

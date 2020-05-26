@@ -60,11 +60,14 @@ resource "vsphere_virtual_machine" "vm" {
       network_interface {
         ipv4_address = var.vm_ip
         ipv4_netmask = var.network.netmask
+        ipv6_address = var.vm_ip6
+        ipv6_netmask = var.network.netmask6
       }
 
       dns_server_list = var.dns.server_list
       dns_suffix_list = var.dns.suffix_list
       ipv4_gateway    = var.network.gateway
+      ipv6_gateway    = var.network.gateway6
     }
   }
 }

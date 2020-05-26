@@ -36,6 +36,11 @@ variable "vm_ip" {
   type = string
 }
 
+variable "vm_ip6" {
+  description = "VM IPv6"
+  type = string
+}
+
 variable "domain" {
   description = "Domain of the machine"
   type = string
@@ -60,8 +65,10 @@ variable "disk" {
 variable "network" {
   description = "Network name"
   type        = object({
-    name = string
-    netmask = string
-    gateway = string
+    name     = string
+    netmask  = string
+    gateway  = string
+    netmask6 = string
+    gateway6 = string
   })
 }
