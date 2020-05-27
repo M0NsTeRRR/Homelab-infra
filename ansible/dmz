@@ -1,3 +1,10 @@
+[dns]
+192.168.10.21
+192.168.10.22
+
+[proxy_cache]
+192.168.10.41
+
 [kubernetes:children]
 lb
 etcd

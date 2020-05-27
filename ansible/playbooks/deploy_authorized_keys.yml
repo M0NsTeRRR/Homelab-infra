@@ -18,8 +18,6 @@
       state: present
       key: "{{ lookup('file', id_rsa_pub) }}"
       exclusive: yes
-    tags:
-      - deploy
     notify:
       - Restart sshd
 
@@ -38,8 +36,6 @@
       - { regexp: '^#?UsePAM', line: 'UsePAM yes' }
       - { regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
       - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
-    tags:
-      - configuration
     notify:
       - Restart sshd
 

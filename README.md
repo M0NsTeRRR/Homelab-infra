@@ -8,6 +8,8 @@ This is my Homelab infrastructure.
 - Terraform (version >= 0.12.24)
 	- Terragrunt (version >= 0.23.2)
 
+Fill ansible/secrets.yml based on ansible/secrets.example and encrypt the file with ansible-vault
+
 # Ansible
 `cd ansible`  
 

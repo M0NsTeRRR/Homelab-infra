@@ -1,0 +1,5 @@
+---
+- name: restart pdns-recursor
+  service:
+    name: pdns-recursor
+    state: restarted

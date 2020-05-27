@@ -1,0 +1,11 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "3142"
+    proto: tcp
+
+- name: Install Apt-cacher-ng
+  apt:
+    name: apt-cacher-ng
+    state: present

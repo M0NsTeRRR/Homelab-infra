@@ -1,0 +1,85 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "53"
+    proto: udp
+
+- name: Add pdns group
+  group:
+    name: pdns
+    state: present
+
+- name: Add pdns user
+  user:
+    name: pdns
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: pdns
+    append: yes
+
+- name: Install required packages by PowerDNS
+  apt:
+    pkg: 
+      - apt-transport-https
+      - gnupg-agent
+    state: present
+
+- name: Add PowerDNS Apt signing key
+  apt_key:
+    id: "CBC8B383"
+    url: "https://repo.powerdns.com/CBC8B383-pub.asc"
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add PowerDNS Apt repository
+  apt_repository:
+    repo: "deb [arch=amd64] http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-rec-master main"
+    state: present
+    filename: pdns-rec
+
+- name: Configure apt preferences
+  template:
+    src: apt-preferences.j2
+    dest: /etc/apt/preferences.d/pdns
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Disable and stop systemd-resolved
+  systemd:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+
+- name: Install PowerDNS
+  apt:
+    name: pdns-recursor
+    state: present
+
+- name: Fix perms on PowerDNS configuration
+  file:
+    name: "/etc/powerdns/recursor.conf"
+    owner: "root"
+    group: "pdns"
+    mode: 0640
+    state: file
+
+- name:
+  set_fact:
+    dns_list: "{{ (groups['dns'] | join(':53000;')) + ':53000' }}"
+
+- name: Configure PowerDNS
+  lineinfile:
+    dest: "/etc/powerdns/recursor.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+      - { regexp: '^(# )?setgid=', line: 'setgid=pdns' }
+      - { regexp: '^(# )?setuid=', line: 'setuid=pdns' }
+      - { regexp: '^(# )?local-address=', line: 'local-address=0.0.0.0, ::' }
+      - { regexp: '^(# )?allow-from=', line: 'allow-from={{ ipv4_subnets | join(", ") }}, {{ ipv6_subnets | join(", ") }}' }
+      - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ domains | join("=" + dns_list + ", ") + "=" + dns_list }}' }
+  notify: restart pdns-recursor
