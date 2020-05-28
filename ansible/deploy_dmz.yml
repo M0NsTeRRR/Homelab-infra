@@ -1,4 +1,23 @@
 ---
+- name: Configure apt-proxy cache servers
+  hosts: apt_proxy
+  become: yes
+  roles:
+    - apt-proxy
+
+- name: Configure DNS servers
+  hosts: dns
+  become: yes
+  roles:
+    - powerdns-authoritative
+    - powerdns-recursor
+
+- name: Configure DNS authoritative
+  hosts: dns:&authoritative
+  become: yes
+  roles:
+    - powerdns-authoritative
+
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb
   become: yes
@@ -17,6 +36,7 @@
   become: yes
   roles:
     - kubernetes-master
+    - istio
 
 - name: Configure kubernetes worker
   hosts: kubernetes:&worker
