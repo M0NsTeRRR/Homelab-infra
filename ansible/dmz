@@ -1,6 +1,6 @@
 [dns]
-192.168.10.21
-192.168.10.22
+192.168.10.21 ipv6=2001:bc8:2e64:10::21 canonical_hostname=dns1.unicornafk.fr.
+192.168.10.22 ipv6=2001:bc8:2e64:10::22 canonical_hostname=dns2.unicornafk.fr.
 
 [apt_proxy]
 apt-proxy.dmz.unicornafk.fr

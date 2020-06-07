@@ -1,0 +1,27 @@
+---
+- name: Check if zone exist
+  uri:
+    url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones/{{ item }}."
+    method: GET
+    return_content: yes
+    validate_certs: no
+    status_code:
+      - 200
+      - 404
+    headers:
+      X-Api-Key: "{{ powerdns.api_key }}"
+  register: zone
+
+- name: POST zone
+  uri:
+    url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones"
+    method: POST
+    return_content: yes
+    body_format: json
+    validate_certs: no
+    body: "{{ lookup('template', 'post_zone.json.j2') }}"
+    status_code: 201
+    headers:
+      Content-Type: application/json
+      X-Api-Key: "{{ powerdns.api_key }}"
+  when: zone.status == 404

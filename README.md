@@ -7,6 +7,7 @@ This is my Homelab infrastructure.
 - Packer (version >= 1.5.4)
 - Terraform (version >= 0.12.24)
 	- Terragrunt (version >= 0.23.2)
+	- terraform-provider-ansiblevault (version >=2.1.0)
 
 Fill ansible/secrets.yml based on ansible/secrets.example and encrypt the file with ansible-vault
 

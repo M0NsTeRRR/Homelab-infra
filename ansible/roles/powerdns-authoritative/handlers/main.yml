@@ -3,3 +3,8 @@
   service:
     name: pdns
     state: restarted
+
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
