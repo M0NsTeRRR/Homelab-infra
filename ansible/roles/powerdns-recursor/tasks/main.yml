@@ -81,5 +81,6 @@
       - { regexp: '^(# )?setuid=', line: 'setuid=pdns' }
       - { regexp: '^(# )?local-address=', line: 'local-address=0.0.0.0, ::' }
       - { regexp: '^(# )?allow-from=', line: 'allow-from={{ ipv4_subnets | join(", ") }}, {{ ipv6_subnets | join(", ") }}' }
-      - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ domains | join("=" + dns_list + ", ") + "=" + dns_list }}' }
+      - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ domains | join("=" + dns_list + ", ") + "=" + dns_list }}, {{ reverse_domains | join("=" + dns_list + ", ") + "=" + dns_list }}' }
+      - { regexp: '^(# )?serve-rfc1918=', line: 'serve-rfc1918=no' }
   notify: restart pdns-recursor
