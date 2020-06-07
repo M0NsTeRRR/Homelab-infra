@@ -104,7 +104,7 @@
   with_items:
       - { regexp: '^(# )?setgid=', line: 'setgid=pdns' }
       - { regexp: '^(# )?setuid=', line: 'setuid=pdns' }
-      - { regexp: '^(# )?local-address=', line: 'local-address={{ inventory_hostname }}' }
+      - { regexp: '^(# )?local-address=', line: 'local-address=0.0.0.0, ::' }
       - { regexp: '^(# )?local-port=', line: 'local-port=53000' }
       - { regexp: '^(# )?launch=', line: 'launch=gsqlite3' }
       - { regexp: '^(# )?gsqlite3-database=', line: 'gsqlite3-database=/var/lib/powerdns/db.sqlite' }
