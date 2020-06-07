@@ -13,3 +13,23 @@ ipv6_subnets:
 domains:
   - unicornafk.fr
   - adminafk.fr
+subdomains:
+  - dmz.unicornafk.fr
+  - lab.unicornafk.fr
+reverse_domains:
+  - 4.168.192.in-addr.arpa
+  - 5.168.192.in-addr.arpa
+  - 10.168.192.in-addr.arpa
+  - 20.168.192.in-addr.arpa
+  - 30.168.192.in-addr.arpa
+  - 40.168.192.in-addr.arpa
+  - 50.168.192.in-addr.arpa
+  - 60.168.192.in-addr.arpa
+  - 4.0.1.4.6.e.2.8.c.b.1.0.0.2.ip6.arpa
+  - 5.0.1.4.6.e.2.8.c.b.1.0.0.2.ip6.arpa
+  - 0.1.1.4.6.e.2.8.c.b.1.0.0.2.ip6.arpa
+  - 0.2.1.4.6.e.2.8.c.b.1.0.0.2.ip6.arpa
+  - 0.3.1.4.6.e.2.8.c.b.1.0.0.2.ip6.arpa
+  - 0.4.1.4.6.e.2.8.c.b.1.0.0.2.ip6.arpa
+  - 0.5.1.4.6.e.2.8.c.b.1.0.0.2.ip6.arpa
+  - 0.6.1.4.6.e.2.8.c.b.1.0.0.2.ip6.arpa
