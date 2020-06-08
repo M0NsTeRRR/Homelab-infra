@@ -71,3 +71,39 @@ resource "vsphere_virtual_machine" "vm" {
     }
   }
 }
+
+resource "powerdns_record" "dns_A" {
+  zone    = "${var.domain}."
+  name    = "${var.vm_name}.${var.domain}."
+  type    = "A"
+  ttl     = 3600
+  records = [var.vm_ip]
+}
+
+resource "powerdns_record" "dns_AAAA" {
+  zone    = "${var.domain}."
+  name    = "${var.vm_name}.${var.domain}."
+  type    = "AAAA"
+  ttl     = 3600
+  records = [var.vm_ip6]
+}
+
+resource "powerdns_record" "dns_PTR_ipv4" {
+  zone    = "${var.reverse_zone}."
+  name    = "${join(".", reverse(split(".", var.vm_ip)))}.in-addr.arpa."
+  type    = "PTR"
+  ttl     = 3600
+  records = ["${var.vm_name}.${var.domain}."]
+}
+
+data "external" "reverse_ptr_ipv6" {
+  program = ["/bin/bash", "${path.module}/reverse_ptr_ipv6.sh", "${var.vm_ip6}"]
+}
+
+resource "powerdns_record" "dns_PTR_ipv6" {
+  zone    = "${var.reverse_zone6}."
+  name    = data.external.reverse_ptr_ipv6.result.reversed
+  type    = "PTR"
+  ttl     = 3600
+  records = ["${var.vm_name}.${var.domain}."]
+}

@@ -1,5 +1,7 @@
 locals {
-  vsphere_server = ""
-  user           = ""
-  password       = ""
+  vsphere_user     = ""
+  vsphere_password = ""
+
+  powerdns_api_key = ""
 }
+
