@@ -12,12 +12,6 @@
     - powerdns-authoritative
     - powerdns-recursor
 
-- name: Configure DNS authoritative
-  hosts: dns:&authoritative
-  become: yes
-  roles:
-    - powerdns-authoritative
-
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb
   become: yes
