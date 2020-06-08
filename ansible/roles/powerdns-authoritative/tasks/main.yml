@@ -15,4 +15,5 @@
 - name: Create zones and reverse zones
   include_tasks: provision.yml
   when: inventory_hostname == play_hosts[0]
-  with_items: "{{ domains + subdomains + reverse_domains }}"
+  run_once: true
+  with_items: "{{ domains + subdomains + reverse_zones }}"

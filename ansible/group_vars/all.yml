@@ -16,7 +16,7 @@ domains:
 subdomains:
   - dmz.unicornafk.fr
   - lab.unicornafk.fr
-reverse_domains:
+reverse_zones:
   - 4.168.192.in-addr.arpa
   - 5.168.192.in-addr.arpa
   - 10.168.192.in-addr.arpa
