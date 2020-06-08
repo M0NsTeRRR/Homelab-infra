@@ -17,10 +17,10 @@ inputs = {
   }
 
   disk = {
-    "datastore" = "SERVER2-DISK1"
-    "size"      = 20
+    datastore = "SERVER2-DISK1"
+    size      = 20
   }
 
-  "vm_ip" = "192.168.10.92"
-  "vm_ip6" = "2001:bc8:2e64:110::92"
+  vm_ip  = "192.168.10.92"
+  vm_ip6 = "2001:bc8:2e64:110::92"
 }
