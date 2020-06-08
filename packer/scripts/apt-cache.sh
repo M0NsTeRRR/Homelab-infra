@@ -2,7 +2,7 @@
 
 cat << 'EOT' >> /etc/apt/detect-http-proxy.sh
 #!/bin/bash
-IP=apt-proxy.dmz.unicornafk.fr
+IP=apt-proxy.unicornafk.fr
 PORT=3142
 
 nc -w1 -z ${IP} ${PORT} && echo http://${IP}:${PORT} || echo DIRECT

@@ -3,7 +3,7 @@
 192.168.10.22 ipv6=2001:bc8:2e64:10::22 canonical_hostname=dns2.unicornafk.fr.
 
 [apt_proxy]
-apt-proxy.dmz.unicornafk.fr
+apt-proxy.unicornafk.fr
 
 [kubernetes:children]
 lb
