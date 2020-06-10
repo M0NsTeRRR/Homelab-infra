@@ -1,0 +1,16 @@
+notifiers:
+  - name: notification-mail
+    type: email
+    uid: notifier1
+    org_name: Main Org.
+    is_default: true
+    send_reminder: true
+    frequency: 1h
+    disable_resolve_message: false
+    settings:
+      addresses: "{{ email }}"
+
+delete_notifiers:
+  - name: notification-mail
+    uid: notifier1
+    org_name: Main Org.

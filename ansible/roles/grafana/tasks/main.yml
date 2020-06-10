@@ -1,0 +1,113 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "3000"
+    proto: tcp
+
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  pip:
+    name: cryptography
+
+- name: Install required packages by Grafana
+  apt:
+    pkg: 
+      - apt-transport-https
+      - gnupg-agent
+      - software-properties-common
+    state: present
+
+- name: Add Grafana Apt signing key
+  apt_key:
+    url: "https://packages.grafana.com/gpg.key"
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add Grafana Apt repository
+  apt_repository:
+    repo: "deb https://packages.grafana.com/oss/deb stable main"
+    state: present
+    filename: grafana
+
+- name: Install Grafana
+  apt:
+    name: grafana
+    state: present
+  notify:
+    - enable grafana-server
+    - restart grafana-server
+
+- name: Generate openssl_privatekey
+  openssl_privatekey:
+    mode: 0640
+    group: grafana
+    path: /etc/ssl/certs/grafana.key
+
+- name: Generate openssl_csr
+  openssl_csr:
+    group: grafana
+    mode: 0640
+    path: /etc/ssl/certs/grafana.csr
+    privatekey_path: /etc/ssl/certs/grafana.key
+
+- name: Generate openssl_certificate
+  openssl_certificate:
+    group: grafana
+    mode: 0640
+    provider: selfsigned
+    path: /etc/ssl/certs/grafana.crt
+    privatekey_path: /etc/ssl/certs/grafana.key
+    csr_path: /etc/ssl/certs/grafana.csr
+
+- name: Configure Grafana
+  lineinfile:
+    dest: "/etc/grafana/grafana.ini"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+      - { regexp: '^(;)protocol =', line: 'protocol = https' }
+      - { regexp: '^(;)domain =', line: 'domain = monitoring.unicornafk.fr' }
+      - { regexp: '^(;)enforce_domain =', line: 'enforce_domain = true' }
+      - { regexp: '^(;)cert_file =', line: 'cert_file = /etc/ssl/certs/grafana.crt' }
+      - { regexp: '^(;)cert_key =', line: 'cert_key = /etc/ssl/certs/grafana.key' }
+      - { regexp: '^(;)enable_gzip =', line: 'enable_gzip = true' }
+      - { regexp: '^(;)admin_user =', line: 'admin_user = admin' }
+      - { regexp: '^(;)admin_password =', line: 'admin_password = {{ grafana.admin_password }}' }
+      - { regexp: '^(;)allow_sign_up =', line: 'allow_sign_up = false' }
+      - { regexp: '^(;)allow_org_create =', line: 'allow_org_create = false' }
+  notify:
+    - restart grafana-server
+
+- name: Configure dashboards
+  template:
+    group: grafana
+    mode: 0640
+    src: dashboards.yml.j2
+    dest: /etc/grafana/provisioning/dashboards/dashboards.yml
+  notify:
+    - restart grafana-server
+
+- name: Configure datasources
+  template:
+    group: grafana
+    mode: 0640
+    src: datasources.yml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yml
+  notify:
+    - restart grafana-server
+
+- name: Configure notifiers
+  template:
+    group: grafana
+    mode: 0640
+    src: notifiers.yml.j2
+    dest: /etc/grafana/provisioning/notifiers/notifiers.yml
+  notify:
+    - restart grafana-server
