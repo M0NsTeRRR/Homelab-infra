@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: Ludovic Ortega
+  description: Install and configure snmp-exporter
+  company: Ludovic Ortega
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+    - name: Ubuntu
+      versions:
+        - focal
+
+dependencies:
+  - role: prometheus

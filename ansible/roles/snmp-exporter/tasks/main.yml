@@ -1,0 +1,58 @@
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "9116"
+    proto: tcp
+
+- name: Create snmp-exporter folder 
+  file:
+    state: directory
+    name: /opt/exporter/snmp-exporter
+
+- name: Check if snmp-exporter is already build
+  stat:
+    path: /usr/local/bin/snmp-exporter
+  register: snmp_exporter
+
+- name: Download last version of snmp-exporter 
+  get_url:
+    url: https://github.com/prometheus/snmp_exporter/releases/download/v0.18.0/snmp_exporter-0.18.0.linux-amd64.tar.gz
+    dest: /tmp/snmp_exporter.tar.gz
+  when: not snmp_exporter.stat.exists
+
+- name: Extract latest binary of snmp-exporter 
+  unarchive:
+    src: /tmp/snmp_exporter.tar.gz
+    dest: /opt/exporter/snmp-exporter
+    remote_src: yes
+    list_files: yes
+  register: archive_contents
+
+- name: Copy snmp-exporter binary to /usr/local/bin
+  copy:
+    src: "/opt/exporter/snmp-exporter/{{ archive_contents.files[0] }}snmp_exporter"
+    dest: /usr/local/bin/snmp-exporter
+    owner: prometheus
+    group: prometheus
+    mode: 0700
+    remote_src: yes
+  notify: restart snmp-exporter.service
+
+- name: Create snmp-exporter configuration directory
+  file:
+    dest: /etc/snmp_exporter/
+    state: directory
+
+- name: Create snmp.yml file
+  template:
+    src: snmp.yml.j2
+    dest: /etc/snmp_exporter/snmp.yml
+  notify: restart snmp-exporter
+
+- name: Create systemd service file
+  template:
+    src: snmp-exporter.service.j2
+    dest: /etc/systemd/system/snmp-exporter.service
+  notify:
+    - enable snmp-exporter.service
+    - restart snmp-exporter.service
