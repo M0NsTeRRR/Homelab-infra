@@ -1,1 +1,6 @@
 ---
+- name: Configure Unifi controller
+  hosts: unifi
+  become: yes
+  roles:
+    - unifi

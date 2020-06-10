@@ -1,0 +1,56 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+  with_items:
+    - { port: 3478, proto: udp }
+    - { port: 5514, proto: tcp }
+    - { port: 8080, proto: tcp }
+    - { port: 8443, proto: tcp }
+    - { port: 8880, proto: tcp }
+    - { port: 8843, proto: tcp }
+    - { port: 6789, proto: tcp }
+    - { port: 27117, proto: tcp }
+    - { port: 5656:5699, proto: udp }
+    - { port: 10001, proto: udp }
+    - { port: 1900, proto: udp }
+
+- name: Install gnupg-agent
+  apt:
+    name: gnupg-agent
+    state: present
+
+- name: Add MongoDB Apt signing key
+  apt_key:
+    url: "https://www.mongodb.org/static/pgp/server-3.4.asc"
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add MongoDB Apt repository
+  apt_repository:
+    repo: "deb [arch=amd64] http://repo.mongodb.org/apt/{{ ansible_distribution|lower }} xenial/mongodb-org/3.4 multiverse"
+    state: present
+    filename: mongodb-org
+
+- name: Install libssl1.0.0
+  apt:
+    deb: http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5.3_amd64.deb
+
+- name: Install openjdk-8-jre and mongodb-org
+  apt:
+    pkg: 
+      - openjdk-8-jre
+      - mongodb-org=3.4.24 
+      - mongodb-org-server=3.4.24 
+      - mongodb-org-shell=3.4.24 
+      - mongodb-org-mongos=3.4.24 
+      - mongodb-org-tools=3.4.24
+    state: present
+
+- name: Install unifi
+  apt:
+    deb: https://dl.ui.com/unifi/5.12.72/unifi_sysvinit_all.deb
+  notify: restart unifi
