@@ -22,35 +22,13 @@
     name: nginx
     state: present
 
-- name: Check if Diffie-Hellman file exist
-  stat:
-    path: /etc/nginx/dhparam.pem
-  register: dhparam
-
-- name: Check if OpenSSL certificate Signing Request
-  stat:
-    path: /etc/ssl/csr/powerdns.csr
-  register: powerdns_csr
-
-- name: Check if OpenSSL private key exist
-  stat:
-    path: /etc/ssl/certs/powerdns.pem
-  register: powerdns_pem
-
-- name: Check if OpenSSL certificate exist
-  stat:
-    path: /etc/ssl/certs/powerdns.crt
-  register: powerdns_crt
-
 - name: Generate Diffie-Hellman parameters
   openssl_dhparam:
     path: /etc/nginx/dhparam.pem
-  when: not dhparam.stat.exists
 
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
     path: /etc/ssl/certs/powerdns.pem
-  when: not powerdns_pem.stat.exists
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
@@ -60,7 +38,6 @@
     organization_name: unicornafk.fr
     email_address: admin@unicornafk.fr
     common_name: "{{ ansible_hostname }}.unicornafk.fr"
-  when: not powerdns_csr.stat.exists
 
 - name: Generate an OpenSSL certificate
   openssl_certificate:
@@ -68,7 +45,6 @@
     privatekey_path: /etc/ssl/certs/powerdns.pem
     csr_path: /etc/ssl/certs/powerdns.csr
     provider: selfsigned
-  when: not powerdns_crt.stat.exists
 
 - name: Configure Nginx
   template:

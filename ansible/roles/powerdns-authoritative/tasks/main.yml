@@ -1,6 +1,4 @@
 ---
-- include_vars: secrets.yml
-
 - name: Install PowerDNS-authoritative
   include_tasks: install.yml
 
