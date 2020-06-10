@@ -3,3 +3,4 @@ packer_cache/
 .terragrunt-cache
 terraform/account.hcl
 secrets.yml
+account.hcl

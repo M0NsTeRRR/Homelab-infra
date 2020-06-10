@@ -15,6 +15,8 @@ Fill ansible/secrets.yml based on ansible/secrets.example and encrypt the file w
 
 Install dependencies `pip3 install -r requirements.txt`
 
+fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`
+
 ### Playbooks to add fingerprint on know_hosts
 `ansible-playbook -i <inventory_file> playbooks/add-ssh-keys.yml`  
 
@@ -47,7 +49,7 @@ Windows : `./validate.ps1`
 
 Install dependencies `< packages.txt xargs sudo apt-get install -y`
 
-fill `account.hcl`
+fill `account.hcl` based on `account.example`
 
 Infrastructure is split in 2 parts :  
 - dmz
