@@ -1,0 +1,10 @@
+---
+- name: restart fping-exporter.service
+  service:
+    name: fping-exporter.service
+    state: restarted
+
+- name: enable fping-exporter.service
+  service:
+    name: fping-exporter.service
+    enabled: true

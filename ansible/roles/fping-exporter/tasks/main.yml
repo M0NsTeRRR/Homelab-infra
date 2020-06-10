@@ -1,0 +1,54 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "9605"
+    proto: tcp
+
+- name: Install required packages
+  apt:
+    pkg: 
+      - git
+      - golang
+      - fping
+    state: present
+
+- name: Create fping folder 
+  file:
+    state: directory
+    name: /opt/exporter/fping/build
+
+- name: Check if fping-exporter is already build
+  stat:
+    path: /usr/local/bin/fping-exporter
+  register: fping_exporter
+
+- name: Git clone 
+  git:
+    repo: https://github.com/schweikert/fping-exporter.git
+    dest: /opt/exporter/fping/build
+  when: not fping_exporter.stat.exists
+
+- name: Compile sources
+  shell: /usr/bin/go build -o /opt/exporter/fping/build
+  args:
+    chdir: /opt/exporter/fping/build
+  when: not fping_exporter.stat.exists
+
+- name: Copy fping-exporter binary to /usr/local/bin
+  copy:
+    src: /opt/exporter/fping/build/fping-exporter
+    dest: /usr/local/bin/fping-exporter
+    owner: prometheus
+    group: prometheus
+    mode: 0700
+    remote_src: yes
+  notify: restart fping-exporter.service
+
+- name: Create systemd service file
+  template:
+    src: fping-exporter.service.j2
+    dest: /etc/systemd/system/fping-exporter.service
+  notify:
+    - enable fping-exporter.service
+    - restart fping-exporter.service
