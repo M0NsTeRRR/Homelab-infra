@@ -10,6 +10,6 @@
   when: '"colocation loc inf: virtual-IP-rsc HAproxy-rsc" not in pacemaker_configuration.stdout_lines'
 
 - name: Configure ressource start order
-  command: "crm configure order ord inf: virtual-IP-rsc HAproxy-rsc"
+  command: "crm configure order inf mandatory: virtual-IP-rsc HAproxy-rsc"
   run_once: true
-  when: '"order ord inf: virtual-IP-rsc HAproxy-rsc" not in pacemaker_configuration.stdout_lines'
+  when: '"order inf Mandatory: virtual-IP-rsc HAproxy-rsc" not in pacemaker_configuration.stdout_lines'

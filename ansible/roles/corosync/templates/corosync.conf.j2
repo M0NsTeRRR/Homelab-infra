@@ -2,10 +2,11 @@ totem {
 	version: 2
 	cluster_name: lb-haproxy-ha
 	secauth: on
-	transport: udpu
+	transport: knet
 	interface {
+		linknumber: 0
 	    bindnetaddr: {{ lookup('dig', lb_ip)}}
-	    ringnumber: 0
+	    knet_transport: udp
 	    mcastport: 5405
   	}
 }
