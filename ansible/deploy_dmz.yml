@@ -1,16 +1,26 @@
 ---
-- name: Configure apt-proxy cache servers
-  hosts: apt_proxy
-  become: yes
-  roles:
-    - apt-cacher-ng
-
 - name: Configure DNS servers
   hosts: dns
   become: yes
   roles:
     - powerdns-authoritative
     - powerdns-recursor
+
+- name: Configure apt-proxy cache servers
+  hosts: apt_proxy
+  become: yes
+  roles:
+    - apt-cacher-ng
+
+- name: Configure monitoring
+  hosts: monitoring
+  become: yes
+  roles:
+    - prometheus
+    - snmp-exporter
+    - fping-exporter
+    - vmware-exporter
+    - grafana
 
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb

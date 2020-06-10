@@ -5,6 +5,12 @@
 [apt_proxy]
 apt-proxy.unicornafk.fr
 
+[monitoring]
+monitoring.unicornafk.fr
+
+[log]
+log.unicornafk.fr
+
 [kubernetes:children]
 lb
 etcd
