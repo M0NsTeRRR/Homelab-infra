@@ -116,3 +116,6 @@
     dest: /etc/grafana/provisioning/notifiers/notifiers.yml
   notify:
     - restart grafana-server
+
+- name: Install grafana plugins
+  include_tasks: plugins.yml
