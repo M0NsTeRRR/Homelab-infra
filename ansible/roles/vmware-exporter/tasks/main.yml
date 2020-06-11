@@ -1,3 +1,4 @@
+---
 - name: Open required ports
   ufw:
     rule: allow
@@ -18,7 +19,7 @@
     dest: /etc/vmware_exporter/
     state: directory
 
-- name: Create config.yml file
+- name: Configure vmware-exporter
   template:
     src: config.yml.j2
     dest: /etc/vmware_exporter/config.yml
@@ -31,3 +32,23 @@
   notify:
     - enable vmware-exporter.service
     - restart vmware-exporter.service
+
+- name: Create cluster grafana dashboards
+  template:
+    src: cluster-dashboard.json.j2
+    dest: /var/lib/grafana/dashboards/cluster.json
+
+- name: Create esx grafana dashboards
+  template:
+    src: esx-dashboard.json.j2
+    dest: /var/lib/grafana/dashboards/esx.json
+
+- name: Create esxi grafana dashboards
+  template:
+    src: esxi-dashboard.json.j2
+    dest: /var/lib/grafana/dashboards/esxi.json
+
+- name: Create virtualmachine grafana dashboards
+  template:
+    src: virtualmachine-dashboard.json.j2
+    dest: /var/lib/grafana/dashboards/virtualmachine.json

@@ -14,3 +14,4 @@ galaxy_info:
 
 dependencies:
   - role: prometheus
+  - role: grafana
