@@ -1,0 +1,82 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "9115"
+    proto: tcp
+
+- name: Install required packages
+  apt:
+    pkg: 
+      - git
+      - curl
+      - golang
+    state: present
+
+- name: Create blackbox folder 
+  file:
+    state: directory
+    name: /opt/exporter/blackbox/build
+
+- name: Check if blackbox-exporter is already build
+  stat:
+    path: /usr/local/bin/blackbox_exporter
+  register: blackbox_exporter
+
+- name: Git clone 
+  git:
+    repo: https://github.com/prometheus/blackbox_exporter.git
+    dest: /opt/exporter/blackbox/build
+  when: not blackbox_exporter.stat.exists
+
+- name: Install golangci-lint
+  shell:
+    cmd: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.27.0
+    warn: no
+  when: not blackbox_exporter.stat.exists
+
+- name: Compile sources
+  shell: make
+  args:
+    chdir: /opt/exporter/blackbox/build
+  when: not blackbox_exporter.stat.exists
+
+- name: Copy blackbox-exporter binary to /usr/local/bin
+  copy:
+    src: /opt/exporter/blackbox/build/blackbox_exporter
+    dest: /usr/local/bin/blackbox_exporter
+    owner: prometheus
+    group: prometheus
+    mode: 0700
+    remote_src: yes
+  notify: restart blackbox-exporter.service
+  when: not blackbox_exporter.stat.exists
+
+- name: Create blackbox-exporter configuration directory
+  file:
+    dest: /etc/blackbox_exporter/
+    state: directory
+
+- name: Configure blackbox-exporter
+  template:
+    src: blackbox.yml.j2
+    dest: /etc/blackbox_exporter/blackbox.yml
+  notify: restart blackbox-exporter.service
+
+- name: Create systemd service file
+  template:
+    src: blackbox-exporter.service.j2
+    dest: /etc/systemd/system/blackbox-exporter.service
+  notify:
+    - enable blackbox-exporter.service
+    - restart blackbox-exporter.service
+
+- name: Create blackbox folder in prometheus folder 
+  file:
+    state: directory
+    name: /etc/prometheus/blackbox
+
+- name: Create blackbox target file
+  template:
+    src: targets.json.j2
+    dest: /etc/prometheus/blackbox/targets.json

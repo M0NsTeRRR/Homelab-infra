@@ -1,0 +1,7 @@
+modules:
+  http_2xx:
+    prober: http
+    http:
+      valid_status_codes: [200, 404]
+      tls_config:
+        insecure_skip_verify: true

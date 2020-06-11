@@ -19,6 +19,7 @@
     - prometheus
     - grafana
     - snmp-exporter
+    - blackbox-exporter
     - fping-exporter
     - vmware-exporter
 
