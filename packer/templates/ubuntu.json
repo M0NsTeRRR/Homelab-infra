@@ -71,7 +71,7 @@
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/snmp.sh"
+      "script": "scripts/ubuntu/snmp.sh"
     },
     {
       "type": "shell",

@@ -62,7 +62,7 @@
     {
       "type": "shell",
       "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/snmp.sh"
+      "script": "scripts/debian/snmp.sh"
     },
     {
       "type": "shell",
