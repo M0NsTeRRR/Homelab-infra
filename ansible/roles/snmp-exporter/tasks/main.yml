@@ -1,3 +1,4 @@
+---
 - name: Open required ports
   ufw:
     rule: allow
@@ -43,11 +44,11 @@
     dest: /etc/snmp_exporter/
     state: directory
 
-- name: Create snmp.yml file
+- name: Configure snmp-exporter
   template:
     src: snmp.yml.j2
     dest: /etc/snmp_exporter/snmp.yml
-  notify: restart snmp-exporter
+  notify: restart snmp-exporter.service
 
 - name: Create systemd service file
   template:
@@ -56,3 +57,19 @@
   notify:
     - enable snmp-exporter.service
     - restart snmp-exporter.service
+
+- name: Create snmp-exporter folder in prometheus folder 
+  file:
+    state: directory
+    name: /etc/prometheus/snmp-exporter
+
+- name: Create snmp-exporter target file
+  template:
+    src: targets.json.j2
+    dest: /etc/prometheus/snmp-exporter/targets.json
+
+- name: Create snmp-exporter grafana dashboards
+  template:
+    src: dashboard.json.j2
+    dest: /var/lib/grafana/dashboards/snmp-exporter.json
+    
