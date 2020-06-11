@@ -31,3 +31,34 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: localhost:9272
+
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    params:
+      module: [http_2xx]
+    file_sd_configs:
+    - files:
+      - blackbox/*.json
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9115
+
+  - job_name: 'snmp'
+    static_configs:
+    file_sd_configs:
+    - files:
+      - snmp-exporter/*.json
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9116
