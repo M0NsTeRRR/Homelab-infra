@@ -1,5 +1,17 @@
 ---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "9090"
+    proto: tcp
+
 - name: Install Prometheus
   apt:
     name: prometheus
     state: present
+
+- name: Configure Prometheus
+  template:
+    src: prometheus.yml.j2
+    dest: /etc/prometheus/prometheus.yml
+  notify: restart prometheus
