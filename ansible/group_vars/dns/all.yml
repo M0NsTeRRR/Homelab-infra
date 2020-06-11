@@ -1,7 +1,7 @@
 ---
 records:
-  - { canonical_hostname: dns1.unicornafk.fr.,    ipv4: 192.168.10.21, ipv6: 2001:bc8:2e64:140::21 }
-  - { canonical_hostname: dns2.unicornafk.fr.,    ipv4: 192.168.10.22, ipv6: 2001:bc8:2e64:140::22 }
+  - { canonical_hostname: dns1.unicornafk.fr.,    ipv4: 192.168.10.21, ipv6: 2001:bc8:2e64:10::21 }
+  - { canonical_hostname: dns2.unicornafk.fr.,    ipv4: 192.168.10.22, ipv6: 2001:bc8:2e64:10::22 }
   - { canonical_hostname: r1.unicornafk.fr.,      ipv4: 192.168.40.1,  ipv6: 2001:bc8:2e64:140::1 }
   - { canonical_hostname: sw1.unicornafk.fr.,     ipv4: 192.168.40.2,  ipv6: 2001:bc8:2e64:140::2 }
   - { canonical_hostname: sw2.unicornafk.fr.,     ipv4: 192.168.40.3,  ipv6: 2001:bc8:2e64:140::3 }
