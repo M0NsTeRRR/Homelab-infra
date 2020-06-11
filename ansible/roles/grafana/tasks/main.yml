@@ -85,6 +85,11 @@
   notify:
     - restart grafana-server
 
+- name: Create grafana dashboards directory
+  file:
+    dest: /var/lib/grafana/dashboards
+    state: directory
+
 - name: Configure dashboards
   template:
     group: grafana

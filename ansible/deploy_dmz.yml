@@ -17,10 +17,10 @@
   become: yes
   roles:
     - prometheus
+    - grafana
     - snmp-exporter
     - fping-exporter
     - vmware-exporter
-    - grafana
 
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb
