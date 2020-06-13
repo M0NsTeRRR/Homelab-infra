@@ -13,7 +13,7 @@ inputs = {
 
   hardware = {
     num_cpus = 1
-    memory   = 2048
+    memory   = 4096
   }
 
   disk = {
