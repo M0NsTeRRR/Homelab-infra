@@ -1,0 +1,41 @@
+{% raw %}#!/bin/bash
+
+mountpoints=('/dev/sda1')
+
+white="\e[39m"
+green="\e[1;32m"
+red="\e[1;31m"
+yellow="\e[33m"
+barWidth=34
+max_usage=90
+clear="\e[39m\e[0m"
+dim="\e[2m"
+barclear=""
+echo
+echo 'HDD free:'
+for point in "${mountpoints[@]}"; do
+    line=$(df -hl "${point}")
+	label=$(lsblk -o label "${point}")
+    usage=$(echo "$line"|tail -n1|awk '{print $5;}'|sed 's/%//')
+    usedBarWidth=$((($usage*$barWidth)/100))
+    barContent=""
+    if [ "${usage}" -ge "${max_usage}" ]; then
+        color=$red
+    else
+        color=$green
+    fi
+    barContent="${color}"
+    for sep in $(seq 1 $usedBarWidth); do
+        barContent="${barContent}|"
+    done
+    barContent="${barContent}${clear}${dim}"
+    for sep in $(seq 1 $(($barWidth-$usedBarWidth))); do
+        barContent="${barContent}-"
+    done
+    bar="[${barContent}${clear}]"
+	echo "${label}" | awk '{if ($1 != "LABEL") printf("%-10s", $1); }'
+	echo "${line}" | awk  '{if ($1 != "Filesystem") printf("%+8s used out of %+5s\n", $3, $2); }'
+	echo -e "${bar}"
+
+done
+{% endraw %}

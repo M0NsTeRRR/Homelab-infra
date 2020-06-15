@@ -28,14 +28,25 @@
       "cpu_cores": 1,
       "RAM": 1024,
       "disk_controller_type": "pvscsi",
-      "disk_size": 10000,
-      "disk_thin_provisioned": true,
-      "network": "LAB",
-      "network_card": "vmxnet3",
+      "storage": [
+        {
+          "disk_size": 10000,
+          "disk_thin_provisioned": true
+        }
+      ],
+      "network_adapters": [
+        {
+          "network": "LAB",
+          "network_card": "vmxnet3"
+        }
+      ],
       "notes": "ubuntu-{{ user `version` }}, generated on {{ isotime \"2006-01-02T15:04:05Z\" }}",
 
       "iso_paths": ["[NAS] ISO/ubuntu-{{ user `version` }}-server-amd64.iso"],
       "http_directory":"preseed",
+      "http_port_min": 8889,
+      "http_port_max": 8889,
+      "http_bind_address": "127.0.0.1",
       "boot_wait": "10s",
       "boot_command": [
         "<esc><wait>",
@@ -54,49 +65,9 @@
   ],
   "provisioners": [
     {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/dns.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/apt-cache.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/fail2ban.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/ubuntu/snmp.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/ntp.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/auto-update.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/motd.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/ufw.sh"
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo 'ludovic' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'",
-      "script": "scripts/sudoers.sh"
+      "type": "ansible",
+      "playbook_file": "scripts/main.yml",
+      "ansible_env_vars": [ "ANSIBLE_HOST_KEY_CHECKING=False", "ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3" ]
     }
   ]
 }

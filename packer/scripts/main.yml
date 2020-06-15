@@ -1,0 +1,45 @@
+---
+- name: 'Provision Image'
+  hosts: default
+  become: true
+  vars:
+    - ansible_user: 'ludovic'
+    - ansible_ssh_pass: 'ludovic'
+    - ansible_become_password: 'ludovic'
+  tasks:
+    - name: Include dns
+      include_tasks: dns.yml
+      when: ansible_distribution == "Ubuntu"
+  
+    - name: Include apt-cache
+      include_tasks: apt-cache.yml
+
+    - name: Include ufw
+      include_tasks: ufw.yml
+
+    - name: Include fail2ban
+      include_tasks: fail2ban.yml
+
+    - name: Include ntp
+      include_tasks: ntp.yml
+
+    - name: Include snmp
+      include_tasks: snmp.yml
+
+    - name: Include auto-update
+      include_tasks: auto-update.yml
+
+    - name: Include motd
+      include_tasks: motd.yml
+
+    - name: Include sudoers
+      include_tasks: sudoers.yml
+
+#    - name: Include chkrootkit
+#      include_tasks: chkrootkit.yml
+
+#    - name: Include clamav
+#      include_tasks: clamav.yml
+
+#    - name: Include rkhunter
+#      include_tasks: rkhunter.yml

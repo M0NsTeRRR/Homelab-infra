@@ -1,0 +1,14 @@
+---
+- name: Install chkrootkit
+  apt:
+    name: chkrootkit
+    state: present
+
+- name: Configure chkrootkit
+  lineinfile:
+    dest: "/etc/chkrootkit.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+      - { regexp: '^RUN_DAILY=', line: 'RUN_DAILY="true"' }

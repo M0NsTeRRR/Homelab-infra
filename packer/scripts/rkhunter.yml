@@ -1,0 +1,24 @@
+---
+- name: Install rkhunter
+  apt:
+    name: rkhunter
+    state: present
+
+- name: Configure rkhunter
+  lineinfile:
+    dest: "/etc/default/rkhunter"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+      - { regexp: '^CRON_DAILY_RUN=', line: 'CRON_DAILY_RUN="true"' }
+      - { regexp: '^CRON_DB_UPDATE=', line: 'CRON_DB_UPDATE="true"' }
+      - { regexp: '^APT_AUTOGEN=', line: 'APT_AUTOGEN="true"' }
+      - { regexp: '^UPDATE_MIRRORS=', line: 'UPDATE_MIRRORS=1' }
+      - { regexp: '^MIRRORS_MODE=', line: 'MIRRORS_MODE=0' }
+      - { regexp: '^MAIL-ON-WARNING=', line: 'MAIL-ON-WARNING=root' }
+      - { regexp: '^PHALANX2_DIRTEST=', line: 'PHALANX2_DIRTEST=1' }
+      - { regexp: '^COPY_LOG_ON_ERROR=', line: 'COPY_LOG_ON_ERROR=1' }
+      - { regexp: '^WEB_CMD=', line: 'WEB_CMD=""' }
+      - { regexp: '^PKGMGR=', line: 'PKGMGR=DPKG' }
+      - { regexp: '^USE_LOCKING=', line: 'USE_LOCKING=1' }

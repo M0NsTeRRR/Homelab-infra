@@ -1,0 +1,16 @@
+---
+- name: Create /etc/apt/detect-http-proxy.sh
+  template:
+    src: ./templates/apt-cache/detect-http-proxy.sh.j2
+    dest: /etc/apt/detect-http-proxy.sh
+    mode: '0755'
+
+- name: Create /etc/apt/apt.conf.d/01proxy
+  template:
+    src: ./templates/apt-cache/01proxy.j2
+    dest: /etc/apt/apt.conf.d/01proxy
+    mode: '0644'
+
+- name: Apt update
+  apt:
+    update_cache: yes

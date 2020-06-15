@@ -1,0 +1,31 @@
+---
+- name: Install unattended-upgrades
+  apt:
+    name: unattended-upgrades
+    state: present
+
+- name: Configure /etc/apt/apt.conf.d/50unattended-upgrades
+  lineinfile:
+    dest: "/etc/apt/apt.conf.d/50unattended-upgrades"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+      - { regexp: '(//)?^Unattended-Upgrade::MailOnlyOnError', line: 'Unattended-Upgrade::MailOnlyOnError "false";' }
+      - { regexp: '(//)?^Unattended-Upgrade::InstallOnShutdown', line: 'Unattended-Upgrade::InstallOnShutdown "false";' }
+      - { regexp: '(//)?^Unattended-Upgrade::Remove-Unused-Kernel-Packages', line: 'Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";' }
+      - { regexp: '(//)?^Unattended-Upgrade::Remove-Unused-Dependencies', line: 'Unattended-Upgrade::Remove-Unused-Dependencies "true";' }
+      - { regexp: '(//)?^Unattended-Upgrade::Remove-New-Unused-Dependencies', line: 'Unattended-Upgrade::Remove-New-Unused-Dependencies "true";' }
+      - { regexp: '(// )?^Unattended-Upgrade::SyslogEnable', line: 'Unattended-Upgrade::SyslogEnable "true";' }
+
+- name: Configure /etc/apt/apt.conf.d/20auto-upgrades
+  lineinfile:
+    dest: "/etc/apt/apt.conf.d/20auto-upgrades"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+      - { regexp: '^APT::Periodic::Enable', line: 'APT::Periodic::Enable "1";' }
+      - { regexp: '^APT::Periodic::Download-Upgradeable-Packages', line: 'APT::Periodic::Download-Upgradeable-Packages "1";' }
+      - { regexp: '^APT::Periodic::AutocleanInterval', line: 'APT::Periodic::AutocleanInterval "7";' }
+      - { regexp: '^APT::Periodic::Verbose', line: 'APT::Periodic::Verbose "1";' }

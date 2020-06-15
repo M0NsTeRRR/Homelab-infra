@@ -1,0 +1,11 @@
+---
+- name: Delete /etc/resolv.conf
+  file:
+    path: /etc/resolv.conf
+    state: absent
+
+- name: Create symbolic link /run/systemd/resolve/resolv.conf -> /etc/resolv.conf
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
