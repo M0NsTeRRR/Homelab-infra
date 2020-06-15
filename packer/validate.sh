@@ -11,6 +11,5 @@ for distribution in "debian" "ubuntu"; do
 	-var "vcenter_server=192.168.0.1" \
 	-var "username=administrator@vsphere.local" \
 	-var "password=test" \
-	-timestamp-ui \
 	templates/"$distribution".json
 done
