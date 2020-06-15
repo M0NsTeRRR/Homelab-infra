@@ -2,11 +2,11 @@ This is my Homelab infrastructure.
 
 # Requirements
 
-- Ansible (version >= 2.9.5)
+- Ansible (version >= 2.9.6)
 	- Python3 and Pip
-- Packer (version >= 1.5.4)
-- Terraform (version >= 0.12.24)
-	- Terragrunt (version >= 0.23.2)
+- Packer (version >= 1.6.0)
+- Terraform (version >= 0.12.26)
+	- Terragrunt (version >= 0.23.26)
 
 Fill ansible/secrets.yml based on ansible/secrets.example and encrypt the file with ansible-vault
 
@@ -30,6 +30,13 @@ fill all `secrets.yml` based on `secrets.example` in each subdirectory of `group
 `ansible-playbook -i lab deploy_lab.yml`
 
 # Packer
+Port 8888 used for debian build
+Port 8889 used for ubuntu build
+
+Open both ports on windows firewall  
+Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenport=<PORT> listenaddress=<IP> connectport=<PORT> connectaddress=127.0.0.1`  
+Replace <IP> with the LAN IP of your PC and <PORT> with [8888, 8889]
+
 `cd packer`
 
 Supported distributions :
