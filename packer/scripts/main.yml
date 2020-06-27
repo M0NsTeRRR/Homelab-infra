@@ -7,6 +7,11 @@
     - ansible_ssh_pass: 'ludovic'
     - ansible_become_password: 'ludovic'
   tasks:
+    - name: Update and upgrade all packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+
     - name: Include dns
       include_tasks: dns.yml
       when: ansible_distribution == "Ubuntu"
