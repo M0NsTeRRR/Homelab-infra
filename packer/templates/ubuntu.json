@@ -1,6 +1,7 @@
 {
   "variables": {
     "host_ip": "",
+    "http_port": "8889",
     "version": "",
     "vcenter_server": "",
     "username": "",
@@ -44,8 +45,8 @@
 
       "iso_paths": ["[NAS] ISO/ubuntu-{{ user `version` }}-server-amd64.iso"],
       "http_directory":"preseed",
-      "http_port_min": 8889,
-      "http_port_max": 8889,
+      "http_port_min": "{{ user `http_port` }}",
+      "http_port_max": "{{ user `http_port` }}",
       "http_bind_address": "127.0.0.1",
       "boot_wait": "10s",
       "boot_command": [

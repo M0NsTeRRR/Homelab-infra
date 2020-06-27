@@ -1,6 +1,7 @@
 {
   "variables": {
     "host_ip": "",
+    "http_port": "8888",
     "version": "",
     "vcenter_server": "",
     "username": "",
@@ -44,8 +45,8 @@
 
       "iso_paths": ["[NAS] ISO/debian-{{ user `version` }}-amd64-netinst.iso"],
       "http_directory":"preseed",
-      "http_port_min": 8888,
-      "http_port_max": 8888,
+      "http_port_min": "{{ user `http_port` }}",
+      "http_port_max": "{{ user `http_port` }}",
       "http_bind_address": "127.0.0.1",
       "boot_wait": "10s",
       "boot_command": [
