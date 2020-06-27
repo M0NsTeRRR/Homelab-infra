@@ -2,9 +2,6 @@
 - name: Install PowerDNS-authoritative
   include_tasks: install.yml
 
-- name: Install reverse proxy
-  include_tasks: reverse-proxy.yml
-
 - name: Set inception date with YYYYMMDD format
   set_fact:
     inception_date: "{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}"

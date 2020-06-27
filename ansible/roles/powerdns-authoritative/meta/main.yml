@@ -15,3 +15,8 @@ galaxy_info:
 
 dependencies:
   - role: powerdns-recursor
+  - role: nginx
+    vars:
+      application:
+        name: "powerdns"
+        url: "http://127.0.0.1:8081"
