@@ -1,0 +1,54 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  with_items:
+    - "80"
+    - "443"
+
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  pip:
+    name: cryptography
+
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: Generate Diffie-Hellman parameters
+  openssl_dhparam:
+    path: /etc/nginx/dhparam.pem
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: "/etc/ssl/certs/{{ application.name }}.pem"
+
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr:
+    path: "/etc/ssl/certs/{{ application.name }}.csr"
+    privatekey_path: "/etc/ssl/certs/{{ application.name }}.pem"
+    country_name: FR
+    organization_name: unicornafk.fr
+    email_address: admin@unicornafk.fr
+    common_name: "{{ ansible_hostname }}.unicornafk.fr"
+
+- name: Generate an OpenSSL certificate
+  openssl_certificate:
+    path: "/etc/ssl/certs/{{ application.name }}.crt"
+    privatekey_path: "/etc/ssl/certs/{{ application.name }}.pem"
+    csr_path: "/etc/ssl/certs/{{ application.name }}.csr"
+    provider: selfsigned
+
+- name: Configure Nginx
+  template:
+    src: nginx.conf.j2
+    dest: "/etc/nginx/conf.d/{{ application.name }}.conf"
+  notify:
+    - restart nginx

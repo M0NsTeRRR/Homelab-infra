@@ -7,8 +7,8 @@ include {
 }
 
 inputs = {
-  vsphere_host = "server3.unicornafk.fr"
-  vm_name      = "dhcp2"
+  vsphere_host = "server2.unicornafk.fr"
+  vm_name      = "dhcp1"
   template     = "packer-ubuntu"
 
   hardware = {
@@ -17,12 +17,12 @@ inputs = {
   }
 
   disk = {
-    datastore = "SERVER3-RAID1"
+    datastore = "SERVER2-DISK1"
     size      = 20
   }
 
-  vm_ip  = "192.168.20.22"
-  vm_ip6 = "2001:bc8:2e64:120::22"
+  vm_ip  = "192.168.10.23"
+  vm_ip6 = "2001:bc8:2e64:110::23"
 
   domain = "unicornafk.fr"
 }
