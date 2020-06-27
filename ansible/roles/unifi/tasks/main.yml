@@ -41,6 +41,7 @@
 
 - name: Install openjdk-8-jre and mongodb-org
   apt:
+    update_cache: yes
     pkg: 
       - openjdk-8-jre-headless
       - mongodb-org=3.4.24 
