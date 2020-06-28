@@ -1,0 +1,93 @@
+---
+ipv4_subnets:
+  - subnet: 192.168.10.0/24
+    pools:
+      - start: 192.168.10.201
+        end: 192.168.10.240
+    router: 192.168.10.2
+    reservations: []
+  - subnet: 192.168.20.0/24
+    pools:
+      - start: 192.168.20.201
+        end: 192.168.20.240
+    router: 192.168.20.2
+    reservations:
+      - hostname: UAP1
+        hw_address: 18:E8:29:A3:24:10
+        ip_address: 192.168.20.51
+  - subnet: 192.168.30.0/24
+    pools:
+      - start: 192.168.30.201
+        end: 192.168.30.240
+    router: 192.168.30.2
+    reservations: []
+  - subnet: 192.168.40.0/24
+    pools:
+      - start: 192.168.40.201
+        end: 192.168.40.240
+    router: 192.168.40.2
+    reservations:
+      - hostname: HS110-Rack1
+        hw_address: 98:DA:C4:BE:E8:89 
+        ip_address: 192.168.40.101
+      - hostname: HS110-Rack2
+        hw_address: 98:DA:C4:BE:E8:96
+        ip_address: 192.168.40.102
+      - hostname: HS110-Chambre1
+        hw_address: 98:DA:C4:BE:E9:EA
+        ip_address: 192.168.40.103
+  - subnet: 192.168.50.0/24
+    pools:
+      - start: 192.168.50.201
+        end: 192.168.50.240
+    router: 192.168.50.2
+    reservations: []
+  - subnet: 192.168.60.0/24
+    pools:
+      - start: 192.168.60.201
+        end: 192.168.60.240
+    router: 192.168.60.2
+    reservations: []
+ipv6_subnets:
+  - subnet: 2001:bc8:2e64:10::/64
+    pools:
+      - start: 2001:bc8:2e64:10::201
+        end: 2001:bc8:2e64:10::240
+    reservations: []
+  - subnet: 2001:bc8:2e64:20::/64
+    pools:
+      - start: 2001:bc8:2e64:20::201
+        end: 2001:bc8:2e64:20::240
+    reservations:
+      - hostname: UAP1
+        hw_address: 18:E8:29:A3:24:10
+        ip_address: 2001:bc8:2e64:20::51
+  - subnet: 2001:bc8:2e64:30::/64
+    pools:
+      - start: 2001:bc8:2e64:30::201
+        end: 2001:bc8:2e64:30::240
+    reservations: []
+  - subnet: 2001:bc8:2e64:40::/64
+    pools:
+      - start: 2001:bc8:2e64:40::201
+        end: 2001:bc8:2e64:40::240
+    reservations:
+      - hostname: HS110-Rack1
+        hw_address: 98:DA:C4:BE:E8:89
+        ip_address: 2001:bc8:2e64:40::101
+      - hostname: HS110-Rack2
+        hw_address: 98:DA:C4:BE:E8:96
+        ip_address: 2001:bc8:2e64:40::102
+      - hostname: HS110-Chambre1
+        hw_address: 98:DA:C4:BE:E9:EA
+        ip_address: 2001:bc8:2e64:40::103
+  - subnet: 2001:bc8:2e64:50::/64
+    pools:
+      - start: 2001:bc8:2e64:50::201
+        end: 2001:bc8:2e64:50::240
+    reservations: []
+  - subnet: 2001:bc8:2e64:60::/64
+    pools:
+      - start: 2001:bc8:2e64:60::201
+        end: 2001:bc8:2e64:60::240
+    reservations: []
