@@ -1,0 +1,106 @@
+{
+    "Dhcp4": {
+        "hooks-libraries": [
+            {
+                "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_lease_cmds.so",
+                "parameters": { }
+            }, 
+            {
+                "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_ha.so",
+                "parameters": {
+                    "high-availability": [{
+                        "this-server-name": "{{ inventory_hostname }}",
+                        "mode": "hot-standby",
+                        "heartbeat-delay": 10000,
+                        "max-response-delay": 10000,
+                        "max-ack-delay": 5000,
+                        "max-unacked-clients": 5,
+                        "peers": [
+                            {% for host in ansible_play_hosts %}{
+                                "name": "{{ host }}",
+                                "url": "https://{{ host }}/",
+                                "role": "{% if host == ansible_play_hosts[0] %}primary{% elif host == ansible_play_hosts[1] %}standby{% else %}backup{% endif %}",
+                                "auto-failover": true
+                            }{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        ]
+                    }]
+                }
+            }
+        ],
+        "interfaces-config": {
+            "interfaces": [ ]
+        },
+        "control-socket": {
+            "socket-type": "unix",
+            "socket-name": "/tmp/kea-dhcp4-ctrl.sock"
+        },
+        "lease-database": {
+            "type": "memfile",
+            "lfc-interval": 3600
+        },
+        "expired-leases-processing": {
+            "reclaim-timer-wait-time": 10,
+            "flush-reclaimed-timer-wait-time": 25,
+            "hold-reclaimed-time": 3600,
+            "max-reclaim-leases": 100,
+            "max-reclaim-time": 250,
+            "unwarned-reclaim-cycles": 5
+        },
+        "renew-timer": 900,
+        "rebind-timer": 1800,
+        "valid-lifetime": 3600,
+        "option-data": [
+            {
+                "name": "domain-name-servers",
+                "data": "{{ groups['dns']|join(',') }}"
+            },
+            {
+                "name": "domain-search",
+                "data": "{{ domains|join(',') }}"
+            }
+        ],
+        "subnet4": [
+            {% for subnet in ipv4_subnets %}{
+                "subnet": "{{ subnet.subnet }}",
+                "pools": [
+                    {% for pool in subnet.pools %}{ 
+                        "pool": "{{ pool.start }} - {{ pool.end }}" 
+                    }{% if not loop.last %},{% endif %}
+                    {% endfor %} 
+                ],
+                "option-data": [
+                    {
+                        "name": "routers",
+                        "data": "{{ subnet.router }}"
+                    }
+                ],
+                "reservations": [
+                    {% for reservation in subnet.reservations %}{
+                        "hw-address": "{{ reservation.hw_address }}",
+                        "ip-address": "{{ reservation.ip_address }}",
+                        "hostname": "{{ reservation.hostname }}"
+                    }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ]
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ],
+        "loggers": [
+        {
+            "name": "kea-dhcp4",
+            "output_options": [
+                {
+                    "output": "/var/log/kea/kea-dhcp4.log",
+                    "pattern": "%-5p %m\n",
+                    "flush": false,
+                    "maxsize": 1048576,
+                    "maxver": 8
+                }
+            ],
+            "severity": "INFO",
+            "debuglevel": 0
+        }
+      ]
+    }
+}

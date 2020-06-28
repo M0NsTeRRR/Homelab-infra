@@ -1,0 +1,10 @@
+---
+- name: restart kea-dhcp4-server
+  service:
+    name: kea-dhcp4-server
+    state: restarted
+
+- name: restart kea-dhcp6-server
+  service:
+    name: kea-dhcp6-server
+    state: restarted

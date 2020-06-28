@@ -1,0 +1,22 @@
+---
+galaxy_info:
+  author: Ludovic Ortega
+  description: Install and configure kea-dhcp
+  company: Ludovic Ortega
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+    - name: Ubuntu
+      versions:
+        - focal
+
+
+dependencies:
+  - role: nginx
+    vars:
+      application:
+        name: "kea-dhcp"
+        url: "http://127.0.0.1:8000"
+        server_name: "{{ inventory_hostname }}"

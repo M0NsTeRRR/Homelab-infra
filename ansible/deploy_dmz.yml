@@ -6,6 +6,12 @@
     - powerdns-authoritative
     - powerdns-recursor
 
+- name: Configure DHCP servers
+  hosts: dhcp
+  become: yes
+  roles:
+    - kea-dhcp
+
 - name: Configure apt-proxy cache servers
   hosts: apt_proxy
   become: yes

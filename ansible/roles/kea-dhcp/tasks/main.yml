@@ -1,0 +1,28 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "67"
+    proto: udp
+
+- name: Install kea-dhcp4-server kea-dhcp6-server kea-ctrl-agent
+  apt:
+    pkg: 
+      - kea-dhcp4-server
+      - kea-dhcp6-server
+      - kea-ctrl-agent
+    state: present
+
+- name: Configure kea-dhcp4-server
+  template:
+    src: kea-dhcp4.conf.j2
+    dest: /etc/kea/kea-dhcp4.conf
+  notify:
+    - restart kea-dhcp4-server
+
+- name: Configure kea-dhcp6-server
+  template:
+    src: kea-dhcp6.conf.j2
+    dest: /etc/kea/kea-dhcp6.conf
+  notify:
+    - restart kea-dhcp6-server
