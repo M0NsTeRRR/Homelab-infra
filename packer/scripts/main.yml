@@ -9,8 +9,8 @@
   tasks:
     - name: Update and upgrade all packages
       apt:
-        upgrade: yes
-        update_cache: yes
+        upgrade: 'yes'
+        update_cache: 'yes'
 
     - name: Include dns
       include_tasks: dns.yml

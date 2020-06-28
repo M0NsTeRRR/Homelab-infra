@@ -4,17 +4,19 @@
     "http_port": "8889",
     "version": "",
     "vcenter_server": "",
-    "username": "",
-    "password": ""
+    "vcenter_username": "",
+    "vcenter_password": "",
+    "ssh_username": "ludovic",
+    "ssh_password": "ludovic"
   },
-  "sensitive-variables": ["password"],
+  "sensitive-variables": ["vcenter_password"],
   "builders": [
     {
       "type": "vsphere-iso",
       "vcenter_server": "{{ user `vcenter_server` }}",
       "insecure_connection": true,
-      "username": "{{ user `username` }}",
-      "password": "{{ user `password` }}",
+      "username": "{{ user `vcenter_username` }}",
+      "password": "{{ user `vcenter_password` }}",
       "datacenter": "Homelab",
 
       
@@ -59,8 +61,8 @@
         "<enter>"
       ],
 
-      "ssh_username": "ludovic",
-      "ssh_password": "ludovic",
+      "ssh_username": "{{ user `ssh_username` }}",
+      "ssh_password": "{{ user `ssh_password` }}",
       "ssh_timeout": "30m"
     }
   ],
@@ -68,7 +70,13 @@
     {
       "type": "ansible",
       "playbook_file": "scripts/main.yml",
-      "ansible_env_vars": [ "ANSIBLE_HOST_KEY_CHECKING=False", "ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3" ]
+      "ansible_env_vars": [ 
+        "ANSIBLE_HOST_KEY_CHECKING=False", 
+        "ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3" ,
+        "ANSIBLE_USER={{ user `ssh_username` }}",
+        "ANSIBLE_SSH_PASS={{ user `ssh_password` }}",
+        "ANSIBLE_BECOME_PASSWORD={{ user `ssh_password` }}"
+      ]
     }
   ]
 }
