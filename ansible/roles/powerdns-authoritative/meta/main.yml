@@ -20,3 +20,4 @@ dependencies:
       application:
         name: "powerdns"
         url: "http://127.0.0.1:8081"
+        server_name: "{{ inventory_hostname }}"

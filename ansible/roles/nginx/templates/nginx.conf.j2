@@ -38,7 +38,7 @@ server {
   listen 80;
   listen [::]:80;
 
-  server_name _;
+  server_name {{ application.server_name }};
 
   location / {
     return 301 https://$server_name$request_uri;
