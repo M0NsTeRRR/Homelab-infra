@@ -34,6 +34,7 @@
     state: "present"
   with_items:
       - { regexp: '^agentAddress  udp:127.0.0.1:161', line: '#agentAddress  udp:127.0.0.1:161' }
-      - { regexp: '^#agentAddress udp:161', line: 'agentAddress udp:161' }
-      - { regexp: '^#rocommunity public  localhost', line: 'rocommunity unicornafk default' }
+      - { regexp: '^#agentAddress udp:161,udp6:[::1]:161', line: 'agentAddress udp:161,udp6:[::1]:161' }
+      - { regexp: '^ rocommunity public  default    -V systemonly', line: 'rocommunity unicornafk default' }
+      - { regexp: '^ rocommunity6 public  default   -V systemonly', line: 'rocommunity6 unicornafk default' }
   when: ansible_distribution == "Debian"
