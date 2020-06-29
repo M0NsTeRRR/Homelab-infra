@@ -80,3 +80,8 @@
   template:
     src: targets.json.j2
     dest: /etc/prometheus/blackbox/targets.json
+
+- name: Create blackbox grafana dashboards
+  template:
+    src: dashboard.json.j2
+    dest: /var/lib/grafana/dashboards/blackbox.json
