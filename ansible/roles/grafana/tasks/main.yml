@@ -41,7 +41,6 @@
     state: present
   notify:
     - enable grafana-server
-    - restart grafana-server
 
 - name: Generate openssl_privatekey
   openssl_privatekey:
@@ -66,22 +65,9 @@
     csr_path: /etc/ssl/certs/grafana.csr
 
 - name: Configure Grafana
-  lineinfile:
-    dest: "/etc/grafana/grafana.ini"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    state: "present"
-  with_items:
-      - { regexp: '^(;)protocol =', line: 'protocol = https' }
-      - { regexp: '^(;)domain =', line: 'domain = monitoring.unicornafk.fr' }
-      - { regexp: '^(;)enforce_domain =', line: 'enforce_domain = true' }
-      - { regexp: '^(;)cert_file =', line: 'cert_file = /etc/ssl/certs/grafana.crt' }
-      - { regexp: '^(;)cert_key =', line: 'cert_key = /etc/ssl/certs/grafana.key' }
-      - { regexp: '^(;)enable_gzip =', line: 'enable_gzip = true' }
-      - { regexp: '^(;)admin_user =', line: 'admin_user = admin' }
-      - { regexp: '^(;)admin_password =', line: 'admin_password = {{ grafana.admin_password }}' }
-      - { regexp: '^(;)allow_sign_up =', line: 'allow_sign_up = false' }
-      - { regexp: '^(;)allow_org_create =', line: 'allow_org_create = false' }
+  template:
+    src: grafana.ini.j2
+    dest: /etc/grafana/grafana.ini
   notify:
     - restart grafana-server
 
@@ -96,8 +82,6 @@
     mode: 0640
     src: dashboards.yml.j2
     dest: /etc/grafana/provisioning/dashboards/dashboards.yml
-  notify:
-    - restart grafana-server
 
 - name: Configure datasources
   template:
@@ -105,8 +89,6 @@
     mode: 0640
     src: datasources.yml.j2
     dest: /etc/grafana/provisioning/datasources/datasources.yml
-  notify:
-    - restart grafana-server
 
 - name: Configure notifiers
   template:
@@ -114,8 +96,6 @@
     mode: 0640
     src: notifiers.yml.j2
     dest: /etc/grafana/provisioning/notifiers/notifiers.yml
-  notify:
-    - restart grafana-server
 
 - name: Install grafana plugins
   include_tasks: plugins.yml
