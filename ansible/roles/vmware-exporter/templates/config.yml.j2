@@ -1,6 +1,6 @@
 default:
-    vsphere_host: "vsphere.unicornafk.fr"
-    vsphere_user: "{{ vsphere.user }}"
+    vsphere_host: "{{ vcenter.hostname }}"
+    vsphere_user: "{{ vsphere.username }}"
     vsphere_password: "{{ vsphere.password }}"
     ignore_ssl: True
     specs_size: 5000
