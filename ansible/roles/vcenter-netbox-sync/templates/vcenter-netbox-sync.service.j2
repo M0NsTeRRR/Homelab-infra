@@ -1,0 +1,8 @@
+[Unit]
+Description=sync netbox with vcenter
+
+[Service]
+Nice=19
+IOSchedulingClass=2
+IOSchedulingPriority=7 
+ExecStart=/opt/vcenter-netbox-sync/venv/bin/python /opt/vcenter-netbox-sync/run.py

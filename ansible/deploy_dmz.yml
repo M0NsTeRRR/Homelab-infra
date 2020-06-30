@@ -23,6 +23,7 @@
   become: yes
   roles:
     - netbox
+    - vcenter-netbox-sync
 
 - name: Configure monitoring
   hosts: monitoring

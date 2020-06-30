@@ -1,0 +1,10 @@
+---
+- name: restart vcenter-netbox-sync.timer
+  service:
+    name: vcenter-netbox-sync.timer
+    state: restarted
+
+- name: enable vcenter-netbox-sync.timer
+  service:
+    name: vcenter-netbox-sync.timer
+    enabled: yes

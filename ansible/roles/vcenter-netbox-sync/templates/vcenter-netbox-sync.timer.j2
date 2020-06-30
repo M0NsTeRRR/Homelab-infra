@@ -1,0 +1,9 @@
+[Unit]
+Description=sync netbox with vcenter every hour
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=1h
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,40 @@
+---
+- name: Install required packages
+  apt:
+    pkg:
+      - git
+      - python3-pip
+    state: present
+
+- name: Install required python packages
+  pip:
+    name:
+      - virtualenv
+
+- name: Clone vcenter-netbox-sync repository
+  git:
+    repo: https://github.com/synackray/vcenter-netbox-sync.git
+    dest: /opt/vcenter-netbox-sync
+
+- name: Install vcenter-netbox-sync python packages
+  pip:
+    requirements: /opt/vcenter-netbox-sync/requirements.txt
+    virtualenv: /opt/vcenter-netbox-sync/venv
+
+- name: Configure vcenter-netbox-sync
+  template:
+    src: settings.py.j2
+    dest: /opt/vcenter-netbox-sync/settings.py
+
+- name: Configure vcenter-netbox-sync.service
+  template:
+    src: vcenter-netbox-sync.service.j2
+    dest: /etc/systemd/system/vcenter-netbox-sync.service
+
+- name: Configure vcenter-netbox-sync.timer
+  template:
+    src: vcenter-netbox-sync.timer.j2
+    dest: /etc/systemd/system/vcenter-netbox-sync.timer
+  notify:
+    - restart vcenter-netbox-sync.timer
+    - enable vcenter-netbox-sync.timer
