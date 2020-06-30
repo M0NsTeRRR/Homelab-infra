@@ -9,6 +9,9 @@ dhcp2.unicornafk.fr
 [apt_proxy]
 apt-proxy.unicornafk.fr
 
+[ipam]
+ipam.unicornafk.fr
+
 [monitoring]
 monitoring.unicornafk.fr
 

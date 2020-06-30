@@ -1,0 +1,11 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "443"
+    proto: tcp
+
+- name: Install nginx
+  apt:
+    name: nginx
+    state: present

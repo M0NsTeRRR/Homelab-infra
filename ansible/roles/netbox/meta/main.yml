@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: Ludovic Ortega
+  description: Install and configure netbox
+  company: Ludovic Ortega
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+    - name: Ubuntu
+      versions:
+        - focal
+
+
+dependencies:
+  - role: nginx
+    vars:
+      application:
+        name: "netbox"
+        url: "http://127.0.0.1:8001"
+        static: "/opt/netbox/netbox/static/"
+        server_name: "{{ inventory_hostname }}"

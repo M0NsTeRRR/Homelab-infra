@@ -1,0 +1,9 @@
+---
+- name: Install and configure postgresql
+  include_tasks: postgresql.yml
+
+- name: Install and configure redis
+  include_tasks: redis.yml
+
+- name: Install and configure netbox
+  include_tasks: netbox.yml

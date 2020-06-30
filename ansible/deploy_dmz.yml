@@ -18,6 +18,12 @@
   roles:
     - apt-cacher-ng
 
+- name: Configure IPAM
+  hosts: ipam
+  become: yes
+  roles:
+    - netbox
+
 - name: Configure monitoring
   hosts: monitoring
   become: yes

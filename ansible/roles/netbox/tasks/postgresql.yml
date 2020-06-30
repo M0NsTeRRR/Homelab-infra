@@ -1,0 +1,29 @@
+---
+- name: Install Postgresql
+  apt:
+    name: postgresql
+    state: present
+  notify:
+    - enable postgresql
+    - restart postgresql
+
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  pip:
+    name: psycopg2-binary
+
+- name: Create netbox postgresql user
+  postgresql_user:
+    name: netbox
+    password: "{{ postgresql.password }}"
+  become_user: postgres
+
+- name: Create netbox postgresql database
+  postgresql_db:
+    name: netbox
+    owner: netbox
+  become_user: postgres
