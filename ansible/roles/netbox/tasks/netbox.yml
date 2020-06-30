@@ -54,6 +54,8 @@
   template:
     src: configuration.py.j2
     dest: /opt/netbox/netbox/netbox/configuration.py
+  notify:
+    - restart netbox.service
 
 - name: Migrate netbox database
   shell: 
