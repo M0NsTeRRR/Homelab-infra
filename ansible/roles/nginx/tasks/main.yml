@@ -46,9 +46,22 @@
     csr_path: "/etc/ssl/certs/{{ application.name }}.csr"
     provider: selfsigned
 
+- name: Remove default Nginx configuration
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
 - name: Configure Nginx
   template:
     src: nginx.conf.j2
-    dest: "/etc/nginx/conf.d/{{ application.name }}.conf"
+    dest: "/etc/nginx/sites-available/{{ application.name }}"
+  notify:
+    - restart nginx
+
+- name: Create symlink sites-available to sites-enabled
+  file:
+    src: "/etc/nginx/sites-available/{{ application.name }}"
+    dest: "/etc/nginx/sites-enabled/{{ application.name }}"
+    state: link
   notify:
     - restart nginx

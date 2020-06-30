@@ -22,6 +22,12 @@ server {
 
   access_log                /var/log/nginx/{{ application.name }}.access.log;
 
+  {% if application.static is defined %}
+  location /static/ {
+    alias {{ application.static }};
+  }
+  {% endif %}
+
   location / {
 
     proxy_set_header        Host $host;

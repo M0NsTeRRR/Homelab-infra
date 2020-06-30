@@ -1,0 +1,6 @@
+---
+application:
+  name: "application"
+  url: "http://127.0.0.1:8000"
+  static: "/var/www/"
+  server_name: "www.application.fr"
