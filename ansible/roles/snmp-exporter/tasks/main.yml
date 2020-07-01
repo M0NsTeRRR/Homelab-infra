@@ -28,6 +28,7 @@
     remote_src: yes
     list_files: yes
   register: archive_contents
+  when: not snmp_exporter.stat.exists
 
 - name: Copy snmp-exporter binary to /usr/local/bin
   copy:
@@ -37,6 +38,7 @@
     group: prometheus
     mode: 0700
     remote_src: yes
+  when: not snmp_exporter.stat.exists
   notify: restart snmp-exporter.service
 
 - name: Create snmp-exporter configuration directory

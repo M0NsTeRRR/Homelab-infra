@@ -17,16 +17,23 @@
     state: directory
     name: /opt/wikijs
 
+- name: Check if wikijs is already installed and configured
+  stat:
+    path: /opt/wikijs/config.yml
+  register: wikijs
+
 - name: Download last version of wiki.js
   get_url:
     url: https://github.com/Requarks/wiki/releases/download/2.4.107/wiki-js.tar.gz
     dest: /tmp/wiki-js.tar.gz
+  when: not wikijs.stat.exists
 
 - name: Extract wiki.js files 
   unarchive:
     src: /tmp/wiki-js.tar.gz
     dest: /opt/wikijs
     remote_src: yes
+  when: not wikijs.stat.exists
 
 - name: Configure wiki.js
   template:
