@@ -1,0 +1,29 @@
+---
+- name: Install Postgresql
+  apt:
+    name: postgresql
+    state: present
+  notify:
+    - enable postgresql
+    - restart postgresql
+
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  pip:
+    name: psycopg2-binary
+
+- name: "Create {{postgresql_user }} postgresql user"
+  postgresql_user:
+    name: "{{ postgresql_user }}"
+    password: "{{ postgresql_password }}"
+  become_user: postgres
+
+- name: "Create {{ postgresql_name }} postgresql database"
+  postgresql_db:
+    name: "{{ postgresql_name }}"
+    owner: "{{ postgresql_user }}"
+  become_user: postgres
