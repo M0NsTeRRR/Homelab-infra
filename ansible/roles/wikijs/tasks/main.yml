@@ -1,0 +1,50 @@
+---
+- name: Add wikijs group
+  group:
+    name: wikijs
+    state: present
+
+- name: Add wikijs user
+  user:
+    name: wikijs
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: wikijs
+    append: yes
+
+- name: Create wiki-js folder 
+  file:
+    state: directory
+    name: /opt/wikijs
+
+- name: Download last version of wiki.js
+  get_url:
+    url: https://github.com/Requarks/wiki/releases/download/2.4.107/wiki-js.tar.gz
+    dest: /tmp/wiki-js.tar.gz
+
+- name: Extract wiki.js files 
+  unarchive:
+    src: /tmp/wiki-js.tar.gz
+    dest: /opt/wikijs
+    remote_src: yes
+
+- name: Configure wiki.js
+  template:
+    src: config.yml.j2
+    dest: /opt/wikijs/config.yml
+  notify:
+    - restart wikijs.service
+
+- name: Fix perms on wikijs data folder
+  file:
+    name: "/opt/wikijs/data"
+    owner: "wikijs"
+    group: "wikijs"
+
+- name: Create systemd service file
+  template:
+    src: wikijs.service.j2
+    dest: /etc/systemd/system/wikijs.service
+  notify:
+    - enable wikijs.service
+    - restart wikijs.service

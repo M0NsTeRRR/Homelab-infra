@@ -25,6 +25,12 @@
     - netbox
     - vcenter-netbox-sync
 
+- name: Configure Wiki
+  hosts: wiki
+  become: yes
+  roles:
+    - wikijs
+
 - name: Configure monitoring
   hosts: monitoring
   become: yes

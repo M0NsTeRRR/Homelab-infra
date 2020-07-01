@@ -1,0 +1,27 @@
+---
+galaxy_info:
+  author: Ludovic Ortega
+  description: Install and configure wikijs
+  company: Ludovic Ortega
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+    - name: Ubuntu
+      versions:
+        - focal
+
+
+dependencies:
+  - role: nginx
+    vars:
+      nginx_name: "wikijs"
+      nginx_url: "http://127.0.0.1:3000"
+      nginx_enable_content_security: false
+  - role: nodejs
+  - role: postgresql
+    vars:
+      postgresql_name: "wikijs"
+      postgresql_user: "wikijs"
+      postgresql_password: "{{ postgresql.password }}"

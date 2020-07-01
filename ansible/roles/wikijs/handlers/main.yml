@@ -1,0 +1,9 @@
+- name: restart wikijs.service
+  service:
+    name: wikijs.service
+    state: restarted
+
+- name: enable wikijs.service
+  service:
+    name: wikijs.service
+    enabled: true
