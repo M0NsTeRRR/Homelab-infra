@@ -28,12 +28,12 @@
 
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
-    path: "/etc/ssl/certs/{{ application.name }}.pem"
+    path: "/etc/ssl/certs/{{ nginx_name }}.pem"
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
-    path: "/etc/ssl/certs/{{ application.name }}.csr"
-    privatekey_path: "/etc/ssl/certs/{{ application.name }}.pem"
+    path: "/etc/ssl/certs/{{ nginx_name }}.csr"
+    privatekey_path: "/etc/ssl/certs/{{ nginx_name }}.pem"
     country_name: FR
     organization_name: unicornafk.fr
     email_address: admin@unicornafk.fr
@@ -41,27 +41,32 @@
 
 - name: Generate an OpenSSL certificate
   openssl_certificate:
-    path: "/etc/ssl/certs/{{ application.name }}.crt"
-    privatekey_path: "/etc/ssl/certs/{{ application.name }}.pem"
-    csr_path: "/etc/ssl/certs/{{ application.name }}.csr"
+    path: "/etc/ssl/certs/{{ nginx_name }}.crt"
+    privatekey_path: "/etc/ssl/certs/{{ nginx_name }}.pem"
+    csr_path: "/etc/ssl/certs/{{ nginx_name }}.csr"
     provider: selfsigned
 
 - name: Remove default Nginx configuration
   file:
-    path: /etc/nginx/sites-enabled/default
+    path: "{{ item }}"
     state: absent
+  with_items:
+    - /etc/nginx/sites-available/default
+    - /etc/nginx/sites-enabled/default
+  notify:
+    - restart nginx
 
 - name: Configure Nginx
   template:
     src: nginx.conf.j2
-    dest: "/etc/nginx/sites-available/{{ application.name }}"
+    dest: "/etc/nginx/sites-available/{{ nginx_name }}"
   notify:
     - restart nginx
 
 - name: Create symlink sites-available to sites-enabled
   file:
-    src: "/etc/nginx/sites-available/{{ application.name }}"
-    dest: "/etc/nginx/sites-enabled/{{ application.name }}"
+    src: "/etc/nginx/sites-available/{{ nginx_name }}"
+    dest: "/etc/nginx/sites-enabled/{{ nginx_name }}"
     state: link
   notify:
     - restart nginx
