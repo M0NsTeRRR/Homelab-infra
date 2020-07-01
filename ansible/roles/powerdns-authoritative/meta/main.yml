@@ -17,7 +17,5 @@ dependencies:
   - role: powerdns-recursor
   - role: nginx
     vars:
-      application:
-        name: "powerdns"
-        url: "http://127.0.0.1:8081"
-        server_name: "{{ inventory_hostname }}"
+      nginx_name: "powerdns"
+      nginx_url: "http://127.0.0.1:8081"

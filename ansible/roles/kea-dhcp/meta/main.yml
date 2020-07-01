@@ -16,7 +16,5 @@ galaxy_info:
 dependencies:
   - role: nginx
     vars:
-      application:
-        name: "kea-dhcp"
-        url: "http://127.0.0.1:8000"
-        server_name: "{{ inventory_hostname }}"
+      nginx_name: "kea-dhcp"
+      nginx_url: "http://127.0.0.1:8000"

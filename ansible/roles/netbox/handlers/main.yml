@@ -1,14 +1,4 @@
 ---
-- name: restart postgresql
-  service:
-    name: postgresql
-    state: restarted
-
-- name: enable postgresql
-  service:
-    name: postgresql
-    enabled: true
-
 - name: restart netbox.service
   service:
     name: netbox.service
