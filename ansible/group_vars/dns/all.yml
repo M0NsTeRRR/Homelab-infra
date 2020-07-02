@@ -13,8 +13,8 @@ records:
     ipv4: 192.168.20.51
     ipv6: 2001:bc8:2e64:120::51
   - canonical_hostname: r1.unicornafk.fr.
-    ipv4: 192.168.40.1
-    ipv6: 2001:bc8:2e64:140::1
+    ipv4: 192.168.5.1
+    ipv6: 2001:bc8:2e64:5::1
   - canonical_hostname: sw1.unicornafk.fr.
     ipv4: 192.168.40.2
     ipv6: 2001:bc8:2e64:140::2
