@@ -9,11 +9,13 @@
     - restart pacemaker
     - enable pacemaker
 
-- name: Download haproxy ocf ressource
-  get_url:
-    url: https://raw.githubusercontent.com/M0NsTeRRR/cluster-agents/master/haproxy
+- name: Configure haproxy ocf ressource
+  template:
+    src: haproxy.j2
     dest: /usr/lib/ocf/resource.d/heartbeat/haproxy
-    mode: '+x'
+    mode: 0744
+  notify:
+    - restart pacemaker
 
 - name: Get pacemaker configuration
   command: "crm configure show"
