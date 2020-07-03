@@ -1,7 +1,7 @@
 default:
     vsphere_host: "{{ vcenter.hostname }}"
-    vsphere_user: "{{ vsphere.username }}"
-    vsphere_password: "{{ vsphere.password }}"
+    vsphere_user: "{{ vcenter.username }}"
+    vsphere_password: "{{ vcenter.password }}"
     ignore_ssl: True
     specs_size: 5000
     fetch_custom_attributes: True
