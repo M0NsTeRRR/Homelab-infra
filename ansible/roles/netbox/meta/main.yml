@@ -21,6 +21,6 @@ dependencies:
       nginx_static: "/opt/netbox/netbox/static/"
   - role: postgresql
     vars:
-      postgresql_name: "netbox"
+      postgresql_db: "netbox"
       postgresql_user: "netbox"
       postgresql_password: "{{ postgresql.password }}"

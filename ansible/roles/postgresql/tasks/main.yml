@@ -22,8 +22,8 @@
     password: "{{ postgresql_password }}"
   become_user: postgres
 
-- name: "Create {{ postgresql_name }} postgresql database"
+- name: "Create {{ postgresql_db }} postgresql database"
   postgresql_db:
-    name: "{{ postgresql_name }}"
+    name: "{{ postgresql_db }}"
     owner: "{{ postgresql_user }}"
   become_user: postgres

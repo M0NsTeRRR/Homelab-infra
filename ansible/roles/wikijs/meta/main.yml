@@ -22,6 +22,6 @@ dependencies:
   - role: nodejs
   - role: postgresql
     vars:
-      postgresql_name: "wikijs"
+      postgresql_db: "wikijs"
       postgresql_user: "wikijs"
       postgresql_password: "{{ postgresql.password }}"

@@ -1,4 +1,4 @@
 ---
-postgresql_name: application
+postgresql_db: application
 postgresql_user: application
 postgresql_password: application
