@@ -1,0 +1,9 @@
+[Interface]
+PrivateKey = {{ item.value.private_key }}
+Address = {{ item.value.ipv4 }},{{ item.value.ipv6 }}
+
+[Peer]
+PublicKey = {{ vpn_server_public_key.stdout }}
+AllowedIPs = 0.0.0.0/0
+Endpoint = {{ inventory_hostname }}:51820
+PersistentKeepalive = 25

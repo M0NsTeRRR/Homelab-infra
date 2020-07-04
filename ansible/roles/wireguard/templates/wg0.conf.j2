@@ -1,0 +1,16 @@
+[Interface]
+Address = {{ vpn_server.ipv4 }},{{ vpn_server.ipv6 }}
+ListenPort = 51820
+PrivateKey = {{ vpn_server_private_key.stdout }}
+DNS = {{ groups['dns']|join(',') }}, {% for host in groups['dns'] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %} 
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; ip6tables -A FORWARD -i wg0 -j ACCEPT
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; ip6tables -D FORWARD -i wg0 -j ACCEPT
+
+{% for key, client in vpn_clients.items() %}
+
+[Peer]
+# Name = {{ key }}
+PublicKey = {{ client.public_key }}
+AllowedIPs = {{ client.ipv4 }},{{ client.ipv6 }}
+
+{% endfor %}

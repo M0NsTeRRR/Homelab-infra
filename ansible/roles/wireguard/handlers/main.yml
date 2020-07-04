@@ -1,0 +1,10 @@
+---
+- name: enable wireguard
+  service:
+    name: "wg-quick@wg0"
+    enabled: true
+
+- name: restart wireguard
+  service:
+    name: "wg-quick@wg0"
+    state: restarted
