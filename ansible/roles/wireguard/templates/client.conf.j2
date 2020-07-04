@@ -1,7 +1,7 @@
 [Interface]
 PrivateKey = {{ item.value.private_key }}
 Address = {{ item.value.ipv4 }},{{ item.value.ipv6 }}
-DNS = {{ groups['dns']|join(',') }}, {% for host in groups['dns'] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %}
+DNS = {{ groups['dns']|join(',') }}, {% for host in groups['dns'] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %}, {{ domains|join(',') }} 
 
 [Peer]
 PublicKey = {{ vpn_server_public_key.stdout }}
