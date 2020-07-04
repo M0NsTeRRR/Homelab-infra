@@ -17,7 +17,7 @@ inputs = {
   }
 
   disk = {
-    datastore = "SERVER1-DISK1"
+    datastore = "SERVER1-RAID1"
     size      = 20
   }
 
