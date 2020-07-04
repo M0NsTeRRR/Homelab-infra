@@ -1,0 +1,23 @@
+---
+galaxy_info:
+  author: Ludovic Ortega
+  description: Install and configure Ghost
+  company: Ludovic Ortega
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+    - name: Ubuntu
+      versions:
+        - focal
+
+
+dependencies:
+  - role: nginx
+    vars:
+      nginx_name: "ghost"
+      nginx_url: "http://127.0.0.1:2368"
+  - role: nodejs
+    vars:
+      nodejs_version: 12

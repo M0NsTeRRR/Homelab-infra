@@ -1,0 +1,63 @@
+---
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python packages
+  pip:
+    name: pexpect
+
+- name: Add ghost group
+  group:
+    name: idiotghost
+    state: present
+
+- name: Add ghost user
+  user:
+    name: idiotghost
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: idiotghost
+    append: yes
+
+- name: Create ghost directory
+  file:
+    path: /var/www/ghost
+    state: directory
+    owner: idiotghost
+    group: idiotghost
+    mode: '0775'
+
+- name: Install ghost-cli@latest node.js package globally
+  npm:
+    name: ghost-cli@latest
+    global: yes
+
+- name: Check if ghost is already install
+  stat:
+    path: /var/www/ghost/config.production.json
+  register: ghost
+
+- name: Install ghost
+  command: 
+    cmd: ghost install --db sqlite3 --no-setup --no-stack --no-start
+    chdir: /var/www/ghost
+  become: yes
+  become_user: idiotghost
+  when: not ghost.stat.exists
+
+- name: Create Ghost configuration
+  template:
+    src: config.production.json.j2
+    dest: /var/www/ghost/config.production.json
+    owner: idiotghost
+    group: idiotghost
+    mode: '0775'
+
+- name: Start ghost
+  command: 
+    cmd: ghost start
+    chdir: /var/www/ghost
+  become: yes
+  become_user: idiotghost
