@@ -1,12 +1,12 @@
 ---
-- name: Ensure dependencies are present.
+- name: Ensure dependencies are present
   apt:
     pkg:
       - apt-transport-https
       - gnupg2
     state: present
 
-- name: Add Nodesource apt key.
+- name: Add Nodesource apt key
   apt_key:
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     state: present
@@ -19,7 +19,7 @@
     - "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
     - "deb-src https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
 
-- name: Ensure dependencies are present.
+- name: Ensure dependencies are present
   apt:
     name: nodejs
     state: present
