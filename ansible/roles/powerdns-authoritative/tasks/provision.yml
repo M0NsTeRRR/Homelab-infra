@@ -38,3 +38,4 @@
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ powerdns.api_key }}"
+  when: zone.status == 200
