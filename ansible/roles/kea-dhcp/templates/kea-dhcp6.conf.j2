@@ -1,7 +1,7 @@
 {    
     "Dhcp6": {
         "interfaces-config": {
-            "interfaces": [ ]
+            "interfaces": [ {% for interface in ansible_interfaces %}"{{ interface }}"{% if not loop.last %},{% endif %}{% endfor %} ]
         },
         "control-socket": {
             "socket-type": "unix",
