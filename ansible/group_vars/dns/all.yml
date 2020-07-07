@@ -1,5 +1,6 @@
 ---
 records:
+  # unicornafk.fr
   - canonical_hostname: dns1.unicornafk.fr.
     ipv4: 192.168.10.21
     ipv6: 2001:bc8:2e64:110::21
@@ -36,3 +37,31 @@ records:
   - canonical_hostname: pi1.unicornafk.fr.
     ipv4: 192.168.40.32
     ipv6: 2001:bc8:2e64:140::32
+  # adminafk.fr
+  - canonical_hostname: vpn.adminafk.fr.
+    ipv4: 192.168.10.29
+    ipv6: 2001:bc8:2e64:110::29
+  - canonical_hostname: blog.adminafk.fr.
+    ipv4: 192.168.10.30
+    ipv6: 2001:bc8:2e64:110::30
+  - canonical_hostname: wiki.adminafk.fr.
+    ipv4: 192.168.10.30
+    ipv6: 2001:bc8:2e64:110::30
+  - canonical_hostname: git.adminafk.fr.
+    ipv4: 192.168.10.30
+    ipv6: 2001:bc8:2e64:110::30
+  - canonical_hostname: ipam.adminafk.fr.
+    ipv4: 192.168.10.30
+    ipv6: 2001:bc8:2e64:110::30
+  - canonical_hostname: monitoring.adminafk.fr.
+    ipv4: 192.168.10.30
+    ipv6: 2001:bc8:2e64:110::30
+  - canonical_hostname: ludovic-ortega.adminafk.fr.
+    ipv4: 192.168.10.30
+    ipv6: 2001:bc8:2e64:110::30
+  - canonical_hostname: api.ludovic-ortega.adminafk.fr.
+    ipv4: 192.168.10.30
+    ipv6: 2001:bc8:2e64:110::30
+  - canonical_hostname: admin.ludovic-ortega.adminafk.fr.
+    ipv4: 192.168.10.30
+    ipv6: 2001:bc8:2e64:110::30
