@@ -10,7 +10,7 @@
     state: directory
     name: /opt/exporter/snmp-exporter
 
-- name: Check if snmp-exporter is already build
+- name: Check if snmp-exporter is already installed
   stat:
     path: /usr/local/bin/snmp-exporter
   register: snmp_exporter
