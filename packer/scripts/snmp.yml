@@ -20,9 +20,9 @@
     line: "{{ item.line }}"
     state: "present"
   with_items:
-      - { regexp: '^agentaddress  127.0.0.1,[::1]', line: 'agentaddress  0.0.0.0,::' }
-      - { regexp: '^rocommunity  public default -V systemonly', line: 'rocommunity unicornafk default' }
-      - { regexp: '^rocommunity6 public default -V systemonly', line: 'rocommunity6 unicornafk default' }
+      - { regexp: '^agentaddress', line: 'agentaddress  0.0.0.0,::' }
+      - { regexp: '^rocommunity', line: 'rocommunity unicornafk default' }
+      - { regexp: '^rocommunity6', line: 'rocommunity6 unicornafk default' }
   when: ansible_distribution == "Ubuntu"
 
 
