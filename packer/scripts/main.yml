@@ -31,6 +31,9 @@
     - name: Include snmp
       include_tasks: snmp.yml
 
+    - name: Include rsyslog
+      include_tasks: rsyslog.yml
+
     - name: Include auto-update
       include_tasks: auto-update.yml
 
