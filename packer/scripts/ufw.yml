@@ -10,6 +10,6 @@
     port: "22"
     proto: tcp
 
-- name: Enable and start UFW
+- name: Enable UFW
   ufw:
     state: enabled
