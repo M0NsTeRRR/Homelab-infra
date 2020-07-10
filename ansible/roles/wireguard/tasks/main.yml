@@ -5,6 +5,13 @@
     port: "51820"
     proto: udp
 
+- name: Add Debian buster-backports
+  apt_repository:
+    repo: "deb http://deb.debian.org/debian buster-backports main"
+    state: present
+    filename: buster-backports
+  when: ansible_distribution == "Debian"
+
 - name: Install Wireguard
   apt:
     name: wireguard
