@@ -1,0 +1,21 @@
+---
+- name: Add elastic Apt signing key
+  apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add elastic Apt repository
+  apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/6.x/apt stable main"
+    state: present
+    filename: elastic
+
+- name: Install elasticsearch
+  apt:
+    name: elasticsearch
+    state: present
+  notify:
+    - restart elasticsearch
+    - enable elasticsearch

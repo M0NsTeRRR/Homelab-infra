@@ -1,0 +1,33 @@
+---
+- name: Disable SWAP
+  shell: |
+    swapoff -a
+
+- name: Disable SWAP in fstab
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
+
+- name: Delete local rsyslog config
+  file:
+    path: /etc/rsyslog.d/01-client.conf
+    state: absent
+  notify: restart rsyslog
+
+- name: Install required packages
+  apt:
+    pkg: 
+      - apt-transport-https
+      - gnupg-agent
+      - openjdk-8-jre-headless
+    state: present
+
+- name: Install mongodb
+  include_tasks: mongodb.yml
+
+- name: Install elasticsearch
+  include_tasks: elasticsearch.yml
+
+- name: Install graylog
+  include_tasks: graylog.yml

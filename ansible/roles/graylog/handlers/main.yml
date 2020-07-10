@@ -1,0 +1,35 @@
+---
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+
+- name: restart mongod
+  service:
+    name: mongod
+    state: restarted
+
+- name: enable mongod
+  service:
+    name: mongod
+    enabled: true
+
+- name: restart elasticsearch
+  service:
+    name: elasticsearch
+    state: restarted
+
+- name: enable elasticsearch
+  service:
+    name: elasticsearch
+    enabled: true
+
+- name: restart graylog-server
+  service:
+    name: graylog-server
+    state: restarted
+
+- name: enable graylog-server
+  service:
+    name: graylog-server
+    enabled: true

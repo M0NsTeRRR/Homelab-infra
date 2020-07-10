@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: Ludovic Ortega
+  description: Install and configure Graylog
+  company: Ludovic Ortega
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+
+
+dependencies:
+  - role: nginx
+    vars:
+      nginx_name: "graylog"
+      nginx_url: "http://127.0.0.1:9000"
+      nginx_enable_content_security: false
+      nginx_proxy_headers:
+        X-Graylog-Server-URL: https://$server_name/
