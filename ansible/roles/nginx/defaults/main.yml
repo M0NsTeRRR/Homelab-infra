@@ -2,5 +2,6 @@
 nginx_name: "application"
 nginx_url: "http://127.0.0.1:8000"
 #nginx_static:
+nginx_proxy_headers: {}
 nginx_enable_content_security: true
 nginx_server_name: "{{ inventory_hostname }}"
