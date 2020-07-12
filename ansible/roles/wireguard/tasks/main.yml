@@ -23,6 +23,12 @@
     value: '1'
     reload: yes
 
+- name: Enable IPv6 forwarding
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: '1'
+    reload: yes
+
 - name: Create /etc/wireguard/keys directory
   file:
     dest: /etc/wireguard/keys
