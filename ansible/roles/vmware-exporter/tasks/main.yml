@@ -47,8 +47,3 @@
   template:
     src: esxi-dashboard.json.j2
     dest: /var/lib/grafana/dashboards/esxi.json
-
-- name: Create virtualmachine grafana dashboards
-  template:
-    src: virtualmachine-dashboard.json.j2
-    dest: /var/lib/grafana/dashboards/virtualmachine.json
