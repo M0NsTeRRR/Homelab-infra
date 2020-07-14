@@ -26,6 +26,7 @@
     with_items:
       - { regexp: '^#?PrintMotd', line: 'PrintMotd yes' }
       - { regexp: '^#?X11Forwarding', line: 'X11Forwarding no' }
+      - { regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval 300' }
       - { regexp: '^#?AuthenticationMethods', line: 'AuthenticationMethods publickey' }
       - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
       - { regexp: '^#?ChallengeResponseAuthentication', line: 'ChallengeResponseAuthentication no' }
