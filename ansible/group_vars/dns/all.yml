@@ -37,6 +37,9 @@ records:
   - canonical_hostname: pi1.unicornafk.fr.
     ipv4: 192.168.40.32
     ipv6: 2001:bc8:2e64:140::32
+  - canonical_hostname: idrac3.unicornafk.fr.
+    ipv4: 192.168.40.53
+    ipv6: 2001:bc8:2e64:140::53
   # adminafk.fr
   - canonical_hostname: vpn.adminafk.fr.
     ipv4: 192.168.10.29
