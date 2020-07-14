@@ -32,6 +32,7 @@
       - { regexp: '^#?UsePAM', line: 'UsePAM yes' }
       - { regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
       - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+      - { regexp: '^#?AllowUsers', line: 'AllowUsers {{ ansible_user }}' }
       - { regexp: '^#?RekeyLimit', line: 'RekeyLimit 1G 1H' }
       - { regexp: '^#?KexAlgorithms', line: 'KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group16-sha512,diffie-hellman-group14-sha256' }
       - { regexp: '^#?Ciphers', line: 'Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr' }
