@@ -8,3 +8,8 @@
   service:
     name: kea-dhcp6-server
     state: restarted
+
+- name: restart kea-ctrl-agent
+  service:
+    name: kea-ctrl-agent
+    state: restarted

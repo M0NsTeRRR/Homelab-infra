@@ -1,5 +1,33 @@
 {    
     "Dhcp6": {
+        "hooks-libraries": [
+            {
+                "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_lease_cmds.so",
+                "parameters": { }
+            },
+            {
+                "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_ha.so",
+                "parameters": {
+                    "high-availability": [{
+                        "this-server-name": "{{ inventory_hostname }}",
+                        "mode": "hot-standby",
+                        "heartbeat-delay": 10000,
+                        "max-response-delay": 10000,
+                        "max-ack-delay": 5000,
+                        "max-unacked-clients": 5,
+                        "peers": [
+                            {% for host in ansible_play_hosts %}{
+                                "name": "{{ host }}",
+                                "url": "https://[{{ lookup('dig', host, 'qtype=AAAA' )}}]/",
+                                "role": "{% if host == ansible_play_hosts[0] %}primary{% elif host == ansible_play_hosts[1] %}standby{% else %}backup{% endif %}",
+                                "auto-failover": true
+                            }{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        ]
+                    }]
+                }
+            }
+        ],
         "interfaces-config": {
             "interfaces": [ {% for interface in ansible_interfaces %}"{{ interface }}"{% if not loop.last %},{% endif %}{% endfor %} ]
         },
@@ -59,7 +87,7 @@
             "output_options": [
                 {
                     "output": "/var/log/kea/kea-dhcp6.log",
-                    "pattern": "%-5p %m\n",
+                    "pattern": {% raw %}"%D{%Y-%m-%d %H:%M:%S.%q} %-5p [%c/%i] %m\n",{% endraw %}
                     "flush": false,
                     "maxsize": 1048576,
                     "maxver": 8
