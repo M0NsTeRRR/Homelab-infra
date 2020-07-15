@@ -1,0 +1,10 @@
+---
+graylog_inputs:
+  - title: Syslog UDP
+    port: 1514
+    proto: udp
+    bind_address: 0.0.0.0
+  - title: Syslog TCP
+    port: 1514
+    proto: tcp
+    bind_address: 0.0.0.0

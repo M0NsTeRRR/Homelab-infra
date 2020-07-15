@@ -1,0 +1,26 @@
+{
+    "title":"{{ item.title }}",
+    "global":true,
+    "type":"org.graylog2.inputs.syslog.tcp.SyslogTCPInput",
+    "configuration":{
+        "recv_buffer_size":1048576,
+        "tcp_keepalive":false,
+        "use_null_delimiter":false,
+        "number_worker_threads":2,
+        "tls_client_auth_cert_file":"",
+        "force_rdns":false,
+        "bind_address":"{{ item.bind_address }}",
+        "tls_cert_file":"",
+        "store_full_message":false,
+        "expand_structured_data":false,
+        "port":{{ item.port }},
+        "tls_key_file":"",
+        "tls_enable":false,
+        "tls_key_password":"",
+        "max_message_size":2097152,
+        "tls_client_auth":"disabled",
+        "override_source":null,
+        "allow_override_date":true
+    },
+    "node":null
+}

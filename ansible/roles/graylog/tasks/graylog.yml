@@ -1,13 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "1514"
-    proto: "{{ item }}"
-  with_items:
-    - "tcp"
-    - "udp"
-
 - name: Add graylog Apt signing key
   apt_key:
     url: "https://packages.graylog2.org/repo/debian/keyring.gpg"
@@ -37,7 +28,7 @@
     state: "present"
   with_items:
       - { regexp: '^(#)?password_secret =', line: 'password_secret = {{ graylog.password_secret }}' }
-      - { regexp: '^(#)?root_password_sha2 =', line: 'root_password_sha2 = {{ graylog.root_password_sha2 }}' }
+      - { regexp: '^(#)?root_password_sha2 =', line: 'root_password_sha2 = {{ graylog.root_password | hash("sha256") }}' }
       - { regexp: '^(#)?root_email =', line: 'root_email = {{ email }}' }
       - { regexp: '^(#)?root_timezone =', line: 'root_timezone = Europe/Paris' }
   notify: restart graylog-server
