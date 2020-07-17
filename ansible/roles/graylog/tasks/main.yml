@@ -35,3 +35,7 @@
 - name: Provision inputs graylog
   include_tasks: provision_inputs.yml
   with_items: "{{ graylog_inputs }}"
+
+- name: Provision events graylog
+  include_tasks: provision_events.yml
+  with_items: "{{ graylog_events }}"

@@ -1,0 +1,26 @@
+{
+    "title": "{{ item.title }}",
+    "description": "{{ item.description }}",
+    "priority": {{ item.priority }},
+    "alert": false,
+    "config": {
+        "type": "aggregation-v1",
+        "query": "{{ item.query }}",
+        "query_parameters": [],
+        "streams": [],
+        "group_by": [],
+        "series": [],
+        "conditions": {
+            "expression": null
+        },
+        "search_within_ms": 60000,
+        "execute_every_ms": 60000
+    },
+    "field_spec": {},
+    "key_spec": [],
+    "notification_settings": {
+        "grace_period_ms": 0,
+        "backlog_size": 0
+    },
+    "notifications": []
+}
