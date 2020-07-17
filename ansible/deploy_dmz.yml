@@ -18,6 +18,12 @@
   roles:
     - apt-cacher-ng
 
+- name: Configure reverse-proxy
+  hosts: reverse_proxy
+  become: yes
+  roles:
+    - nginx
+
 - name: Configure IPAM
   hosts: ipam
   become: yes
@@ -30,6 +36,24 @@
   become: yes
   roles:
     - wikijs
+
+- name: Configure Blog
+  hosts: blog
+  become: yes
+  roles:
+    - ghost
+
+- name: Configure VPN
+  hosts: vpn
+  become: yes
+  roles:
+    - wireguard
+
+- name: Configure log
+  hosts: log
+  become: yes
+  roles:
+    - graylog
 
 - name: Configure monitoring
   hosts: monitoring

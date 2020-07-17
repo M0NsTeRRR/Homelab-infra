@@ -8,3 +8,9 @@ graylog_inputs:
     port: 1514
     proto: tcp
     bind_address: 0.0.0.0
+
+graylog_events:
+  - title: ERROR
+    description: ''
+    priority: 3
+    query: level:<3

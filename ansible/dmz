@@ -9,17 +9,29 @@ dhcp2.unicornafk.fr
 [apt_proxy]
 apt-proxy.unicornafk.fr
 
+[reverse_proxy]
+reverse-proxy.unicornafk.fr
+
 [ipam]
 ipam.unicornafk.fr
+
+[git]
+git.unicornafk.fr
 
 [wiki]
 wiki.unicornafk.fr
 
-[monitoring]
-monitoring.unicornafk.fr
+[blog]
+blog.unicornafk.fr
+
+[vpn]
+vpn.unicornafk.fr
 
 [log]
 log.unicornafk.fr
+
+[monitoring]
+monitoring.unicornafk.fr
 
 [kubernetes:children]
 lb
