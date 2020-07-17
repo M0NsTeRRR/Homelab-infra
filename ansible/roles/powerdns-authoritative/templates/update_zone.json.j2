@@ -35,7 +35,7 @@
       ],
       "ttl": "3600",
       "type": "AAAA"
-    }{% endif %}{% endfor %}{% for host in records %}{% if item in host.ipv4|ipaddr("revdns") %},
+    }{% endif %}{% endfor %}{% for host in records %}{% if item in host.ipv4|ipaddr("revdns") and host.rdns %},
     {
       "name": "{{ host.ipv4|ipaddr('revdns') }}",
       "changetype": "REPLACE",
@@ -44,7 +44,7 @@
       ],
       "ttl": "3600",
       "type": "PTR"
-    }{% endif %}{% endfor %}{% for host in records %}{% if item in host.ipv6|ipaddr("revdns") %},
+    }{% endif %}{% endfor %}{% for host in records %}{% if item in host.ipv6|ipaddr("revdns") and host.rdns %},
     {
       "name": "{{ host.ipv6|ipaddr('revdns') }}",
       "changetype": "REPLACE",
