@@ -1,5 +1,7 @@
 ---
-ipv4_subnets:
+kea_dns_group: dns
+kea_dns_domains: '{{ domains }}'
+kea_ipv4_subnets:
   - subnet: 192.168.10.0/24
     pools:
       - start: 192.168.10.201
@@ -48,7 +50,7 @@ ipv4_subnets:
         end: 192.168.60.240
     router: 192.168.60.2
     reservations: []
-ipv6_subnets:
+kea_ipv6_subnets:
   - subnet: 2001:bc8:2e64:110::/64
     pools:
       - start: 2001:bc8:2e64:110::201

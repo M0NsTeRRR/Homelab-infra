@@ -54,15 +54,15 @@
         "option-data": [
             {
                 "name": "dns-servers",
-                "data": "{% for host in groups['dns'] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %}"
+                "data": "{% for host in groups[kea_dns_group] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %}"
             },
             {
                 "name": "domain-search",
-                "data": "{{ domains|join(',') }}"
+                "data": "{{ kea_dns_domains|join(',') }}"
             }
         ],
         "subnet6": [
-            {% for subnet in ipv6_subnets %}{
+            {% for subnet in kea_ipv6_subnets %}{
                 "subnet": "{{ subnet.subnet }}",
                 "pools": [
                     {% for pool in subnet.pools %}{ 

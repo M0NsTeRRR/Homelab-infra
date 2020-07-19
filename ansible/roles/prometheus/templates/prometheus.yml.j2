@@ -17,7 +17,7 @@ scrape_configs:
     - source_labels: [__param_target]
       target_label: instance
     - target_label: __address__
-      replacement: 127.0.0.1:9605
+      replacement: localhost:9605
 
   - job_name: 'vmware_vcenter'
     metrics_path: '/metrics'
@@ -45,7 +45,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 127.0.0.1:9115
+        replacement: localhost:9115
 
   - job_name: 'snmp'
     static_configs:
@@ -54,11 +54,11 @@ scrape_configs:
       - snmp-exporter/*.json
     metrics_path: /snmp
     params:
-      module: [if_mib_ifalias]
+      module: [if_mib]
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: 127.0.0.1:9116
+        replacement: localhost:9116

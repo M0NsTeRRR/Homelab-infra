@@ -1,9 +1,9 @@
 ---
 timezone: Europe/Paris
 email: mastership@hotmail.fr
-smtp_provider:
-  hostname: mail.gandi.net
-  port: 587
+smtp_provider_host: mail.gandi.net
+smtp_provider_port: 587
+monitoring_email: monitoring@unicornafk.fr
 ipv4_subnets:
   - 192.168.4.0/24
   - 192.168.5.0/24

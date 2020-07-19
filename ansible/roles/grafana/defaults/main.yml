@@ -1,0 +1,8 @@
+---
+grafana_admin_password: password
+grafana_secret_key: secret_key
+grafana_smtp_host: smtp.exemple.com
+grafana_smtp_port: 587
+grafana_smtp_user: grafana@example.com
+grafana_smtp_password: password
+grafana_smtp_from_address: grafana@example.com

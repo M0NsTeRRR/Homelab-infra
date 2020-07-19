@@ -16,7 +16,7 @@
   pip:
     name: psycopg2-binary
 
-- name: "Create {{postgresql_user }} postgresql user"
+- name: "Create {{ postgresql_user }} postgresql user"
   postgresql_user:
     name: "{{ postgresql_user }}"
     password: "{{ postgresql_password }}"

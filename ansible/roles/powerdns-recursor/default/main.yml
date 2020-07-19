@@ -1,0 +1,6 @@
+---
+pdns_ipv4_subnets: []
+pdns_ipv6_subnets: []
+pdns_dns_group: []
+pdns_domains: []
+pdns_reverse_zones: []

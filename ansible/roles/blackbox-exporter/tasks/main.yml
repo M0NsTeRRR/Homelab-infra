@@ -5,45 +5,34 @@
     port: "9115"
     proto: tcp
 
-- name: Install required packages
-  apt:
-    pkg: 
-      - git
-      - curl
-      - golang
-    state: present
-
 - name: Create blackbox folder 
   file:
     state: directory
     name: /opt/exporter/blackbox/build
 
-- name: Check if blackbox-exporter is already build
+- name: Check if blackbox-exporter is already installed
   stat:
     path: /usr/local/bin/blackbox_exporter
   register: blackbox_exporter
 
-- name: Git clone 
-  git:
-    repo: https://github.com/prometheus/blackbox_exporter.git
-    dest: /opt/exporter/blackbox/build
+- name: "Download blackbox-exporter version {{ blackbox_exporter_version }}"
+  get_url:
+    url: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{ blackbox_exporter_version }}/blackbox_exporter-{{ blackbox_exporter_version }}.linux-amd64.tar.gz"
+    dest: /tmp/blackbox-exporter.tar.gz
   when: not blackbox_exporter.stat.exists
 
-- name: Install golangci-lint
-  shell:
-    cmd: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.27.0
-    warn: no
-  when: not blackbox_exporter.stat.exists
-
-- name: Compile sources
-  shell: make
-  args:
-    chdir: /opt/exporter/blackbox/build
+- name: Extract blackbox-exporter binary
+  unarchive:
+    src: /tmp/blackbox-exporter.tar.gz
+    dest: /tmp
+    remote_src: yes
+    list_files: yes
+  register: archive_contents
   when: not blackbox_exporter.stat.exists
 
 - name: Copy blackbox-exporter binary to /usr/local/bin
   copy:
-    src: /opt/exporter/blackbox/build/blackbox_exporter
+    src: /tmp/{{ archive_contents.files[0] }}blackbox_exporter
     dest: /usr/local/bin/blackbox_exporter
     owner: prometheus
     group: prometheus

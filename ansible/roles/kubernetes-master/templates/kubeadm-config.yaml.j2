@@ -1,11 +1,11 @@
 apiVersion: kubeadm.k8s.io/v1beta2
 kind: ClusterConfiguration
 kubernetesVersion: stable
-controlPlaneEndpoint: "{{ lb_ip }}:{{ lb_port }}"
+controlPlaneEndpoint: "{{ k8s_lb_ip }}:{{ k8s_lb_port }}"
 etcd:
   external:
       endpoints:
-{% for host in groups[etcd_group] %}
+{% for host in groups[k8s_etcd_group] %}
       - https://{{ host }}:2379
 {% endfor %}
       caFile: /etc/kubernetes/pki/etcd/ca.crt

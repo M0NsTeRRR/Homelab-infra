@@ -19,7 +19,7 @@ defaults
     maxconn 3000
 
 frontend api-front
-    bind :{{ lb_port }}
+    bind :{{ haproxy_lb_port }}
     mode tcp
     option tcplog
     use_backend api-backend
@@ -28,6 +28,6 @@ backend api-backend
     mode tcp
     option tcp-check
     balance roundrobin
-    {% for host in groups[control_plane_group] %}
-    server {{ host.split(".")[0] }}  {{ host }}:6443 check
+    {% for server in groups[haproxy_servers_group] %}
+    server {{ server.split(".")[0] }}  {{ server }}:6443 check
     {% endfor %}

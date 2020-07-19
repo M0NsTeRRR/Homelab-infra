@@ -9,7 +9,7 @@
       - 200
       - 404
     headers:
-      X-Api-Key: "{{ powerdns.api_key }}"
+      X-Api-Key: "{{ pdns_api_key }}"
   register: zone
 
 - name: "POST zone {{ item}}."
@@ -23,7 +23,7 @@
     status_code: 201
     headers:
       Content-Type: application/json
-      X-Api-Key: "{{ powerdns.api_key }}"
+      X-Api-Key: "{{ pdns_api_key }}"
   when: zone.status == 404
 
 - name: "PATCH zone {{ item}}."
@@ -37,5 +37,5 @@
     status_code: 204
     headers:
       Content-Type: application/json
-      X-Api-Key: "{{ powerdns.api_key }}"
+      X-Api-Key: "{{ pdns_api_key }}"
   when: zone.status == 200

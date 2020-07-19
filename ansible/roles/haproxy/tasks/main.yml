@@ -2,7 +2,7 @@
 - name: Open required ports
   ufw:
     rule: allow
-    port: "{{ lb_port }}"
+    port: "{{ haproxy_lb_port }}"
     proto: tcp
     
 - name: Install Haproxy

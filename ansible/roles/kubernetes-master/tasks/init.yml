@@ -9,14 +9,14 @@
       - /etc/kubernetes/pki/apiserver-etcd-client.crt
       - /etc/kubernetes/pki/apiserver-etcd-client.key
     dest: "/home/{{ ansible_user }}/pki.tgz"
-  delegate_to: "{{ groups[etcd_group][0] }}"
+  delegate_to: "{{ groups[k8s_etcd_group][0] }}"
 
 - name: Fetch certificates from first etcd node
   fetch:
     src: "/home/{{ ansible_user }}/pki.tgz"
     dest: "/tmp/pki.tgz"
     flat: yes
-  delegate_to: "{{ groups[etcd_group][0] }}"
+  delegate_to: "{{ groups[k8s_etcd_group][0] }}"
 
 - name: Copy certificates to first control plane node
   unarchive:
@@ -72,7 +72,7 @@
     state: absent
   delegate_to: "{{ item.host }}"
   with_items:
-    - { "host": "{{ groups[etcd_group][0] }}", "path": "/home/{{ ansible_user }}/pki.tgz"}
+    - { "host": "{{ groups[k8s_etcd_group][0] }}", "path": "/home/{{ ansible_user }}/pki.tgz"}
     - { "host": "{{ inventory_hostname }}", "path": "/home/{{ ansible_user }}/pki.tgz"}
     - { "host": "{{ inventory_hostname }}", "path": "/home/{{ ansible_user }}/kubeadm-config.yaml"}
   

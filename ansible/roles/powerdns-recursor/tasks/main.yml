@@ -68,7 +68,7 @@
 
 - name: Set DNS list ipv4
   set_fact:
-    dns_list: "{{ (groups['dns'] | join(':53000;')) + ':53000' }}"
+    dns_list: "{{ (groups[pdns_dns_group] | join(':53000;')) + ':53000' }}"
 
 - name: Configure PowerDNS
   lineinfile:
@@ -80,7 +80,7 @@
       - { regexp: '^(# )?setgid=', line: 'setgid=pdns' }
       - { regexp: '^(# )?setuid=', line: 'setuid=pdns' }
       - { regexp: '^(# )?local-address=', line: 'local-address=0.0.0.0, ::' }
-      - { regexp: '^(# )?allow-from=', line: 'allow-from={{ ipv4_subnets | join(", ") }}, {{ ipv6_subnets | join(", ") }}' }
-      - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ domains | join("=" + dns_list + ", ") + "=" + dns_list }}, {{ reverse_zones | join("=" + dns_list + ", ") + "=" + dns_list }}' }
+      - { regexp: '^(# )?allow-from=', line: 'allow-from={{ pdns_ipv4_subnets | join(", ") }}, {{ pdns_ipv6_subnets | join(", ") }}' }
+      - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ pdns_domains | join("=" + dns_list + ", ") + "=" + dns_list }}, {{ pdns_reverse_zones | join("=" + dns_list + ", ") + "=" + dns_list }}' }
       - { regexp: '^(# )?serve-rfc1918=', line: 'serve-rfc1918=no' }
   notify: restart pdns-recursor

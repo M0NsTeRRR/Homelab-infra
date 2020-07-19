@@ -3,7 +3,7 @@
   uri:
     url: "https://{{ inventory_hostname }}/api/events/definitions"
     user: admin
-    password: "{{ graylog.root_password }}"
+    password: "{{ graylog_root_password }}"
     method: GET
     return_content: yes
     validate_certs: no
@@ -37,7 +37,7 @@
   uri:
     url: "https://{{ inventory_hostname }}/api/events/definitions"
     user: admin
-    password: "{{ graylog.root_password }}"
+    password: "{{ graylog_root_password }}"
     method: POST
     return_content: yes
     body_format: json

@@ -8,9 +8,9 @@ LOG_CONSOLE = True
 # Places all logs in a rotating file if True
 LOG_FILE = True
 # IPv4 networks eligible to be synced to NetBox
-IPV4_ALLOWED = ["{{ ipv4_subnets | join('", "') }}"]
+IPV4_ALLOWED = ["{{ vcenter_netbox_sync_ipv4_subnets | join('", "') }}"]
 # IPv6 networks eligible to be synced to NetBox
-IPV6_ALLOWED = ["{{ ipv6_subnets | join('", "') }}"]
+IPV6_ALLOWED = ["{{ vcenter_netbox_sync_ipv6_subnets | join('", "') }}"]
 
 
 # Optional Settings
@@ -21,7 +21,7 @@ POPULATE_DNS_NAME = True
 # Use custom DNS servers defined below for reverse DNS lookups
 CUSTOM_DNS_SERVERS = False
 # List of DNS servers to query for PTR records
-DNS_SERVERS = ["{{ groups[dns_group] | join(", ") }}"]
+DNS_SERVERS = ["{{ groups[vcenter_netbox_sync_dns_group] | join(", ") }}"]
 # Create a custom field for virtual machines to track the current host they reside on
 TRACK_VM_HOST = True
 
@@ -31,13 +31,13 @@ TRACK_VM_HOST = True
 # The USER argument supports SSO with @domain.tld suffix
 VC_HOSTS = [
     # You can add more vCenter instances by duplicating the line below
-    {"HOST": "{{ vcenter.hostname }}", "PORT": {{ vcenter.port }}, "USER": "{{ vcenter.username }}", "PASS": "{{ vcenter.password }}"},
+    {"HOST": "{{ vcenter_netbox_sync_vcenter_hostname }}", "PORT": {{ vcenter_netbox_sync_vcenter_port }}, "USER": "{{ vcenter_netbox_sync_vcenter_username }}", "PASS": "{{ vcenter_netbox_sync_vcenter_password }}"},
 ]
 
 
 # NetBox Settings
 # NetBox API Key
-NB_API_KEY = "{{ netbox.api_key }}"
+NB_API_KEY = "{{ vcenter_netbox_sync_netbox_api_key }}"
 # Disables SSL/TLS and uses HTTP for requests. Not ever recommended.
 NB_DISABLE_TLS = False
 # The fully qualified domain name to reach NetBox

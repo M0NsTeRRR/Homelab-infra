@@ -1,16 +1,18 @@
 ---
-graylog:
-  password_secret: password_secret
-  root_password: root_password
-  transport_email_hostname: mail.example.com
-  transport_email_port: 587
-  transport_email_use_auth: true
-  transport_email_auth_username: you@example.com
-  transport_email_auth_password: secret
-  transport_email_subject_prefix: '[graylog]'
-  transport_email_use_tls: true
-  transport_email_use_ssl: false
-  transport_email_from_email: graylog@example.com
+graylog_password_secret: password_secret
+graylog_root_password: root_password
+graylog_root_email: root@example.com
+graylog_root_timezone: Europe/Paris
+graylog_transport_email_enabled: true
+graylog_transport_email_hostname: mail.example.com
+graylog_transport_email_port: 587
+graylog_transport_email_use_auth: true
+graylog_transport_email_auth_username: you@example.com
+graylog_transport_email_auth_password: secret
+graylog_transport_email_subject_prefix: '[graylog]'
+graylog_transport_email_from_email: graylog@example.com
+graylog_transport_email_use_tls: true
+graylog_transport_email_use_ssl: false
 
 graylog_inputs: []
 graylog_events: []

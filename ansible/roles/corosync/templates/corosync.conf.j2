@@ -1,11 +1,11 @@
 totem {
 	version: 2
-	cluster_name: lb-haproxy-ha
+	cluster_name: lb-ha
 	secauth: on
 	transport: knet
 	interface {
 		linknumber: 0
-	    bindnetaddr: {{ lookup('dig', lb_ip)}}
+	    bindnetaddr: {{ lookup('dig', corosync_lb_ip) }}
 	    knet_transport: udp
 	    mcastport: 5405
   	}
@@ -15,7 +15,7 @@ nodelist {
 	{% for host in ansible_play_hosts %}
 	node {
 		ring0_addr: {{ hostvars[host]['ansible_default_ipv4']['address'] }}
-		nodeid: {{loop.index}}
+		nodeid: {{ loop.index }}
 		quorum_votes: 1
 	}
 	{% endfor %}

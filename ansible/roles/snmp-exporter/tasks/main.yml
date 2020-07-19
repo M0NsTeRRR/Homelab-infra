@@ -17,7 +17,7 @@
 
 - name: Download last version of snmp-exporter 
   get_url:
-    url: https://github.com/prometheus/snmp_exporter/releases/download/v0.18.0/snmp_exporter-0.18.0.linux-amd64.tar.gz
+    url: https://github.com/prometheus/snmp_exporter/releases/download/v{{ snmp_exporter_version }}/snmp_exporter-{{ snmp_exporter_version }}.linux-amd64.tar.gz
     dest: /tmp/snmp-exporter.tar.gz
   when: not snmp_exporter.stat.exists
 

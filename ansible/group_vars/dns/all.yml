@@ -1,5 +1,12 @@
 ---
-records:
+pdns_ipv4_subnets: '{{ ipv4_subnets }}'
+pdns_ipv6_subnets: '{{ ipv6_subnets }}'
+pdns_dns_group: dns
+pdns_domains: '{{ domains }}'
+pdns_subdomains: '{{ subdomains }}'
+pdns_reverse_zones: '{{ reverse_zones }}'
+
+pdns_records:
   # unicornafk.fr
   - canonical_hostname: dns1.unicornafk.fr.
     ipv4: 192.168.10.21

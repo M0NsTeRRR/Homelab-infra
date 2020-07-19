@@ -1,11 +1,11 @@
 [Interface]
-Address = {{ vpn_server.ipv4 }},{{ vpn_server.ipv6 }}
+Address = {{ wireguard_server_ipv4 }},{{ wireguard_server_ipv6 }}
 ListenPort = 51820
 PrivateKey = {{ vpn_server_private_key.stdout }}
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; ip6tables -A FORWARD -i wg0 -j ACCEPT
 PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; ip6tables -D FORWARD -i wg0 -j ACCEPT
 
-{% for key, client in vpn_clients.items() %}
+{% for key, client in wireguard_clients.items() %}
 
 [Peer]
 # Name = {{ key }}

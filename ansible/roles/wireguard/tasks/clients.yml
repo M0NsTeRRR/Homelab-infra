@@ -19,25 +19,25 @@
   file:
     path: "/etc/wireguard/clients/{{ item.key }}"
     state: directory
-  with_dict: "{{ vpn_clients }}"
+  with_dict: "{{ wireguard_clients }}"
 
 - name: Generate certificates for new clients
   shell: 
     cmd: wg genkey | tee private_key | wg pubkey > public_key
     chdir: "/etc/wireguard/clients/{{ item.key }}"
-  with_dict: "{{ vpn_clients }}"
+  with_dict: "{{ wireguard_clients }}"
   when: item.key not in clients.stdout_lines
 
 - name: Get public and private key
   include_tasks: get_keys.yml
-  with_dict: "{{ vpn_clients }}"
+  with_dict: "{{ wireguard_clients }}"
 
 - name: Generate clients configuration
   template:
     src: client.conf.j2
     dest: "/etc/wireguard/clients/{{ item.key }}/client.conf"
     mode: 0600
-  with_dict: "{{ vpn_clients }}"
+  with_dict: "{{ wireguard_clients }}"
 
 - name: Fix perms on clients private and public keys
   file:

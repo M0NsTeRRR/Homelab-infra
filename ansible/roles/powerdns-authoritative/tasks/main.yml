@@ -11,4 +11,4 @@
   include_tasks: provision.yml
   when: inventory_hostname == play_hosts[0]
   run_once: true
-  with_items: "{{ domains + subdomains + reverse_zones }}"
+  with_items: "{{ pdns_domains + pdns_subdomains + pdns_reverse_zones }}"

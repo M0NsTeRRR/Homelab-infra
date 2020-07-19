@@ -1,4 +1,17 @@
 ---
+graylog_root_email: "{{ email }}"
+graylog_root_timezone: "{{ timezone }}"
+graylog_transport_email_enabled: true
+graylog_transport_email_hostname: "{{ smtp_provider_host }}"
+graylog_transport_email_port: "{{ smtp_provider_port }}"
+graylog_transport_email_use_auth: true
+graylog_transport_email_auth_username: monitoring.unicornafk.fr
+graylog_transport_email_auth_password: to_replace
+graylog_transport_email_subject_prefix: '[LOG]'
+graylog_transport_email_from_email: monitoring.unicornafk.fr
+graylog_transport_email_use_tls: true
+graylog_transport_email_use_ssl: false
+
 graylog_inputs:
   - title: Syslog UDP
     port: 1514

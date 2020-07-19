@@ -53,5 +53,5 @@
 
 - name: Install unifi
   apt:
-    deb: https://dl.ui.com/unifi/5.13.29/unifi_sysvinit_all.deb
+    deb: 'https://dl.ui.com/unifi/{{ unifi_version }}/unifi_sysvinit_all.deb'
   notify: restart unifi

@@ -24,7 +24,7 @@
 
 - name: Download last version of wiki.js
   get_url:
-    url: https://github.com/Requarks/wiki/releases/download/2.4.107/wiki-js.tar.gz
+    url: 'https://github.com/Requarks/wiki/releases/download/{{ wiki_js_version }}/wiki-js.tar.gz'
     dest: /tmp/wiki-js.tar.gz
   when: not wikijs.stat.exists
 

@@ -53,15 +53,15 @@
         "option-data": [
             {
                 "name": "domain-name-servers",
-                "data": "{{ groups['dns']|join(',') }}"
+                "data": "{{ groups[kea_dns_group]|join(',') }}"
             },
             {
                 "name": "domain-search",
-                "data": "{{ domains|join(',') }}"
+                "data": "{{ kea_dns_domains|join(',') }}"
             }
         ],
         "subnet4": [
-            {% for subnet in ipv4_subnets %}{
+            {% for subnet in kea_ipv4_subnets %}{
                 "subnet": "{{ subnet.subnet }}",
                 "pools": [
                     {% for pool in subnet.pools %}{ 

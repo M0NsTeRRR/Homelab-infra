@@ -4,7 +4,7 @@
       "name": "{{ item }}.",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ hostvars[groups['dns'][0]].canonical_hostname }} admin.{{ hostvars[groups['dns'][0]].canonical_hostname.split('.')[-3:]|join('.') }} {{ inception_date }} 10800 3600 604800 3600", "disabled": false }
+        { "content": "{{ hostvars[groups[pdns_dns_group][0]].canonical_hostname }} admin.{{ hostvars[groups[pdns_dns_group][0]].canonical_hostname.split('.')[-3:]|join('.') }} {{ inception_date }} 10800 3600 604800 3600", "disabled": false }
       ],
       "ttl": "3600",
       "type": "SOA"
@@ -12,13 +12,13 @@
       "name": "{{ item }}.",
       "changetype": "REPLACE",
       "records": [
-        {% for host in groups['dns'] %}
+        {% for host in groups[pdns_dns_group] %}
         { "content": "{{ hostvars[host].canonical_hostname }}", "disabled": false }{% if not loop.last %},{% endif %}
         {% endfor %}
       ],
       "ttl": "3600",
       "type": "NS"
-    }{% for host in records %}{% if item in host.canonical_hostname %},
+    }{% for host in pdns_records %}{% if item in host.canonical_hostname %},
     {
       "name": "{{ host.canonical_hostname }}",
       "changetype": "REPLACE",
@@ -35,7 +35,7 @@
       ],
       "ttl": "3600",
       "type": "AAAA"
-    }{% endif %}{% endfor %}{% for host in records %}{% if item in host.ipv4|ipaddr("revdns") and host.rdns %},
+    }{% endif %}{% endfor %}{% for host in pdns_records %}{% if item in host.ipv4|ipaddr("revdns") and host.rdns %},
     {
       "name": "{{ host.ipv4|ipaddr('revdns') }}",
       "changetype": "REPLACE",
@@ -44,7 +44,7 @@
       ],
       "ttl": "3600",
       "type": "PTR"
-    }{% endif %}{% endfor %}{% for host in records %}{% if item in host.ipv6|ipaddr("revdns") and host.rdns %},
+    }{% endif %}{% endfor %}{% for host in pdns_records %}{% if item in host.ipv6|ipaddr("revdns") and host.rdns %},
     {
       "name": "{{ host.ipv6|ipaddr('revdns') }}",
       "changetype": "REPLACE",

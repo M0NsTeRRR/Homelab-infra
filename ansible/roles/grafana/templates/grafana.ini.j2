@@ -163,10 +163,10 @@ cert_key = /etc/ssl/certs/grafana.key
 admin_user = admin
 
 # default admin password, can be changed before first start of grafana,  or in profile settings
-admin_password = {{ grafana.admin_password }}
+admin_password = {{ grafana_admin_password }}
 
 # used for signing
-secret_key = {{ grafana.secret_key }}
+secret_key = {{ grafana_secret_key }}
 
 # disable gravatar profile images
 ;disable_gravatar = false
@@ -442,16 +442,16 @@ allow_sign_up = false
 
 #################################### SMTP / Emailing ##########################
 [smtp]
-;enabled = false
-;host = localhost:25
-;user =
+enabled = true
+host = {{ grafana_smtp_host }}:{{ grafana_smtp_port }}
+user = {{ grafana_smtp_user }}
 # If the password contains # or ; you have to wrap it with triple quotes. Ex """#password;"""
-;password =
+password = {{ grafana_smtp_password }}
 ;cert_file = 
 ;key_file =
-;skip_verify = false
-;from_address = admin@grafana.localhost
-;from_name = Grafana
+skip_verify = false
+from_address = {{ grafana_smtp_from_address }}
+from_name = Monitoring
 # EHLO identity in SMTP dialog (defaults to instance_name)
 ;ehlo_identity = dashboard.example.com
 

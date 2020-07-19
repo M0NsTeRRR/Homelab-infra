@@ -15,10 +15,24 @@
       - zlib1g-dev
     state: present
 
-- name: Clone netbox repository
-  git:
-    repo: https://github.com/netbox-community/netbox.git
+- name: Check if netbox is already installed
+  stat:
+    path: /opt/netbox
+  register: netbox
+
+- name: "Download netbox version {{ netbox_version }}"
+  get_url:
+    url: "https://github.com/netbox-community/netbox/archive/v{{ netbox_version }}.zip"
+    dest: /tmp/netbox.zip
+  when: not netbox.stat.exists
+
+- name: Extract netbox files
+  unarchive:
+    src: /tmp/netbox.zip
     dest: /opt/netbox
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+  when: not netbox.stat.exists
 
 - name: Add netbox group
   group:
@@ -72,8 +86,8 @@
     chdir: /opt/netbox/netbox/
   environment:
     DJANGO_SUPERUSER_USERNAME: admin
-    DJANGO_SUPERUSER_EMAIL: "{{ email }}"
-    DJANGO_SUPERUSER_PASSWORD: "{{ netbox.password }}"
+    DJANGO_SUPERUSER_EMAIL: "{{ netbox_superuser_email }}"
+    DJANGO_SUPERUSER_PASSWORD: "{{ netbox_superuser_password }}"
   register: netbox_user
   ignore_errors: yes
 

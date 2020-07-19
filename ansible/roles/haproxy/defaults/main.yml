@@ -1,0 +1,3 @@
+---
+haproxy_lb_port: 2000
+haproxy_servers_group: etcd

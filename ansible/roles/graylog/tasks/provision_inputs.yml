@@ -9,7 +9,7 @@
   uri:
     url: "https://{{ inventory_hostname }}/api/system/inputs"
     user: admin
-    password: "{{ graylog.root_password }}"
+    password: "{{ graylog_root_password }}"
     method: GET
     return_content: yes
     validate_certs: no
@@ -27,7 +27,7 @@
   uri:
     url: "https://{{ inventory_hostname }}/api/system/inputs/{{ inputs[0].id }}"
     user: admin
-    password: "{{ graylog.root_password }}"
+    password: "{{ graylog_root_password }}"
     method: PUT
     return_content: yes
     body_format: json
@@ -43,7 +43,7 @@
   uri:
     url: "https://{{ inventory_hostname }}/api/system/inputs"
     user: admin
-    password: "{{ graylog.root_password }}"
+    password: "{{ graylog_root_password }}"
     method: POST
     return_content: yes
     body_format: json

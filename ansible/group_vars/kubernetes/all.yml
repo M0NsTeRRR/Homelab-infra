@@ -1,6 +1,10 @@
 ---
-lb_ip: 'lb.dmz.unicornafk.fr'
-lb_port: '6443'
-lb_service_type: 'haproxy'
-etcd_group: 'etcd'
-control_plane_group: 'master'
+corosync_lb_ip: lb.dmz.unicornafk.fr
+haproxy_lb_port: 6443
+haproxy_servers_group: etcd
+k8s_lb_ip: lb.dmz.unicornafk.fr
+k8s_lb_port: 6443
+k8s_etcd_group: etcd
+k8s_ontrol_plane_group: master
+pacemaker_lb_ip: lb.dmz.unicornafk.fr
+pacemaker_lb_service_type: haproxy

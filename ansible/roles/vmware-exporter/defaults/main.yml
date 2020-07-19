@@ -1,0 +1,4 @@
+---
+vmware_exporter_vcenter_hostname: vsphere.example.com
+vmware_exporter_vcenter_username: administrator@vsphere.example.com
+vmware_exporter_vcenter_password: password

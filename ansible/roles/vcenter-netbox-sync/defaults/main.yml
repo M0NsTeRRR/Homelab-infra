@@ -1,0 +1,9 @@
+---
+vcenter_netbox_sync_ipv4_subnets: []
+vcenter_netbox_sync_ipv6_subnets: []
+vcenter_netbox_sync_dns_group: []
+vcenter_netbox_sync_vcenter_hostname: vsphere.example.com
+vcenter_netbox_sync_vcenter_port: 443
+vcenter_netbox_sync_vcenter_username: administrator@vsphere.example.com
+vcenter_netbox_sync_vcenter_password: password
+vcenter_netbox_sync_netbox_api_key: api_key

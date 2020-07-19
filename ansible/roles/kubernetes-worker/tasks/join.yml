@@ -4,15 +4,15 @@
 
 - name: Create a new bootstrap token
   shell: kubeadm token create
-  delegate_to: "{{ groups[control_plane_group][0] }}"
+  delegate_to: "{{ groups[k8s_control_plane_group][0] }}"
   register: token
 
 - name: Get root ca cert fingerprint
   shell: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
-  delegate_to: "{{ groups[control_plane_group][0] }}"
+  delegate_to: "{{ groups[k8s_control_plane_group][0] }}"
   register: root_ca
 
 - name: Join worker cluster
-  shell: "kubeadm join --token {{ token.stdout }} --discovery-token-ca-cert-hash sha256:{{ root_ca.stdout }} {{ lb_ip }}:{{ lb_port }}"
+  shell: "kubeadm join --token {{ token.stdout }} --discovery-token-ca-cert-hash sha256:{{ root_ca.stdout }} {{ k8s_lb_ip }}:{{ k8s_lb_port }}"
   notify:
     - Recreate kube-dns

@@ -1,0 +1,7 @@
+---
+pdns_domains: []
+pdns_subdomains: []
+pdns_reverse_zones: []
+pdns_api_key: api_key
+pdns_dns_group: dns
+pdns_records: []

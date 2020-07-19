@@ -1,4 +1,5 @@
 ---
-nginx_name: "kea-dhcp"
-nginx_url: "http://127.0.0.1:8000"
-nginx_server_name: "{{ lookup('dig', host) }}, {{ lookup('dig', host, 'qtype=AAAA' ) }}"
+kea_dns_group: dns
+kea_dns_domains: []
+kea_ipv4_subnets: []
+kea_ipv6_subnets: []

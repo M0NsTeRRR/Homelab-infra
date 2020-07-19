@@ -9,4 +9,4 @@
 
 - name: "Set public_key and private_key of {{ item.key }}"
   set_fact:
-    vpn_clients: "{{ vpn_clients|default({})|combine({ item.key:{ 'ipv4':item.value.ipv4, 'ipv6':item.value.ipv6, 'public_key':public_key.stdout, 'private_key':private_key.stdout } }) }}"
+    wireguard_clients: "{{ wireguard_clients|default({})|combine({ item.key:{ 'ipv4':item.value.ipv4, 'ipv6':item.value.ipv6, 'public_key':public_key.stdout, 'private_key':private_key.stdout } }) }}"
