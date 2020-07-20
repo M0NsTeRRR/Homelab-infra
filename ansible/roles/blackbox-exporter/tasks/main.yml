@@ -5,11 +5,6 @@
     port: "9115"
     proto: tcp
 
-- name: Create blackbox folder 
-  file:
-    state: directory
-    name: /opt/exporter/blackbox/build
-
 - name: Check if blackbox-exporter is already installed
   stat:
     path: /usr/local/bin/blackbox_exporter
