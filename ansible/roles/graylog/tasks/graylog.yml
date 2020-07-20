@@ -31,7 +31,7 @@
       - { regexp: '^(#)?root_password_sha2 =', line: 'root_password_sha2 = {{ graylog_root_password | hash("sha256") }}' }
       - { regexp: '^(#)?root_email =', line: 'root_email = {{ graylog_root_email }}' }
       - { regexp: '^(#)?root_timezone =', line: 'root_timezone = {{ graylog_root_timezone }}' }
-      - { regexp: '^(#)?transport_email_enabled =', line: 'transport_email_enabled = graylog_transport_email_enabled' }
+      - { regexp: '^(#)?transport_email_enabled =', line: 'transport_email_enabled = {{ graylog_transport_email_enabled }}' }
       - { regexp: '^(#)?transport_email_hostname =', line: 'transport_email_hostname = {{ graylog_transport_email_hostname }}' }
       - { regexp: '^(#)?transport_email_port =', line: 'transport_email_port = {{ graylog_transport_email_port }}' }
       - { regexp: '^(#)?transport_email_use_auth =', line: 'transport_email_use_auth = {{ graylog_transport_email_use_auth }}' }
@@ -43,3 +43,10 @@
       - { regexp: '^(#)?transport_email_use_ssl =', line: 'transport_email_use_ssl = {{ graylog_transport_email_use_ssl }}' }
       - { regexp: '^(#)?transport_email_web_interface_url =', line: 'transport_email_web_interface_url = https://{{ ansible_hostname }}' }
   notify: restart graylog-server
+
+- meta: flush_handlers
+
+- name: Wait graylog-server restart
+  wait_for:
+    port: 443
+    delay: 10
