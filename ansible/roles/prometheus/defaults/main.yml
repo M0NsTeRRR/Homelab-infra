@@ -1,2 +1,3 @@
 ---
-prometheus_vpn_hostname: vpn.example.com
+prometheus_vpn_group: vpn
+prometheus_dhcp_group: dhcp

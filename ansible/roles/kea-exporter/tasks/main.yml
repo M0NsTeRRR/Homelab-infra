@@ -1,0 +1,23 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "9547"
+    proto: tcp
+
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  pip:
+    name: kea-exporter
+
+- name: Create systemd service file
+  template:
+    src: kea-exporter.service.j2
+    dest: /etc/systemd/system/kea-exporter.service
+  notify:
+    - enable kea-exporter.service
+    - restart kea-exporter.service

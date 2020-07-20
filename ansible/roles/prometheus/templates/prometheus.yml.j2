@@ -65,4 +65,14 @@ scrape_configs:
 
   - job_name: wireguard
     static_configs:
-      - targets: ['{{ prometheus_vpn_hostname }}:9586']
+      - targets:
+{% for vpn in groups[prometheus_vpn_group] %}
+        - '{{ vpn }}:9586'
+{% endfor %}
+
+  - job_name: kea-dhcp
+    static_configs:
+      - targets:
+{% for vpn in groups[prometheus_dhcp_group] %}
+        - '{{ vpn }}:9547'
+{% endfor %}

@@ -1,0 +1,10 @@
+---
+- name: restart kea-exporter.service
+  service:
+    name: kea-exporter.service
+    state: restarted
+
+- name: enable kea-exporter.service
+  service:
+    name: kea-exporter.service
+    enabled: true
