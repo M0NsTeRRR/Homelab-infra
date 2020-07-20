@@ -143,3 +143,8 @@
   notify: restart pdns
 
 - meta: flush_handlers
+
+- name: Wait pdns restart
+  wait_for:
+    port: 443
+    delay: 10
