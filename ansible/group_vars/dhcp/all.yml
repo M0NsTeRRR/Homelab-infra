@@ -14,7 +14,7 @@ kea_ipv4_subnets:
         end: 192.168.20.240
     router: 192.168.20.2
     reservations:
-      - hostname: UAP1
+      - hostname: AP1
         hw_address: 18:E8:29:A3:24:10
         ip_address: 192.168.20.51
   - subnet: 192.168.30.0/24
@@ -61,7 +61,7 @@ kea_ipv6_subnets:
       - start: 2001:bc8:2e64:120::201
         end: 2001:bc8:2e64:120::240
     reservations:
-      - hostname: UAP1
+      - hostname: AP1
         hw_address: 18:E8:29:A3:24:10
         ip_address: 2001:bc8:2e64:120::51
   - subnet: 2001:bc8:2e64:130::/64
