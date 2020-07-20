@@ -35,7 +35,7 @@
     mv /home/{{ ansible_user }}/apiserver-etcd-client.crt /etc/kubernetes/pki
     mv /home/{{ ansible_user }}/apiserver-etcd-client.key /etc/kubernetes/pki
 
-- name: Ansible fix permissions on certificates
+- name: Fix permissions on certificates
   file:
     path: '{{ item.path }}'
     owner: root
