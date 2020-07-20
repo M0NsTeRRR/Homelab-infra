@@ -64,6 +64,18 @@ pdns_records:
     ipv4: 192.168.40.53
     ipv6: 2001:bc8:2e64:140::53
     rdns: true
+  - canonical_hostname: hs110-rack1.unicornafk.fr.
+    ipv4: 192.168.40.101
+    ipv6: 2001:bc8:2e64:140::101
+    rdns: true
+  - canonical_hostname: hs110-rack2.unicornafk.fr.
+    ipv4: 192.168.40.102
+    ipv6: 2001:bc8:2e64:140::102
+    rdns: true
+  - canonical_hostname: hs110-chambre1.unicornafk.fr.
+    ipv4: 192.168.40.103
+    ipv6: 2001:bc8:2e64:140::103
+    rdns: true
   # adminafk.fr
   - canonical_hostname: vpn.adminafk.fr.
     ipv4: 192.168.10.29
