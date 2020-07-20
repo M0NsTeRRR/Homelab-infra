@@ -16,6 +16,10 @@ pdns_records:
     ipv4: 192.168.10.22
     ipv6: 2001:bc8:2e64:110::22
     rdns: true
+  - canonical_hostname: lb.dmz.unicornafk.fr.
+    ipv4: 192.168.10.60
+    ipv6: 2001:bc8:2e64:110::60
+    rdns: false
   - canonical_hostname: nas.unicornafk.fr.
     ipv4: 192.168.20.42
     ipv6: 2001:bc8:2e64:120::42

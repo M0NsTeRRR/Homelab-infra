@@ -17,7 +17,7 @@ scrape_configs:
     - source_labels: [__param_target]
       target_label: instance
     - target_label: __address__
-      replacement: localhost:9605
+      replacement: {{ inventory_hostname }}:9605
 
   - job_name: 'vmware_vcenter'
     metrics_path: '/metrics'
@@ -30,7 +30,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: localhost:9272
+        replacement: {{ inventory_hostname }}:9272
 
   - job_name: 'blackbox'
     metrics_path: /probe
@@ -45,7 +45,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: localhost:9115
+        replacement: {{ inventory_hostname }}:9115
 
   - job_name: 'snmp'
     static_configs:
@@ -61,4 +61,4 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: localhost:9116
+        replacement: {{ inventory_hostname }}:9116
