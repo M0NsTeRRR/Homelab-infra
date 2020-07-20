@@ -62,3 +62,7 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: {{ inventory_hostname }}:9116
+
+  - job_name: wireguard
+    static_configs:
+      - targets: ['{{ prometheus_vpn_hostname }}:9586']

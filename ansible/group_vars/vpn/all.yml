@@ -13,3 +13,7 @@ wireguard_clients:
   LudovicPortable:
     ipv4: 192.168.4.13/32
     ipv6: 2001:bc8:2e64:104::13/128
+
+wireguard_exporter_peers:
+  - name: homelab
+    public_key: S7q5wROYfaRyFbuz1DXsbXgq8ZfiYyJZ4oSrlztgTAQ=

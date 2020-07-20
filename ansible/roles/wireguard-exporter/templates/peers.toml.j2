@@ -1,0 +1,5 @@
+{% for peer in wireguard_exporter_peers %}
+[[peer]]
+public_key = "{{ peer.public_key }}"
+name = "{{ peer.name }}"
+{% endfor %}

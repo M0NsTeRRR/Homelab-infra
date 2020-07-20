@@ -1,0 +1,11 @@
+[Unit]
+Description=Prometheus WireGuard Exporter
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/wireguard_exporter -wireguard.peer-file /etc/wireguard_exporter/peers.toml
+
+[Install]
+WantedBy=multi-user.target
