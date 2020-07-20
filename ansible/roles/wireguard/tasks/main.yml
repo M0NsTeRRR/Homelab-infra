@@ -12,9 +12,11 @@
     filename: buster-backports
   when: ansible_distribution == "Debian"
 
-- name: Install Wireguard
+- name: Install Wireguard and Qrencode
   apt:
-    name: wireguard
+    pkg:
+      - wireguard
+      - qrencode
     state: present
 
 - name: Enable IPv4 forwarding
