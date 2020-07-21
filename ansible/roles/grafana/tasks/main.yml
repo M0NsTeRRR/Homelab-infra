@@ -99,3 +99,6 @@
 
 - name: Install grafana plugins
   include_tasks: plugins.yml
+
+- name: Add grafana dashboards
+  include_tasks: dashboards.yml

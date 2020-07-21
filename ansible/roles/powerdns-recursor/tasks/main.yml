@@ -83,6 +83,7 @@
       - { regexp: '^(# )?allow-from=', line: 'allow-from={{ pdns_ipv4_subnets | join(", ") }}, {{ pdns_ipv6_subnets | join(", ") }}' }
       - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ pdns_domains | join("=" + dns_list + ", ") + "=" + dns_list }}, {{ pdns_reverse_zones | join("=" + dns_list + ", ") + "=" + dns_list }}' }
       - { regexp: '^(# )?serve-rfc1918=', line: 'serve-rfc1918=no' }
+      - { regexp: '^(# )?api-key=', line: 'api-key={{ pdns_api_key }}' }
       - { regexp: '^(# )?webserver-address=', line: 'webserver-address=127.0.0.1' }
       - { regexp: '^(# )?webserver-port=', line: 'webserver-port=8082' }
       - { regexp: '^(# )?webserver-allow-from=', line: 'webserver-allow-from=127.0.0.1' }

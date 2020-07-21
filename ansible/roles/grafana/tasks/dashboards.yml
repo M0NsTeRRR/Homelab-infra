@@ -1,0 +1,6 @@
+---
+- name: "Create {{ item | basename | replace('.j2', '') }} grafana dashboards"
+  template:
+    src: "{{ item }}"
+    dest: "/var/lib/grafana/dashboards/{{ item | basename | replace('.j2', '') }}"
+  with_fileglob: templates/dashboards/*.j2
