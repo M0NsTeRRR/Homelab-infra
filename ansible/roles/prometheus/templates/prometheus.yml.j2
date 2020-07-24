@@ -7,7 +7,6 @@ scrape_configs:
   - job_name: fping
     scrape_interval: 5s
     metrics_path: /probe
-    static_configs:
     file_sd_configs:
     - files:
       - fping/*.json
@@ -51,7 +50,7 @@ scrape_configs:
     static_configs:
     file_sd_configs:
     - files:
-      - snmp-exporter/*.json
+      - snmp/*.json
     metrics_path: /snmp
     params:
       module: [if_mib]
@@ -73,6 +72,19 @@ scrape_configs:
   - job_name: kea-dhcp
     static_configs:
       - targets:
-{% for vpn in groups[prometheus_dhcp_group] %}
-        - '{{ vpn }}:9547'
+{% for dhcp in groups[prometheus_dhcp_group] %}
+        - '{{ dhcp }}:9547'
 {% endfor %}
+
+  - job_name: 'kasa'
+    file_sd_configs:
+    - files:
+      - tplink_plug/*.json
+    metrics_path: /scrape
+    relabel_configs:
+      - source_labels : [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ inventory_hostname }}:9233
