@@ -1,0 +1,10 @@
+---
+- name: restart tplink-plug-exporter.service
+  service:
+    name: tplink-plug-exporter.service
+    state: restarted
+
+- name: enable tplink-plug-exporter.service
+  service:
+    name: tplink-plug-exporter.service
+    enabled: true

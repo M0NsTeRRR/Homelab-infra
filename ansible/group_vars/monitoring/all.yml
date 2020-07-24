@@ -61,3 +61,8 @@ vmware_exporter_vcenter_username: '{{ vcenter_username }}'
 
 prometheus_vpn_group: vpn
 prometheus_dhcp_group: dhcp
+
+tplink_plug_exporter_targets:
+  - hs110-rack1.unicornafk.fr
+  - hs110-rack2.unicornafk.fr
+  - hs110-chambre1.unicornafk.fr
