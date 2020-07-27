@@ -27,7 +27,6 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-
 resource "vsphere_virtual_machine" "vm" {
   name             = var.vm_name
   datastore_id     = data.vsphere_datastore.datastore.id
@@ -35,7 +34,7 @@ resource "vsphere_virtual_machine" "vm" {
   host_system_id   = data.vsphere_host.host.id
 
   guest_id = data.vsphere_virtual_machine.template.guest_id
-  
+
   num_cpus = var.hardware.num_cpus
   memory   = var.hardware.memory
 
@@ -69,6 +68,19 @@ resource "vsphere_virtual_machine" "vm" {
       ipv4_gateway    = var.network.gateway
       ipv6_gateway    = var.network.gateway6
     }
+  }
+
+  provisioner "remote-exec" {
+    connection {
+      host = var.vm_ip
+      user = "ludovic"
+      password = "ludovic"
+    }
+    inline = ["echo 'Wait VM creation'"]
+  }
+
+  provisioner "local-exec" {
+    command = "ansible-playbook -i ${var.vm_ip}, lvm_resize.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
   }
 }
 
