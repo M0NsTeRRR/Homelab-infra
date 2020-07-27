@@ -50,7 +50,7 @@ Linux : `./build.sh`
 # Terraform
 `cd terraform`  
 
-Install dependencies `< packages.txt xargs sudo apt-get install -y`
+Install dependencies `apt install -y ipv6calc jq`
 
 fill `account.hcl` based on `account.example`
 
