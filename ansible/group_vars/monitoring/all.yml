@@ -1,8 +1,8 @@
 ---
 grafana_smtp_host: "{{ smtp_provider_host }}"
 grafana_smtp_port: "{{ smtp_provider_port }}"
-grafana_smtp_user: monitoring@unicornafk.fr
-grafana_smtp_from_address: monitoring@unicornafk.fr
+grafana_smtp_user: "{{ monitoring_email }}"
+grafana_smtp_from_address: "{{ monitoring_email }}"
 
 blackbox_exporter_targets:
   - https://dns1.unicornafk.fr
