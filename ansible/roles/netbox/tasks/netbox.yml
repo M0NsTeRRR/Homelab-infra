@@ -99,7 +99,7 @@
 - name: Check if user was created
   fail:
     msg: "{{ netbox_user.stderr }}"
-  when: '"That username is already taken" not in netbox_user.stderr'
+  when: 'netbox_user.rc == 1 and "That username is already taken" not in netbox_user.stderr'
 
 - name: Collect netbox static files
   shell: 
