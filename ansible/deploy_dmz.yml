@@ -11,6 +11,7 @@
   become: yes
   roles:
     - kea-dhcp
+    - kea-exporter
 
 - name: Configure apt-proxy cache servers
   hosts: apt_proxy
@@ -31,6 +32,12 @@
     - netbox
     - vcenter-netbox-sync
 
+- name: Configure Git
+  hosts: git
+  become: yes
+  roles:
+    - gitlab
+
 - name: Configure Wiki
   hosts: wiki
   become: yes
@@ -48,14 +55,15 @@
   become: yes
   roles:
     - wireguard
+    - wireguard-exporter
 
-- name: Configure log
+- name: Configure Log
   hosts: log
   become: yes
   roles:
     - graylog
 
-- name: Configure monitoring
+- name: Configure Monitoring
   hosts: monitoring
   become: yes
   roles:
@@ -64,7 +72,7 @@
     - snmp-exporter
     - blackbox-exporter
     - fping-exporter
-    - vmware-exporter
+    - tplink-plug-exporter
 
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb
