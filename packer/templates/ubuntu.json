@@ -21,7 +21,8 @@
 
       
       "vm_name": "packer-ubuntu",
-      "cluster": "HA", "host": "server3.unicornafk.fr",
+      "cluster": "HA",
+      "host": "server3.unicornafk.fr",
       "datastore": "SERVER3-RAID1",
       "vm_version": 14,
       "guest_os_type": "ubuntu64Guest",
