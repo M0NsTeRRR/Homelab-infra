@@ -23,7 +23,7 @@
       "vm_name": "packer-debian",
       "cluster": "HA", "host": "server3.unicornafk.fr",
       "datastore": "SERVER3-RAID1",
-      "vm_version": 13,
+      "vm_version": 14,
       "guest_os_type": "debian10_64Guest",
       "convert_to_template": "true",
       
