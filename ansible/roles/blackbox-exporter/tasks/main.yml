@@ -54,18 +54,3 @@
   notify:
     - enable blackbox-exporter.service
     - restart blackbox-exporter.service
-
-- name: Create blackbox folder in prometheus folder 
-  file:
-    state: directory
-    name: /etc/prometheus/blackbox
-
-- name: Create blackbox target file
-  template:
-    src: targets.json.j2
-    dest: /etc/prometheus/blackbox/targets.json
-
-- name: Create blackbox grafana dashboards
-  template:
-    src: dashboard.json.j2
-    dest: /var/lib/grafana/dashboards/blackbox.json

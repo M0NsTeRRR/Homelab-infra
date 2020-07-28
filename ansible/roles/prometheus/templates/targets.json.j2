@@ -1,10 +1,10 @@
 [
   {
     "labels": {
-      "job": "blackbox"
+      "job": "{{ item.key }}"
     },
     "targets": [
-      {% for target in blackbox_exporter_targets %}
+      {% for target in item.value %}
       "{{ target }}"{% if not loop.last %},{% endif %}
       {% endfor %}
     ]

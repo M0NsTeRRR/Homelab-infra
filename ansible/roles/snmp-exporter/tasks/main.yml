@@ -59,19 +59,3 @@
   notify:
     - enable snmp-exporter.service
     - restart snmp-exporter.service
-
-- name: Create snmp folder in prometheus folder
-  file:
-    state: directory
-    name: /etc/prometheus/snmp
-
-- name: Create snmp-exporter target file
-  template:
-    src: targets.json.j2
-    dest: /etc/prometheus/snmp/targets.json
-
-- name: Create snmp-exporter grafana dashboards
-  template:
-    src: dashboard.json.j2
-    dest: /var/lib/grafana/dashboards/snmp-exporter.json
-    

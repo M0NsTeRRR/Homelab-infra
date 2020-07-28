@@ -4,65 +4,73 @@ grafana_smtp_port: "{{ smtp_provider_port }}"
 grafana_smtp_user: "{{ monitoring_email }}"
 grafana_smtp_from_address: "{{ monitoring_email }}"
 
-blackbox_exporter_targets:
-  - https://dns1.unicornafk.fr
-  - https://dns2.unicornafk.fr
-  - https://dhcp1.unicornafk.fr
-  - https://dhcp2.unicornafk.fr
-  - https://ipam.unicornafk.fr
-  - https://git.unicornafk.fr
-  - https://wiki.unicornafk.fr
-  - https://blog.unicornafk.fr
-  - https://unifi.unicornafk.fr:8443
-  - https://nas.unicornafk.fr
-  - https://log.unicornafk.fr
-
-fping_exporter_targets:
-  - 1.1.1.1
-  - 2606:4700:4700::1111
-  - 8.8.8.8
-  - 2001:4860:4860::8888
-  - 192.168.4.2
-  - 2001:bc8:2e64:104::2
-
-snmp_exporter_targets:
-  - 192.168.5.1
-  - 192.168.40.2
-  - 192.168.40.3
-  - pi1.unicornafk.fr
-  - apt-proxy.unicornafk.fr
-  - blog.unicornafk.fr
-  - dhcp1.unicornafk.fr
-  - dhcp2.unicornafk.fr
-  - dns1.unicornafk.fr
-  - dns2.unicornafk.fr
-  - git.unicornafk.fr
-  - ipam.unicornafk.fr
-  - monitoring.unicornafk.fr
-  - reverse-proxy.unicornafk.fr
-  - unifi.unicornafk.fr
-  - vpn.unicornafk.fr
-  - wiki.unicornafk.fr
-  - lb1.dmz.unicornafk.fr
-  - lb2.dmz.unicornafk.fr
-  - lb3.dmz.unicornafk.fr
-  - etcd1.dmz.unicornafk.fr
-  - etcd2.dmz.unicornafk.fr
-  - etcd3.dmz.unicornafk.fr
-  - master1.dmz.unicornafk.fr
-  - master2.dmz.unicornafk.fr
-  - master3.dmz.unicornafk.fr
-  - worker1.dmz.unicornafk.fr
-  - worker2.dmz.unicornafk.fr
-  - worker3.dmz.unicornafk.fr
-
-vmware_exporter_vcenter_hostname: '{{ vcenter_hostname }}'
-vmware_exporter_vcenter_username: '{{ vcenter_username }}'
-
-prometheus_vpn_group: vpn
-prometheus_dhcp_group: dhcp
-
-tplink_plug_exporter_targets:
-  - hs110-rack1.unicornafk.fr
-  - hs110-rack2.unicornafk.fr
-  - hs110-chambre1.unicornafk.fr
+prometheus_targets:
+  blackbox:
+    - https://dns1.unicornafk.fr
+    - https://dns2.unicornafk.fr
+    - https://dhcp1.unicornafk.fr
+    - https://dhcp2.unicornafk.fr
+    - https://ipam.unicornafk.fr
+    - https://git.unicornafk.fr
+    - https://wiki.unicornafk.fr
+    - https://blog.unicornafk.fr
+    - https://unifi.unicornafk.fr:8443
+    - https://nas.unicornafk.fr
+    - https://log.unicornafk.fr
+  fping:
+    - 1.1.1.1
+    - 2606:4700:4700::1111
+    - 8.8.8.8
+    - 2001:4860:4860::8888
+    - 192.168.5.1
+    - 2001:bc8:2e64:105::1
+  snmp:
+    - sw2.unicornafk.fr
+  snmp_microtik:
+    - 192.168.5.1
+  snmp_brocade:
+    - 192.168.10.2
+  snmp_qnap:
+    - 192.168.20.42
+  snmp_unifi:
+    - ap1.unicornafk.fr
+  snmp_vmware:
+    - server1.unicornafk.fr
+    - server2.unicornafk.fr
+    - server3.unicornafk.fr
+  snmp_linux:
+    - pi1.unicornafk.fr
+    - apt-proxy.unicornafk.fr
+    - blog.unicornafk.fr
+    - dhcp1.unicornafk.fr
+    - dhcp2.unicornafk.fr
+    - dns1.unicornafk.fr
+    - dns2.unicornafk.fr
+    - git.unicornafk.fr
+    - ipam.unicornafk.fr
+    - monitoring.unicornafk.fr
+    - reverse-proxy.unicornafk.fr
+    - unifi.unicornafk.fr
+    - vpn.unicornafk.fr
+    - wiki.unicornafk.fr
+    - lb1.dmz.unicornafk.fr
+    - lb2.dmz.unicornafk.fr
+    - lb3.dmz.unicornafk.fr
+    - etcd1.dmz.unicornafk.fr
+    - etcd2.dmz.unicornafk.fr
+    - etcd3.dmz.unicornafk.fr
+    - master1.dmz.unicornafk.fr
+    - master2.dmz.unicornafk.fr
+    - master3.dmz.unicornafk.fr
+    - worker1.dmz.unicornafk.fr
+    - worker2.dmz.unicornafk.fr
+    - worker3.dmz.unicornafk.fr
+  wireguard:
+    - vpn.unicornafk.fr:9586
+  kea_dhcp:
+    - dhcp1.unicornafk.fr:9547
+    - dhcp2.unicornafk.fr:9547
+  tplink_plug:
+    - hs110-rack1.unicornafk.fr
+    - hs110-rack2.unicornafk.fr
+    - hs110-chambre1.unicornafk.fr

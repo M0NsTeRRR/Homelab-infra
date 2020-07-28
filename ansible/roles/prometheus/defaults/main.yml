@@ -1,4 +1,2 @@
 ---
-prometheus_vpn_group: vpn
-prometheus_dhcp_group: dhcp
-prometheus_hs110s: []
+prometheus_targets: {}

@@ -9,7 +9,7 @@ scrape_configs:
     metrics_path: /probe
     file_sd_configs:
     - files:
-      - fping/*.json
+      - fping/targets.json
     relabel_configs:
     - source_labels: [__address__]
       target_label: __param_target
@@ -18,26 +18,13 @@ scrape_configs:
     - target_label: __address__
       replacement: {{ inventory_hostname }}:9605
 
-  - job_name: 'vmware_vcenter'
-    metrics_path: '/metrics'
-    static_configs:
-      - targets:
-        - 'vsphere.unicornafk.fr'
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: {{ inventory_hostname }}:9272
-
-  - job_name: 'blackbox'
+  - job_name: blackbox
     metrics_path: /probe
     params:
       module: [http_2xx]
     file_sd_configs:
     - files:
-      - blackbox/*.json
+      - blackbox/targets.json
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -46,11 +33,10 @@ scrape_configs:
       - target_label: __address__
         replacement: {{ inventory_hostname }}:9115
 
-  - job_name: 'snmp'
-    static_configs:
+  - job_name: snmp
     file_sd_configs:
     - files:
-      - snmp/*.json
+      - snmp/targets.json
     metrics_path: /snmp
     params:
       module: [if_mib]
@@ -62,24 +48,110 @@ scrape_configs:
       - target_label: __address__
         replacement: {{ inventory_hostname }}:9116
 
-  - job_name: wireguard
-    static_configs:
-      - targets:
-{% for vpn in groups[prometheus_vpn_group] %}
-        - '{{ vpn }}:9586'
-{% endfor %}
-
-  - job_name: kea-dhcp
-    static_configs:
-      - targets:
-{% for dhcp in groups[prometheus_dhcp_group] %}
-        - '{{ dhcp }}:9547'
-{% endfor %}
-
-  - job_name: 'kasa'
+  - job_name: snmp_microtik
     file_sd_configs:
     - files:
-      - tplink_plug/*.json
+      - snmp_microtik/targets.json
+    metrics_path: /snmp
+    params:
+      module: [microtik]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ inventory_hostname }}:9116
+
+  - job_name: snmp_brocade
+    file_sd_configs:
+    - files:
+      - snmp_brocade/targets.json
+    metrics_path: /snmp
+    params:
+      module: [brocade]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ inventory_hostname }}:9116
+
+  - job_name: snmp_qnap
+    file_sd_configs:
+    - files:
+      - snmp_qnap/targets.json
+    metrics_path: /snmp
+    params:
+      module: [qnap]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ inventory_hostname }}:9116
+
+  - job_name: snmp_unifi
+    file_sd_configs:
+    - files:
+      - snmp_unifi/targets.json
+    metrics_path: /snmp
+    params:
+      module: [ubiquiti_unifi]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ inventory_hostname }}:9116
+
+  - job_name: snmp_vmware
+    file_sd_configs:
+    - files:
+      - snmp_vmware/targets.json
+    metrics_path: /snmp
+    params:
+      module: [vmware]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ inventory_hostname }}:9116
+
+  - job_name: snmp_linux
+    file_sd_configs:
+    - files:
+      - snmp_linux/targets.json
+    metrics_path: /snmp
+    params:
+      module: [linux]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ inventory_hostname }}:9116
+
+  - job_name: wireguard
+    file_sd_configs:
+    - files:
+      - wireguard/targets.json
+
+  - job_name: kea-dhcp
+    file_sd_configs:
+    - files:
+      - kea_dhcp/targets.json
+
+  - job_name: tplink_plug
+    file_sd_configs:
+    - files:
+      - tplink_plug/targets.json
     metrics_path: /scrape
     relabel_configs:
       - source_labels : [__address__]

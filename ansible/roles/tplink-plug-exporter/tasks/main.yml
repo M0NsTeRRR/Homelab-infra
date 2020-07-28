@@ -42,13 +42,3 @@
   notify:
     - enable tplink-plug-exporter.service
     - restart tplink-plug-exporter.service
-
-- name: Create tplink_plug folder in prometheus folder
-  file:
-    state: directory
-    name: /etc/prometheus/tplink_plug
-
-- name: Create tplink_plug target file
-  template:
-    src: targets.json.j2
-    dest: /etc/prometheus/tplink_plug/targets.json

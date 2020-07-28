@@ -15,3 +15,15 @@
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
   notify: restart prometheus
+
+- name: "Create {{ item.key }} folder in prometheus folder"
+  file:
+    state: directory
+    name: "/etc/prometheus/{{ item.key }}"
+  with_dict: "{{ prometheus_targets }}"
+
+- name: "Create {{ item.key }} target file"
+  template:
+    src: targets.json.j2
+    dest: "/etc/prometheus/{{ item.key }}/targets.json"
+  with_dict: "{{ prometheus_targets }}"

@@ -52,18 +52,3 @@
   notify:
     - enable fping-exporter.service
     - restart fping-exporter.service
-
-- name: Create fping folder in prometheus folder 
-  file:
-    state: directory
-    name: /etc/prometheus/fping
-
-- name: Create fping target file
-  template:
-    src: targets.json.j2
-    dest: /etc/prometheus/fping/targets.json
-
-- name: Create fping grafana dashboards
-  template:
-    src: dashboard.json.j2
-    dest: /var/lib/grafana/dashboards/fping.json
