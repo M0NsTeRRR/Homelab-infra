@@ -80,7 +80,7 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${var.vm_ip}, lvm_resize.yml --ssh-common-args='-o StrictHostKeyChecking=no'"
+    command = "ansible-playbook -i ${var.vm_ip}, lvm_resize.yml --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
   }
 }
 
