@@ -15,7 +15,7 @@
 - set_fact:
     events: "{{ event.json.event_definitions | selectattr('title','equalto',item.title) | list }}"
 - set_fact:
-    event_found: "{{ event.json.total > 0 }}"
+    event_found: "{{ events | length > 0 }}"
 
 #- name: "Event {{ item.title }} updated"
 #  uri:

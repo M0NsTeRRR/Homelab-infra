@@ -21,7 +21,7 @@
 - set_fact:
     inputs: "{{ input.json.inputs | selectattr('title','equalto',item.title) | list }}"
 - set_fact:
-    input_found: "{{ input.json.total > 0 }}"
+    input_found: "{{ inputs | length > 0 }}"
 
 - name: "Input {{ item.title }} updated"
   uri:
