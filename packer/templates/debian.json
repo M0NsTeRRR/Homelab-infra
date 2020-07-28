@@ -24,7 +24,7 @@
       "cluster": "HA", "host": "server3.unicornafk.fr",
       "datastore": "SERVER3-RAID1",
       "vm_version": 14,
-      "guest_os_type": "debian10_64Guest",
+      "guest_os_type": "ubuntu64Guest",
       "convert_to_template": "true",
       
       "CPUs": 1,
