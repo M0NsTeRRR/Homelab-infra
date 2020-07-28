@@ -2,8 +2,11 @@
 - name: Open required ports
   ufw:
     rule: allow
-    port: "67"
+    port: "{{ item }}"
     proto: udp
+  with_items:
+    - "67"
+    - "547"
 
 - name: Install kea-dhcp4-server kea-dhcp6-server kea-ctrl-agent
   apt:
