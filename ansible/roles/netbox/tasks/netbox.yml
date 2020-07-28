@@ -15,20 +15,25 @@
       - zlib1g-dev
     state: present
 
+- name: Create netbox folder
+  file:
+    state: directory
+    name: /opt/netbox
+
 - name: Check if netbox is already installed
   stat:
-    path: /opt/netbox
+    path: /opt/netbox/netbox
   register: netbox
 
 - name: "Download netbox version {{ netbox_version }}"
   get_url:
-    url: "https://github.com/netbox-community/netbox/archive/v{{ netbox_version }}.zip"
-    dest: /tmp/netbox.zip
+    url: "https://github.com/netbox-community/netbox/archive/v{{ netbox_version }}.tar.gz"
+    dest: /tmp/netbox.tar.gz
   when: not netbox.stat.exists
 
 - name: Extract netbox files
   unarchive:
-    src: /tmp/netbox.zip
+    src: /tmp/netbox.tar.gz
     dest: /opt/netbox
     remote_src: yes
     extra_opts: [--strip-components=1]
