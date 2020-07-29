@@ -27,3 +27,4 @@
     src: targets.json.j2
     dest: "/etc/prometheus/{{ item.key }}/targets.json"
   with_dict: "{{ prometheus_targets }}"
+  notify: restart prometheus

@@ -84,7 +84,9 @@
       - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ pdns_domains | join("=" + dns_list + ", ") + "=" + dns_list }}, {{ pdns_reverse_zones | join("=" + dns_list + ", ") + "=" + dns_list }}' }
       - { regexp: '^(# )?serve-rfc1918=', line: 'serve-rfc1918=no' }
       - { regexp: '^(# )?api-key=', line: 'api-key={{ pdns_api_key }}' }
+      - { regexp: '^(# )?webserver=', line: 'webserver=yes' }
       - { regexp: '^(# )?webserver-address=', line: 'webserver-address=127.0.0.1' }
+      - { regexp: '^(# )?webserver-password=', line: 'webserver-password=' }
       - { regexp: '^(# )?webserver-port=', line: 'webserver-port=8082' }
       - { regexp: '^(# )?webserver-allow-from=', line: 'webserver-allow-from=127.0.0.1' }
   notify: restart pdns-recursor

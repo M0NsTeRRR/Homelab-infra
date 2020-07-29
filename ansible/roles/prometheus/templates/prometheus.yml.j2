@@ -148,6 +148,22 @@ scrape_configs:
     - files:
       - kea_dhcp/targets.json
 
+  - job_name: powerdns_authoritative
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    file_sd_configs:
+    - files:
+      - powerdns_authoritative/targets.json
+
+  - job_name: powerdns_recursor
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true
+    file_sd_configs:
+    - files:
+      - powerdns_recursor/targets.json
+
   - job_name: tplink_plug
     file_sd_configs:
     - files:

@@ -1,12 +1,16 @@
 ---
-- name: Open required ports
+- name: Open port 80
   ufw:
     rule: allow
-    port: "{{ item }}"
+    port: "80"
     proto: tcp
-  with_items:
-    - "80"
-    - "443"
+  when: nginx_http_redirection
+
+- name: "Open port {{ nginx_ssl_port }}"
+  ufw:
+    rule: allow
+    port: "{{ nginx_ssl_port }}"
+    proto: tcp
 
 - name: Install pip3
   apt:

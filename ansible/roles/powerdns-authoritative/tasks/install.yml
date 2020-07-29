@@ -111,7 +111,9 @@
       - { regexp: '^(# )?gsqlite3-dnssec=', line: 'gsqlite3-dnssec=yes' }
       - { regexp: '^(# )?api=', line: 'api=yes' }
       - { regexp: '^(# )?api-key=', line: 'api-key={{ pdns_api_key }}' }
+      - { regexp: '^(# )?webserver=', line: 'webserver=yes' }
       - { regexp: '^(# )?webserver-address=', line: 'webserver-address=127.0.0.1' }
+      - { regexp: '^(# )?webserver-password=', line: 'webserver-password=' }
       - { regexp: '^(# )?webserver-port=', line: 'webserver-port=8081' }
       - { regexp: '^(# )?webserver-allow-from=', line: 'webserver-allow-from=127.0.0.1' }
   notify: restart pdns
@@ -145,6 +147,11 @@
 - meta: flush_handlers
 
 - name: Wait pdns restart
-  wait_for:
-    port: 443
-    delay: 10
+  uri:
+    url: "https://{{ inventory_hostname }}/metrics"
+    status_code: 200
+    validate_certs: no
+  register: result
+  until: result.status == 200
+  retries: 60
+  delay: 1
