@@ -1,4 +1,3 @@
-{% raw %}
 {
   "annotations": {
     "list": [
@@ -16,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 15,
-  "iteration": 1595415614578,
+  "iteration": 1596069926197,
   "links": [],
   "panels": [
     {
@@ -55,7 +53,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -159,7 +157,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "targets": [
         {
           "expr": "count(kasa_online==1)/count(kasa_online)",
@@ -209,7 +207,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -300,14 +298,14 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "last"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "targets": [
         {
           "expr": "sum(kasa_power_load{instance=~\"$host\"}) by (job)",
@@ -357,7 +355,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -455,7 +453,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "targets": [
         {
           "expr": "sum(increase(kasa_power_total{instance=~\"$host\"}[30d])) by (job)",
@@ -505,7 +503,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -603,7 +601,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "targets": [
         {
           "expr": "sum(increase(kasa_power_total{instance=~\"$host\"}[30d])) by (job)*$electricity_cost",
@@ -622,7 +620,10 @@
   "refresh": false,
   "schemaVersion": 26,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "Kasa",
+    "Prometheus"
+  ],
   "templating": {
     "list": [
       {
@@ -694,11 +695,6 @@
   },
   "timezone": "",
   "title": "Kasa",
-  "tags": [
-    "Kasa",
-    "Prometheus"
-  ],
   "uid": "kKBuMTigk",
-  "version": 12
+  "version": 1
 }
-{% endraw %}
