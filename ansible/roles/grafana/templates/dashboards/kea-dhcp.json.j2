@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1595337050925,
+  "iteration": 1596139760365,
   "links": [],
   "panels": [
     {
@@ -54,7 +54,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -157,7 +157,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -257,7 +257,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -357,7 +357,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -467,10 +467,10 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "targets": [
         {
-          "expr": "sum(kea_dhcp4_addresses_assigned_total{instance=~\"$host\"}/kea_dhcp4_addresses_total{job=\"kea-dhcp\"}) by (subnet)",
+          "expr": "sum(kea_dhcp4_addresses_assigned_total{instance=~\"$host\"}/kea_dhcp4_addresses_total{instance=~\"$host\"}) by (subnet)",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -479,7 +479,7 @@
           "refId": "A"
         },
         {
-          "expr": "sum(kea_dhcp6_na_assigned_total{instance=~\"$host\"}/kea_dhcp6_na_total{job=\"kea-dhcp\"}) by (subnet)",
+          "expr": "sum(kea_dhcp6_na_assigned_total{instance=~\"$host\"}/kea_dhcp6_na_total{instance=~\"$host\"}) by (subnet)",
           "interval": "",
           "legendFormat": "{{subnet}}",
           "refId": "B"
@@ -525,7 +525,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -625,7 +625,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -727,7 +727,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -829,7 +829,7 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "7.1.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -900,6 +900,10 @@
   "refresh": false,
   "schemaVersion": 26,
   "style": "dark",
+  "tags": [
+    "Prometheus",
+    "Kea-dhcp"
+  ],
   "templating": {
     "list": [
       {
@@ -933,7 +937,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -951,10 +955,6 @@
   },
   "timezone": "",
   "title": "Kea-dhcp",
-  "tags": [
-    "Prometheus",
-    "Kea-dhcp"
-  ],
   "uid": "KWr0Cw7Gz",
   "version": 1
 }
