@@ -4,6 +4,12 @@ grafana_smtp_port: "{{ smtp_provider_port }}"
 grafana_smtp_user: "{{ monitoring_email }}"
 grafana_smtp_from_address: "{{ monitoring_email }}"
 
+vmware_exporter_vcenter_hostname: vsphere.unicornafk.fr
+vmware_exporter_vcenter_username: administrator@vsphere.unicornafk.fr
+
+unifi_poller_url: https://unifi.unicornafk.fr:8443
+unifi_poller_user: unifipoller
+
 prometheus_targets:
   blackbox:
     - https://dns1.unicornafk.fr
@@ -24,6 +30,10 @@ prometheus_targets:
     - 2001:4860:4860::8888
     - 192.168.5.1
     - 2001:bc8:2e64:105::1
+  vmware_exporter:
+    - "{{ vmware_exporter_vcenter_hostname }}"
+  unifi_poller:
+    - "{{ unifi_poller_url }}"
   snmp:
     - sw2.unicornafk.fr
   snmp_microtik:
@@ -32,12 +42,6 @@ prometheus_targets:
     - 192.168.10.2
   snmp_qnap:
     - 192.168.20.42
-  snmp_unifi:
-    - ap1.unicornafk.fr
-  snmp_vmware:
-    - server1.unicornafk.fr
-    - server2.unicornafk.fr
-    - server3.unicornafk.fr
   snmp_linux:
     - pi1.unicornafk.fr
     - apt-proxy.unicornafk.fr

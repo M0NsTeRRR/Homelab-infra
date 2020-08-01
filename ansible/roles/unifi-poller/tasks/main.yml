@@ -1,0 +1,42 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "9130"
+    proto: tcp
+
+- name: Install required packages by PowerDNS
+  apt:
+    pkg:
+      - apt-transport-https
+      - gnupg-agent
+    state: present
+
+- name: Add golift Apt signing key
+  apt_key:
+    url: "https://golift.io/gpgkey"
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add golift Apt repository
+  apt_repository:
+    repo: deb https://dl.bintray.com/golift/ubuntu bionic main
+    state: present
+    filename: golift.list
+
+- name: Install unifi-poller
+  apt:
+    name: unifi-poller
+    state: present
+
+- name: Create unifi-poller configuration directory
+  file:
+    dest: /etc/unifi-poller/
+    state: directory
+
+- name: Configure unifi-poller
+  template:
+    src: up.conf.j2
+    dest: /etc/unifi-poller/up.conf
+  notify: restart unifi-poller.service

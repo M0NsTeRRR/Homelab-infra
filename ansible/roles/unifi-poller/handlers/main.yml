@@ -1,0 +1,5 @@
+---
+- name: restart unifi-poller.service
+  service:
+    name: unifi-poller.service
+    state: restarted

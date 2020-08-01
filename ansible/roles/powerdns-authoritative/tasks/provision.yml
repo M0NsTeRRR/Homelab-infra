@@ -28,7 +28,7 @@
 
 - name: "PATCH zone {{ item}}."
   uri:
-    url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones/{{ item}}."
+    url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones/{{ item }}."
     method: PATCH
     return_content: yes
     body_format: json

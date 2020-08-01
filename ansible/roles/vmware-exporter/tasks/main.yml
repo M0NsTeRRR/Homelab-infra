@@ -1,0 +1,34 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "9272"
+    proto: tcp
+
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  pip:
+    name: vmware_exporter
+
+- name: Create vmware-exporter configuration directory
+  file:
+    dest: /etc/vmware_exporter/
+    state: directory
+
+- name: Configure vmware-exporter
+  template:
+    src: config.yml.j2
+    dest: /etc/vmware_exporter/config.yml
+  notify: restart vmware-exporter.service
+
+- name: Create systemd service file
+  template:
+    src: vmware-exporter.service.j2
+    dest: /etc/systemd/system/vmware-exporter.service
+  notify:
+    - enable vmware-exporter.service
+    - restart vmware-exporter.service

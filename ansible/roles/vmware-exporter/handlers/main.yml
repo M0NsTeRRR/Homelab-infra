@@ -1,0 +1,10 @@
+---
+- name: restart vmware-exporter.service
+  service:
+    name: vmware-exporter.service
+    state: restarted
+
+- name: enable vmware-exporter.service
+  service:
+    name: vmware-exporter.service
+    enabled: true

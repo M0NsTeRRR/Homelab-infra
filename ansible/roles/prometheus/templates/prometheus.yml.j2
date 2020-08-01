@@ -33,6 +33,35 @@ scrape_configs:
       - target_label: __address__
         replacement: {{ inventory_hostname }}:9115
 
+  - job_name: 'vmware_exporter'
+    metrics_path: '/metrics'
+    file_sd_configs:
+    - files:
+      - vmware_exporter/targets.json
+    params:
+      section: [default]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ inventory_hostname }}:9272
+
+  - job_name: unifi_poller
+    scrape_interval: 5s
+    metrics_path: /scrape
+    file_sd_configs:
+    - files:
+      - unifi_poller/targets.json
+    relabel_configs:
+    - source_labels: [__address__]
+      target_label: __param_target
+    - source_labels: [__param_target]
+      target_label: instance
+    - target_label: __address__
+      replacement: {{ inventory_hostname }}:9130
+
   - job_name: snmp
     file_sd_configs:
     - files:
@@ -85,51 +114,6 @@ scrape_configs:
     metrics_path: /snmp
     params:
       module: [qnap]
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: {{ inventory_hostname }}:9116
-
-  - job_name: snmp_unifi
-    file_sd_configs:
-    - files:
-      - snmp_unifi/targets.json
-    metrics_path: /snmp
-    params:
-      module: [ubiquiti_unifi]
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: {{ inventory_hostname }}:9116
-
-  - job_name: snmp_vmware
-    file_sd_configs:
-    - files:
-      - snmp_vmware/targets.json
-    metrics_path: /snmp
-    params:
-      module: [vmware]
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: {{ inventory_hostname }}:9116
-
-  - job_name: snmp_linux
-    file_sd_configs:
-    - files:
-      - snmp_linux/targets.json
-    metrics_path: /snmp
-    params:
-      module: [linux]
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

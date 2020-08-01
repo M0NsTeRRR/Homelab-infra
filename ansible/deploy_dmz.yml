@@ -72,6 +72,8 @@
     - snmp-exporter
     - blackbox-exporter
     - fping-exporter
+    - vmware-exporter
+    - unifi-poller
     - tplink-plug-exporter
 
 - name: Configure kubernetes loadbalancers
