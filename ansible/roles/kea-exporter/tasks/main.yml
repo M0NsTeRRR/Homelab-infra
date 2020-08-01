@@ -5,14 +5,24 @@
     port: "9547"
     proto: tcp
 
+- name: Create kea-exporter build directory
+  file:
+    dest: /opt/kea_exporter/
+    state: directory
+
 - name: Install pip3
   apt:
     name: python3-pip
     state: present
 
-- name: Install required python package
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+
+- name: Install kea_exporter
   pip:
     name: kea-exporter
+    virtualenv: /opt/kea_exporter/venv
 
 - name: Create systemd service file
   template:

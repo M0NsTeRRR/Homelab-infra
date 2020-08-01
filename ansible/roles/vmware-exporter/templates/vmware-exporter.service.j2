@@ -9,7 +9,7 @@ Group=prometheus
 Type=simple
 CapabilityBoundingSet=CAP_NET_RAW
 AmbientCapabilities=CAP_NET_RAW
-ExecStart=/usr/local/bin/vmware_exporter -c /etc/vmware_exporter/config.yml
+ExecStart=/opt/vmware_exporter/venv/bin/vmware_exporter -c /etc/vmware_exporter/config.yml
 
 [Install]
 WantedBy=multi-user.target

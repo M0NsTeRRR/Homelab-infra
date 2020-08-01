@@ -5,14 +5,24 @@
     port: "9272"
     proto: tcp
 
+- name: Create vmware-exporter build directory
+  file:
+    dest: /opt/vmware_exporter/
+    state: directory
+
 - name: Install pip3
   apt:
     name: python3-pip
     state: present
 
-- name: Install required python package
+- name: Install virtualenv
   pip:
-    name: vmware_exporter
+    name: virtualenv
+
+- name: Install vmware_exporter
+  pip:
+    name: vmware-exporter
+    virtualenv: /opt/vmware_exporter/venv
 
 - name: Create vmware-exporter configuration directory
   file:

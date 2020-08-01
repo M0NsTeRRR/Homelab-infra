@@ -5,7 +5,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/kea-exporter --interval 30 /tmp/kea-dhcp4-ctrl.sock /tmp/kea-dhcp6-ctrl.sock
+ExecStart=/opt/kea-exporter/venv/bin/kea-exporter --interval 30 /tmp/kea-dhcp4-ctrl.sock /tmp/kea-dhcp6-ctrl.sock
 
 [Install]
 WantedBy=multi-user.target
