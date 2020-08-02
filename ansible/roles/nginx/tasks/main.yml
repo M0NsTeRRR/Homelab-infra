@@ -32,12 +32,12 @@
 
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
-    path: "/etc/ssl/certs/{{ nginx_name }}.pem"
+    path: "/etc/ssl/certs/{{ nginx_name }}.key"
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
     path: "/etc/ssl/certs/{{ nginx_name }}.csr"
-    privatekey_path: "/etc/ssl/certs/{{ nginx_name }}.pem"
+    privatekey_path: "/etc/ssl/certs/{{ nginx_name }}.key"
     country_name: FR
     organization_name: unicornafk.fr
     email_address: admin@unicornafk.fr
@@ -46,7 +46,7 @@
 - name: Generate an OpenSSL certificate
   openssl_certificate:
     path: "/etc/ssl/certs/{{ nginx_name }}.crt"
-    privatekey_path: "/etc/ssl/certs/{{ nginx_name }}.pem"
+    privatekey_path: "/etc/ssl/certs/{{ nginx_name }}.key"
     csr_path: "/etc/ssl/certs/{{ nginx_name }}.csr"
     provider: selfsigned
 

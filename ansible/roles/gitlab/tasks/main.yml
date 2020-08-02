@@ -1,0 +1,87 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  with_items:
+    - "80"
+    - "443"
+
+- name: Install required packages
+  apt:
+    pkg: 
+      - curl
+      - ca-certificates
+    state: present
+
+- name: Check if GitLab is already installed
+  stat: 
+    path: /usr/bin/gitlab-ctl
+  register: gitlab
+
+- name: Download GitLab script
+  get_url:
+    url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
+    dest: /tmp/gitlab.deb.sh
+    mode: 0744
+  when: not gitlab.stat.exists
+
+- name: Install GitLab repository
+  command: bash /tmp/gitlab.deb.sh
+  when: not gitlab.stat.exists
+
+- name: Install GitLab
+  apt:
+    name: gitlab-ce
+    update_cache: yes
+    state: present
+
+- name: Create ssl folder
+  file:
+    state: directory
+    name: /etc/gitlab/ssl
+    mode: 0700
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: "/etc/gitlab/ssl/{{ inventory_hostname }}.key"
+
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr:
+    path: "/etc/gitlab/ssl/{{ inventory_hostname }}.csr"
+    privatekey_path: "/etc/gitlab/ssl/{{ inventory_hostname }}.key"
+    country_name: FR
+    organization_name: unicornafk.fr
+    email_address: admin@unicornafk.fr
+    common_name: "{{ inventory_hostname }}.unicornafk.fr"
+
+- name: Generate an OpenSSL certificate
+  openssl_certificate:
+    path: "/etc/gitlab/ssl/{{ inventory_hostname }}.crt"
+    privatekey_path: "/etc/gitlab/ssl/{{ inventory_hostname }}.key"
+    csr_path: "/etc/gitlab/ssl/{{ inventory_hostname }}.csr"
+    provider: selfsigned
+
+- name: Configure Gitlab
+  lineinfile:
+    dest: "/etc/gitlab/gitlab.rb"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+      - { regexp: "^(# )?external_url", line: "external_url 'https://{{ inventory_hostname }}'" }
+      - { regexp: "^(# )?letsencrypt\\['enable'\\] =", line: "letsencrypt['enable'] = false" }
+      - { regexp: "^(# )?gitlab_rails\\['smtp_enable'\\] =", line: "gitlab_rails['smtp_enable'] = {{ gitlab_smtp_enable }}" }
+      - { regexp: "^(# )?gitlab_rails\\['smtp_address'\\] =", line: "gitlab_rails['smtp_address'] = '{{ gitlab_smtp_address }}'" }
+      - { regexp: "^(# )?gitlab_rails\\['smtp_port'\\] =", line: "gitlab_rails['smtp_port'] = {{ gitlab_smtp_port }}" }
+      - { regexp: "^(# )?gitlab_rails\\['smtp_user_name'\\] =", line: "gitlab_rails['smtp_user_name'] = '{{ gitlab_smtp_user_name }}'" }
+      - { regexp: "^(# )?gitlab_rails\\['smtp_password'\\] =", line: "gitlab_rails['smtp_password'] = '{{ gitlab_smtp_password }}'" }
+      - { regexp: "^(# )?gitlab_rails\\['smtp_domain'\\] =", line: "gitlab_rails['smtp_domain'] = '{{ gitlab_smtp_domain }}'" }
+      - { regexp: "^(# )?gitlab_rails\\['smtp_authentication'\\] =", line: "gitlab_rails['smtp_authentication'] = '{{ gitlab_smtp_authentication }}'" }
+      - { regexp: "^(# )?gitlab_rails\\['smtp_enable_starttls_auto'\\] =", line: "gitlab_rails['smtp_enable_starttls_auto'] = {{ gitlab_smtp_enable_starttls_auto }}" }
+      - { regexp: "^(# )?grafana\\['enable'\\] =", line: "grafana['enable'] = false" }
+      - { regexp: "^(# )?prometheus\\['enable'\\] =", line: "prometheus['enable'] = false" }
+      - { regexp: "^(# )?node_exporter\\['enable'\\] =", line: "node_exporter['enable'] = false" }
+      - { regexp: "^(# )?alertmanager\\['enable'\\] =", line: "alertmanager['enable'] = false" }
+  notify: restart gitlab

@@ -19,11 +19,11 @@
   roles:
     - apt-cacher-ng
 
-- name: Configure reverse-proxy
-  hosts: reverse_proxy
+- name: Configure git
+  hosts: git
   become: yes
   roles:
-    - nginx
+    - gitlab
 
 - name: Configure IPAM
   hosts: ipam

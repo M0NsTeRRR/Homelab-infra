@@ -1,0 +1,9 @@
+---
+gitlab_smtp_enable: 'true'
+gitlab_smtp_address: "{{ smtp_provider_host }}"
+gitlab_smtp_port: "{{ smtp_provider_port }}"
+gitlab_smtp_user_name: "{{ smtp_admin_email }}"
+gitlab_smtp_password: "{{ smtp_admin_password }}"
+gitlab_smtp_domain: unicornafk.fr
+gitlab_smtp_authentication: plain
+gitlab_smtp_enable_starttls_auto: 'true'
