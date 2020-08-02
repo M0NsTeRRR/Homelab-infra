@@ -28,9 +28,6 @@
     - name: Include ntp
       include_tasks: ntp.yml
 
-#    - name: Include snmp
-#      include_tasks: snmp.yml
-
     - name: Include node-exporter
       include_tasks: node-exporter.yml
 
