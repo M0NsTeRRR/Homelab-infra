@@ -10,13 +10,13 @@
 
 - name: Install required packages
   apt:
-    pkg: 
+    pkg:
       - curl
       - ca-certificates
     state: present
 
 - name: Check if GitLab is already installed
-  stat: 
+  stat:
     path: /usr/bin/gitlab-ctl
   register: gitlab
 
