@@ -13,6 +13,6 @@ galaxy_info:
       versions:
         - focal
 
-        
+
 dependencies:
   - role: docker

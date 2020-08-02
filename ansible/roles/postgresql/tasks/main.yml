@@ -20,10 +20,12 @@
   postgresql_user:
     name: "{{ postgresql_user }}"
     password: "{{ postgresql_password }}"
+  become: yes
   become_user: postgres
 
 - name: "Create {{ postgresql_db }} postgresql database"
   postgresql_db:
     name: "{{ postgresql_db }}"
     owner: "{{ postgresql_user }}"
+  become: yes
   become_user: postgres

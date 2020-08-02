@@ -28,7 +28,7 @@
     dest: /tmp/wiki-js.tar.gz
   when: not wikijs.stat.exists
 
-- name: Extract wiki.js files 
+- name: Extract wiki.js files
   unarchive:
     src: /tmp/wiki-js.tar.gz
     dest: /opt/wikijs
