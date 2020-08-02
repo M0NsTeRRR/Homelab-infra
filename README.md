@@ -10,7 +10,7 @@ This is my Homelab infrastructure.
 
 Fill ansible/secrets.yml based on ansible/secrets.example and encrypt the file with ansible-vault
 
-Fill certs/node-exporter folder with :
+Fill every certs/<folder> with :
     - client.crt.j2
     - client.key.j2
     - node-exporter.crt.j2

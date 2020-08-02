@@ -6,5 +6,6 @@ terraform/account.hcl
 secrets.yml
 account.hcl
 *.crt*
+*.csr*
 *.key*
 *.pem*

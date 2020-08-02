@@ -1,0 +1,60 @@
+---
+- name: Generate client and server certificates
+  hosts: localhost
+  connection: local
+  vars_prompt:
+    - name: "certificate_name"
+      prompt: "Certificate name ?"
+      private: no
+  tasks:
+    - name: "Create {{ certificate_name }} folder"
+      file:
+        state: directory
+        name: "../../certs/{{ certificate_name }}"
+
+    - name: Add .gitkeep file
+      copy:
+        content: ""
+        dest: "../../certs/{{ certificate_name }}/.gitkeep"
+        force: no
+
+    - name: Generate server OpenSSL private key
+      openssl_privatekey:
+        path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.key.j2"
+
+    - name: Generate server OpenSSL Certificate Signing Request
+      openssl_csr:
+        path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.csr.j2"
+        privatekey_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.key.j2"
+        country_name: FR
+        organization_name: unicornafk.fr
+        email_address: admin@unicornafk.fr
+        common_name: "{{ certificate_name }}.unicornafk.fr"
+
+    - name: Generate server OpenSSL certificate
+      openssl_certificate:
+        path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.crt.j2"
+        privatekey_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.key.j2"
+        csr_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.csr.j2"
+        provider: selfsigned
+
+    - name: Generate client OpenSSL private key
+      openssl_privatekey:
+        path: "../../certs/{{ certificate_name }}/client.key.j2"
+
+    - name: Generate client OpenSSL Certificate Signing Request
+      openssl_csr:
+        path: "../../certs/{{ certificate_name }}/client.csr.j2"
+        privatekey_path: "../../certs/{{ certificate_name }}/client.key.j2"
+        country_name: FR
+        organization_name: unicornafk.fr
+        email_address: admin@unicornafk.fr
+        common_name: "{{ certificate_name }}.unicornafk.fr"
+
+    - name: Generate client OpenSSL certificate
+      openssl_certificate:
+        path: "../../certs/{{ certificate_name }}/client.crt.j2"
+        ownca_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.crt.j2"
+        ownca_privatekey_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.key.j2"
+        csr_path: "../../certs/{{ certificate_name }}/client.csr.j2"
+        provider: ownca
