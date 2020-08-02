@@ -16,4 +16,4 @@ jobs:
         override-deps: |
           ansible==2.9.6
           ansible-lint==4.2.0
-        args: ""
+        args: "-x 301 305"

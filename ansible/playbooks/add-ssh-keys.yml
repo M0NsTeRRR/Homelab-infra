@@ -11,8 +11,6 @@
     ssh_known_hosts_command: "ssh-keyscan -T 10"
     ssh_known_hosts_file: "{{ lookup('env','HOME') + '/.ssh/known_hosts' }}"
     ssh_known_hosts: "{{ groups['all'] }}"
-
-
   tasks:
   - name: For each host, scan for its ssh public key
     shell: "ssh-keyscan {{ item }},`dig +short {{ item }}`"
@@ -44,6 +42,6 @@
   - name: For each host, ssh-copy-id my ssh public keys to the host
     shell: "sshpass -p {{ ansible_ssh_pass }} ssh-copy-id {{ item }}"
     with_items: "{{ ssh_known_hosts }}"
-    when: not (( ansible_ssh_pass is undefined ) or ( ansible_ssh_pass is none ) or ( ansible_ssh_pass | trim == ''))
+    when: not (( ansible_ssh_pass is undefined ) or ( ansible_ssh_pass is none ) or ( not (ansible_ssh_pass | trim)))
     tags:
       - sshcopy
