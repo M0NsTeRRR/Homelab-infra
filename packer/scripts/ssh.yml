@@ -3,10 +3,8 @@
   authorized_key:
     user: "ludovic"
     state: present
-    key: "{{ lookup('file', '.files/id_rsa.pub') }}"
+    key: "{{ lookup('file', './files/id_rsa.pub') }}"
     exclusive: yes
-  notify:
-    - Restart sshd
 
 - name: Set sshd configuration
   lineinfile:
