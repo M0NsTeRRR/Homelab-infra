@@ -10,6 +10,8 @@ vmware_exporter_vcenter_username: administrator@vsphere.unicornafk.fr
 unifi_poller_url: https://unifi.unicornafk.fr:8443
 unifi_poller_user: unifipoller
 
+snmp_exporter_user: admin
+
 prometheus_clients_certs:
   - node-exporter
 prometheus_targets:
