@@ -12,9 +12,11 @@
       X-Requested-By: cli
   register: event
 
-- set_fact:
+- name: Set fact events
+  set_fact:
     events: "{{ event.json.event_definitions | selectattr('title','equalto',item.title) | list }}"
-- set_fact:
+- name: Set fact event_found
+  set_fact:
     event_found: "{{ events | length > 0 }}"
 
 #- name: "Event {{ item.title }} updated"
@@ -31,7 +33,7 @@
 #    headers:
 #      Content-Type: application/json
 #      X-Requested-By: cli
-#  when: event_found == true
+#  when: event_found
 
 - name: "Event {{ item.title }} created"
   uri:
@@ -47,4 +49,4 @@
     headers:
       Content-Type: application/json
       X-Requested-By: cli
-  when: event_found == false
+  when: not event_found

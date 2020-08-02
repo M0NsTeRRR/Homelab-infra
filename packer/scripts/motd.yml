@@ -1,8 +1,8 @@
 ---
 - name: Install figlet and lolcat
   apt:
-    pkg: 
-      - figlet  
+    pkg:
+      - figlet
       - lolcat
     state: present
 

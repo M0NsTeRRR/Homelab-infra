@@ -42,7 +42,7 @@
   register: wireguard_public_keys
 
 - name: Generate private and public keys
-  shell: 
+  shell:
     cmd: wg genkey | tee private_key | wg pubkey > public_key
     chdir: /etc/wireguard/keys
   when: not wireguard_public_keys.stat.exists
@@ -76,6 +76,6 @@
     src: wg0.conf.j2
     dest: "/etc/wireguard/wg0.conf"
     mode: 0600
-  notify: 
+  notify:
     - restart wireguard
     - enable wireguard

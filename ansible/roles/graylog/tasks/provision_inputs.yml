@@ -18,9 +18,11 @@
       X-Requested-By: cli
   register: input
 
-- set_fact:
+- name: Set fact inputs
+  set_fact:
     inputs: "{{ input.json.inputs | selectattr('title','equalto',item.title) | list }}"
-- set_fact:
+- name: Set fact input_found
+  set_fact:
     input_found: "{{ inputs | length > 0 }}"
 
 - name: "Input {{ item.title }} updated"
@@ -37,7 +39,7 @@
     headers:
       Content-Type: application/json
       X-Requested-By: cli
-  when: input_found == true
+  when: input_found
 
 - name: "Input {{ item.title }} created"
   uri:
@@ -53,4 +55,4 @@
     headers:
       Content-Type: application/json
       X-Requested-By: cli
-  when: input_found == false
+  when: not input_found

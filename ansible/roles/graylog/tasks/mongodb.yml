@@ -17,6 +17,6 @@
     update_cache: yes
     name: mongodb-org
     state: present
-  notify: 
+  notify:
     - enable mongod
     - restart mongod

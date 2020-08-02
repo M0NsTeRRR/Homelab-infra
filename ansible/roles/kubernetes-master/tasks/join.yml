@@ -9,14 +9,16 @@
   register: token
 
 - name: Get root ca cert fingerprint
-  shell: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+  shell: |
+    set -o pipefail
+    openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
   delegate_to: "{{ groups[k8s_ontrol_plane_group][0] }}"
   run_once: true
   register: root_ca
 
 - name: Archive configuration files to copy
   archive:
-    path: 
+    path:
       - /etc/kubernetes/pki/ca.crt
       - /etc/kubernetes/pki/ca.key
       - /etc/kubernetes/pki/sa.key
@@ -54,7 +56,7 @@
 
 - name: Clean files on localhost
   become: no
-  local_action:
-    file
-      path=/tmp/pki.tgz
-      state=absent
+  file:
+    path: /tmp/pki.tgz
+    state: absent
+  delegate_to: localhost

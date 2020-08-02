@@ -7,13 +7,13 @@
 
 - name: Install required packages
   apt:
-    pkg: 
+    pkg:
       - git
       - golang
       - fping
     state: present
 
-- name: Create fping folder 
+- name: Create fping folder
   file:
     state: directory
     name: /opt/exporter/fping/build
@@ -23,7 +23,7 @@
     path: /usr/local/bin/fping-exporter
   register: fping_exporter
 
-- name: Git clone 
+- name: Git clone
   git:
     repo: https://github.com/schweikert/fping-exporter.git
     dest: /opt/exporter/fping/build

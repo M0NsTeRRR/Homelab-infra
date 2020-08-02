@@ -20,7 +20,7 @@
 
 - name: Install required packages by PowerDNS
   apt:
-    pkg: 
+    pkg:
       - apt-transport-https
       - gnupg-agent
     state: present
@@ -55,7 +55,7 @@
 
 - name: Install PowerDNS
   apt:
-    pkg: 
+    pkg:
       - pdns-server
       - sqlite3
       - pdns-backend-sqlite3

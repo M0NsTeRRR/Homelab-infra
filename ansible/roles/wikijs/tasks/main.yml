@@ -12,7 +12,7 @@
     group: wikijs
     append: yes
 
-- name: Create wiki-js folder 
+- name: Create wiki-js folder
   file:
     state: directory
     name: /opt/wikijs

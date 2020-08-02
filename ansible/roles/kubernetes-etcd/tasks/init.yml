@@ -75,12 +75,12 @@
   file:
     path: "{{ item }}"
     state: absent
-  with_items: "{{ ansible_play_hosts}} + {{ ansible_play_hosts | map('regex_replace', '(.*)', '\\1.tgz') | list }}"
+  with_items: "{{ ansible_play_hosts }} + {{ ansible_play_hosts | map('regex_replace', '(.*)', '\\1.tgz') | list }}"
 
 - name: Clean files on localhost
   become: no
-  local_action:
-    file
-      path=/tmp/{{ item }}
-      state=absent
+  file:
+    path: /tmp/{{ item }}
+    state: absent
+  delegate_to: localhost
   with_items: "{{ ansible_play_hosts | map('regex_replace', '(.*)', '\\1.tgz') | list }}"

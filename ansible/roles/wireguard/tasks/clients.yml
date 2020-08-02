@@ -13,7 +13,7 @@
     path: "/etc/wireguard/clients/{{ item }}"
     state: absent
   when: item not in clients
-  with_items: clients.stdout_lines
+  with_items: '{{ clients.stdout_lines }}'
 
 - name: Create new clients
   file:
@@ -22,7 +22,7 @@
   with_dict: "{{ wireguard_clients }}"
 
 - name: Generate certificates for new clients
-  shell: 
+  shell:
     cmd: wg genkey | tee private_key | wg pubkey > public_key
     chdir: "/etc/wireguard/clients/{{ item.key }}"
   with_dict: "{{ wireguard_clients }}"

@@ -1,5 +1,5 @@
 ---
-- name: "Check if zone {{ item}}. exist"
+- name: "Check if zone {{ item }}. exist"
   uri:
     url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones/{{ item }}."
     method: GET
@@ -12,7 +12,7 @@
       X-Api-Key: "{{ pdns_api_key }}"
   register: zone
 
-- name: "POST zone {{ item}}."
+- name: "POST zone {{ item }}."
   uri:
     url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones"
     method: POST
@@ -26,7 +26,7 @@
       X-Api-Key: "{{ pdns_api_key }}"
   when: zone.status == 404
 
-- name: "PATCH zone {{ item}}."
+- name: "PATCH zone {{ item }}."
   uri:
     url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones/{{ item }}."
     method: PATCH

@@ -40,7 +40,7 @@
   register: ghost
 
 - name: Install ghost
-  command: 
+  command:
     cmd: ghost install --db sqlite3 --no-setup --no-stack --no-start
     chdir: /var/www/ghost
   become: yes
@@ -56,7 +56,7 @@
     mode: '0775'
 
 - name: Start ghost
-  command: 
+  command:
     cmd: ghost start
     chdir: /var/www/ghost
   become: yes

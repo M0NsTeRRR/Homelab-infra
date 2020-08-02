@@ -13,7 +13,7 @@
 
 - name: Clone vcenter-netbox-sync repository
   git:
-    repo: https://github.com/synackray/vcenter-netbox-sync.git
+    repo: "https://github.com/synackray/vcenter-netbox-sync/archive/v{{ vcenter_netbox_sync_version }}.tar.gz"
     dest: /opt/vcenter-netbox-sync
 
 - name: Install vcenter-netbox-sync python packages

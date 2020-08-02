@@ -10,7 +10,7 @@
 
 - name: Install kea-dhcp4-server kea-dhcp6-server kea-ctrl-agent
   apt:
-    pkg: 
+    pkg:
       - kea-dhcp4-server
       - kea-dhcp6-server
       - kea-ctrl-agent

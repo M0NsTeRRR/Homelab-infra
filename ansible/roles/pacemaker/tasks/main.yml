@@ -1,11 +1,11 @@
 ---
 - name: Install Pacemaker and CLI configuration/management
   apt:
-    pkg: 
+    pkg:
       - pacemaker
       - crmsh
     state: present
-  notify: 
+  notify:
     - restart pacemaker
     - enable pacemaker
 
@@ -27,12 +27,12 @@
   when: '"\tstonith-enabled=false \\" not in pacemaker_configuration.stdout_lines'
 
 - name: Configure Virtual IP ressource
-  command: "crm configure primitive virtual-IP-rsc ocf:heartbeat:IPaddr2 params ip='{{ lookup('dig', pacemaker_lb_ip)}}'"
+  command: "crm configure primitive virtual-IP-rsc ocf:heartbeat:IPaddr2 params ip='{{ lookup('dig', pacemaker_lb_ip) }}'"
   run_once: true
   when: '"primitive virtual-IP-rsc IPaddr2 \\" not in pacemaker_configuration.stdout_lines'
 
 - include_tasks: haproxy.yml
   tags: [ 'haproxy' ]
-  when: 
+  when:
     - pacemaker_lb_service_type is defined
     - pacemaker_lb_service_type == "haproxy"

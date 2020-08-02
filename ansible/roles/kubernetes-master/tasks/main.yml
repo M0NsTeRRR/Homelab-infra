@@ -18,7 +18,7 @@
 
 - name: Init cluster if needed
   include_tasks: init.yml
-  when: 
+  when:
     - not kubeadm_ca.stat.exists
     - inventory_hostname == play_hosts[0]
 

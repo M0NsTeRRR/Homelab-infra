@@ -20,7 +20,7 @@
 
 - name: Install required packages by PowerDNS
   apt:
-    pkg: 
+    pkg:
       - apt-transport-https
       - gnupg-agent
     state: present

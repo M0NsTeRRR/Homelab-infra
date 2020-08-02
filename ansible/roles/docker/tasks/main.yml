@@ -1,7 +1,7 @@
 ---
 - name: Install required packages by Docker
   apt:
-    pkg: 
+    pkg:
       - apt-transport-https
       - ca-certificates
       - curl
@@ -24,7 +24,7 @@
 
 - name: Install Docker
   apt:
-    pkg: 
+    pkg:
       - docker-ce
       - docker-ce-cli
       - containerd.io

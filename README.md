@@ -75,6 +75,12 @@ Infrastructure is split in 2 parts :
 ### Deploy/update infrastructure
 `terragrunt apply-all`
 
+# Licence
+
+The code is under CeCILL license.
+
+You can find all details here: https://cecill.info/licences/Licence_CeCILL_V2.1-en.html
+
 # Credits
 
 Copyright © Ludovic Ortega, 2019

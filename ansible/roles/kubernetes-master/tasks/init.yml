@@ -55,7 +55,9 @@
   command: "kubeadm init --config /home/{{ ansible_user }}/kubeadm-config.yaml --upload-certs"
 
 - name: Get Kubernetes version for Weave installation
-  shell: kubectl --kubeconfig /etc/kubernetes/admin.conf version | base64 | tr -d '\n'
+  shell: |
+    set -o pipefail
+    kubectl --kubeconfig /etc/kubernetes/admin.conf version | base64 | tr -d '\n'
   register: cni_version
 
 - name: Configure Weave networking
@@ -75,13 +77,13 @@
     - { "host": "{{ groups[k8s_etcd_group][0] }}", "path": "/home/{{ ansible_user }}/pki.tgz"}
     - { "host": "{{ inventory_hostname }}", "path": "/home/{{ ansible_user }}/pki.tgz"}
     - { "host": "{{ inventory_hostname }}", "path": "/home/{{ ansible_user }}/kubeadm-config.yaml"}
-  
+
 - name: Clean files on localhost
   become: no
-  local_action:
-    file
-      path=/tmp/pki.tgz
-      state=absent
+  file:
+    path: /tmp/pki.tgz
+    state: absent
+  delegate_to: localhost
 
 - name: Copy admin.conf on localhost
   fetch:

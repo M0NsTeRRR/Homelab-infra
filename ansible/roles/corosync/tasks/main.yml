@@ -29,12 +29,12 @@
     name: haveged
     state: present
   run_once: true
-  when: check_authkey_file.stat.exists == False
+  when: not check_authkey_file.stat.exists
 
 - name: Generating /etc/corosync/authkey file
   command: /usr/sbin/corosync-keygen
   run_once: true
-  when: check_authkey_file.stat.exists == False
+  when: not check_authkey_file.stat.exists
 
 - name: Waiting for /etc/corosync/authkey file
   wait_for:
@@ -59,10 +59,10 @@
 
 - name: Cleaning /tmp/authkey file for security reason
   become: no
-  local_action:
-    file
-      path=/tmp/authkey
-      state=absent
+  file:
+    path: /tmp/authkey
+    state: absent
+  delegate_to: localhost
 
 - name: Configure corosync
   template:
