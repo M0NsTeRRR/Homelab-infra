@@ -76,8 +76,8 @@ prometheus_targets:
   wireguard:
     - vpn.unicornafk.fr:9586
   kea_dhcp:
-    - dhcp1.unicornafk.fr
-    - dhcp2.unicornafk.fr
+    - dhcp1.unicornafk.fr:9547
+    - dhcp2.unicornafk.fr:9547
   powerdns_authoritative:
     - dns1.unicornafk.fr
     - dns2.unicornafk.fr
