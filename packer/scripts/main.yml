@@ -28,8 +28,11 @@
     - name: Include ntp
       include_tasks: ntp.yml
 
-    - name: Include snmp
-      include_tasks: snmp.yml
+#    - name: Include snmp
+#      include_tasks: snmp.yml
+
+    - name: Include node-exporter
+      include_tasks: node-exporter.yml
 
     - name: Include rsyslog
       include_tasks: rsyslog.yml
@@ -51,3 +54,6 @@
 
 #    - name: Include rkhunter
 #      include_tasks: rkhunter.yml
+
+    - name: Include ssh
+      include_tasks: ssh.yml

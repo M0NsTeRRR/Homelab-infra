@@ -5,3 +5,6 @@ packer_cache/
 terraform/account.hcl
 secrets.yml
 account.hcl
+*.crt*
+*.key*
+*.pem*

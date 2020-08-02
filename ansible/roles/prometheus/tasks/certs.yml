@@ -1,0 +1,10 @@
+---
+- name: "Add {{ item }}.crt"
+  template:
+    src: "../../../../certs/{{ item }}/client.crt.j2"
+    dest: "/etc/prometheus/{{ item }}.crt"
+
+- name: "Add {{ item }}.key"
+  template:
+    src: "../../../../certs/{{ item }}/client.key.j2"
+    dest: "/etc/prometheus/{{ item }}.key"

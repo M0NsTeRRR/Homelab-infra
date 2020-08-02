@@ -1,0 +1,13 @@
+[Unit]
+Description=Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+CapabilityBoundingSet=CAP_NET_RAW
+AmbientCapabilities=CAP_NET_RAW
+ExecStart=/usr/local/bin/node-exporter --web.config="/etc/node-exporter/web-config.yml"
+
+[Install]
+WantedBy=multi-user.target

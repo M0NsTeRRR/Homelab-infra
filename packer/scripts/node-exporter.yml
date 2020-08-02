@@ -1,0 +1,66 @@
+---
+- name: Allow node-exporter
+  ufw:
+    rule: allow
+    port: "9100"
+    proto: tcp
+
+- name: Create node-exporter folder
+  file:
+    state: directory
+    name: /opt/exporter/node-exporter
+
+- name: Download last version of node-exporter
+  get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v1.0.1/node_exporter-1.0.1.{{ ansible_system | lower }}-amd64.tar.gz"
+    dest: /tmp/node-exporter.tar.gz
+
+- name: Extract latest binary of node-exporter
+  unarchive:
+    src: /tmp/node-exporter.tar.gz
+    dest: /opt/exporter/node-exporter
+    remote_src: yes
+    list_files: yes
+  register: archive_contents
+
+- name: Copy node-exporter binary to /usr/local/bin
+  copy:
+    src: "/opt/exporter/node-exporter/{{ archive_contents.files[0] }}node_exporter"
+    dest: /usr/local/bin/node-exporter
+    mode: 0700
+    remote_src: yes
+
+- name: Create node-exporter configuration directory
+  file:
+    dest: /etc/node-exporter/
+    state: directory
+
+- name: Add node-exporter.crt
+  template:
+    src: ../../certs/node-exporter/node-exporter.crt.j2
+    dest: /etc/node-exporter/node-exporter.crt
+
+- name: Add node-exporter.key
+  template:
+    src: ../../certs/node-exporter/node-exporter.key.j2
+    dest: /etc/node-exporter/node-exporter.key
+
+- name: Add node-exporter.pem
+  template:
+    src: ../../certs/node-exporter/node-exporter.pem.j2
+    dest: /etc/node-exporter/node-exporter.pem
+
+- name: Configure node-exporter
+  template:
+    src: ./templates/node-exporter/web-config.yml.j2
+    dest: /etc/node-exporter/web-config.yml
+
+- name: Create systemd service file
+  template:
+    src: ./templates/node-exporter/node-exporter.service.j2
+    dest: /etc/systemd/system/node-exporter.service
+
+- name: enable node-exporter.service
+  service:
+    name: node-exporter.service
+    enabled: true

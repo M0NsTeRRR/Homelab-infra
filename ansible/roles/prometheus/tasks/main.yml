@@ -28,3 +28,7 @@
     dest: "/etc/prometheus/{{ item.key }}/targets.json"
   with_dict: "{{ prometheus_targets }}"
   notify: restart prometheus
+
+- name: Include certs
+  include_tasks: certs.yml
+  with_items: "{{ prometheus_clients_certs }}"

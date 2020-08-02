@@ -10,6 +10,8 @@ vmware_exporter_vcenter_username: administrator@vsphere.unicornafk.fr
 unifi_poller_url: https://unifi.unicornafk.fr:8443
 unifi_poller_user: unifipoller
 
+prometheus_clients_certs:
+  - node-exporter
 prometheus_targets:
   blackbox:
     - https://dns1.unicornafk.fr
@@ -42,38 +44,38 @@ prometheus_targets:
     - 192.168.10.2
   snmp_qnap:
     - 192.168.20.42
-  snmp_linux:
-    - pi1.unicornafk.fr
-    - apt-proxy.unicornafk.fr
-    - blog.unicornafk.fr
-    - dhcp1.unicornafk.fr
-    - dhcp2.unicornafk.fr
-    - dns1.unicornafk.fr
-    - dns2.unicornafk.fr
-    - git.unicornafk.fr
-    - ipam.unicornafk.fr
-    - monitoring.unicornafk.fr
-    - reverse-proxy.unicornafk.fr
-    - unifi.unicornafk.fr
-    - vpn.unicornafk.fr
-    - wiki.unicornafk.fr
-    - lb1.dmz.unicornafk.fr
-    - lb2.dmz.unicornafk.fr
-    - lb3.dmz.unicornafk.fr
-    - etcd1.dmz.unicornafk.fr
-    - etcd2.dmz.unicornafk.fr
-    - etcd3.dmz.unicornafk.fr
-    - master1.dmz.unicornafk.fr
-    - master2.dmz.unicornafk.fr
-    - master3.dmz.unicornafk.fr
-    - worker1.dmz.unicornafk.fr
-    - worker2.dmz.unicornafk.fr
-    - worker3.dmz.unicornafk.fr
+  node_exporter:
+    - pi1.unicornafk.fr:9100
+    - apt-proxy.unicornafk.fr:9100
+    - blog.unicornafk.fr:9100
+    - dhcp1.unicornafk.fr:9100
+    - dhcp2.unicornafk.fr:9100
+    - dns1.unicornafk.fr:9100
+    - dns2.unicornafk.fr:9100
+    - git.unicornafk.fr:9100
+    - ipam.unicornafk.fr:9100
+    - monitoring.unicornafk.fr:9100
+    - reverse-proxy.unicornafk.fr:9100
+    - unifi.unicornafk.fr:9100
+    - vpn.unicornafk.fr:9100
+    - wiki.unicornafk.fr:9100
+    - lb1.dmz.unicornafk.fr:9100
+    - lb2.dmz.unicornafk.fr:9100
+    - lb3.dmz.unicornafk.fr:9100
+    - etcd1.dmz.unicornafk.fr:9100
+    - etcd2.dmz.unicornafk.fr:9100
+    - etcd3.dmz.unicornafk.fr:9100
+    - master1.dmz.unicornafk.fr:9100
+    - master2.dmz.unicornafk.fr:9100
+    - master3.dmz.unicornafk.fr:9100
+    - worker1.dmz.unicornafk.fr:9100
+    - worker2.dmz.unicornafk.fr:9100
+    - worker3.dmz.unicornafk.fr:9100
   wireguard:
     - vpn.unicornafk.fr:9586
   kea_dhcp:
-    - dhcp1.unicornafk.fr:9547
-    - dhcp2.unicornafk.fr:9547
+    - dhcp1.unicornafk.fr
+    - dhcp2.unicornafk.fr
   powerdns_authoritative:
     - dns1.unicornafk.fr
     - dns2.unicornafk.fr

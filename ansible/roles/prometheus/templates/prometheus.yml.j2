@@ -48,6 +48,17 @@ scrape_configs:
       - target_label: __address__
         replacement: {{ inventory_hostname }}:9272
 
+  - job_name: 'node_exporter'
+    metrics_path: '/metrics'
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/node-exporter.crt
+      key_file: /etc/prometheus/node-exporter.key
+      insecure_skip_verify: true
+    file_sd_configs:
+    - files:
+      - node_exporter/targets.json
+
   - job_name: unifi_poller
     scrape_interval: 5s
     metrics_path: /scrape
@@ -126,11 +137,21 @@ scrape_configs:
     file_sd_configs:
     - files:
       - wireguard/targets.json
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
 
   - job_name: kea-dhcp
     file_sd_configs:
     - files:
       - kea_dhcp/targets.json
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
 
   - job_name: powerdns_authoritative
     scheme: https
@@ -139,6 +160,11 @@ scrape_configs:
     file_sd_configs:
     - files:
       - powerdns_authoritative/targets.json
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
 
   - job_name: powerdns_recursor
     scheme: https
@@ -147,6 +173,11 @@ scrape_configs:
     file_sd_configs:
     - files:
       - powerdns_recursor/targets.json
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
 
   - job_name: tplink_plug
     file_sd_configs:
