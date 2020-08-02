@@ -1,5 +1,7 @@
 This is my Homelab infrastructure.
 
+![Ansible Lint](https://github.com/M0NsTeRRR/Homelab-infra/workflows/Ansible%20Lint/badge.svg)
+
 # Requirements
 
 - Ansible (version >= 2.9.6)
