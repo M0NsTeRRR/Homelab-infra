@@ -32,12 +32,6 @@
     - netbox
     - vcenter-netbox-sync
 
-- name: Configure Git
-  hosts: git
-  become: yes
-  roles:
-    - gitlab
-
 - name: Configure Wiki
   hosts: wiki
   become: yes
