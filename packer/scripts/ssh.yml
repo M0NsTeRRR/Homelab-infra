@@ -3,7 +3,7 @@
   authorized_key:
     user: "ludovic"
     state: present
-    key: "{{ lookup('file', './files/id_rsa.pub') }}"
+    key: "{{ lookup('file', './files/id_ed25519.pub') }}"
     exclusive: yes
 
 - name: Set sshd configuration
