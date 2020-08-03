@@ -38,4 +38,3 @@
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ pdns_api_key }}"
-  when: zone.status == 200
