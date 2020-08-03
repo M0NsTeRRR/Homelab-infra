@@ -36,28 +36,6 @@
   notify:
     - enable grafana-server
 
-- name: Generate openssl_privatekey
-  openssl_privatekey:
-    mode: 0640
-    group: grafana
-    path: /etc/ssl/certs/grafana.key
-
-- name: Generate openssl_csr
-  openssl_csr:
-    group: grafana
-    mode: 0640
-    path: /etc/ssl/certs/grafana.csr
-    privatekey_path: /etc/ssl/certs/grafana.key
-
-- name: Generate openssl_certificate
-  openssl_certificate:
-    group: grafana
-    mode: 0640
-    provider: selfsigned
-    path: /etc/ssl/certs/grafana.crt
-    privatekey_path: /etc/ssl/certs/grafana.key
-    csr_path: /etc/ssl/certs/grafana.csr
-
 - name: Configure Grafana
   template:
     src: grafana.ini.j2
