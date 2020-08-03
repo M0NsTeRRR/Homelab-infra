@@ -6,7 +6,7 @@ server {
   server_name {{ nginx_server_name }};
 
   ssl_certificate /etc/ssl/certs/{{ nginx_name }}.crt;
-  ssl_certificate_key /etc/ssl/certs/{{ nginx_name }}.key;
+  ssl_certificate_key /etc/ssl/certs/{{ nginx_name }}.pem;
 
   ssl_session_cache  builtin:1000  shared:SSL:10m;
   ssl_dhparam /etc/nginx/dhparam.pem;

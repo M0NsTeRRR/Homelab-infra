@@ -18,43 +18,50 @@
         dest: "../../certs/{{ certificate_name }}/.gitkeep"
         force: no
 
-    - name: Generate server OpenSSL private key
+    - name: Generate CertAuthority OpenSSL private key
       openssl_privatekey:
-        path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.key.j2"
+        path: "../../certs/{{ certificate_name }}/ca.pem.j2"
 
-    - name: Generate server OpenSSL Certificate Signing Request
+    - name: Generate CertAuthority OpenSSL Certificate Signing Request
       openssl_csr:
-        path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.csr.j2"
-        privatekey_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.key.j2"
+        path: "../../certs/{{ certificate_name }}/ca.csr.j2"
+        privatekey_path: "../../certs/{{ certificate_name }}/ca.pem.j2"
         country_name: FR
         organization_name: unicornafk.fr
         email_address: admin@unicornafk.fr
         common_name: "{{ certificate_name }}.unicornafk.fr"
+        basic_constraints:
+          - CA:TRUE
+          - pathlen:1
+        basic_constraints_critical: True
+        key_usage:
+          - keyCertSign
+          - digitalSignature
 
-    - name: Generate server OpenSSL certificate
+    - name: Generate CertAuthority OpenSSL certificate
       openssl_certificate:
-        path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.crt.j2"
-        privatekey_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.key.j2"
-        csr_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.csr.j2"
+        path: "../../certs/{{ certificate_name }}/ca.crt.j2"
+        privatekey_path: "../../certs/{{ certificate_name }}/ca.pem.j2"
+        csr_path: "../../certs/{{ certificate_name }}/ca.csr.j2"
         provider: selfsigned
 
     - name: Generate client OpenSSL private key
       openssl_privatekey:
-        path: "../../certs/{{ certificate_name }}/client.key.j2"
+        path: "../../certs/{{ certificate_name }}/client.pem.j2"
 
     - name: Generate client OpenSSL Certificate Signing Request
       openssl_csr:
         path: "../../certs/{{ certificate_name }}/client.csr.j2"
-        privatekey_path: "../../certs/{{ certificate_name }}/client.key.j2"
+        privatekey_path: "../../certs/{{ certificate_name }}/client.pem.j2"
         country_name: FR
         organization_name: unicornafk.fr
         email_address: admin@unicornafk.fr
         common_name: "{{ certificate_name }}.unicornafk.fr"
 
-    - name: Generate client OpenSSL certificate
+    - name: Generate client OpenSSL certificate signed with our CA
       openssl_certificate:
         path: "../../certs/{{ certificate_name }}/client.crt.j2"
-        ownca_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.crt.j2"
-        ownca_privatekey_path: "../../certs/{{ certificate_name }}/{{ certificate_name }}.key.j2"
+        ownca_path: "../../certs/{{ certificate_name }}/ca.crt.j2"
+        ownca_privatekey_path: "../../certs/{{ certificate_name }}/ca.pem.j2"
         csr_path: "../../certs/{{ certificate_name }}/client.csr.j2"
         provider: ownca

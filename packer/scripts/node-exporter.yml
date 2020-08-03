@@ -5,6 +5,15 @@
     port: "9100"
     proto: tcp
 
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  pip:
+    name: cryptography
+
 - name: Create node-exporter folder
   file:
     state: directory
@@ -35,20 +44,30 @@
     dest: /etc/node-exporter/
     state: directory
 
-- name: Add node-exporter.crt
-  template:
-    src: ../../certs/node-exporter/node-exporter.crt.j2
-    dest: /etc/node-exporter/node-exporter.crt
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: "/etc/node-exporter/server.pem"
 
-- name: Add node-exporter.key
-  template:
-    src: ../../certs/node-exporter/node-exporter.key.j2
-    dest: /etc/node-exporter/node-exporter.key
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr:
+    path: "/etc/node-exporter/server.csr"
+    privatekey_path: "/etc/node-exporter/server.pem"
+    country_name: FR
+    organization_name: unicornafk.fr
+    email_address: admin@unicornafk.fr
+    common_name: "{{ ansible_hostname }}.unicornafk.fr"
+
+- name: Generate an OpenSSL certificate
+  openssl_certificate:
+    path: "/etc/node-exporter/server.crt"
+    privatekey_path: "/etc/node-exporter/server.pem"
+    csr_path: "/etc/node-exporter/server.csr"
+    provider: selfsigned
 
 - name: Add node-exporter.pem
   template:
-    src: ../../certs/node-exporter/node-exporter.pem.j2
-    dest: /etc/node-exporter/node-exporter.pem
+    src: ../../certs/node-exporter/ca.crt.j2
+    dest: /etc/node-exporter/ca.crt
 
 - name: Configure node-exporter
   template:
