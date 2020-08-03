@@ -29,7 +29,7 @@
 #################################### Server ####################################
 [server]
 # Protocol (http, https, h2, socket)
-protocol = https
+protocol = http
 
 # The ip address to bind to, empty will bind to all interfaces
 http_addr = 127.0.0.1
@@ -61,8 +61,8 @@ enforce_domain = true
 enable_gzip = true
 
 # https certs & key file
-cert_file = /etc/ssl/certs/grafana.crt
-cert_key = /etc/ssl/certs/grafana.key
+#cert_file = /etc/ssl/certs/grafana.crt
+#cert_key = /etc/ssl/certs/grafana.pem
 
 # Unix socket path
 ;socket =
