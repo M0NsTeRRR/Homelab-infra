@@ -1,2 +1,5 @@
 ---
 netbox_version: 2.8.8
+netbox_postgresql_password: password
+netbox_superuser_password: password
+netbox_secret_key: secret_key

@@ -21,7 +21,6 @@
     src: /tmp/tplink-plug-exporter.tar.gz
     dest: /tmp
     remote_src: yes
-    list_files: yes
   when: not tplink_plug_exporter.stat.exists
 
 - name: Copy tplink-plug-exporter binary to /usr/local/bin
