@@ -13,11 +13,11 @@ This is my Homelab infrastructure.
 Fill ansible/secrets.yml based on ansible/secrets.example and encrypt the file with ansible-vault
 
 Fill every certs/<folder> with :
-	- client.crt.j2
-	- client.key.j2
-	- node-exporter.crt.j2
-	- node-exporter.key.j2
-	- node-exporter.pem.j2
+- client.crt.j2
+- client.key.j2
+- node-exporter.crt.j2
+- node-exporter.key.j2
+- node-exporter.pem.j2
 
 # Ansible
 `cd ansible`  
@@ -50,7 +50,7 @@ To delete the rules `netsh interface portproxy del v4tov4 listenport=<PORT>  lis
 `cd packer`
 
 Supported distributions :
-- Debian (10.4.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.4.0-amd64-netinst.iso)  
+- Debian (10.5.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso)
 - Ubuntu (20.04) - [iso](http://cdimage.ubuntu.com/ubuntu-server/daily/current/focal-legacy-server-amd64.iso)
 
 ### Create template
