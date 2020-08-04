@@ -12,3 +12,12 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
+
+
+dependencies:
+  - role: nginx
+    vars:
+      nginx_name: "kea-exporter"
+      nginx_url: "http://127.0.0.1:9546"
+      nginx_ssl_port: "9547"
+      nginx_http_redirection: false

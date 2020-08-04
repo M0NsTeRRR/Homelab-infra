@@ -16,5 +16,6 @@ dependencies:
     vars:
       nginx_name: "kea-dhcp"
       nginx_url: "http://127.0.0.1:8000"
-      nginx_server_name: "{{ lookup('dig', ansible_hostname) }}, {{ lookup('dig', ansible_hostname, 'qtype=AAAA' ) }}"
+      nginx_server_name: "{{ inventory_hostname }}, {{ lookup('dig', inventory_hostname) }}, {{ lookup('dig', inventory_hostname, 'qtype=AAAA' ) }}"
+      nginx_ssl_port: "443"
       nginx_http_redirection: false
