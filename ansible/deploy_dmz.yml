@@ -5,6 +5,7 @@
   roles:
     - powerdns-authoritative
     - powerdns-recursor
+    - exporter-exporter
 
 - name: Configure DHCP servers
   hosts: dhcp

@@ -113,3 +113,10 @@ pdns_records:
     ipv4: 192.168.10.30
     ipv6: 2001:bc8:2e64:110::30
     rdns: false
+
+exporter_exporter_name: powerdns-exporter
+exporter_exporter_nodes:
+  - name: powerdns-recursor
+    port: 8082
+  - name: powerdns-authoritative
+    port: 8081

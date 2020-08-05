@@ -12,12 +12,3 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
-
-
-dependencies:
-  - role: nginx
-    vars:
-      nginx_name: powerdns-recursor
-      nginx_url: http://127.0.0.1:8082
-      nginx_http_redirection: false
-      nginx_ssl_port: "9082"
