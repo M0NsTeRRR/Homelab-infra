@@ -12,6 +12,7 @@
   roles:
     - kea-dhcp
     - kea-exporter
+    - exporter-exporter
 
 - name: Configure apt-proxy cache servers
   hosts: apt_proxy

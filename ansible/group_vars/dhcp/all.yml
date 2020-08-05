@@ -93,3 +93,8 @@ kea_ipv6_subnets:
       - start: 2001:bc8:2e64:160::201
         end: 2001:bc8:2e64:160::240
     reservations: []
+
+exporter_exporter_name: kea-exporter
+exporter_exporter_nodes:
+  - name: kea
+    port: 9546

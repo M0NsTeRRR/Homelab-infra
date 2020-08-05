@@ -1,10 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "9547"
-    proto: tcp
-
 - name: Create kea-exporter build directory
   file:
     dest: /opt/kea_exporter/
