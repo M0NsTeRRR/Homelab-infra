@@ -160,6 +160,9 @@ scrape_configs:
     file_sd_configs:
     - files:
       - kea_dhcp/targets.json
+    params:
+      module:
+      - kea
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -175,6 +178,9 @@ scrape_configs:
     file_sd_configs:
     - files:
       - powerdns_authoritative/targets.json
+    params:
+      module:
+      - powerdns-authoritative
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -190,6 +196,9 @@ scrape_configs:
     file_sd_configs:
     - files:
       - powerdns_recursor/targets.json
+    params:
+      module:
+      - powerdns-recursor
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
