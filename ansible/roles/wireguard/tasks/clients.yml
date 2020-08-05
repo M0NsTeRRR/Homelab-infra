@@ -10,9 +10,9 @@
 
 - name: Delete old clients
   file:
-    path: "/etc/wireguard/clients/{{ item }}"
+    path: "/etc/wireguard/clients/{{ item }}/"
     state: absent
-  when: item not in clients
+  when: item not in wireguard_clients
   with_items: '{{ clients.stdout_lines }}'
 
 - name: Create new clients
