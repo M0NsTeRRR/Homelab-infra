@@ -75,6 +75,11 @@
     owner: exporter-exporter
     group: exporter-exporter
 
+- name: Create exporter_exporter folder
+  file:
+    state: directory
+    name: /etc/exporter_exporter
+
 - name: Configure exporter_exporter
   template:
     src: exporter_exporter.yml.j2
