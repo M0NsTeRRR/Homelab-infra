@@ -17,3 +17,8 @@ wireguard_clients:
 wireguard_exporter_peers:
   - name: homelab
     public_key: S7q5wROYfaRyFbuz1DXsbXgq8ZfiYyJZ4oSrlztgTAQ=
+
+exporter_exporter_name: wireguard-exporter
+exporter_exporter_nodes:
+  - name: wireguard
+    port: 9586

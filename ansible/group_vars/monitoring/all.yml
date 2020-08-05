@@ -14,10 +14,18 @@ unifi_poller_user: unifipoller
 
 snmp_exporter_user: admin
 
+alertmanager_smtp_smarthost: "{{ smtp_provider_host }}:{{ smtp_provider_port }}"
+alertmanager_smtp_from: "[MONITORING] Unicornafk"
+alertmanager_smtp_require_tls: "true"
+alertmanager_smtp_hello: alertmanager
+alertmanager_smtp_auth_username: "{{ smtp_monitoring_email }}"
+alertmanager_smtp_auth_password: "{{ smtp_monitoring_password }}"
+
 prometheus_clients_certs:
   - node-exporter
   - kea-exporter
   - powerdns-exporter
+  - wireguard-exporter
 prometheus_targets:
   blackbox:
     - https://dns1.unicornafk.fr
@@ -78,16 +86,16 @@ prometheus_targets:
     - worker2.dmz.unicornafk.fr:9100
     - worker3.dmz.unicornafk.fr:9100
   wireguard:
-    - vpn.unicornafk.fr:9586
+    - vpn.unicornafk.fr:9998
   kea_dhcp:
-    - dhcp1.unicornafk.fr:9547
-    - dhcp2.unicornafk.fr:9547
+    - dhcp1.unicornafk.fr:9998
+    - dhcp2.unicornafk.fr:9998
   powerdns_authoritative:
-    - dns1.unicornafk.fr
-    - dns2.unicornafk.fr
+    - dns1.unicornafk.fr:9998
+    - dns2.unicornafk.fr:9998
   powerdns_recursor:
-    - dns1.unicornafk.fr:9082
-    - dns2.unicornafk.fr:9082
+    - dns1.unicornafk.fr:9998
+    - dns2.unicornafk.fr:9998
   tplink_plug:
     - hs110-rack1.unicornafk.fr
     - hs110-rack2.unicornafk.fr

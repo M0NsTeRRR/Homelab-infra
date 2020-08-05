@@ -30,7 +30,7 @@
   openssl_dhparam:
     path: /etc/nginx/dhparam.pem
 
-- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+- name: Generate an OpenSSL private key
   openssl_privatekey:
     path: "/etc/ssl/certs/{{ nginx_name }}.pem"
 
