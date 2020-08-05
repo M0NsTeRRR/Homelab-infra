@@ -1,0 +1,7 @@
+modules:
+{% for node in exporter_exporter_nodes %}
+  {{ node.name }}:
+    method: http
+    http:
+       port: {{ node.port }}
+{% endfor %}

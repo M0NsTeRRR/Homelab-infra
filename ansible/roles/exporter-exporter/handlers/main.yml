@@ -1,0 +1,10 @@
+---
+- name: restart exporter-exporter.service
+  service:
+    name: exporter-exporter.service
+    state: restarted
+
+- name: enable exporter-exporter.service
+  service:
+    name: exporter-exporter.service
+    enabled: true

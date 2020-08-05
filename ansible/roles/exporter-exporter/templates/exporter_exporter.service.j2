@@ -1,0 +1,16 @@
+[Unit]
+Description=Prometheus Exporter Exporter
+After=network-online.target
+
+[Service]
+Type=simple
+User=exporter-exporter
+Group=exporter-exporter
+ExecStart=/usr/local/bin/exporter_exporter \
+    -config.file=/etc/exporter_exporter/expexp.yaml \
+    -web.listen-address=\
+    -web.tls.listen-address=:9998 \
+    -web.tls.cert=/etc/ssl/certs/exporter_exporter.crt \
+    -web.tls.key=/etc/ssl/certs/exporter_exporter.pem \
+    -web.tls.ca=/etc/exporter_exporter/ca.crt \
+    -web.tls.verify
