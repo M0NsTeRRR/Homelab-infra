@@ -50,6 +50,7 @@
   roles:
     - wireguard
     - wireguard-exporter
+    - exporter-exporter
 
 - name: Configure Log
   hosts: log

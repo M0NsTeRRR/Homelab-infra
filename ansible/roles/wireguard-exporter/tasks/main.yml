@@ -1,10 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "9586"
-    proto: tcp
-
 - name: Install golang
   apt:
     name: golang
