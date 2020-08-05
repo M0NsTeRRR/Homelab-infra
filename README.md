@@ -13,11 +13,12 @@ This is my Homelab infrastructure.
 Fill ansible/secrets.yml based on ansible/secrets.example and encrypt the file with ansible-vault
 
 Fill every certs/<folder> with :
+- ca.crt.j2
+- ca.csr.j2
+- ca.pem.j2
 - client.crt.j2
-- client.key.j2
-- node-exporter.crt.j2
-- node-exporter.key.j2
-- node-exporter.pem.j2
+- client.csr.j2
+- client.pem.j2
 
 # Ansible
 `cd ansible`  
@@ -29,8 +30,8 @@ fill all `secrets.yml` based on `secrets.example` in each subdirectory of `group
 ### Playbooks to add fingerprint on know_hosts
 `ansible-playbook -i <inventory_file> playbooks/add-ssh-keys.yml`  
 
-### Playbooks to deploy SSH configuration
-`ansible-playbook -i <inventory_file> playbooks/deploy_authorized_keys.yml`  
+### Playbooks to create client certificate signed by a CA
+`ansible-playbook playbooks/generate-certs.yml`
 
 ### Playbooks to deploy dmz
 `ansible-playbook -i dmz deploy_dmz.yml`
