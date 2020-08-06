@@ -8,9 +8,9 @@ LOG_CONSOLE = True
 # Places all logs in a rotating file if True
 LOG_FILE = True
 # IPv4 networks eligible to be synced to NetBox
-IPV4_ALLOWED = ["{{ vcenter_netbox_sync_ipv4_subnets | join('", "') }}"]
+IPV4_ALLOWED = {{ vcenter_netbox_sync_ipv4_subnets | to_json }}
 # IPv6 networks eligible to be synced to NetBox
-IPV6_ALLOWED = ["{{ vcenter_netbox_sync_ipv6_subnets | join('", "') }}"]
+IPV6_ALLOWED = {{ vcenter_netbox_sync_ipv6_subnets | to_json }}
 
 
 # Optional Settings
@@ -21,7 +21,7 @@ POPULATE_DNS_NAME = True
 # Use custom DNS servers defined below for reverse DNS lookups
 CUSTOM_DNS_SERVERS = False
 # List of DNS servers to query for PTR records
-DNS_SERVERS = ["{{ groups[vcenter_netbox_sync_dns_group] | join(", ") }}"]
+DNS_SERVERS = {{ groups[vcenter_netbox_sync_dns_group] | to_json }}
 # Create a custom field for virtual machines to track the current host they reside on
 TRACK_VM_HOST = True
 

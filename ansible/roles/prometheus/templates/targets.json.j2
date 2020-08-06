@@ -3,10 +3,6 @@
     "labels": {
       "job": "{{ item.key }}"
     },
-    "targets": [
-      {% for target in item.value %}
-      "{{ target }}"{% if not loop.last %},{% endif %}
-      {% endfor %}
-    ]
+    "targets": {{ item.value | to_json }}
   }
 ]

@@ -29,7 +29,7 @@
             }
         ],
         "interfaces-config": {
-            "interfaces": [ {% for interface in ansible_interfaces %}"{{ interface }}"{% if not loop.last %},{% endif %}{% endfor %} ]
+            "interfaces": [ {{ ansible_interfaces | to_json }} ]
         },
         "control-socket": {
             "socket-type": "unix",
