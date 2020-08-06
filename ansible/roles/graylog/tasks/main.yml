@@ -43,7 +43,7 @@
     status_code: 200
     headers:
       X-Requested-By: cli
-  register: input
+  register: inputs
   when: graylog_inputs | length > 0
 
 - name: Provision inputs graylog
@@ -61,12 +61,26 @@
     status_code: 200
     headers:
       X-Requested-By: cli
-  register: notification
+  register: notifications
   when: graylog_notifications | length > 0
 
 - name: Provision notifications graylog
   include_tasks: provision_notifications.yml
   with_items: "{{ graylog_notifications }}"
+
+- name: Get all notifications
+  uri:
+    url: "https://{{ inventory_hostname }}/api/events/notifications"
+    user: admin
+    password: "{{ graylog_root_password }}"
+    method: GET
+    return_content: yes
+    validate_certs: no
+    status_code: 200
+    headers:
+      X-Requested-By: cli
+  register: notifications
+  when: graylog_notifications | length > 0
 
 - name: Get all events
   uri:
@@ -79,7 +93,7 @@
     status_code: 200
     headers:
       X-Requested-By: cli
-  register: event
+  register: events
   when: graylog_events | length > 0
 
 - name: Provision events graylog

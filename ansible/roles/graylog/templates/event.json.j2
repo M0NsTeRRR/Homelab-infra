@@ -1,5 +1,5 @@
 {
-    {% if events.0 is defined %}"id": "{{ events.0.id }}",{% endif %}
+    {% if events_match.0 is defined %}"id": "{{ events_match.0.id }}",{% endif %}
     "title": "{{ item.title }}",
     "description": "{{ item.description }}",
     "priority": {{ item.priority }},
@@ -23,5 +23,12 @@
         "grace_period_ms": 0,
         "backlog_size": 0
     },
-    "notifications": []
+    "notifications": [
+{% for notification in notifications.json.notifications %}
+      {
+        "notification_id": "{{ notification.id }}",
+        "notification_parameters": null
+      }{% if not loop.last %},{% endif %}
+{% endfor %}
+    ]
 }

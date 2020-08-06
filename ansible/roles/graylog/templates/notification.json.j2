@@ -1,5 +1,5 @@
 {
-    {% if notifications.0 is defined %}"id": "{{ notifications.0.id }}",{% endif %}
+    {% if notifications_match.0 is defined %}"id": "{{ notifications_match.0.id }}",{% endif %}
     "title": "{{ item.title }}",
     "description": "",
     "config": {

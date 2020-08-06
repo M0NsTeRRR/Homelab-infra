@@ -1,14 +1,14 @@
 ---
 - name: Set fact notifications
   set_fact:
-    notifications: "{{ notification.json.notifications | selectattr('title','equalto',item.title) | list }}"
+    notifications_match: "{{ notifications.json.notifications | selectattr('title','equalto',item.title) | list }}"
 - name: Set fact notification_found
   set_fact:
-    notification_found: "{{ notifications | length > 0 }}"
+    notification_found: "{{ notifications_match | length > 0 }}"
 
 - name: "Notification {{ item.title }} updated"
   uri:
-    url: "https://{{ inventory_hostname }}/api/events/notifications/{{ notifications[0].id }}"
+    url: "https://{{ inventory_hostname }}/api/events/notifications/{{ notifications_match[0].id }}"
     user: admin
     password: "{{ graylog_root_password }}"
     method: PUT

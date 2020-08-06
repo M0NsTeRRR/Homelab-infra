@@ -7,14 +7,14 @@
 
 - name: Set fact inputs
   set_fact:
-    inputs: "{{ input.json.inputs | selectattr('title','equalto',item.title) | list }}"
+    inputs_match: "{{ inputs.json.inputs | selectattr('title','equalto',item.title) | list }}"
 - name: Set fact input_found
   set_fact:
-    input_found: "{{ inputs | length > 0 }}"
+    input_found: "{{ inputs_match | length > 0 }}"
 
 - name: "Input {{ item.title }} updated"
   uri:
-    url: "https://{{ inventory_hostname }}/api/system/inputs/{{ inputs[0].id }}"
+    url: "https://{{ inventory_hostname }}/api/system/inputs/{{ inputs_match[0].id }}"
     user: admin
     password: "{{ graylog_root_password }}"
     method: PUT
