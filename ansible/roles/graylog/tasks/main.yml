@@ -32,9 +32,55 @@
 - name: Install graylog
   include_tasks: graylog.yml
 
+- name: Get all inputs
+  uri:
+    url: "https://{{ inventory_hostname }}/api/system/inputs"
+    user: admin
+    password: "{{ graylog_root_password }}"
+    method: GET
+    return_content: yes
+    validate_certs: no
+    status_code: 200
+    headers:
+      X-Requested-By: cli
+  register: input
+  when: graylog_inputs | length > 0
+
 - name: Provision inputs graylog
   include_tasks: provision_inputs.yml
   with_items: "{{ graylog_inputs }}"
+
+- name: Get all notifications
+  uri:
+    url: "https://{{ inventory_hostname }}/api/events/notifications"
+    user: admin
+    password: "{{ graylog_root_password }}"
+    method: GET
+    return_content: yes
+    validate_certs: no
+    status_code: 200
+    headers:
+      X-Requested-By: cli
+  register: notification
+  when: graylog_notifications | length > 0
+
+- name: Provision notifications graylog
+  include_tasks: provision_notifications.yml
+  with_items: "{{ graylog_notifications }}"
+
+- name: Get all events
+  uri:
+    url: "https://{{ inventory_hostname }}/api/events/definitions"
+    user: admin
+    password: "{{ graylog_root_password }}"
+    method: GET
+    return_content: yes
+    validate_certs: no
+    status_code: 200
+    headers:
+      X-Requested-By: cli
+  register: event
+  when: graylog_events | length > 0
 
 - name: Provision events graylog
   include_tasks: provision_events.yml

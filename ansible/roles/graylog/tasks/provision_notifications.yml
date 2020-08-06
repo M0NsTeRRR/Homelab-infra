@@ -1,0 +1,39 @@
+---
+- name: Set fact notifications
+  set_fact:
+    notifications: "{{ notification.json.notifications | selectattr('title','equalto',item.title) | list }}"
+- name: Set fact notification_found
+  set_fact:
+    notification_found: "{{ notifications | length > 0 }}"
+
+- name: "Notification {{ item.title }} updated"
+  uri:
+    url: "https://{{ inventory_hostname }}/api/events/notifications/{{ notifications[0].id }}"
+    user: admin
+    password: "{{ graylog_root_password }}"
+    method: PUT
+    return_content: yes
+    body_format: json
+    validate_certs: no
+    body: "{{ lookup('template', 'notification.json.j2') }}"
+    status_code: 200
+    headers:
+      Content-Type: application/json
+      X-Requested-By: cli
+  when: notification_found
+
+- name: "Notification {{ item.title }} created"
+  uri:
+    url: "https://{{ inventory_hostname }}/api/events/notifications"
+    user: admin
+    password: "{{ graylog_root_password }}"
+    method: POST
+    return_content: yes
+    body_format: json
+    validate_certs: no
+    body: "{{ lookup('template', 'notification.json.j2') }}"
+    status_code: 200
+    headers:
+      Content-Type: application/json
+      X-Requested-By: cli
+  when: not notification_found

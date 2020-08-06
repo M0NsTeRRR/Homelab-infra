@@ -5,19 +5,6 @@
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
 
-- name: Get all inputs
-  uri:
-    url: "https://{{ inventory_hostname }}/api/system/inputs"
-    user: admin
-    password: "{{ graylog_root_password }}"
-    method: GET
-    return_content: yes
-    validate_certs: no
-    status_code: 200
-    headers:
-      X-Requested-By: cli
-  register: input
-
 - name: Set fact inputs
   set_fact:
     inputs: "{{ input.json.inputs | selectattr('title','equalto',item.title) | list }}"

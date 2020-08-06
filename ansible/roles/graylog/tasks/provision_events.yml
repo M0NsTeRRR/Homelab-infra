@@ -1,17 +1,4 @@
 ---
-- name: Get all events
-  uri:
-    url: "https://{{ inventory_hostname }}/api/events/definitions"
-    user: admin
-    password: "{{ graylog_root_password }}"
-    method: GET
-    return_content: yes
-    validate_certs: no
-    status_code: 200
-    headers:
-      X-Requested-By: cli
-  register: event
-
 - name: Set fact events
   set_fact:
     events: "{{ event.json.event_definitions | selectattr('title','equalto',item.title) | list }}"
@@ -19,21 +6,21 @@
   set_fact:
     event_found: "{{ events | length > 0 }}"
 
-#- name: "Event {{ item.title }} updated"
-#  uri:
-#    url: "https://{{ inventory_hostname }}/api/events/definitions/{{ events[0].id }}"
-#    user: admin
-#    password: "{{ graylog.root_password }}"
-#    method: PATCH
-#    return_content: yes
-#    body_format: json
-#    validate_certs: no
-#    body: "{{ lookup('template', 'event.json.j2') }}"
-#    status_code: 200
-#    headers:
-#      Content-Type: application/json
-#      X-Requested-By: cli
-#  when: event_found
+- name: "Event {{ item.title }} updated"
+  uri:
+    url: "https://{{ inventory_hostname }}/api/events/definitions/{{ events[0].id }}"
+    user: admin
+    password: "{{ graylog_root_password }}"
+    method: PUT
+    return_content: yes
+    body_format: json
+    validate_certs: no
+    body: "{{ lookup('template', 'event.json.j2') }}"
+    status_code: 200
+    headers:
+      Content-Type: application/json
+      X-Requested-By: cli
+  when: event_found
 
 - name: "Event {{ item.title }} created"
   uri:

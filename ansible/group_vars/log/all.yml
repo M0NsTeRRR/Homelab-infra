@@ -6,7 +6,7 @@ graylog_transport_email_hostname: "{{ smtp_provider_host }}"
 graylog_transport_email_port: "{{ smtp_provider_port }}"
 graylog_transport_email_use_auth: true
 graylog_transport_email_auth_username: "{{ smtp_monitoring_email }}"
-graylog_transport_email_subject_prefix: '[LOG]'
+graylog_transport_email_subject_prefix: '[LOG] Unicornafk'
 graylog_transport_email_from_email: "{{ smtp_monitoring_email }}"
 graylog_transport_email_auth_password: "{{ smtp_monitoring_password }}"
 graylog_transport_email_use_tls: true
@@ -21,6 +21,16 @@ graylog_inputs:
     port: 1514
     proto: tcp
     bind_address: 0.0.0.0
+
+graylog_notifications:
+  - title: Default
+    type: email-notification-v1
+    sender: "{{ smtp_monitoring_email }}"
+    subject: "Graylog event notification: ${event_definition_title}"
+    body_template: "--- [Event Definition] ---------------------------\\nTitle:       ${event_definition_title}\\nDescription: ${event_definition_description}\\nType:        ${event_definition_type}\\n--- [Event] --------------------------------------\\nTimestamp:            ${event.timestamp}\\nMessage:              ${event.message}\\nSource:               ${event.source}\\nKey:                  ${event.key}\\nPriority:             ${event.priority}\\nAlert:                ${event.alert}\\nTimestamp Processing: ${event.timestamp}\\nTimerange Start:      ${event.timerange_start}\\nTimerange End:        ${event.timerange_end}\\nFields:\\n${foreach event.fields field}  ${field.key}: ${field.value}\\n${end}\\n${if backlog}\\n--- [Backlog] ------------------------------------\\nLast messages accounting for this alert:\\n${foreach backlog message}\\n${message}\\n${end}\\n${end}\\n"
+    user_recipients:
+      - "admin"
+    email_recipients: []
 
 graylog_events:
   - title: ERROR

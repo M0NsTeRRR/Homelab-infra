@@ -1,4 +1,5 @@
 {
+    {% if events.0 is defined %}"id": "{{ events.0.id }}",{% endif %}
     "title": "{{ item.title }}",
     "description": "{{ item.description }}",
     "priority": {{ item.priority }},

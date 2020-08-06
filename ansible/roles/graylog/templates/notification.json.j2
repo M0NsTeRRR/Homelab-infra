@@ -1,0 +1,13 @@
+{
+    {% if notifications.0 is defined %}"id": "{{ notifications.0.id }}",{% endif %}
+    "title": "{{ item.title }}",
+    "description": "",
+    "config": {
+        "type": "{{ item.type }}",
+        "sender": "{{ item.sender }}",
+        "subject": "{{ item.subject }}",
+        "body_template": "{{ item.body_template }}",
+        "email_recipients": {{ item.email_recipients | to_json }},
+        "user_recipients": {{ item.user_recipients | to_json }}
+    }
+}

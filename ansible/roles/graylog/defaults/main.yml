@@ -15,4 +15,5 @@ graylog_transport_email_use_tls: true
 graylog_transport_email_use_ssl: false
 
 graylog_inputs: []
+graylog_email_notifications: {}
 graylog_events: []
