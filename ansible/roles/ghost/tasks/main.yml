@@ -46,6 +46,9 @@
   become: yes
   become_user: idiotghost
   when: not ghost.stat.exists
+  notify:
+    - restart ghost
+    - enable ghost
 
 - name: Create Ghost configuration
   template:
@@ -54,10 +57,4 @@
     owner: idiotghost
     group: idiotghost
     mode: '0775'
-
-- name: Start ghost
-  command:
-    cmd: ghost start
-    chdir: /var/www/ghost
-  become: yes
-  become_user: idiotghost
+  notify: restart ghost
