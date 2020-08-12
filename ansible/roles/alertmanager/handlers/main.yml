@@ -1,0 +1,10 @@
+---
+- name: restart alertmanager.service
+  service:
+    name: alertmanager.service
+    state: restarted
+
+- name: enable alertmanager.service
+  service:
+    name: alertmanager.service
+    enabled: true

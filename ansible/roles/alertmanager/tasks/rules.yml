@@ -1,0 +1,6 @@
+---
+- name: "Create {{ item | basename | replace('.j2', '') }} alertmanager rules"
+  template:
+    src: "{{ item }}"
+    dest: "/etc/alertmanager/rules/{{ item | basename | replace('.j2', '') }}"
+  with_fileglob: templates/rules/*.j2

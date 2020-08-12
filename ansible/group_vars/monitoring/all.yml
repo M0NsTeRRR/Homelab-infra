@@ -15,11 +15,12 @@ unifi_poller_user: unifipoller
 snmp_exporter_user: admin
 
 alertmanager_smtp_smarthost: "{{ smtp_provider_host }}:{{ smtp_provider_port }}"
-alertmanager_smtp_from: "[MONITORING] Unicornafk"
+alertmanager_smtp_from: "{{ smtp_monitoring_email }}"
 alertmanager_smtp_require_tls: "true"
 alertmanager_smtp_hello: alertmanager
 alertmanager_smtp_auth_username: "{{ smtp_monitoring_email }}"
 alertmanager_smtp_auth_password: "{{ smtp_monitoring_password }}"
+alertmanager_receivers_email: "{{ email }}"
 
 prometheus_clients_certs:
   - node-exporter

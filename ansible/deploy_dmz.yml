@@ -65,6 +65,7 @@
   become: yes
   roles:
     - prometheus
+    - alertmanager
     - grafana
     - snmp-exporter
     - blackbox-exporter

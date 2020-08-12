@@ -1,0 +1,9 @@
+---
+alertmanager_version: 0.21.0
+alertmanager_smtp_smarthost: smtp.example.com:587
+alertmanager_smtp_from: "[MONITORING]"
+alertmanager_smtp_require_tls: "true"
+alertmanager_smtp_hello: alertmanager
+alertmanager_smtp_auth_username: username
+alertmanager_smtp_auth_password: password
+alertmanager_receivers_email: email@example.com

@@ -1,0 +1,18 @@
+global:
+  smtp_smarthost: '{{ alertmanager_smtp_smarthost }}'
+  smtp_from: '{{ alertmanager_smtp_from }}'
+  smtp_require_tls: {{ alertmanager_smtp_require_tls }}
+  smtp_hello: '{{ alertmanager_smtp_hello }}'
+  smtp_auth_username: '{{ alertmanager_smtp_auth_username }}'
+  smtp_auth_password: '{{ alertmanager_smtp_auth_password }}'
+
+route:
+  receiver: 'alert-mails'
+  group_wait: 30s
+  group_interval: 1m
+  repeat_interval: 4h
+
+receivers:
+- name: 'alert-mails'
+  email_configs:
+  - to: '{{ alertmanager_receivers_email }}'

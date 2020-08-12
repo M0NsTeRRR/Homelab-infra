@@ -1,0 +1,60 @@
+---
+- name: Check if alertmanager is already installed
+  stat:
+    path: /usr/local/bin/alertmanager
+  register: alertmanager
+
+- name: "Download alertmanager version {{ alertmanager_version }}"
+  get_url:
+    url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
+    dest: /tmp/alertmanager.tar.gz
+  when: not alertmanager.stat.exists
+
+- name: Extract alertmanager binary
+  unarchive:
+    src: /tmp/alertmanager.tar.gz
+    dest: /tmp
+    remote_src: yes
+    list_files: yes
+  register: archive_contents
+  when: not alertmanager.stat.exists
+
+- name: Copy alertmanager binary to /usr/local/bin
+  copy:
+    src: /tmp/{{ archive_contents.files[0] }}alertmanager
+    dest: /usr/local/bin/alertmanager
+    owner: prometheus
+    group: prometheus
+    mode: 0700
+    remote_src: yes
+  notify: restart alertmanager.service
+  when: not alertmanager.stat.exists
+
+- name: Create alertmanager configuration directory
+  file:
+    dest: /etc/alertmanager/rules
+    state: directory
+
+- name: Create alertmanager data directory
+  file:
+    dest: /var/lib/alertmanager/
+    state: directory
+    owner: prometheus
+    group: prometheus
+
+- name: Configure alertmanager
+  template:
+    src: alertmanager.yml.j2
+    dest: /etc/alertmanager/alertmanager.yml
+  notify: restart alertmanager.service
+
+- name: Create systemd service file
+  template:
+    src: alertmanager.service.j2
+    dest: /etc/systemd/system/alertmanager.service
+  notify:
+    - enable alertmanager.service
+    - restart alertmanager.service
+
+- name: Provision alertmanager rules
+  include_tasks: rules.yml
