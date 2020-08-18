@@ -52,7 +52,7 @@ To delete the rules `netsh interface portproxy del v4tov4 listenport=<PORT>  lis
 
 Supported distributions :
 - Debian (10.5.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso)
-- Ubuntu (20.04) - [iso](http://cdimage.ubuntu.com/ubuntu-server/daily/current/focal-legacy-server-amd64.iso)
+- Ubuntu (20.04.1) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.1/release/ubuntu-20.04-legacy-server-amd64.iso)
 
 ### Create template
 Linux : `./build.sh`  
