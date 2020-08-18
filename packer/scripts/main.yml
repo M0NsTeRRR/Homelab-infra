@@ -40,9 +40,6 @@
     - name: Include motd
       include_tasks: motd.yml
 
-    - name: Include sudoers
-      include_tasks: sudoers.yml
-
 #    - name: Include chkrootkit
 #      include_tasks: chkrootkit.yml
 

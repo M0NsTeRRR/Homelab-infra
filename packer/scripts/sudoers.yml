@@ -1,6 +1,0 @@
----
-- name: Create /etc/sudoers.d/ludovic
-  template:
-    src: ./templates/sudoers/ludovic.j2
-    dest: /etc/sudoers.d/ludovic
-    mode: '0440'
