@@ -43,6 +43,7 @@
       "type": "shell",
       "inline": [
         "useradd -m -p $(openssl passwd -crypt {{ user `ssh_password` }}) {{ user `ssh_username` }}",
+        "usermod -aG sudo {{ user `ssh_username` }}",
         "touch /boot/ssh"
       ]
     }
