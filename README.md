@@ -11,7 +11,8 @@ This is my Homelab infrastructure.
 - Terraform (version >= 0.12.28)
 	- Terragrunt (version >= 0.23.31)
 
-Fill ansible/secrets.yml based on ansible/secrets.example and encrypt the file with ansible-vault
+# Ansible
+`cd ansible`  
 
 Fill every certs/<folder> with :
 - ca.crt.j2
@@ -20,9 +21,6 @@ Fill every certs/<folder> with :
 - client.crt.j2
 - client.csr.j2
 - client.pem.j2
-
-# Ansible
-`cd ansible`  
 
 Install dependencies `pip3 install -r requirements.txt`
 
