@@ -9,3 +9,4 @@ account.hcl
 *.csr*
 *.key*
 *.pem*
+*.img

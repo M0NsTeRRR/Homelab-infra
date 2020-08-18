@@ -7,6 +7,7 @@ This is my Homelab infrastructure.
 - Ansible (version >= 2.9.6)
 	- Python3 and Pip
 - Packer (version >= 1.6.0)
+    - Packer builder arm
 - Terraform (version >= 0.12.28)
 	- Terragrunt (version >= 0.23.31)
 
@@ -51,11 +52,16 @@ To delete the rules `netsh interface portproxy del v4tov4 listenport=<PORT>  lis
 `cd packer`
 
 Supported distributions :
+
+**VM**
 - Debian (10.5.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.5.0-amd64-netinst.iso)
 - Ubuntu (20.04.1) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.1/release/ubuntu-20.04-legacy-server-amd64.iso)
 
+**Raspberry Pi (v3/v4)**
+- Ubuntu (20.04.1) - [iso](https://cdimage.ubuntu.com/releases/20.04.1/release/ubuntu-20.04.1-preinstalled-server-arm64+raspi.img.xz)
+
 ### Create template
-Linux : `./build.sh`  
+`./build.sh` (sudo permission required for Raspberry Pi choice only)
 
 # Terraform
 `cd terraform`  
