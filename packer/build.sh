@@ -10,7 +10,7 @@ do
   case $CHOICE in
 	1)
     vcenter_server='vsphere.unicornafk.fr'
-    vcenter_username='administrator@vsphere.unicornafk.fr'
+    vcenter_username='administrator@unicornafk.fr'
 
     read -p 'host_ip: ' host_ip
     read -p 'distribution: ' distribution

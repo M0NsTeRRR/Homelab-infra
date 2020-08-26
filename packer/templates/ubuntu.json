@@ -46,7 +46,9 @@
       ],
       "notes": "ubuntu-{{ user `version` }}, generated on {{ isotime \"2006-01-02T15:04:05Z\" }}",
 
-      "iso_paths": ["[NAS] ISO/ubuntu-{{ user `version` }}-server-amd64.iso"],
+      "iso_url": "http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/{{ user `version` }}/release/ubuntu-{{ user `version` }}-legacy-server-amd64.iso",
+      "iso_checksum": "file:http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/{{ user `version` }}/release/SHA256SUMS",
+
       "http_directory":"preseed",
       "http_port_min": "{{ user `http_port` }}",
       "http_port_max": "{{ user `http_port` }}",

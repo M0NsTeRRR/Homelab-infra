@@ -46,7 +46,9 @@
       ],
       "notes": "debian-{{ user `version` }}, generated on {{ isotime \"2006-01-02T15:04:05Z\" }}",
 
-      "iso_paths": ["[NAS] ISO/debian-{{ user `version` }}-amd64-netinst.iso"],
+      "iso_url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-{{ user `version` }}-amd64-netinst.iso",
+      "iso_checksum": "file:https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS",
+
       "http_directory":"preseed",
       "http_port_min": "{{ user `http_port` }}",
       "http_port_max": "{{ user `http_port` }}",
