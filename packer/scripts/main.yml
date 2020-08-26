@@ -12,6 +12,9 @@
         upgrade: 'yes'
         update_cache: 'yes'
 
+    - name: Include sudoers
+      include_tasks: sudoers.yml
+
     - name: Include dns
       include_tasks: dns.yml
       when: ansible_distribution == "Ubuntu"
