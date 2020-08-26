@@ -45,7 +45,7 @@ Port 8889 used for ubuntu build
 Open both ports on windows firewall  
 Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenport=<PORT> listenaddress=<IP> connectport=<PORT> connectaddress=127.0.0.1`  
 Replace <IP> with the LAN IP of your PC and <PORT> with [8888, 8889]  
-To delete the rules `netsh interface portproxy del v4tov4 listenport=<PORT>  listenaddress=<IP>`  
+To delete the rules `netsh interface portproxy del v4tov4 listenport=<PORT> listenaddress=<IP>`
 
 `cd packer`
 
