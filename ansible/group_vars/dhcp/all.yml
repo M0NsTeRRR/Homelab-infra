@@ -14,7 +14,7 @@ kea_ipv4_subnets:
         end: 192.168.20.240
     router: 192.168.20.2
     reservations:
-      - hostname: AP1
+      - hostname: ap1
         hw_address: 18:E8:29:A3:24:10
         ip_address: 192.168.20.51
   - subnet: 192.168.30.0/24
@@ -29,15 +29,21 @@ kea_ipv4_subnets:
         end: 192.168.40.240
     router: 192.168.40.2
     reservations:
-      - hostname: HS110-Rack1
+      - hostname: hs110-Rack1
         hw_address: 98:DA:C4:BE:E8:89 
-        ip_address: 192.168.40.101
-      - hostname: HS110-Rack2
+        ip_address: 192.168.50.101
+      - hostname: hs110-Rack2
         hw_address: 98:DA:C4:BE:E8:96
-        ip_address: 192.168.40.102
-      - hostname: HS110-Chambre1
+        ip_address: 192.168.50.102
+      - hostname: hs110-Chambre1
         hw_address: 98:DA:C4:BE:E9:EA
-        ip_address: 192.168.40.103
+        ip_address: 192.168.50.103
+      - hostname: bulb-chambre1
+        hw_address: 04:cf:8c:b5:1e:17
+        ip_address: 192.168.50.111
+      - hostname: vaccum
+        hw_address: 4a:b9:8b:13:55:65
+        ip_address: 192.168.50.112
   - subnet: 192.168.50.0/24
     pools:
       - start: 192.168.50.201
@@ -51,47 +57,53 @@ kea_ipv4_subnets:
     router: 192.168.60.2
     reservations: []
 kea_ipv6_subnets:
-  - subnet: 2001:bc8:2e64:110::/64
+  - subnet: 2001:470:cace:110::/64
     pools:
-      - start: 2001:bc8:2e64:110::201
-        end: 2001:bc8:2e64:110::240
+      - start: 2001:470:cace:110::201
+        end: 2001:470:cace:110::240
     reservations: []
-  - subnet: 2001:bc8:2e64:120::/64
+  - subnet: 2001:470:cace:120::/64
     pools:
-      - start: 2001:bc8:2e64:120::201
-        end: 2001:bc8:2e64:120::240
+      - start: 2001:470:cace:120::201
+        end: 2001:470:cace:120::240
     reservations:
-      - hostname: AP1
+      - hostname: ap1
         hw_address: 18:E8:29:A3:24:10
-        ip_address: 2001:bc8:2e64:120::51
-  - subnet: 2001:bc8:2e64:130::/64
+        ip_address: 2001:470:cace:120::51
+  - subnet: 2001:470:cace:130::/64
     pools:
-      - start: 2001:bc8:2e64:130::201
-        end: 2001:bc8:2e64:130::240
+      - start: 2001:470:cace:130::201
+        end: 2001:470:cace:130::240
     reservations: []
-  - subnet: 2001:bc8:2e64:140::/64
+  - subnet: 2001:470:cace:140::/64
     pools:
-      - start: 2001:bc8:2e64:140::201
-        end: 2001:bc8:2e64:140::240
+      - start: 2001:470:cace:140::201
+        end: 2001:470:cace:140::240
+    reservations: []
+  - subnet: 2001:470:cace:150::/64
+    pools:
+      - start: 2001:470:cace:150::201
+        end: 2001:470:cace:150::240
     reservations:
-      - hostname: HS110-Rack1
+      - hostname: hs110-Rack1
         hw_address: 98:DA:C4:BE:E8:89
-        ip_address: 2001:bc8:2e64:140::101
-      - hostname: HS110-Rack2
+        ip_address: 2001:470:cace:150::101
+      - hostname: hs110-Rack2
         hw_address: 98:DA:C4:BE:E8:96
-        ip_address: 2001:bc8:2e64:140::102
-      - hostname: HS110-Chambre1
+        ip_address: 2001:470:cace:150::102
+      - hostname: hs110-Chambre1
         hw_address: 98:DA:C4:BE:E9:EA
-        ip_address: 2001:bc8:2e64:140::103
-  - subnet: 2001:bc8:2e64:150::/64
+        ip_address: 2001:470:cace:150::103
+      - hostname: bulb-chambre1
+        hw_address: 04:cf:8c:b5:1e:17
+        ip_address: 2001:470:cace:150::111
+      - hostname: vaccum
+        hw_address: 4a:b9:8b:13:55:65
+        ip_address: 2001:470:cace:150::112
+  - subnet: 2001:470:cace:160::/64
     pools:
-      - start: 2001:bc8:2e64:150::201
-        end: 2001:bc8:2e64:150::240
-    reservations: []
-  - subnet: 2001:bc8:2e64:160::/64
-    pools:
-      - start: 2001:bc8:2e64:160::201
-        end: 2001:bc8:2e64:160::240
+      - start: 2001:470:cace:160::201
+        end: 2001:470:cace:160::240
     reservations: []
 
 exporter_exporter_name: kea-exporter
