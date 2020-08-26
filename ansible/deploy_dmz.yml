@@ -15,12 +15,6 @@
     - kea-exporter
     - exporter-exporter
 
-- name: Configure apt-proxy cache servers
-  hosts: apt_proxy
-  become: yes
-  roles:
-    - apt-cacher-ng
-
 - name: Configure git
   hosts: git
   become: yes

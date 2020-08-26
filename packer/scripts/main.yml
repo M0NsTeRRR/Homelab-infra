@@ -16,8 +16,8 @@
       include_tasks: dns.yml
       when: ansible_distribution == "Ubuntu"
 
-    - name: Include apt-cache
-      include_tasks: apt-cache.yml
+#    - name: Include apt-cache
+#      include_tasks: apt-cache.yml
 
     - name: Include ufw
       include_tasks: ufw.yml

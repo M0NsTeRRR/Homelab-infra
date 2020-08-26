@@ -6,9 +6,6 @@
 dhcp1.unicornafk.fr
 dhcp2.unicornafk.fr
 
-[apt_proxy]
-apt-proxy.unicornafk.fr
-
 [reverse_proxy]
 reverse-proxy.unicornafk.fr
 
