@@ -18,9 +18,9 @@
       - { regexp: '(//)?^Unattended-Upgrade::Remove-New-Unused-Dependencies', line: 'Unattended-Upgrade::Remove-New-Unused-Dependencies "true";' }
       - { regexp: '(// )?^Unattended-Upgrade::SyslogEnable', line: 'Unattended-Upgrade::SyslogEnable "true";' }
 
-- name: Configure /etc/apt/apt.conf.d/20auto-upgrades
+- name: Configure /etc/apt/apt.conf.d/10periodic
   lineinfile:
-    dest: "/etc/apt/apt.conf.d/20auto-upgrades"
+    dest: "/etc/apt/apt.conf.d/10periodic"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: "present"
