@@ -41,12 +41,13 @@ prometheus_targets:
     - https://nas.unicornafk.fr
     - https://log.unicornafk.fr
   fping:
-    - 1.1.1.1
-    - 2606:4700:4700::1111
-    - 8.8.8.8
-    - 2001:4860:4860::8888
+    - 1.1.1.1              # cloudflare
+    - 2606:4700:4700::1111 # cloudflare
+    - 8.8.8.8              # google
+    - 2001:4860:4860::8888 # google
+    - 216.66.84.42         # HE Tunnel
     - 192.168.5.1
-    - 2001:bc8:2e64:105::1
+    - 2001:470:cace:105::1
   vmware_exporter:
     - "{{ vmware_exporter_vcenter_hostname }}"
   unifi_poller:
@@ -54,7 +55,7 @@ prometheus_targets:
   snmp:
     - sw2.unicornafk.fr
   snmp_microtik:
-    - 192.168.5.1
+    - r1.unicornafk.fr
   snmp_brocade:
     - 192.168.10.2
   snmp_qnap:
