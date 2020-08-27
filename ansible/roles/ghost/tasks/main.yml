@@ -46,9 +46,7 @@
   become: yes
   become_user: idiotghost
   when: not ghost.stat.exists
-  notify:
-    - restart ghost
-    - enable ghost
+  notify: restart ghost
 
 - name: Create Ghost configuration
   template:

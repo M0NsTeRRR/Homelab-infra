@@ -1,14 +1,7 @@
 ---
 - name: restart ghost
   command:
-    cmd: ghost start
-    chdir: /var/www/ghost
-  become: yes
-  become_user: idiotghost
-
-- name: enable ghost
-  command:
-    cmd: ghost enable
+    cmd: ghost start --enable
     chdir: /var/www/ghost
   become: yes
   become_user: idiotghost
