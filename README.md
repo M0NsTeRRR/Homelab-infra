@@ -4,12 +4,12 @@ This is my Homelab infrastructure.
 
 # Requirements
 
-- Ansible (version >= 2.9.6)
+- Ansible (version >= 2.9)
 	- Python3 and Pip
-- Packer (version >= 1.6.1)
+- Packer (version >= 1.6)
     - Packer builder arm
-- Terraform (version >= 0.12.28)
-	- Terragrunt (version >= 0.23.33)
+- Terraform (version >= 0.13)
+	- Terragrunt (version >= 0.23)
 
 # Ansible
 `cd ansible`  

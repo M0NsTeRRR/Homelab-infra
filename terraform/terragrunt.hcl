@@ -19,6 +19,19 @@ generate "provider" {
   path      = "provider.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
+terraform {
+  required_providers {
+    vsphere = {
+      source  = "hashicorp/vsphere"
+      version = "~> 1.23.0"
+    }
+    powerdns = {
+      source  = "terraform-providers/powerdns"
+      version = "~> 1.4.0"
+    }
+  }
+}
+
 provider "vsphere" {
   vsphere_server = "vsphere.unicornafk.fr"
   user           = "${local.vsphere_user}"
