@@ -38,12 +38,15 @@ kea_ipv4_subnets:
       - hostname: hs110-Chambre1
         hw_address: 98:DA:C4:BE:E9:EA
         ip_address: 192.168.50.103
-      - hostname: bulb-chambre1
+      - hostname: xiaomi-bulb-chambre1
         hw_address: 04:cf:8c:b5:1e:17
         ip_address: 192.168.50.111
-      - hostname: vaccum
+      - hostname: xiaomi-vaccum
         hw_address: 4a:b9:8b:13:55:65
         ip_address: 192.168.50.112
+      - hostname: xiaomi-gateway
+        hw_address: 64:90:c1:7a:e2:c0
+        ip_address: 192.168.50.113
   - subnet: 192.168.50.0/24
     pools:
       - start: 192.168.50.201
@@ -94,12 +97,15 @@ kea_ipv6_subnets:
       - hostname: hs110-Chambre1
         hw_address: 98:DA:C4:BE:E9:EA
         ip_address: 2001:470:cace:150::103
-      - hostname: bulb-chambre1
+      - hostname: xiaomi-bulb-chambre1
         hw_address: 04:cf:8c:b5:1e:17
         ip_address: 2001:470:cace:150::111
-      - hostname: vaccum
+      - hostname: xiaomi-vaccum
         hw_address: 4a:b9:8b:13:55:65
         ip_address: 2001:470:cace:150::112
+      - hostname: xiaomi-gateway
+        hw_address: 64:90:c1:7a:e2:c0
+        ip_address: 2001:470:cace:150::113
   - subnet: 2001:470:cace:160::/64
     pools:
       - start: 2001:470:cace:160::201

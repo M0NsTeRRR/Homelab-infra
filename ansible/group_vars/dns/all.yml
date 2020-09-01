@@ -84,13 +84,17 @@ pdns_records:
     ipv4: 192.168.50.103
     ipv6: 2001:470:cace:150::103
     rdns: true
-  - canonical_hostname: bulb-chambre1.unicornafk.fr.
+  - canonical_hostname: xiaomi-bulb-chambre1.unicornafk.fr.
     ipv4: 192.168.50.111
     ipv6: 2001:470:cace:150::111
     rdns: true
-  - canonical_hostname: vaccum.unicornafk.fr.
+  - canonical_hostname: xiaomi-vaccum.unicornafk.fr.
     ipv4: 192.168.50.112
     ipv6: 2001:470:cace:150::112
+    rdns: true
+  - canonical_hostname: xiaomi-gateway.unicornafk.fr.
+    ipv4: 192.168.50.113
+    ipv6: 2001:470:cace:150::113
     rdns: true
   # adminafk.fr
   - canonical_hostname: vpn.adminafk.fr.
