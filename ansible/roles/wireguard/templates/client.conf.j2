@@ -5,6 +5,6 @@ DNS = {{ groups[wireguard_dns_group]|join(',') }}, {% for host in groups[wiregua
 
 [Peer]
 PublicKey = {{ vpn_server_public_key.stdout }}
-AllowedIPs = 0.0.0.0/0
+AllowedIPs = 0.0.0.0/0,::/0
 Endpoint = {{ inventory_hostname }}:51820
 PersistentKeepalive = 25
