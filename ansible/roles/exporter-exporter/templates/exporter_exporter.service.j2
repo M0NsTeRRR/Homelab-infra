@@ -1,5 +1,6 @@
 [Unit]
 Description=Prometheus Exporter Exporter
+Wants=network-online.target
 After=network-online.target
 
 [Service]
@@ -14,3 +15,6 @@ ExecStart=/usr/local/bin/exporter_exporter \
     -web.tls.key=/etc/ssl/certs/exporter_exporter.pem \
     -web.tls.ca=/etc/exporter_exporter/ca.crt \
     -web.tls.verify
+
+[Install]
+WantedBy=multi-user.target
