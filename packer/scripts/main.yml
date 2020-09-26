@@ -37,9 +37,6 @@
     - name: Include rsyslog
       include_tasks: rsyslog.yml
 
-    - name: Include auto-update
-      include_tasks: auto-update.yml
-
     - name: Include motd
       include_tasks: motd.yml
 
