@@ -86,7 +86,6 @@
   become: yes
   roles:
     - kubernetes-master
-    - istio
 
 - name: Configure kubernetes worker
   hosts: kubernetes:&worker
