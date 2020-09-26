@@ -62,7 +62,6 @@ prometheus_targets:
     - 192.168.20.42
   node_exporter:
     - pi1.unicornafk.fr:9100
-    - apt-proxy.unicornafk.fr:9100
     - blog.unicornafk.fr:9100
     - dhcp1.unicornafk.fr:9100
     - dhcp2.unicornafk.fr:9100
