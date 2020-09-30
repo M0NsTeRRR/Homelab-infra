@@ -28,9 +28,15 @@ kea_ipv4_subnets:
       - start: 192.168.40.201
         end: 192.168.40.240
     router: 192.168.40.2
+    reservations: []
+  - subnet: 192.168.50.0/24
+    pools:
+      - start: 192.168.50.201
+        end: 192.168.50.240
+    router: 192.168.50.2
     reservations:
       - hostname: hs110-Rack1
-        hw_address: 98:DA:C4:BE:E8:89 
+        hw_address: 98:DA:C4:BE:E8:89
         ip_address: 192.168.50.101
       - hostname: hs110-Rack2
         hw_address: 98:DA:C4:BE:E8:96
@@ -47,12 +53,6 @@ kea_ipv4_subnets:
       - hostname: xiaomi-gateway
         hw_address: 64:90:c1:7a:e2:c0
         ip_address: 192.168.50.113
-  - subnet: 192.168.50.0/24
-    pools:
-      - start: 192.168.50.201
-        end: 192.168.50.240
-    router: 192.168.50.2
-    reservations: []
   - subnet: 192.168.60.0/24
     pools:
       - start: 192.168.60.201
