@@ -152,12 +152,11 @@ scrape_configs:
     file_sd_configs:
     - files:
       - wireguard/targets.json
+    metrics_path: /proxy
     params:
       module:
       - wireguard
     relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
 
@@ -170,12 +169,11 @@ scrape_configs:
     file_sd_configs:
     - files:
       - kea_dhcp/targets.json
+    metrics_path: /proxy
     params:
       module:
       - kea
     relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
 
@@ -188,12 +186,11 @@ scrape_configs:
     file_sd_configs:
     - files:
       - powerdns_authoritative/targets.json
+    metrics_path: /proxy
     params:
       module:
       - powerdns-authoritative
     relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
 
@@ -206,12 +203,11 @@ scrape_configs:
     file_sd_configs:
     - files:
       - powerdns_recursor/targets.json
+    metrics_path: /proxy
     params:
       module:
       - powerdns-recursor
     relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
 
