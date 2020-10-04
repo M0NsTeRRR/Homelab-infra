@@ -44,6 +44,8 @@ scrape_configs:
         replacement: {{ inventory_hostname }}:9115
 
   - job_name: vmware
+    scrape_interval: 2m
+    scrape_timeout: 2m
     metrics_path: '/metrics'
     file_sd_configs:
     - files:
