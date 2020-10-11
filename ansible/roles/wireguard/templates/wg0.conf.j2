@@ -1,7 +1,7 @@
 [Interface]
 Address = {{ wireguard_server_ipv4 }},{{ wireguard_server_ipv6 }}
 ListenPort = 51820
-PrivateKey = {{ vpn_server_private_key.stdout }}
+PrivateKey = {{ wireguard_server_private_key }}
 PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; ip6tables -A FORWARD -i wg0 -j ACCEPT
 PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; ip6tables -D FORWARD -i wg0 -j ACCEPT
 

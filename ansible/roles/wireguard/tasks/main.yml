@@ -31,45 +31,8 @@
     value: '1'
     reload: yes
 
-- name: Create /etc/wireguard/keys directory
-  file:
-    dest: /etc/wireguard/keys
-    state: directory
-
-- name: Check if public keys already exist
-  stat:
-    path: /etc/wireguard/keys/public_key
-  register: wireguard_public_keys
-
-- name: Generate private and public keys
-  shell:
-    cmd: wg genkey | tee private_key | wg pubkey > public_key
-    chdir: /etc/wireguard/keys
-  when: not wireguard_public_keys.stat.exists
-
-- name: "Get public_key of wireguard server"
-  command: "cat /etc/wireguard/keys/public_key"
-  register: vpn_server_public_key
-
-- name: "Get private_key of wireguard server"
-  command: "cat /etc/wireguard/keys/private_key"
-  register: vpn_server_private_key
-
-- name: Fix perms on private and public keys
-  file:
-    path: "{{ item }}"
-    mode: 0600
-    state: file
-  with_items:
-    - /etc/wireguard/keys/public_key
-    - /etc/wireguard/keys/private_key
-
 - name: Setup clients
   include_tasks: clients.yml
-
-- name: Get private_key
-  command: cat /etc/wireguard/keys/private_key
-  register: private_key
 
 - name: Setup interface and peers
   template:

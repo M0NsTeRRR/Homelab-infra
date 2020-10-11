@@ -3,20 +3,6 @@ wireguard_server_ipv4: 192.168.4.2/24
 wireguard_server_ipv6: 2001:470:cace:104::2/64
 wireguard_dns_group: dns
 wireguard_domains: '{{ domains }}'
-wireguard_clients:
-  LudovicPCFixe:
-    ipv4: 192.168.4.11/32
-    ipv6: 2001:470:cace:104::11/128
-  LudovicPCPortable:
-    ipv4: 192.168.4.12/32
-    ipv6: 2001:470:cace:104::12/128
-  LudovicPortable:
-    ipv4: 192.168.4.13/32
-    ipv6: 2001:470:cace:104::13/128
-
-wireguard_exporter_peers:
-  - name: homelab
-    public_key: S7q5wROYfaRyFbuz1DXsbXgq8ZfiYyJZ4oSrlztgTAQ=
 
 exporter_exporter_name: wireguard-exporter
 exporter_exporter_nodes:

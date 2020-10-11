@@ -1,4 +1,6 @@
 ---
+wireguard_server_public_key: public_key
+wireguard_server_private_key: private_key
 wireguard_server_ipv4: 192.168.0.1/24
 wireguard_server_ipv6: fe80::1/64
 wireguard_dns_group: dns
