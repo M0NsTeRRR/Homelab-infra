@@ -40,6 +40,9 @@
     - name: Include motd
       include_tasks: motd.yml
 
+    - name: Include cloud
+      include_tasks: cloud.yml
+
 #    - name: Include chkrootkit
 #      include_tasks: chkrootkit.yml
 
