@@ -2,9 +2,6 @@
 - name: Disable SLAAC
   hosts: all
   become: true
-  vars:
-    - ansible_user: 'ludovic'
-    - ansible_ssh_pass: 'ludovic'
   tasks:
     - name: Disable SLAAC
       sysctl:

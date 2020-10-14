@@ -41,6 +41,21 @@ variable "vm_ip6" {
   type = string
 }
 
+variable "vm_user" {
+  description = "User"
+  type = string
+}
+
+variable "vm_old_password" {
+  description = "User password before change"
+  type = string
+}
+
+variable "vm_password" {
+  description = "User password"
+  type = string
+}
+
 variable "domain" {
   description = "Domain of the machine"
   type = string

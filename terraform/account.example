@@ -3,5 +3,9 @@ locals {
   vsphere_password = ""
 
   powerdns_api_key = ""
+
+  vm_user          = ""
+  vm_old_password  = ""
+  vm_password      = ""
 }
 

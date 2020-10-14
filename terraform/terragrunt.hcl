@@ -7,6 +7,9 @@ locals {
   vsphere_password = local.account_vars.locals.vsphere_password
   powerdns_api_key = local.account_vars.locals.powerdns_api_key
 
+  vm_user            = local.account_vars.locals.vm_user
+  vm_password        = local.account_vars.locals.vm_password
+
   vsphere_datacenter = local.env_vars.locals.vsphere_datacenter
   vsphere_cluster    = local.env_vars.locals.vsphere_cluster
   dns                = local.env_vars.locals.dns
