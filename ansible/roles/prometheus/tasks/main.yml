@@ -4,11 +4,11 @@
     name: prometheus
     state: present
 
-- name: Configure PowerDNS
+- name: Configure Prometheus
   lineinfile:
     dest: "/etc/default/prometheus"
     regexp: "^(# )?ARGS="
-    line: 'ARGS="--web.listen-address=127.0.0.1:9090"'
+    line: 'ARGS="--web.listen-address=127.0.0.1:9090 --web.external-url=https://{{ inventory_hostname }}:9091"'
     state: "present"
   notify: restart prometheus
 
