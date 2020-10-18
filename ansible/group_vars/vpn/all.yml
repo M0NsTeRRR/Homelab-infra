@@ -1,6 +1,6 @@
 ---
 wireguard_server_ipv4: 192.168.4.2/24
-wireguard_server_ipv6: 2001:470:cace:104::2/64
+wireguard_server_ipv6: 2a0c:b641:02c0:104::2/64
 wireguard_dns_group: dns
 wireguard_domains: '{{ domains }}'
 

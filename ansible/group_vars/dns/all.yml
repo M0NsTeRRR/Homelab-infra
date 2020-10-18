@@ -10,128 +10,128 @@ pdns_records:
   # unicornafk.fr
   - canonical_hostname: dns1.unicornafk.fr.
     ipv4: 192.168.10.21
-    ipv6: 2001:470:cace:110::21
+    ipv6: 2a0c:b641:02c0:110::21
     rdns: true
   - canonical_hostname: dns2.unicornafk.fr.
     ipv4: 192.168.10.22
-    ipv6: 2001:470:cace:110::22
+    ipv6: 2a0c:b641:02c0:110::22
     rdns: true
   - canonical_hostname: dhcp1.unicornafk.fr.
     ipv4: 192.168.10.23
-    ipv6: 2001:470:cace:110::23
+    ipv6: 2a0c:b641:02c0:110::23
     rdns: true
   - canonical_hostname: dhcp2.unicornafk.fr.
     ipv4: 192.168.10.24
-    ipv6: 2001:470:cace:110::24
+    ipv6: 2a0c:b641:02c0:110::24
     rdns: true
   - canonical_hostname: lb.dmz.unicornafk.fr.
     ipv4: 192.168.10.60
-    ipv6: 2001:470:cace:110::60
+    ipv6: 2a0c:b641:02c0:110::60
     rdns: false
   - canonical_hostname: nas.unicornafk.fr.
     ipv4: 192.168.20.42
-    ipv6: 2001:470:cace:120::42
+    ipv6: 2a0c:b641:02c0:120::42
     rdns: true
   - canonical_hostname: ap1.unicornafk.fr.
     ipv4: 192.168.20.51
-    ipv6: 2001:470:cace:120::51
+    ipv6: 2a0c:b641:02c0:120::51
     rdns: true
   - canonical_hostname: r1.unicornafk.fr.
     ipv4: 192.168.5.1
-    ipv6: 2001:470:cace:105::1
+    ipv6: 2a0c:b641:02c0:105::1
     rdns: true
   - canonical_hostname: sw1.unicornafk.fr.
     ipv4: 192.168.40.2
-    ipv6: 2001:470:cace:140::2
+    ipv6: 2a0c:b641:02c0:140::2
     rdns: true
   - canonical_hostname: sw2.unicornafk.fr.
     ipv4: 192.168.40.3
-    ipv6: 2001:470:cace:140::3
+    ipv6: 2a0c:b641:02c0:140::3
     rdns: true
   - canonical_hostname: vsphere.unicornafk.fr.
     ipv4: 192.168.40.10
-    ipv6: 2001:470:cace:140::10
+    ipv6: 2a0c:b641:02c0:140::10
     rdns: true
   - canonical_hostname: server1.unicornafk.fr.
     ipv4: 192.168.40.11
-    ipv6: 2001:470:cace:140::11
+    ipv6: 2a0c:b641:02c0:140::11
     rdns: true
   - canonical_hostname: server2.unicornafk.fr.
     ipv4: 192.168.40.12
-    ipv6: 2001:470:cace:140::12
+    ipv6: 2a0c:b641:02c0:140::12
     rdns: true
   - canonical_hostname: server3.unicornafk.fr.
     ipv4: 192.168.40.13
-    ipv6: 2001:470:cace:140::13
+    ipv6: 2a0c:b641:02c0:140::13
     rdns: true
   - canonical_hostname: pi1.unicornafk.fr.
     ipv4: 192.168.40.32
-    ipv6: 2001:470:cace:140::32
+    ipv6: 2a0c:b641:02c0:140::32
     rdns: true
   - canonical_hostname: idrac3.unicornafk.fr.
     ipv4: 192.168.40.53
-    ipv6: 2001:470:cace:140::53
+    ipv6: 2a0c:b641:02c0:140::53
     rdns: true
   - canonical_hostname: hs110-rack1.unicornafk.fr.
     ipv4: 192.168.50.101
-    ipv6: 2001:470:cace:150::101
+    ipv6: 2a0c:b641:02c0:150::101
     rdns: true
   - canonical_hostname: hs110-rack2.unicornafk.fr.
     ipv4: 192.168.50.102
-    ipv6: 2001:470:cace:150::102
+    ipv6: 2a0c:b641:02c0:150::102
     rdns: true
   - canonical_hostname: hs110-chambre1.unicornafk.fr.
     ipv4: 192.168.50.103
-    ipv6: 2001:470:cace:150::103
+    ipv6: 2a0c:b641:02c0:150::103
     rdns: true
   - canonical_hostname: xiaomi-bulb-chambre1.unicornafk.fr.
     ipv4: 192.168.50.111
-    ipv6: 2001:470:cace:150::111
+    ipv6: 2a0c:b641:02c0:150::111
     rdns: true
   - canonical_hostname: xiaomi-vaccum.unicornafk.fr.
     ipv4: 192.168.50.112
-    ipv6: 2001:470:cace:150::112
+    ipv6: 2a0c:b641:02c0:150::112
     rdns: true
   - canonical_hostname: xiaomi-gateway.unicornafk.fr.
     ipv4: 192.168.50.113
-    ipv6: 2001:470:cace:150::113
+    ipv6: 2a0c:b641:02c0:150::113
     rdns: true
   # adminafk.fr
   - canonical_hostname: vpn.adminafk.fr.
     ipv4: 192.168.10.29
-    ipv6: 2001:470:cace:110::29
+    ipv6: 2a0c:b641:02c0:110::29
     rdns: false
   - canonical_hostname: blog.adminafk.fr.
     ipv4: 192.168.10.30
-    ipv6: 2001:470:cace:110::30
+    ipv6: 2a0c:b641:02c0:110::30
     rdns: false
   - canonical_hostname: wiki.adminafk.fr.
     ipv4: 192.168.10.30
-    ipv6: 2001:470:cace:110::30
+    ipv6: 2a0c:b641:02c0:110::30
     rdns: false
   - canonical_hostname: git.adminafk.fr.
     ipv4: 192.168.10.30
-    ipv6: 2001:470:cace:110::30
+    ipv6: 2a0c:b641:02c0:110::30
     rdns: false
   - canonical_hostname: ipam.adminafk.fr.
     ipv4: 192.168.10.30
-    ipv6: 2001:470:cace:110::30
+    ipv6: 2a0c:b641:02c0:110::30
     rdns: false
   - canonical_hostname: monitoring.adminafk.fr.
     ipv4: 192.168.10.30
-    ipv6: 2001:470:cace:110::30
+    ipv6: 2a0c:b641:02c0:110::30
     rdns: false
   - canonical_hostname: ludovic-ortega.adminafk.fr.
     ipv4: 192.168.10.30
-    ipv6: 2001:470:cace:110::30
+    ipv6: 2a0c:b641:02c0:110::30
     rdns: false
   - canonical_hostname: api.ludovic-ortega.adminafk.fr.
     ipv4: 192.168.10.30
-    ipv6: 2001:470:cace:110::30
+    ipv6: 2a0c:b641:02c0:110::30
     rdns: false
   - canonical_hostname: admin.ludovic-ortega.adminafk.fr.
     ipv4: 192.168.10.30
-    ipv6: 2001:470:cace:110::30
+    ipv6: 2a0c:b641:02c0:110::30
     rdns: false
 
 exporter_exporter_name: powerdns-exporter

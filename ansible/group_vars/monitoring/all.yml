@@ -45,9 +45,8 @@ prometheus_targets:
     - 2606:4700:4700::1111 # cloudflare
     - 8.8.8.8              # google
     - 2001:4860:4860::8888 # google
-    - 216.66.84.42         # HE Tunnel
     - 192.168.5.1
-    - 2001:470:cace:105::1
+    - 2a0c:b641:02c0:105::1
   vmware_exporter:
     - "{{ vmware_exporter_vcenter_hostname }}"
   unifi_poller:

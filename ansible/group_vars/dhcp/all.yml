@@ -60,56 +60,56 @@ kea_ipv4_subnets:
     router: 192.168.60.2
     reservations: []
 kea_ipv6_subnets:
-  - subnet: 2001:470:cace:110::/64
+  - subnet: 2a0c:b641:02c0:110::/64
     pools:
-      - start: 2001:470:cace:110::201
-        end: 2001:470:cace:110::240
+      - start: 2a0c:b641:02c0:110::201
+        end: 2a0c:b641:02c0:110::240
     reservations: []
-  - subnet: 2001:470:cace:120::/64
+  - subnet: 2a0c:b641:02c0:120::/64
     pools:
-      - start: 2001:470:cace:120::201
-        end: 2001:470:cace:120::240
+      - start: 2a0c:b641:02c0:120::201
+        end: 2a0c:b641:02c0:120::240
     reservations:
       - hostname: ap1
         hw_address: 18:E8:29:A3:24:10
-        ip_address: 2001:470:cace:120::51
-  - subnet: 2001:470:cace:130::/64
+        ip_address: 2a0c:b641:02c0:120::51
+  - subnet: 2a0c:b641:02c0:130::/64
     pools:
-      - start: 2001:470:cace:130::201
-        end: 2001:470:cace:130::240
+      - start: 2a0c:b641:02c0:130::201
+        end: 2a0c:b641:02c0:130::240
     reservations: []
-  - subnet: 2001:470:cace:140::/64
+  - subnet: 2a0c:b641:02c0:140::/64
     pools:
-      - start: 2001:470:cace:140::201
-        end: 2001:470:cace:140::240
+      - start: 2a0c:b641:02c0:140::201
+        end: 2a0c:b641:02c0:140::240
     reservations: []
-  - subnet: 2001:470:cace:150::/64
+  - subnet: 2a0c:b641:02c0:150::/64
     pools:
-      - start: 2001:470:cace:150::201
-        end: 2001:470:cace:150::240
+      - start: 2a0c:b641:02c0:150::201
+        end: 2a0c:b641:02c0:150::240
     reservations:
       - hostname: hs110-Rack1
         hw_address: 98:DA:C4:BE:E8:89
-        ip_address: 2001:470:cace:150::101
+        ip_address: 2a0c:b641:02c0:150::101
       - hostname: hs110-Rack2
         hw_address: 98:DA:C4:BE:E8:96
-        ip_address: 2001:470:cace:150::102
+        ip_address: 2a0c:b641:02c0:150::102
       - hostname: hs110-Chambre1
         hw_address: 98:DA:C4:BE:E9:EA
-        ip_address: 2001:470:cace:150::103
+        ip_address: 2a0c:b641:02c0:150::103
       - hostname: xiaomi-bulb-chambre1
         hw_address: 04:cf:8c:b5:1e:17
-        ip_address: 2001:470:cace:150::111
+        ip_address: 2a0c:b641:02c0:150::111
       - hostname: xiaomi-vaccum
         hw_address: 4a:b9:8b:13:55:65
-        ip_address: 2001:470:cace:150::112
+        ip_address: 2a0c:b641:02c0:150::112
       - hostname: xiaomi-gateway
         hw_address: 64:90:c1:7a:e2:c0
-        ip_address: 2001:470:cace:150::113
-  - subnet: 2001:470:cace:160::/64
+        ip_address: 2a0c:b641:02c0:150::113
+  - subnet: 2a0c:b641:02c0:160::/64
     pools:
-      - start: 2001:470:cace:160::201
-        end: 2001:470:cace:160::240
+      - start: 2a0c:b641:02c0:160::201
+        end: 2a0c:b641:02c0:160::240
     reservations: []
 
 exporter_exporter_name: kea-exporter
