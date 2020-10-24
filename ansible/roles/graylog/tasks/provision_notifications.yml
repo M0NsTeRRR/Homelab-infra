@@ -15,7 +15,7 @@
     return_content: yes
     body_format: json
     validate_certs: no
-    body: "{{ lookup('template', 'notification.json.j2') }}"
+    body: "{{ lookup('template', 'notification.json.j2', lstrip_blocks=yes) }}"
     status_code: 200
     headers:
       Content-Type: application/json
@@ -31,7 +31,7 @@
     return_content: yes
     body_format: json
     validate_certs: no
-    body: "{{ lookup('template', 'notification.json.j2') }}"
+    body: "{{ lookup('template', 'notification.json.j2', lstrip_blocks=yes) }}"
     status_code: 200
     headers:
       Content-Type: application/json
