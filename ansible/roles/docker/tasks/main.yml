@@ -4,9 +4,7 @@
     pkg:
       - apt-transport-https
       - ca-certificates
-      - curl
       - gnupg-agent
-      - software-properties-common
     state: present
 
 - name: Add Docker Apt signing key
