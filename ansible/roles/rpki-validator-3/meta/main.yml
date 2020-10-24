@@ -1,0 +1,21 @@
+---
+galaxy_info:
+  author: Ludovic Ortega
+  description: Install and configure RIPE NCC rpki-validator-3
+  company: Ludovic Ortega
+  license: CeCILL
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+    - name: Ubuntu
+      versions:
+        - focal
+
+
+dependencies:
+  - role: nginx
+    vars:
+      nginx_name: "rpki-validator-3"
+      nginx_url: "http://127.0.0.1:8080"

@@ -1,0 +1,21 @@
+---
+- name: Open required ports
+  ufw:
+    rule: allow
+    port: "8323"
+    proto: tcp
+
+- name: "Install rpki-rtr-server {{ rpki_rtr_server_version }}"
+  apt:
+    deb: "https://ftp.ripe.net/ripe/tools/rpki/validator3/prod/deb/rpki-rtr-server-{{ rpki_rtr_server_version }}.deb"
+  notify: enable rpki-rtr-server
+
+- name: Configure rpki-rtr-server
+  lineinfile:
+    dest: "/etc/rpki-rtr-server/application.properties"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+      - { regexp: '^rtr.server.address=localhost', line: 'rtr.server.address=0.0.0.0' }
+  notify: restart rpki-rtr-server

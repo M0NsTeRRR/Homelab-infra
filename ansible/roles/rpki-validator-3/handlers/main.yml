@@ -1,0 +1,10 @@
+---
+- name: restart rpki-validator-3
+  service:
+    name: rpki-validator-3
+    state: restarted
+
+- name: enable rpki-validator-3
+  service:
+    name: rpki-validator-3
+    enabled: true

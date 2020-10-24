@@ -1,0 +1,10 @@
+---
+- name: restart rpki-rtr-server
+  service:
+    name: rpki-rtr-server
+    state: restarted
+
+- name: enable rpki-rtr-server
+  service:
+    name: rpki-rtr-server
+    enabled: true

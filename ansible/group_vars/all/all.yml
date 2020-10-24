@@ -19,6 +19,7 @@ ipv6_subnets:
 domains:
   - unicornafk.fr
   - adminafk.fr
+  - as212510.net
 subdomains:
   - dmz.unicornafk.fr
   - lab.unicornafk.fr
