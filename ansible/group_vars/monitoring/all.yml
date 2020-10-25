@@ -100,3 +100,7 @@ prometheus_targets:
     - hs110-rack1.unicornafk.fr
     - hs110-rack2.unicornafk.fr
     - hs110-chambre1.unicornafk.fr
+  rpki_rtr_server:
+    - rpki.unicornafk.fr:9998
+  rpki_validator_3:
+    - rpki.unicornafk.fr:9998
