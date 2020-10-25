@@ -15,13 +15,13 @@
     path: /usr/local/bin/snmp-exporter
   register: snmp_exporter
 
-- name: Download last version of snmp-exporter
+- name: "Download snmp-exporter {{ snmp_exporter_version }}"
   get_url:
     url: https://github.com/prometheus/snmp_exporter/releases/download/v{{ snmp_exporter_version }}/snmp_exporter-{{ snmp_exporter_version }}.linux-amd64.tar.gz
     dest: /tmp/snmp-exporter.tar.gz
   when: not snmp_exporter.stat.exists
 
-- name: Extract latest binary of snmp-exporter
+- name: Extract binary of snmp-exporter
   unarchive:
     src: /tmp/snmp-exporter.tar.gz
     dest: /opt/exporter/snmp-exporter
