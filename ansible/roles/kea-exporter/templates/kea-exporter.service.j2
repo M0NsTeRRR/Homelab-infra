@@ -1,7 +1,6 @@
 [Unit]
 Description=kea-exporter allows you to get kea-dhcp metric using prometheus
-Wants=network-online.target
-After=network-online.target
+After=After=kea-ctrl-agent.service
 
 [Service]
 Type=simple
