@@ -162,7 +162,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
 
-  - job_name: kea-dhcp
+  - job_name: kea_dhcp
     scheme: https
     tls_config:
       cert_file: /etc/prometheus/certs/kea-exporter/client.crt
@@ -174,7 +174,7 @@ scrape_configs:
     metrics_path: /proxy
     params:
       module:
-      - kea
+      - kea_dhcp
     relabel_configs:
       - source_labels: [__param_target]
         target_label: instance
@@ -225,3 +225,37 @@ scrape_configs:
         target_label: instance
       - target_label: __address__
         replacement: {{ inventory_hostname }}:9233
+
+  - job_name: rpki_validator_3
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/rpki-exporter/client.crt
+      key_file: /etc/prometheus/certs/rpki-exporter/client.pem
+      insecure_skip_verify: true
+    file_sd_configs:
+    - files:
+      - rpki_validator_3/targets.json
+    metrics_path: /proxy
+    params:
+      module:
+      - rpki_validator_3
+    relabel_configs:
+      - source_labels: [__param_target]
+        target_label: instance
+
+  - job_name: rpki_rtr_server
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/rpki-exporter/client.crt
+      key_file: /etc/prometheus/certs/rpki-exporter/client.pem
+      insecure_skip_verify: true
+    file_sd_configs:
+    - files:
+      - rpki_rtr_server/targets.json
+    metrics_path: /proxy
+    params:
+      module:
+      - rpki_rtr_server
+    relabel_configs:
+      - source_labels: [__param_target]
+        target_label: instance

@@ -34,3 +34,4 @@
 - name: Include certs
   include_tasks: certs.yml
   with_items: "{{ prometheus_clients_certs }}"
+  notify: restart prometheus
