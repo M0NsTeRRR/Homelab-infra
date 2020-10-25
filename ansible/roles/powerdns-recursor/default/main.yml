@@ -1,4 +1,5 @@
 ---
+pdns_version: 44
 pdns_api_key: api-key
 pdns_ipv4_subnets: []
 pdns_ipv6_subnets: []

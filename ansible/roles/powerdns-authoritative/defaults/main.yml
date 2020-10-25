@@ -1,4 +1,5 @@
 ---
+pdns_version: 44
 pdns_domains: []
 pdns_subdomains: []
 pdns_reverse_zones: []

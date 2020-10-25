@@ -35,7 +35,7 @@
 
 - name: Add PowerDNS Apt repository
   apt_repository:
-    repo: "deb [arch=amd64] http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-auth-master main"
+    repo: "deb [arch=amd64] http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-auth-{{ pdns_version }} main"
     state: present
     filename: pdns-auth
 
