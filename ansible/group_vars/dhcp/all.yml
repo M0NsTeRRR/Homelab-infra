@@ -114,5 +114,5 @@ kea_ipv6_subnets:
 
 exporter_exporter_name: kea-exporter
 exporter_exporter_nodes:
-  - name: kea
+  - name: kea_dhcp
     port: 9546
