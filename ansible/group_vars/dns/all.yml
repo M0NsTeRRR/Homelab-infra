@@ -24,6 +24,10 @@ pdns_records:
     ipv4: 192.168.10.24
     ipv6: 2a0c:b641:02c0:110::24
     rdns: true
+  - canonical_hostname: rpki.unicornafk.fr.
+    ipv4: 192.168.10.31
+    ipv6: 2a0c:b641:02c0:110::31
+    rdns: true
   - canonical_hostname: lb.dmz.unicornafk.fr.
     ipv4: 192.168.10.60
     ipv6: 2a0c:b641:02c0:110::60
@@ -97,23 +101,11 @@ pdns_records:
     ipv6: 2a0c:b641:02c0:150::113
     rdns: true
   # adminafk.fr
-  - canonical_hostname: vpn.adminafk.fr.
-    ipv4: 192.168.10.29
-    ipv6: 2a0c:b641:02c0:110::29
-    rdns: false
   - canonical_hostname: blog.adminafk.fr.
     ipv4: 192.168.10.30
     ipv6: 2a0c:b641:02c0:110::30
     rdns: false
   - canonical_hostname: wiki.adminafk.fr.
-    ipv4: 192.168.10.30
-    ipv6: 2a0c:b641:02c0:110::30
-    rdns: false
-  - canonical_hostname: git.adminafk.fr.
-    ipv4: 192.168.10.30
-    ipv6: 2a0c:b641:02c0:110::30
-    rdns: false
-  - canonical_hostname: ipam.adminafk.fr.
     ipv4: 192.168.10.30
     ipv6: 2a0c:b641:02c0:110::30
     rdns: false

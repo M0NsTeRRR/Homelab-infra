@@ -1,0 +1,6 @@
+exporter_exporter_name: rpki-exporter
+exporter_exporter_nodes:
+  - name: rpki_rtr_server
+    port: 8081
+  - name: rpki_validator_3
+    port: 8080

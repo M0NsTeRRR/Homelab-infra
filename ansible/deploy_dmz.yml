@@ -68,6 +68,14 @@
     - unifi-poller
     - tplink-plug-exporter
 
+- name: Configure RPKI validator
+  hosts: rpki
+  become: yes
+  roles:
+    - rpki-validator-3
+    - rpki-rtr-server
+    - exporter-exporter
+
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb
   become: yes
