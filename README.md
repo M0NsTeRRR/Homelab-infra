@@ -53,7 +53,7 @@ Supported distributions :
 
 **VM**
 - Debian (10.6.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.6.0-amd64-netinst.iso)
-- Ubuntu (20.04.1) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.1/release/ubuntu-20.04-legacy-server-amd64.iso)
+- Ubuntu (20.04.1) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.1/release/ubuntu-20.04.1-legacy-server-amd64.iso)
 
 **Raspberry Pi (v3/v4)**
 - Ubuntu (20.04.1) - [iso](https://cdimage.ubuntu.com/releases/20.04.1/release/ubuntu-20.04.1-preinstalled-server-arm64+raspi.img.xz)
