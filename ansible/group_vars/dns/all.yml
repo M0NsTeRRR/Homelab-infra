@@ -76,6 +76,14 @@ pdns_records:
     ipv4: 192.168.40.53
     ipv6: 2a0c:b641:02c0:140::53
     rdns: true
+  - canonical_hostname: samsung-tv.unicornafk.fr.
+    ipv4: 192.168.50.91
+    ipv6: 2a0c:b641:02c0:150::91
+    rdns: true
+  - canonical_hostname: nvidia-shield.unicornafk.fr.
+    ipv4: 192.168.50.92
+    ipv6: 2a0c:b641:02c0:150::92
+    rdns: true
   - canonical_hostname: hs110-rack1.unicornafk.fr.
     ipv4: 192.168.50.101
     ipv6: 2a0c:b641:02c0:150::101

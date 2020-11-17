@@ -35,13 +35,19 @@ kea_ipv4_subnets:
         end: 192.168.50.240
     router: 192.168.50.2
     reservations:
-      - hostname: hs110-Rack1
+      - hostname: samsung-tv
+        hw_address: 44:5c:e9:9d:8b:28
+        ip_address: 192.168.50.91
+      - hostname: nvidia-shield
+        hw_address: 44:5c:e9:9d:8b:28
+        ip_address: 192.168.50.92
+      - hostname: hs110-rack1
         hw_address: 98:DA:C4:BE:E8:89
         ip_address: 192.168.50.101
-      - hostname: hs110-Rack2
+      - hostname: hs110-rack2
         hw_address: 98:DA:C4:BE:E8:96
         ip_address: 192.168.50.102
-      - hostname: hs110-Chambre1
+      - hostname: hs110-chambre1
         hw_address: 98:DA:C4:BE:E9:EA
         ip_address: 192.168.50.103
       - hostname: xiaomi-bulb-chambre1
@@ -88,13 +94,19 @@ kea_ipv6_subnets:
       - start: 2a0c:b641:02c0:150::201
         end: 2a0c:b641:02c0:150::240
     reservations:
-      - hostname: hs110-Rack1
+      - hostname: samsung-tv
+        hw_address: 44:5c:e9:9d:8b:28
+        ip_address: 2a0c:b641:02c0:150::91
+      - hostname: nvidia-shield
+        hw_address: 44:5c:e9:9d:8b:28
+        ip_address: 2a0c:b641:02c0:150::92
+      - hostname: hs110-rack1
         hw_address: 98:DA:C4:BE:E8:89
         ip_address: 2a0c:b641:02c0:150::101
-      - hostname: hs110-Rack2
+      - hostname: hs110-rack2
         hw_address: 98:DA:C4:BE:E8:96
         ip_address: 2a0c:b641:02c0:150::102
-      - hostname: hs110-Chambre1
+      - hostname: hs110-chambre1
         hw_address: 98:DA:C4:BE:E9:EA
         ip_address: 2a0c:b641:02c0:150::103
       - hostname: xiaomi-bulb-chambre1
