@@ -6,8 +6,8 @@
     "vcenter_server": "",
     "vcenter_username": "",
     "vcenter_password": "",
-    "ssh_username": "ludovic",
-    "ssh_password": "ludovic"
+    "ssh_username": "",
+    "ssh_password": ""
   },
   "sensitive-variables": ["vcenter_password"],
   "builders": [

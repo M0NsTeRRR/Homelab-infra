@@ -3,6 +3,9 @@ export PACKER_CACHE_DIR=packer_cache
 
 set -e
 
+ssh_username=ludovic
+ssh_password=ludovic
+
 echo -e "Please enter your choice: \n1) VM\n2) Raspberry Pi\n"
 while :
 do
@@ -23,6 +26,8 @@ do
       -var "vcenter_server=$vcenter_server" \
       -var "vcenter_username=$vcenter_username" \
       -var "vcenter_password=$vcenter_password" \
+      - var "ssh_username=$ssh_username" \
+      - var "ssh_password=$ssh_password" \
       -timestamp-ui \
       templates/"$distribution".json
 		break
@@ -32,7 +37,8 @@ do
     printf "\n"
 
     packer build \
-      -var "version=$version" \
+      - var "ssh_username=$ssh_username" \
+      - var "ssh_password=$ssh_password" \
       -timestamp-ui \
       templates/raspi.json
 		break

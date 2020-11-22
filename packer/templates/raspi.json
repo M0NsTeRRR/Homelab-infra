@@ -1,8 +1,8 @@
 {
   "variables": {
-    "version": "",
-    "ssh_username": "ludovic",
-    "ssh_password": "ludovic"
+    "version": "20.04.1",
+    "ssh_username": "",
+    "ssh_password": ""
   },
   "builders": [{
     "type": "arm",
