@@ -26,8 +26,8 @@ do
       -var "vcenter_server=$vcenter_server" \
       -var "vcenter_username=$vcenter_username" \
       -var "vcenter_password=$vcenter_password" \
-      - var "ssh_username=$ssh_username" \
-      - var "ssh_password=$ssh_password" \
+      -var "ssh_username=$ssh_username" \
+      -var "ssh_password=$ssh_password" \
       -timestamp-ui \
       templates/"$distribution".json
 		break
@@ -37,8 +37,8 @@ do
     printf "\n"
 
     packer build \
-      - var "ssh_username=$ssh_username" \
-      - var "ssh_password=$ssh_password" \
+      -var "ssh_username=$ssh_username" \
+      -var "ssh_password=$ssh_password" \
       -timestamp-ui \
       templates/raspi.json
 		break
