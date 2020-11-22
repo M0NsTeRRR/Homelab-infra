@@ -18,6 +18,4 @@ jobs:
            terraform/modules/vsphere_vm/disable_slaac.yml
            terraform/modules/vsphere_vm/lvm_resize.yml
            packer/scripts/main.yml
-        override-deps: |
-          ansible==2.9
         args: "-x 204 -x 301 -x 305 -x 401"
