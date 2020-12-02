@@ -22,14 +22,14 @@
 #    - name: Include apt-cache
 #      include_tasks: apt-cache.yml
 
+    - name: Include rng-tools
+      include_tasks: rng-tools.yml
+
     - name: Include ufw
       include_tasks: ufw.yml
 
     - name: Include fail2ban
       include_tasks: fail2ban.yml
-
-    - name: Include ntp
-      include_tasks: ntp.yml
 
     - name: Include node-exporter
       include_tasks: node-exporter.yml

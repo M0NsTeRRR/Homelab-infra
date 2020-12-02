@@ -1,0 +1,5 @@
+---
+- name: Install rng-tools
+  apt:
+    name: rng-tools
+    state: present
