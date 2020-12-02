@@ -52,6 +52,10 @@ pdns_records:
     ipv4: 192.168.40.3
     ipv6: 2a0c:b641:02c0:140::3
     rdns: true
+  - canonical_hostname: sw2.unicornafk.fr.
+    ipv4: 192.168.40.4
+    ipv6: 2a0c:b641:02c0:140::4
+    rdns: true
   - canonical_hostname: vsphere.unicornafk.fr.
     ipv4: 192.168.40.10
     ipv6: 2a0c:b641:02c0:140::10
