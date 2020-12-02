@@ -26,7 +26,7 @@ terraform {
   required_providers {
     vsphere = {
       source  = "hashicorp/vsphere"
-      version = "~> 1.23.0"
+      version = "~> 1.24.2"
     }
     powerdns = {
       source  = "terraform-providers/powerdns"
