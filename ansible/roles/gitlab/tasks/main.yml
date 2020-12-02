@@ -13,12 +13,21 @@
     pkg:
       - curl
       - ca-certificates
+      - openssh-server
+      - tzdata
     state: present
 
 - name: Check if GitLab is already installed
   stat:
     path: /usr/bin/gitlab-ctl
   register: gitlab
+
+- name: Add Gitlab Apt signing key
+  apt_key:
+    url: https://packages.gitlab.com/gpg.key
+    state: present
+  retries: 3
+  delay: 3
 
 - name: Download GitLab script
   get_url:
