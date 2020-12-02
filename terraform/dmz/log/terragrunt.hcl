@@ -18,7 +18,7 @@ inputs = {
 
   disk = {
     datastore = "SERVER2-RAID1"
-    size      = 100
+    size      = 500
   }
 
   vm_ip  = "192.168.10.102"
