@@ -12,6 +12,14 @@
     state: present
     filename: elastic
 
+- name: Install elasticsearch
+  apt:
+    name: elasticsearch-oss
+    state: present
+  notify:
+    - restart elasticsearch
+    - enable elasticsearch
+
 - name: Configure elasticsearch
   lineinfile:
     dest: "/etc/elasticsearch/elasticsearch.yml"
@@ -21,11 +29,3 @@
   with_items:
     - { regexp: '^(#)?cluster.name:', line: 'cluster.name: graylog' }
     - { regexp: '^(#)?action.auto_create_index:', line: 'action.auto_create_index: false' }
-
-- name: Install elasticsearch
-  apt:
-    name: elasticsearch-oss
-    state: present
-  notify:
-    - restart elasticsearch
-    - enable elasticsearch
