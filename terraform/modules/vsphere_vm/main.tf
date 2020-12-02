@@ -118,7 +118,7 @@ resource "powerdns_record" "dns_PTR_ipv4" {
 }
 
 data "external" "reverse_ptr_ipv6" {
-  program = ["/bin/bash", "${path.module}/reverse_ptr_ipv6.sh", "${var.vm_ip6}"]
+  program = ["/bin/bash", "${path.module}/reverse_ptr_ipv6.sh", var.vm_ip6]
 }
 
 resource "powerdns_record" "dns_PTR_ipv6" {
