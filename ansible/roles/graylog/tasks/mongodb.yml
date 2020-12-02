@@ -1,14 +1,14 @@
 ---
 - name: Add mongodb Apt signing key
   apt_key:
-    url: "https://www.mongodb.org/static/pgp/server-4.2.asc"
+    url: "https://www.mongodb.org/static/pgp/server-4.4.asc"
     state: present
   retries: 3
   delay: 3
 
 - name: Add mongodb Apt repository
   apt_repository:
-    repo: "deb https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} bionic/mongodb-org/4.2 multiverse"
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} focal/mongodb-org/4.4 multiverse"
     state: present
     filename: mongodb
 

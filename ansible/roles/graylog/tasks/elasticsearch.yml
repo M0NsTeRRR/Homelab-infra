@@ -1,5 +1,5 @@
 ---
-- name: Add elastic Apt signing key
+- name: Add elasticsearch Apt signing key
   apt_key:
     url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
     state: present
@@ -8,13 +8,23 @@
 
 - name: Add elastic Apt repository
   apt_repository:
-    repo: "deb https://artifacts.elastic.co/packages/6.x/apt stable main"
+    repo: "deb https://artifacts.elastic.co/packages/oss-{{ graylog_elasticsearch_version }}.x/apt stable main"
     state: present
     filename: elastic
 
+- name: Configure elasticsearch
+  lineinfile:
+    dest: "/etc/elasticsearch/elasticsearch.yml"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+    - { regexp: '^(#)?cluster.name:', line: 'cluster.name: graylog' }
+    - { regexp: '^(#)?action.auto_create_index:', line: 'action.auto_create_index: false' }
+
 - name: Install elasticsearch
   apt:
-    name: elasticsearch
+    name: elasticsearch-oss
     state: present
   notify:
     - restart elasticsearch

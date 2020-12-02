@@ -19,8 +19,9 @@
   apt:
     pkg:
       - apt-transport-https
-      - gnupg-agent
       - openjdk-8-jre-headless
+      - uuid-runtime
+      - pwgen
     state: present
 
 - name: Install mongodb
