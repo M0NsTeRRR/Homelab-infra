@@ -7,29 +7,18 @@
       prompt: "Certificate name ?"
       private: no
   tasks:
-    - name: "Create {{ certificate_name }} folder"
-      file:
-        state: directory
-        name: "../../certs/{{ certificate_name }}"
-
-    - name: Add .gitkeep file
-      copy:
-        content: ""
-        dest: "../../certs/{{ certificate_name }}/.gitkeep"
-        force: no
-
     - name: Generate CertAuthority OpenSSL private key
       openssl_privatekey:
-        path: "../../certs/{{ certificate_name }}/ca.pem.j2"
+        path: "../../certs/ca.pem.j2"
 
     - name: Generate CertAuthority OpenSSL Certificate Signing Request
       openssl_csr:
-        path: "../../certs/{{ certificate_name }}/ca.csr.j2"
-        privatekey_path: "../../certs/{{ certificate_name }}/ca.pem.j2"
+        path: "../../certs/ca.csr.j2"
+        privatekey_path: "../../certs/ca.pem.j2"
         country_name: FR
-        organization_name: unicornafk.fr
+        organization_name: unicornafk
         email_address: admin@unicornafk.fr
-        common_name: "{{ certificate_name }}.unicornafk.fr"
+        common_name: "unicornafk"
         basic_constraints:
           - CA:TRUE
           - pathlen:1
@@ -40,10 +29,21 @@
 
     - name: Generate CertAuthority OpenSSL certificate
       openssl_certificate:
-        path: "../../certs/{{ certificate_name }}/ca.crt.j2"
-        privatekey_path: "../../certs/{{ certificate_name }}/ca.pem.j2"
-        csr_path: "../../certs/{{ certificate_name }}/ca.csr.j2"
+        path: "../../certs/ca.crt.j2"
+        privatekey_path: "../../certs/ca.pem.j2"
+        csr_path: "../../certs/ca.csr.j2"
         provider: selfsigned
+
+    - name: "Create {{ certificate_name }} folder"
+      file:
+        state: directory
+        name: "../../certs/{{ certificate_name }}"
+
+    - name: Add .gitkeep file
+      copy:
+        content: ""
+        dest: "../../certs/{{ certificate_name }}/.gitkeep"
+        force: no
 
     - name: Generate client OpenSSL private key
       openssl_privatekey:
@@ -61,7 +61,7 @@
     - name: Generate client OpenSSL certificate signed with our CA
       openssl_certificate:
         path: "../../certs/{{ certificate_name }}/client.crt.j2"
-        ownca_path: "../../certs/{{ certificate_name }}/ca.crt.j2"
-        ownca_privatekey_path: "../../certs/{{ certificate_name }}/ca.pem.j2"
+        ownca_path: "../../certs/ca.crt.j2"
+        ownca_privatekey_path: "../../certs/ca.pem.j2"
         csr_path: "../../certs/{{ certificate_name }}/client.csr.j2"
         provider: ownca

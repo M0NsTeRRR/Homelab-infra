@@ -90,7 +90,7 @@
 
 - name: Add CA cert
   template:
-    src: "../../../certs/{{ exporter_exporter_name }}/ca.crt.j2"
+    src: "../../../certs/ca.crt.j2"
     dest: /etc/exporter_exporter/ca.crt
     owner: exporter-exporter
     group: exporter-exporter
