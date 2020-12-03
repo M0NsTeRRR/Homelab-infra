@@ -1,5 +1,6 @@
 ---
 pdns_version: 44
+pdns_repository_key: FD380FBB
 pdns_domains: []
 pdns_subdomains: []
 pdns_reverse_zones: []

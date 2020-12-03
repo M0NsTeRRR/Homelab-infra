@@ -27,8 +27,8 @@
 
 - name: Add PowerDNS Apt signing key
   apt_key:
-    id: "CBC8B383"
-    url: "https://repo.powerdns.com/CBC8B383-pub.asc"
+    id: "{{ pdns_repository_key }}"
+    url: "https://repo.powerdns.com/{{ pdns_repository_key }}-pub.asc"
     state: present
   retries: 3
   delay: 3
