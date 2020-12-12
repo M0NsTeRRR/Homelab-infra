@@ -1,5 +1,0 @@
----
-- name: Install cloud-initramfs-growroot
-  apt:
-    name: cloud-initramfs-growroot
-    state: present

@@ -1,0 +1,88 @@
+---
+- name: Allow node-exporter
+  ufw:
+    rule: allow
+    port: "9100"
+    proto: tcp
+
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  pip:
+    name: cryptography
+
+- name: Create node-exporter folder
+  file:
+    state: directory
+    name: /opt/exporter/node-exporter
+
+- name: Download last version of node-exporter
+  get_url:
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-amd64.tar.gz"
+    dest: /tmp/node-exporter.tar.gz
+
+- name: Extract latest binary of node-exporter
+  unarchive:
+    src: /tmp/node-exporter.tar.gz
+    dest: /opt/exporter/node-exporter
+    remote_src: yes
+    list_files: yes
+  register: archive_contents
+
+- name: Copy node-exporter binary to /usr/local/bin
+  copy:
+    src: "/opt/exporter/node-exporter/{{ archive_contents.files[0] }}node_exporter"
+    dest: /usr/local/bin/node-exporter
+    mode: 0700
+    remote_src: yes
+  notify: restart node-exporter.service
+
+- name: Create node-exporter configuration directory
+  file:
+    dest: /etc/node-exporter/
+    state: directory
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: "/etc/node-exporter/server.pem"
+  notify: restart node-exporter.service
+
+- name: Generate an OpenSSL Certificate Signing Request
+  openssl_csr:
+    path: "/etc/node-exporter/server.csr"
+    privatekey_path: "/etc/node-exporter/server.pem"
+    country_name: "{{ node_exporter_cert_country }}"
+    organization_name: "{{ node_exporter_cert_organization_name }}"
+    email_address: "{{ node_exporter_cert_email_address }}"
+  notify: restart node-exporter.service
+
+- name: Generate an OpenSSL certificate
+  openssl_certificate:
+    path: "/etc/node-exporter/server.crt"
+    privatekey_path: "/etc/node-exporter/server.pem"
+    csr_path: "/etc/node-exporter/server.csr"
+    provider: selfsigned
+  notify: restart node-exporter.service
+
+- name: Add ca.crt
+  copy:
+    src: ../../../certs/ca.crt
+    dest: /etc/node-exporter/ca.crt
+  notify: restart node-exporter.service
+
+- name: Configure node-exporter
+  template:
+    src: web-config.yml.j2
+    dest: /etc/node-exporter/web-config.yml
+  notify: restart node-exporter.service
+
+- name: Create systemd service file
+  template:
+    src: node-exporter.service.j2
+    dest: /etc/systemd/system/node-exporter.service
+  notify:
+    - enable node-exporter.service
+    - restart node-exporter.service

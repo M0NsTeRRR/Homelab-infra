@@ -3,7 +3,7 @@ export PACKER_CACHE_DIR=packer_cache
 
 set -e
 
-ssh_username=ludovic
+ssh_username=lortega
 ssh_password=ludovic
 
 echo -e "Please enter your choice: \n1) VM\n2) Raspberry Pi\n"
@@ -15,10 +15,14 @@ do
     vcenter_server='vsphere.unicornafk.fr'
     vcenter_username='administrator@unicornafk.fr'
 
-    read -p 'host_ip: ' host_ip
-    read -p 'distribution: ' distribution
-    read -sp 'vcenter_password: ' vcenter_password
+    read -p 'Host ip: ' host_ip
+    read -p 'Distribution: ' distribution
+    read -sp 'Vcenter password: ' vcenter_password
     printf "\n"
+    read -sp 'VM password: ' main_password
+    printf "\n"
+
+    export main_password
 
     packer build \
       -var "host_ip=$host_ip" \
@@ -28,17 +32,21 @@ do
       -var "vcenter_password=$vcenter_password" \
       -var "ssh_username=$ssh_username" \
       -var "ssh_password=$ssh_password" \
+      -var "main_password=$main_password" \
       -timestamp-ui \
       templates/"$distribution".json
 		break
 		;;
 	2)
-    read -p 'version: ' version
+    read -sp 'VM password: ' main_password
     printf "\n"
+
+    export main_password
 
     packer build \
       -var "ssh_username=$ssh_username" \
       -var "ssh_password=$ssh_password" \
+      -var "main_password=$main_password" \
       -timestamp-ui \
       templates/raspi.json
 		break

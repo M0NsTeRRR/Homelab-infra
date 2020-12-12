@@ -1,0 +1,25 @@
+---
+- name: 'Provision Image'
+  hosts: default
+  become: true
+  roles:
+    - ufw
+    - motd
+    - node-exporter
+    - rsyslog
+    - sshd
+    - fail2ban
+  pre_tasks:
+    - name: Update and upgrade all packages
+      apt:
+        upgrade: 'yes'
+        update_cache: 'yes'
+
+    - name: Include utils
+      include_tasks: playbooks/utils.yml
+  tasks:
+    - name: "Update {{ main_user }} password"
+      user:
+        name: "{{ main_user }}"
+        password: "{{ main_password | password_hash('sha512') }}"
+        update_password: always

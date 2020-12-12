@@ -1,0 +1,10 @@
+---
+- name: Install rng-tools
+  apt:
+    name: rng-tools
+    state: present
+
+- name: Install cloud-initramfs-growroot
+  apt:
+    name: cloud-initramfs-growroot
+    state: present

@@ -74,22 +74,17 @@ resource "vsphere_virtual_machine" "vm" {
     connection {
       host = var.vm_ip
       user = var.vm_user
-      password = var.vm_old_password
+      password = var.vm_password
     }
     inline = ["echo 'Wait VM creation'"]
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${var.vm_ip}, lvm_resize.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_old_password}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
+    command = "ansible-playbook -i ${var.vm_ip}, lvm_resize.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_password}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
   }
 
   provisioner "local-exec" {
-    command = "ansible-playbook -i ${var.vm_ip}, disable_slaac.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_old_password}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
-  }
-
-  provisioner "local-exec" {
-    command = "ansible-playbook -i ${var.vm_ip}, change_password.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_old_password} password=${var.vm_password}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
-
+    command = "ansible-playbook -i ${var.vm_ip}, disable_slaac.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_password}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
   }
 }
 

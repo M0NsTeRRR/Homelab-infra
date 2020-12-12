@@ -1,5 +1,0 @@
----
-- name: Configure rsyslog
-  template:
-    src: ./templates/rsyslog/01-client.conf.j2
-    dest: /etc/rsyslog.d/01-client.conf

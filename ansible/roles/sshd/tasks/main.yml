@@ -1,0 +1,59 @@
+---
+- set_fact:
+    ssh_pub_keys: "{{ lookup('fileglob', '../ssh_pub_keys/*.pub', wantlist=True) }}"
+
+- name: Create wheel group
+  group:
+    name: wheel
+    state: present
+
+- name: Allow wheel group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Add users
+  user:
+    name: "{{ item | basename | replace('.pub', '') }}"
+    group: wheel
+    append: yes
+    state: present
+    createhome: yes
+    shell: /bin/bash
+  with_items: "{{ ssh_pub_keys }}"
+
+- name: Set authorized key for each user
+  authorized_key:
+    user: "{{ item | basename | replace('.pub', '') }}"
+    state: present
+    key: "{{ lookup('file', item) }}"
+    exclusive: yes
+  with_items: "{{ ssh_pub_keys }}"
+
+- name: Set sshd configuration
+  lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+    - { regexp: '^#?PrintMotd', line: 'PrintMotd no' }
+    - { regexp: '^#?X11Forwarding', line: 'X11Forwarding no' }
+    - { regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval 300' }
+    - { regexp: '^#?AuthenticationMethods', line: 'AuthenticationMethods publickey' }
+    - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
+    - { regexp: '^#?ChallengeResponseAuthentication', line: 'ChallengeResponseAuthentication no' }
+    - { regexp: '^#?PubkeyAuthentication', line: 'PubkeyAuthentication yes' }
+    - { regexp: '^#?UsePAM', line: 'UsePAM yes' }
+    - { regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
+    - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
+    - { regexp: '^#?AllowGroups', line: 'AllowGroups wheel' }
+    - { regexp: '^#?RekeyLimit', line: 'RekeyLimit 1G 1H' }
+    - { regexp: '^#?KexAlgorithms', line: 'KexAlgorithms curve25519-sha256@libssh.org,diffie-hellman-group18-sha512,diffie-hellman-group16-sha512,diffie-hellman-group14-sha256' }
+    - { regexp: '^#?Ciphers', line: 'Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr' }
+    - { regexp: '^#?MACs', line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com' }
+    - { regexp: '^#?HostKeyAlgorithms', line: 'HostKeyAlgorithms ecdsa-sha2-nistp384,ssh-rsa,ssh-ed25519' }
+  notify: restart sshd

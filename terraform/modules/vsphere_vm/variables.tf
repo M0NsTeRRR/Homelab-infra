@@ -46,14 +46,10 @@ variable "vm_user" {
   type = string
 }
 
-variable "vm_old_password" {
-  description = "User password before change"
-  type = string
-}
-
 variable "vm_password" {
   description = "User password"
   type = string
+  sensitive = true
 }
 
 variable "domain" {

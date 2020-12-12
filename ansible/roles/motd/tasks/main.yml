@@ -1,0 +1,32 @@
+---
+- name: Install figlet and lolcat
+  apt:
+    pkg:
+      - figlet
+      - lolcat
+    state: present
+
+- name: Find all motd files
+  find:
+    path: /etc/update-motd.d
+    file_type: file
+    recurse: yes
+  register: motd_files
+
+- name: Remove executions of all motd files
+  file:
+    path: "{{ item.path }}"
+    mode: a-x
+  with_items: "{{ motd_files.files }}"
+
+- name: Delete default motd
+  file:
+    state: absent
+    path: /etc/motd
+
+- name: Create motd
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/update-motd.d/{{ item | basename }}"
+    mode: '0755'
+  with_fileglob: ./files/*

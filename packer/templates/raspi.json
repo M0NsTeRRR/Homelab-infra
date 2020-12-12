@@ -2,8 +2,10 @@
   "variables": {
     "version": "20.04.1",
     "ssh_username": "",
-    "ssh_password": ""
+    "ssh_password": "",
+    "main_password": ""
   },
+  "sensitive-variables": ["main_password"],
   "builders": [{
     "type": "arm",
     "file_urls" : ["http://cdimage.ubuntu.com/releases/{{ user `version` }}/release/ubuntu-{{ user `version` }}-preinstalled-server-arm64+raspi.img.xz"],
@@ -42,7 +44,7 @@
     {
       "type": "shell",
       "inline": [
-        "useradd -m -p $(openssl passwd -crypt {{ user `ssh_password` }}) {{ user `ssh_username` }}",
+        "useradd -m -p $(openssl passwd -crypt {{ user `main_password` }}) {{ user `ssh_username` }}",
         "usermod -aG sudo {{ user `ssh_username` }}",
         "touch /boot/ssh"
       ]
