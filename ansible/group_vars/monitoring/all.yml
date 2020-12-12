@@ -30,10 +30,6 @@ prometheus_clients_certs:
   - rpki-exporter
 prometheus_targets:
   blackbox:
-    - https://dns1.unicornafk.fr
-    - https://dns2.unicornafk.fr
-    - https://dhcp1.unicornafk.fr
-    - https://dhcp2.unicornafk.fr
     - https://ipam.unicornafk.fr
     - https://git.unicornafk.fr
     - https://wiki.unicornafk.fr
@@ -58,6 +54,7 @@ prometheus_targets:
     - r1.unicornafk.fr
   snmp_brocade:
     - 192.168.10.2
+    - 192.168.40.4
   snmp_qnap:
     - 192.168.20.42
   node_exporter:
