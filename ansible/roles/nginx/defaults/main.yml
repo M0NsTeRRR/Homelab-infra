@@ -1,5 +1,5 @@
 ---
-nginx_name: "application"
+nginx_name: "{{ inventory_hostname }}"
 nginx_url: "http://127.0.0.1:8000"
 nginx_location: /
 #nginx_static:

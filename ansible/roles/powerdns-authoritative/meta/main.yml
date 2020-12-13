@@ -18,7 +18,6 @@ dependencies:
   - role: powerdns-recursor
   - role: nginx
     vars:
-      nginx_name: powerdns-authoritative
       nginx_url: http://127.0.0.1:8081
       nginx_location: /api/
       nginx_http_redirection: false

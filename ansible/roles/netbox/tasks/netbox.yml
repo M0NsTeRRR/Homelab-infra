@@ -42,6 +42,7 @@
 - name: Add netbox group
   group:
     name: netbox
+    system: yes
     state: present
 
 - name: Add netbox user

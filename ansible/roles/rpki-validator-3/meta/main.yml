@@ -17,5 +17,4 @@ galaxy_info:
 dependencies:
   - role: nginx
     vars:
-      nginx_name: "rpki-validator-3"
       nginx_url: "http://127.0.0.1:8080"

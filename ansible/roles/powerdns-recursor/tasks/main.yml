@@ -8,6 +8,7 @@
 - name: Add pdns group
   group:
     name: pdns
+    system: yes
     state: present
 
 - name: Add pdns user

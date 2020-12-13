@@ -11,6 +11,7 @@
 - name: Add ghost group
   group:
     name: idiotghost
+    system: yes
     state: present
 
 - name: Add ghost user

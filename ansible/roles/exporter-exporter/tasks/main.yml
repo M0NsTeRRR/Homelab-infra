@@ -8,6 +8,7 @@
 - name: Add exporter-exporter group
   group:
     name: exporter-exporter
+    system: yes
     state: present
 
 - name: Add exporter-exporter user
@@ -79,6 +80,8 @@
   file:
     state: directory
     name: /etc/exporter_exporter
+    owner: exporter-exporter
+    group: exporter-exporter
 
 - name: Configure exporter_exporter
   template:

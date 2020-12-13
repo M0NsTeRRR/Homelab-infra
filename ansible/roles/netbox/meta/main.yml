@@ -17,7 +17,6 @@ galaxy_info:
 dependencies:
   - role: nginx
     vars:
-      nginx_name: "netbox"
       nginx_url: "http://127.0.0.1:8001"
       nginx_static: "/opt/netbox/netbox/static/"
   - role: postgresql

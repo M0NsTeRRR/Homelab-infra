@@ -2,6 +2,7 @@
 - name: Add wikijs group
   group:
     name: wikijs
+    system: yes
     state: present
 
 - name: Add wikijs user

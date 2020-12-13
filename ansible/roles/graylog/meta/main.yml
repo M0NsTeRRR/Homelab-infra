@@ -14,7 +14,6 @@ galaxy_info:
 dependencies:
   - role: nginx
     vars:
-      nginx_name: "graylog"
       nginx_url: "http://127.0.0.1:9000"
       nginx_enable_content_security: false
       nginx_proxy_headers:

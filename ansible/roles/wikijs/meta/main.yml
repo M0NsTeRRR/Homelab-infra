@@ -17,7 +17,6 @@ galaxy_info:
 dependencies:
   - role: nginx
     vars:
-      nginx_name: "wikijs"
       nginx_url: "http://127.0.0.1:3000"
       nginx_enable_content_security: false
   - role: nodejs
