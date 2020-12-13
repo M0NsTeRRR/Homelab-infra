@@ -1,0 +1,10 @@
+---
+- name: restart caddy.service
+  service:
+    name: caddy.service
+    state: restarted
+
+- name: enable caddy.service
+  service:
+    name: caddy.service
+    enabled: true

@@ -1,0 +1,24 @@
+---
+caddy_email: "{{ email }}"
+caddy_domains:
+  - names:
+      - wiki.unicornafk.fr
+    backend_url: https://wiki.unicornafk.fr
+  - names:
+      - git.unicornafk.fr
+    backend_url: https://git.unicornafk.fr
+  - names:
+      - blog.adminafk.fr
+    backend_url: https://blog.unicornafk.fr
+  - names:
+      - adminafk.fr
+      - ludovic-ortega.adminafk.fr
+    backend_url: https://website.unicornafk.fr
+  - names:
+      - as212510.net
+    backend_url: https://website.unicornafk.fr
+
+exporter_exporter_name: caddy-exporter
+exporter_exporter_nodes:
+  - name: caddy
+    port: 2019

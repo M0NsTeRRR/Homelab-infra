@@ -1,0 +1,12 @@
+{% for domain in item.names %}{{ domain }}{% if not loop.last %}, {% endif %}{% endfor %} {
+    reverse_proxy {{ item.backend_url }} {
+      transport http {
+        tls
+        tls_insecure_skip_verify
+      }
+
+      import defaultheaders
+    }
+
+    import webconf
+}

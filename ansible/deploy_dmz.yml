@@ -76,6 +76,12 @@
     - rpki-rtr-server
     - exporter-exporter
 
+- name: Configure Reverse-proxy
+  hosts: reverse_proxy
+  become: yes
+  roles:
+    - caddy
+
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb
   become: yes

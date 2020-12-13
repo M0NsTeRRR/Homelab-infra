@@ -1,0 +1,63 @@
+---
+- name: "Open port {{ item }}"
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+  with_items:
+    - "80"
+    - "443"
+
+- name: Add caddy group
+  group:
+    name: caddy
+    system: yes
+    state: present
+
+- name: Add caddy user
+  user:
+    name: caddy
+    home: /var/lib/caddy
+    shell: /usr/sbin/nologin
+    group: caddy
+    append: yes
+
+- name: Add Caddy Apt repository
+  apt_repository:
+    repo: "deb [trusted=yes] https://apt.fury.io/caddy/ /"
+    state: present
+    filename: caddy-fury
+
+- name: Install Caddy
+  apt:
+    name: caddy
+    state: present
+  notify:
+    - enable caddy.service
+    - restart caddy.service
+
+- name: Create /etc/caddy/conf.d folder
+  file:
+    state: directory
+    name: /etc/caddy/conf.d
+    owner: caddy
+    group: caddy
+
+- name: Configure default Caddy config
+  template:
+    src: default.j2
+    dest: /etc/caddy/Caddyfile
+    owner: caddy
+    group: caddy
+  notify:
+    - restart caddy.service
+
+- name: Configure Caddy
+  template:
+    src: Caddyfile.j2
+    dest: "/etc/caddy/conf.d/{{ item.names[0] }}.conf"
+    owner: caddy
+    group: caddy
+  with_items: "{{ caddy_domains }}"
+  notify:
+    - restart caddy.service
