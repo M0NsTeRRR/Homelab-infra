@@ -28,6 +28,7 @@ prometheus_clients_certs:
   - powerdns-exporter
   - wireguard-exporter
   - rpki-exporter
+  - caddy-exporter
 prometheus_targets:
   blackbox:
     - https://ipam.unicornafk.fr
