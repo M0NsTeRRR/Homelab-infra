@@ -2,9 +2,17 @@
 vcenter_netbox_sync_version: 1.1.0
 vcenter_netbox_sync_ipv4_subnets: []
 vcenter_netbox_sync_ipv6_subnets: []
-vcenter_netbox_sync_dns_group: []
+vcenter_netbox_sync_dns_group: dns
 vcenter_netbox_sync_vcenter_hostname: vsphere.example.com
 vcenter_netbox_sync_vcenter_port: 443
 vcenter_netbox_sync_vcenter_username: administrator@vsphere.example.com
 vcenter_netbox_sync_vcenter_password: password
 vcenter_netbox_sync_netbox_api_key: api_key
+
+
+# vcenter_netbox_sync_ipv4_subnets:
+#   - 192.168.4.0/24
+#   - 192.168.5.0/24
+#   - 192.168.10.0/24
+# vcenter_netbox_sync_ipv6_subnets:
+#   - 2a0c:b641:02c0::/44

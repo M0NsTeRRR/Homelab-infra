@@ -1,6 +1,5 @@
 ---
 snmp_exporter_version: 0.19.0
-snmp_exporter_targets: []
 snmp_exporter_user: user
 snmp_exporter_pass: pass
 snmp_exporter_private: private

@@ -1,3 +1,12 @@
 ---
 prometheus_clients_certs: []
 prometheus_targets: {}
+
+
+# prometheus_clients_certs:
+#   - node-exporter
+#   - kea-exporter
+# prometheus_targets:
+#   blackbox:
+#     - https://ipam.unicornafk.fr
+#     - https://git.unicornafk.fr

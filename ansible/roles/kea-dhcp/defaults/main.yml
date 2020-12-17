@@ -3,3 +3,24 @@ kea_dns_group: dns
 kea_dns_domains: []
 kea_ipv4_subnets: []
 kea_ipv6_subnets: []
+
+
+# kea_ipv4_subnets:
+#   - subnet: 192.168.50.0/24
+#     pools:
+#       - start: 192.168.50.201
+#         end: 192.168.50.240
+#     router: 192.168.50.2
+#     reservations:
+#       - hostname: samsung-tv
+#         hw_address: 44:5c:e9:9d:8b:28
+#         ip_address: 192.168.50.91
+# kea_ipv6_subnets:
+#   - subnet: 2a0c:b641:02c0:150::/64
+#     pools:
+#       - start: 2a0c:b641:02c0:150::201
+#         end: 2a0c:b641:02c0:150::240
+#     reservations:
+#       - hostname: samsung-tv
+#         hw_address: 44:5c:e9:9d:8b:28
+#         ip_address: 2a0c:b641:02c0:150::91

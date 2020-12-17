@@ -18,5 +18,32 @@ graylog_transport_email_use_tls: true
 graylog_transport_email_use_ssl: false
 
 graylog_inputs: []
-graylog_email_notifications: {}
+graylog_notifications: []
 graylog_events: []
+
+
+# graylog_inputs:
+#   - title: Syslog UDP
+#     port: 1514
+#     proto: udp
+#     bind_address: 0.0.0.0
+#   - title: Syslog TCP
+#     port: 1514
+#     proto: tcp
+#     bind_address: 0.0.0.0
+
+# graylog_notifications:
+#   - title: Default
+#     type: email-notification-v1
+#     sender: "{{ smtp_monitoring_email }}"
+#     subject: "Graylog event notification: ${event_definition_title}"
+#     body_template: "--- [Event] ---------------------------\\nTitle:       ${event_definition_title}\\nDescription: ${event_definition_description}\\nTimestamp:   ${event.timestamp}\\nPriority:    ${event.priority}\\n\\n${if backlog}\\n--- [Backlog] ------------------------------------\\nLast messages accounting for this alert:\\n${foreach backlog message}\\nSource:      ${message.source}\\n${if message.fields.gl2_remote_ip}IP:          ${message.fields.gl2_remote_ip}${end}\\n${if message.fields.level}Level:       ${message.fields.level}${end}\\n${if message.fields.application_name}Application: ${message.fields.application_name}${end}\\n${if message.fields.facility}Facility:    ${message.fields.facility}${end}\\nMessage:     ${message.message}\\n--------------------------------------------------\\nRAW:         ${message}\\n\\n\\n\\n${end}\\n${end}\\n"
+#     user_recipients:
+#       - "admin"
+#     email_recipients: []
+
+# graylog_events:
+#   - title: ERROR
+#     description: ''
+#     priority: 3
+#     query: level:<3
