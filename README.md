@@ -8,8 +8,8 @@ This is my Homelab infrastructure.
 	- Python3 and Pip
 - Packer (version >= 1.6)
     - Packer builder arm
-- Terraform (version >= 0.13)
-	- Terragrunt (version >= 0.23)
+- Terraform (version >= 0.14)
+	- Terragrunt (version >= 0.26)
 
 # Ansible
 `cd ansible`  
@@ -29,16 +29,16 @@ Install dependencies `pip3 install -r requirements.txt`
 fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`
 
 ### Playbooks to add fingerprint on know_hosts
-`ansible-playbook -i <inventory_file> playbooks/add-ssh-keys.yml`  
+`ansible-playbook -i hosts playbooks/add-ssh-keys.yml`
 
 ### Playbooks to create client certificate signed by a CA
 `ansible-playbook playbooks/generate-certs.yml`
 
 ### Playbooks to deploy dmz
-`ansible-playbook -i dmz deploy_dmz.yml`
+`ansible-playbook -i hosts deploy_dmz.yml`
 
 ### Playbooks to deploy lab
-`ansible-playbook -i lab deploy_lab.yml`
+`ansible-playbook -i hosts deploy_lab.yml`
 
 # Packer
 `cd packer`
@@ -90,7 +90,7 @@ You can find all details here: https://cecill.info/licences/Licence_CeCILL_V2.1-
 
 # Credits
 
-Copyright © Ludovic Ortega, 2019
+Copyright © Ludovic Ortega, 2021
 
 Contributor(s):
 

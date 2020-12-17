@@ -1,5 +1,7 @@
 ---
+country: FR
 timezone: Europe/Paris
+organization: unicornafk
 email: ludovic-ortega@adminafk.fr
 smtp_provider_host: mail.gandi.net
 smtp_provider_port: 587
@@ -14,6 +16,7 @@ ipv4_subnets:
   - 192.168.40.0/24
   - 192.168.50.0/24
   - 192.168.60.0/24
+  - 192.168.70.0/24
 ipv6_subnets:
   - 2a0c:b641:02c0::/44
 domains:
@@ -32,6 +35,7 @@ reverse_zones:
   - 40.168.192.in-addr.arpa
   - 50.168.192.in-addr.arpa
   - 60.168.192.in-addr.arpa
+  - 70.168.192.in-addr.arpa
   - 4.0.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
   - 5.0.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
   - 0.1.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
@@ -40,3 +44,4 @@ reverse_zones:
   - 0.4.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
   - 0.5.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
   - 0.6.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 0.7.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa

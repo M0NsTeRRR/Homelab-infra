@@ -40,14 +40,6 @@
   roles:
     - ghost
 
-- name: Configure VPN
-  hosts: vpn
-  become: yes
-  roles:
-    - wireguard
-    - wireguard-exporter
-    - exporter-exporter
-
 - name: Configure Log
   hosts: log
   become: yes

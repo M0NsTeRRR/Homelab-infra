@@ -1,0 +1,8 @@
+---
+- name: Configure VPN
+  hosts: vpn
+  become: yes
+  roles:
+    - wireguard
+    - wireguard-exporter
+    - exporter-exporter

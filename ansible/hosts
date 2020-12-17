@@ -30,6 +30,9 @@ log.unicornafk.fr
 [monitoring]
 monitoring.unicornafk.fr
 
+[unifi]
+unifi.unicornafk.fr
+
 [rpki]
 rpki.unicornafk.fr
 
