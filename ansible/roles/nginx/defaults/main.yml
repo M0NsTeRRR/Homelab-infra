@@ -1,4 +1,7 @@
 ---
+nginx_cert_country: ""
+nginx_cert_organization_name: ""
+nginx_cert_email_address: ""
 nginx_name: "{{ inventory_hostname }}"
 nginx_url: "http://127.0.0.1:8000"
 nginx_location: /

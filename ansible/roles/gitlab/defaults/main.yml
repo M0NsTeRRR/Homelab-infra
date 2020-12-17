@@ -1,4 +1,7 @@
 ---
+gitlab_cert_country: "{{ country }}"
+gitlab_cert_organization_name: "{{ organization }}"
+gitlab_cert_email_address: "{{ smtp_admin_email }}"
 gitlab_smtp_enable: true
 gitlab_smtp_address: mail.example.com
 gitlab_smtp_port: 587
