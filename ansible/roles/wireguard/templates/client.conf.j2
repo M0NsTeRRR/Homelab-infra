@@ -1,7 +1,7 @@
 [Interface]
 PrivateKey = {{ item.value.private_key }}
 Address = {{ item.value.ipv4 }},{{ item.value.ipv6 }}
-DNS = {{ groups[wireguard_dns_group]|join(',') }}, {% for host in groups[wireguard_dns_group] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %}, {{ wireguard_domains|join(',') }}
+DNS = {{ groups[wireguard_dns_group]|join(',') }}, {% for host in groups[wireguard_dns_group] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %}{% if not item.value.mobile %}, {{ wireguard_domains|join(',') }}{% endif %}
 
 [Peer]
 PublicKey = {{ wireguard_server_public_key }}
