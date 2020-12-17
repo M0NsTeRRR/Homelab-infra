@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ludovic Ortega
-  description: Install and configure unifi_poller
+  description: Install and configure powerdns_recursor
   company: Ludovic Ortega
   license: CeCILL
   min_ansible_version: 2.9

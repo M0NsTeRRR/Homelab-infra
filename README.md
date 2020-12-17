@@ -47,7 +47,7 @@ Port 8888 used for debian build
 Port 8889 used for ubuntu build  
 
 Open both ports on windows firewall  
-Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenport=<WINDOWS PORT> listenaddress=<WINDOWS IP> connectport=<WSL PORT> connectaddress=<WSL IP>`
+Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenport=<WINDOWS PORT> listenaddress=<WINDOWS IP> connectport=<WSL PORT> connectaddress=<WSL IP>`  
 Replace <IP> with the LAN IP of your PC and <PORT> with [8888, 8889]  
 To delete the rules `netsh interface portproxy del v4tov4 listenport=<PORT> listenaddress=<IP>`
 
@@ -74,7 +74,7 @@ Infrastructure is split in 2 parts :
 - dmz
 - lab
 
-**Command must be run in one of this two directories (dmz/lab)**
+**Command must be run in one of this two directories (dmz/lab/vpn)**
 
 ### Create an execution plan
 `terragrunt plan-all`

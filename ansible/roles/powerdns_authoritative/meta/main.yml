@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  author: Ludovic Ortega
+  description: Install and configure powerdns_authoritative
+  company: Ludovic Ortega
+  license: CeCILL
+  min_ansible_version: 2.9
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+    - name: Ubuntu
+      versions:
+        - focal
+
+
+dependencies:
+  - role: powerdns-recursor
+  - role: nginx
+    vars:
+      nginx_url: http://127.0.0.1:8081
+      nginx_location: /api/
+      nginx_http_redirection: false
+      nginx_ssl_port: "443"

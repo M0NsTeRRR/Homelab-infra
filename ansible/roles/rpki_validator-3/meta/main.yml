@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ludovic Ortega
-  description: Install and configure unifi_poller
+  description: Install and configure RIPE NCC rpki_validator_3
   company: Ludovic Ortega
   license: CeCILL
   min_ansible_version: 2.9
@@ -12,3 +12,9 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
+
+
+dependencies:
+  - role: nginx
+    vars:
+      nginx_url: "http://127.0.0.1:8080"

@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ludovic Ortega
-  description: Install and configure unifi_poller
+  description: Install and configure vcenter_netbox_sync
   company: Ludovic Ortega
   license: CeCILL
   min_ansible_version: 2.9
@@ -12,3 +12,7 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
+
+
+dependencies:
+  - role: netbox
