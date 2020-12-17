@@ -81,7 +81,7 @@
       - { regexp: '^(# )?setgid=', line: 'setgid=pdns' }
       - { regexp: '^(# )?setuid=', line: 'setuid=pdns' }
       - { regexp: '^(# )?local-address=', line: 'local-address=0.0.0.0, ::' }
-      - { regexp: '^(# )?allow-from=', line: 'allow-from={{ pdns_ipv4_subnets | join(", ") }}, {{ pdns_ipv6_subnets | join(", ") }}' }
+      - { regexp: '^(# )?allow-from=', line: 'allow-from=0.0.0.0/0, ::/0' }
       - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ pdns_domains | join("=" + dns_list + ", ") + "=" + dns_list }}, {{ pdns_reverse_zones | join("=" + dns_list + ", ") + "=" + dns_list }}' }
       - { regexp: '^(# )?serve-rfc1918=', line: 'serve-rfc1918=no' }
       - { regexp: '^(# )?api-key=', line: 'api-key={{ pdns_api_key }}' }
