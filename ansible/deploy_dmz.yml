@@ -3,17 +3,17 @@
   hosts: dns
   become: yes
   roles:
-    - powerdns-authoritative
-    - powerdns-recursor
-    - exporter-exporter
+    - powerdns_authoritative
+    - powerdns_recursor
+    - exporter_exporter
 
 - name: Configure DHCP servers
   hosts: dhcp
   become: yes
   roles:
-    - kea-dhcp
-    - kea-exporter
-    - exporter-exporter
+    - kea_dhcp
+    - kea_exporter
+    - exporter_exporter
 
 - name: Configure git
   hosts: git
@@ -26,7 +26,7 @@
   become: yes
   roles:
     - netbox
-    - vcenter-netbox-sync
+    - vcenter_netbox_sync
 
 - name: Configure Wiki
   hosts: wiki
@@ -53,27 +53,27 @@
     - prometheus
     - alertmanager
     - grafana
-    - snmp-exporter
-    - blackbox-exporter
-    - fping-exporter
-    - vmware-exporter
-    - unifi-poller
-    - tplink-plug-exporter
+    - snmp_exporter
+    - blackbox_exporter
+    - fping_exporter
+    - vmware_exporter
+    - unifi_poller
+    - tplink_plug_exporter
 
 - name: Configure RPKI validator
   hosts: rpki
   become: yes
   roles:
-    - rpki-validator-3
-    - rpki-rtr-server
-    - exporter-exporter
+    - rpki_validator_3
+    - rpki_rtr_server
+    - exporter_exporter
 
 - name: Configure Reverse-proxy
   hosts: reverse_proxy
   become: yes
   roles:
     - caddy
-    - exporter-exporter
+    - exporter_exporter
 
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb
@@ -86,16 +86,16 @@
   hosts: kubernetes:&etcd
   become: yes
   roles:
-    - kubernetes-etcd
+    - kubernetes_etcd
 
 - name: Configure kubernetes master
   hosts: kubernetes:&master
   become: yes
   roles:
-    - kubernetes-master
+    - kubernetes_master
 
 - name: Configure kubernetes worker
   hosts: kubernetes:&worker
   become: yes
   roles:
-    - kubernetes-worker
+    - kubernetes_worker

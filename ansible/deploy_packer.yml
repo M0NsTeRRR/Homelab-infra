@@ -2,19 +2,14 @@
 - name: 'Provision Image'
   hosts: default
   become: true
-  vars_files:
-    - group_vars/all/all.yml
-  vars:
-    node_exporter_cert_country: "{{ country }}"
-    node_exporter_cert_organization_name: "{{ organization }}"
-    node_exporter_cert_email_address: "{{ smtp_admin_email }}"
   roles:
     - ufw
     - motd
-    - node-exporter
+    - node_exporter
     - rsyslog
     - sshd
     - fail2ban
+    - root_ca
   pre_tasks:
     - name: Update and upgrade all packages
       apt:

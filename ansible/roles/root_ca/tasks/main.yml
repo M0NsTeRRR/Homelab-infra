@@ -1,0 +1,13 @@
+---
+- name: Create ca-certificates folder
+  file:
+    path: /usr/local/share/ca-certificates
+    state: directory
+
+- name: "Copy the certificate {{ root_ca_organization_name }}"
+  copy:
+    src: ../../../certs/ca.crt
+    dest: "/usr/local/share/ca-certificates/{{ root_ca_organization_name }}.crt"
+
+- name: Update CA Trust
+  command: update-ca-certificates

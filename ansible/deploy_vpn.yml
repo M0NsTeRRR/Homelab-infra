@@ -4,5 +4,5 @@
   become: yes
   roles:
     - wireguard
-    - wireguard-exporter
-    - exporter-exporter
+    - wireguard_exporter
+    - exporter_exporter
