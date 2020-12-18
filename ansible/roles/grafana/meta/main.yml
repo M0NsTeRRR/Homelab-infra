@@ -12,13 +12,3 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
-
-
-dependencies:
-  - role: nginx
-    vars:
-      nginx_name: "grafana"
-      nginx_url: "http://127.0.0.1:3000"
-      nginx_http_redirection: true
-      nginx_ssl_port: "443"
-      nginx_enable_content_security: false

@@ -37,3 +37,14 @@ graylog_events:
     description: ''
     priority: 3
     query: level:<3
+
+nginx_configuration:
+  - name: "{{ inventory_hostname }}"
+    url: "http://127.0.0.1:9000"
+    location: /
+    nginx_proxy_headers:
+      X-Graylog-Server-URL: https://$server_name/
+    enable_content_security: false
+    http_redirection: true
+    ssl_port: "443"
+    server_name: "{{ inventory_hostname }}"

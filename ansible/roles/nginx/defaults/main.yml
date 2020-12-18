@@ -2,12 +2,16 @@
 nginx_cert_country: ""
 nginx_cert_organization_name: ""
 nginx_cert_email_address: ""
-nginx_name: "{{ inventory_hostname }}"
-nginx_url: "http://127.0.0.1:8000"
-nginx_location: /
-#nginx_static:
-nginx_proxy_headers: {}
-nginx_enable_content_security: true
-nginx_http_redirection: true
-nginx_ssl_port: "443"
-nginx_server_name: "{{ inventory_hostname }}"
+nginx_configuration: []
+
+
+# nginx_configuration:
+#   - name: "{{ inventory_hostname }}"
+#     url: "http://127.0.0.1:8000"
+#     location: /
+#     static:
+#     proxy_headers: { }
+#     enable_content_security: true
+#     http_redirection: true
+#     ssl_port: "443"
+#     server_name: "{{ inventory_hostname }}"

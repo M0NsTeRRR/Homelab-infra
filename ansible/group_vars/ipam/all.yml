@@ -6,3 +6,17 @@ vcenter_netbox_sync_dns_group: dns
 vcenter_netbox_sync_vcenter_hostname: '{{ vcenter_hostname }}'
 vcenter_netbox_sync_vcenter_port: '{{ vcenter_port }}'
 vcenter_netbox_sync_vcenter_username: '{{ vcenter_username }}'
+
+postgresql_db: "netbox"
+postgresql_user: "netbox"
+
+nginx_configuration:
+  - name: "{{ inventory_hostname }}"
+    url: "http://127.0.0.1:8001"
+    location: /
+    static: "/opt/netbox/netbox/static/"
+    proxy_headers: { }
+    enable_content_security: true
+    http_redirection: true
+    ssl_port: "443"
+    server_name: "{{ inventory_hostname }}"

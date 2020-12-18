@@ -1,0 +1,28 @@
+---
+- name: Open port 80
+  ufw:
+    rule: allow
+    port: "80"
+    proto: tcp
+  when: "{{ item.http_redirection }}"
+
+- name: "Open port {{ item.ssl_port }}"
+  ufw:
+    rule: allow
+    port: "{{ item.ssl_port }}"
+    proto: tcp
+
+- name: Configure Nginx
+  template:
+    src: nginx.conf.j2
+    dest: "/etc/nginx/sites-available/{{ item.name }}"
+  notify:
+    - restart nginx
+
+- name: Create symlink sites-available to sites-enabled
+  file:
+    src: "/etc/nginx/sites-available/{{ item.name }}"
+    dest: "/etc/nginx/sites-enabled/{{ item.name }}"
+    state: link
+  notify:
+    - restart nginx

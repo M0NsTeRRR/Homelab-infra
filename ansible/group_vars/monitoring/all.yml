@@ -105,3 +105,19 @@ prometheus_targets:
     - rpki.unicornafk.fr:9998
   rpki_rtr_server:
     - rpki.unicornafk.fr:9998
+
+nginx_configuration:
+  - name: "grafana"
+    url: "http://127.0.0.1:3000"
+    location: /
+    enable_content_security: false
+    http_redirection: true
+    ssl_port: "443"
+    server_name: "{{ inventory_hostname }}"
+  - name: "prometheus"
+    url: "http://127.0.0.1:9090"
+    location: /
+    enable_content_security: true
+    http_redirection: false
+    ssl_port: "9091"
+    server_name: "{{ inventory_hostname }}"

@@ -12,16 +12,3 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
-
-
-dependencies:
-  - role: nginx
-    vars:
-      nginx_url: "http://127.0.0.1:3000"
-      nginx_enable_content_security: false
-  - role: nodejs
-  - role: postgresql
-    vars:
-      postgresql_db: "wikijs"
-      postgresql_user: "wikijs"
-      postgresql_password: "{{ wiki_js_postgresql_password }}"

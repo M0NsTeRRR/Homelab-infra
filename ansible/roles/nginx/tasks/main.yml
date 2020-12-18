@@ -1,17 +1,4 @@
 ---
-- name: Open port 80
-  ufw:
-    rule: allow
-    port: "80"
-    proto: tcp
-  when: nginx_http_redirection
-
-- name: "Open port {{ nginx_ssl_port }}"
-  ufw:
-    rule: allow
-    port: "{{ nginx_ssl_port }}"
-    proto: tcp
-
 - name: Install pip3
   apt:
     name: python3-pip
@@ -30,26 +17,6 @@
   openssl_dhparam:
     path: /etc/nginx/dhparam.pem
 
-- name: Generate an OpenSSL private key
-  openssl_privatekey:
-    path: "/etc/ssl/certs/{{ nginx_name }}.pem"
-
-- name: Generate an OpenSSL Certificate Signing Request
-  openssl_csr:
-    path: "/etc/ssl/certs/{{ nginx_name }}.csr"
-    privatekey_path: "/etc/ssl/certs/{{ nginx_name }}.pem"
-    country_name: "{{ nginx_cert_country }}"
-    organization_name: "{{ nginx_cert_organization_name }}"
-    email_address: "{{ nginx_cert_email_address }}"
-    common_name: "{{ ansible_hostname }}.unicornafk.fr"
-
-- name: Generate an OpenSSL certificate
-  openssl_certificate:
-    path: "/etc/ssl/certs/{{ nginx_name }}.crt"
-    privatekey_path: "/etc/ssl/certs/{{ nginx_name }}.pem"
-    csr_path: "/etc/ssl/certs/{{ nginx_name }}.csr"
-    provider: selfsigned
-
 - name: Remove default Nginx configuration
   file:
     path: "{{ item }}"
@@ -60,17 +27,10 @@
   notify:
     - restart nginx
 
-- name: Configure Nginx
-  template:
-    src: nginx.conf.j2
-    dest: "/etc/nginx/sites-available/{{ nginx_name }}"
-  notify:
-    - restart nginx
+- name: Setup certs
+  include_tasks: generate_certs.yml
+  with_items: "{{ nginx_configuration }}"
 
-- name: Create symlink sites-available to sites-enabled
-  file:
-    src: "/etc/nginx/sites-available/{{ nginx_name }}"
-    dest: "/etc/nginx/sites-enabled/{{ nginx_name }}"
-    state: link
-  notify:
-    - restart nginx
+- name: Setup configurations
+  include_tasks: configure.yml
+  with_items: "{{ nginx_configuration }}"

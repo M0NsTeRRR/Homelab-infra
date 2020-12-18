@@ -128,3 +128,13 @@ exporter_exporter_name: kea-exporter
 exporter_exporter_nodes:
   - name: kea_dhcp
     port: 9546
+
+nginx_configuration:
+  - name: "{{ inventory_hostname }}"
+    url: "http://127.0.0.1:8000"
+    location: /
+    proxy_headers: { }
+    enable_content_security: false
+    http_redirection: false
+    ssl_port: "443"
+    server_name: "{{ inventory_hostname }}, {{ lookup('dig', inventory_hostname) }}, {{ lookup('dig', inventory_hostname, 'qtype=AAAA' ) }}"

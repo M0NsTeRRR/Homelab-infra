@@ -12,12 +12,3 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
-
-
-dependencies:
-  - role: nginx
-    vars:
-      nginx_url: "http://127.0.0.1:2368"
-  - role: nodejs
-    vars:
-      nodejs_version: 12

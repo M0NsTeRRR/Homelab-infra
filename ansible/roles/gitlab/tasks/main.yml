@@ -46,31 +46,26 @@
     update_cache: yes
     state: present
 
-- name: Create ssl folder
-  file:
-    state: directory
-    name: /etc/gitlab/ssl
-    mode: 0700
-
 - name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
   openssl_privatekey:
-    path: "/etc/gitlab/ssl/{{ inventory_hostname }}.key"
+    path: "/etc/ssl/certs/{{ inventory_hostname }}.key"
 
 - name: Generate an OpenSSL Certificate Signing Request
   openssl_csr:
-    path: "/etc/gitlab/ssl/{{ inventory_hostname }}.csr"
-    privatekey_path: "/etc/gitlab/ssl/{{ inventory_hostname }}.key"
+    path: "/etc/ssl/certs/{{ inventory_hostname }}.csr"
+    privatekey_path: "/etc/ssl/certs/{{ inventory_hostname }}.key"
     country_name: "{{ gitlab_cert_country }}"
     organization_name: "{{ gitlab_cert_organization_name }}"
     email_address: "{{ gitlab_cert_email_address }}"
     common_name: "{{ inventory_hostname }}.unicornafk.fr"
 
-- name: Generate an OpenSSL certificate
+- name: Generate client OpenSSL certificate signed with our CA
   openssl_certificate:
-    path: "/etc/gitlab/ssl/{{ inventory_hostname }}.crt"
-    privatekey_path: "/etc/gitlab/ssl/{{ inventory_hostname }}.key"
-    csr_path: "/etc/gitlab/ssl/{{ inventory_hostname }}.csr"
-    provider: selfsigned
+    path: "/etc/ssl/certs/{ inventory_hostname }}.crt"
+    ownca_path: "../../../certs/ca.crt"
+    ownca_privatekey_path: "../../../certs/ca.pem"
+    csr_path: "/etc/ssl/certs/{{ inventory_hostname }}.csr"
+    provider: ownca
 
 - name: Configure Gitlab
   lineinfile:

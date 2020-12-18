@@ -59,12 +59,13 @@
     email_address: "{{ node_exporter_cert_email_address }}"
   notify: restart node-exporter.service
 
-- name: Generate an OpenSSL certificate
+- name: Generate client OpenSSL certificate signed with our CA
   openssl_certificate:
     path: "/etc/node-exporter/server.crt"
-    privatekey_path: "/etc/node-exporter/server.pem"
+    ownca_path: "../../../certs/ca.crt"
+    ownca_privatekey_path: "../../../certs/ca.pem"
     csr_path: "/etc/node-exporter/server.csr"
-    provider: selfsigned
+    provider: ownca
   notify: restart node-exporter.service
 
 - name: Add ca.crt

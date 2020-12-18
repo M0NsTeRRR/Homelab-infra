@@ -9,12 +9,3 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - focal
-
-
-dependencies:
-  - role: nginx
-    vars:
-      nginx_url: "http://127.0.0.1:9000"
-      nginx_enable_content_security: false
-      nginx_proxy_headers:
-        X-Graylog-Server-URL: https://$server_name/

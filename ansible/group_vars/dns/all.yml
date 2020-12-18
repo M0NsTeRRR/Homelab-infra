@@ -142,3 +142,13 @@ exporter_exporter_nodes:
     port: 8082
   - name: powerdns-authoritative
     port: 8081
+
+nginx_configuration:
+  - name: "{{ inventory_hostname }}"
+    url: "http://127.0.0.1:8081"
+    location: /api/
+    proxy_headers: { }
+    enable_content_security: true
+    http_redirection: false
+    ssl_port: "443"
+    server_name: "{{ inventory_hostname }}"

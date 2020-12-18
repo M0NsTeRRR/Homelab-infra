@@ -3,8 +3,9 @@
   hosts: dns
   become: yes
   roles:
-    - powerdns_authoritative
     - powerdns_recursor
+    - powerdns_authoritative
+    - nginx
     - exporter_exporter
 
 - name: Configure DHCP servers
@@ -12,6 +13,7 @@
   become: yes
   roles:
     - kea_dhcp
+    - nginx
     - kea_exporter
     - exporter_exporter
 
@@ -25,26 +27,34 @@
   hosts: ipam
   become: yes
   roles:
+    - postgresql
     - netbox
+    - nginx
     - vcenter_netbox_sync
 
 - name: Configure Wiki
   hosts: wiki
   become: yes
   roles:
+    - nodejs
+    - postgresql
     - wikijs
+    - nginx
 
 - name: Configure Blog
   hosts: blog
   become: yes
   roles:
+    - nodejs
     - ghost
+    - nginx
 
 - name: Configure Log
   hosts: log
   become: yes
   roles:
     - graylog
+    - nginx
 
 - name: Configure Monitoring
   hosts: monitoring
@@ -66,6 +76,7 @@
   roles:
     - rpki_validator_3
     - rpki_rtr_server
+    - nginx
     - exporter_exporter
 
 - name: Configure Reverse-proxy
@@ -79,6 +90,7 @@
   hosts: kubernetes:&lb
   become: yes
   roles:
+    - corosync
     - pacemaker
     - haproxy
 
@@ -86,16 +98,22 @@
   hosts: kubernetes:&etcd
   become: yes
   roles:
+    - docker
+    - common_kubernetes
     - kubernetes_etcd
 
 - name: Configure kubernetes master
   hosts: kubernetes:&master
   become: yes
   roles:
+    - docker
+    - common_kubernetes
     - kubernetes_master
 
 - name: Configure kubernetes worker
   hosts: kubernetes:&worker
   become: yes
   roles:
+    - docker
+    - common_kubernetes
     - kubernetes_worker
