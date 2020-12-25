@@ -11,12 +11,17 @@ caddy_domains:
       - blog.adminafk.fr
     backend_url: https://blog.unicornafk.fr
   - names:
+      - www.adminafk.fr
       - adminafk.fr
       - ludovic-ortega.adminafk.fr
-    backend_url: https://website.unicornafk.fr
+    backend_url: https://adminafk.unicornafk.fr
   - names:
+      - www.as212510.net
       - as212510.net
-    backend_url: https://website.unicornafk.fr
+    backend_url: https://as212510.unicornafk.fr
+  - names:
+      - lg.as212510.net
+    backend_url: https://lg.as212510.unicornafk.fr
 
 exporter_exporter_name: caddy-exporter
 exporter_exporter_nodes:
