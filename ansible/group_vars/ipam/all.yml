@@ -19,6 +19,6 @@ nginx_configuration:
     enable_content_security: true
     http_redirection: true
     ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/ipam.unicornafk.fr/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/ipam.unicornafk.fr/client.pem"
+    local_path_ssl_certificate: "{{ certs_dir }}www/{{ inventory_hostname }}/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ inventory_hostname }}/client.pem"
     server_name: "{{ inventory_hostname }}"

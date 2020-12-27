@@ -136,6 +136,6 @@ nginx_configuration:
     enable_content_security: true
     http_redirection: false
     ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/.pem"
+    local_path_ssl_certificate: "{{ certs_dir }}www/{{ canonical_hostname }}/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ canonical_hostname }}/client.pem"
     server_name: "{{ inventory_hostname }}"

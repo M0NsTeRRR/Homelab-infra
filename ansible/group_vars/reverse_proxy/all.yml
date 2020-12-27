@@ -1,5 +1,6 @@
 ---
 caddy_email: "{{ email }}"
+caddy_exporter_port: 9998
 caddy_domains:
   - names:
       - wiki.unicornafk.fr
