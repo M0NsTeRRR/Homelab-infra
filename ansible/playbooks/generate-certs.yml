@@ -2,19 +2,24 @@
 - name: Generate client and server certificates
   hosts: localhost
   connection: local
+  vars:
+    certs_dir: "../../certs/"
   vars_prompt:
+    - name: "certificate_group"
+      prompt: "Certificate group ?"
+      private: no
     - name: "certificate_name"
       prompt: "Certificate name ?"
       private: no
   tasks:
     - name: Generate CertAuthority OpenSSL private key
       openssl_privatekey:
-        path: "../../certs/ca.pem"
+        path: "{{ certs_dir }}ca.pem"
 
     - name: Generate CertAuthority OpenSSL Certificate Signing Request
       openssl_csr:
-        path: "../../certs/ca.csr"
-        privatekey_path: "../../certs/ca.pem"
+        path: "{{ certs_dir }}ca.csr"
+        privatekey_path: "{{ certs_dir }}ca.pem"
         country_name: FR
         organization_name: unicornafk
         email_address: admin@unicornafk.fr
@@ -29,39 +34,39 @@
 
     - name: Generate CertAuthority OpenSSL certificate
       openssl_certificate:
-        path: "../../certs/ca.crt"
-        privatekey_path: "../../certs/ca.pem"
-        csr_path: "../../certs/ca.csr"
+        path: "{{ certs_dir }}ca.crt"
+        privatekey_path: "{{ certs_dir }}ca.pem"
+        csr_path: "{{ certs_dir }}ca.csr"
         provider: selfsigned
 
-    - name: "Create {{ certificate_name }} folder"
+    - name: "Create {{ certificate_group }}{{ certificate_name }} folder"
       file:
         state: directory
-        name: "../../certs/{{ certificate_name }}"
+        name: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}"
 
     - name: Add .gitkeep file
       copy:
         content: ""
-        dest: "../../certs/{{ certificate_name }}/.gitkeep"
+        dest: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/.gitkeep"
         force: no
 
     - name: Generate client OpenSSL private key
       openssl_privatekey:
-        path: "../../certs/{{ certificate_name }}/client.pem"
+        path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.pem"
 
     - name: Generate client OpenSSL Certificate Signing Request
       openssl_csr:
-        path: "../../certs/{{ certificate_name }}/client.csr"
-        privatekey_path: "../../certs/{{ certificate_name }}/client.pem"
-        country_name: FR
-        organization_name: unicornafk.fr
-        email_address: admin@unicornafk.fr
-        common_name: "{{ certificate_name }}.unicornafk.fr"
+        path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.csr"
+        privatekey_path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.pem"
+        country_name: "{{ country }}"
+        organization_name: "{{ organization }}"
+        email_address: "{{ admin_email }}"
+        common_name: "{{ certificate_name }}"
 
     - name: Generate client OpenSSL certificate signed with our CA
       openssl_certificate:
-        path: "../../certs/{{ certificate_name }}/client.crt"
-        ownca_path: "../../certs/ca.crt"
-        ownca_privatekey_path: "../../certs/ca.pem"
-        csr_path: "../../certs/{{ certificate_name }}/client.csr"
+        path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.crt"
+        ownca_path: "{{ certs_dir }}ca.crt"
+        ownca_privatekey_path: "{{ certs_dir }}ca.pem"
+        csr_path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.csr"
         provider: ownca

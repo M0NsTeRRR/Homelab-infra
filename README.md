@@ -14,15 +14,7 @@ This is my Homelab infrastructure.
 # Ansible
 `cd ansible`  
 
-Fill certs with :
-- ca.crt
-- ca.csr
-- ca.pem
-
-Fill every certs/<folder> with :
-- client.crt
-- client.csr
-- client.pem
+Fill certs folders
 
 Install dependencies `pip3 install -r requirements.txt`
 
