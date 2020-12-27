@@ -1,7 +1,7 @@
 {
     email {{ caddy_email }}
     admin localhost:2019 {
-		origins {{ ansible_hostname }}:{{ caddy_exporter_port }}, localhost:2019
+		origins {{ ansible_fqdn }}:{{ caddy_exporter_port }}, localhost:2019
     }
 }
 

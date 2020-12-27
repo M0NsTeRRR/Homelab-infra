@@ -1,6 +1,6 @@
 [dns]
-192.168.10.21 ipv6=2a0c:b641:02c0:110::21 canonical_hostname=dns1.unicornafk.fr.
-192.168.10.22 ipv6=2a0c:b641:02c0:110::22 canonical_hostname=dns2.unicornafk.fr.
+192.168.10.21 ipv6=2a0c:b641:02c0:110::21
+192.168.10.22 ipv6=2a0c:b641:02c0:110::22
 
 [dhcp]
 dhcp1.unicornafk.fr

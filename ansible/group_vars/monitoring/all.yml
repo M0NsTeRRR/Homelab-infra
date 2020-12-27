@@ -114,15 +114,15 @@ nginx_configuration:
     enable_content_security: false
     http_redirection: true
     ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ inventory_hostname }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ inventory_hostname }}/client.pem"
-    server_name: "{{ inventory_hostname }}"
+    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
+    server_name: "{{ ansible_fqdn }}"
   - name: "prometheus"
     url: "http://127.0.0.1:9090"
     location: /
     enable_content_security: true
     http_redirection: false
     ssl_port: "9091"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ inventory_hostname }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ inventory_hostname }}/client.pem"
-    server_name: "{{ inventory_hostname }}"
+    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
+    server_name: "{{ ansible_fqdn }}"

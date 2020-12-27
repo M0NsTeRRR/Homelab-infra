@@ -149,7 +149,7 @@
 
 - name: Wait pdns restart
   uri:
-    url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones"
+    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones"
     status_code: 401
     validate_certs: no
   register: result

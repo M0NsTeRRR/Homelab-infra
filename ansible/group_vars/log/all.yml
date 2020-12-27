@@ -39,7 +39,7 @@ graylog_events:
     query: level:<3
 
 nginx_configuration:
-  - name: "{{ inventory_hostname }}"
+  - name: "{{ ansible_fqdn }}"
     url: "http://127.0.0.1:9000"
     location: /
     nginx_proxy_headers:
@@ -47,6 +47,6 @@ nginx_configuration:
     enable_content_security: false
     http_redirection: true
     ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ inventory_hostname }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ inventory_hostname }}/client.pem"
-    server_name: "{{ inventory_hostname }}"
+    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
+    server_name: "{{ ansible_fqdn }}"

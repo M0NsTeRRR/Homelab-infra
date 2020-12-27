@@ -129,13 +129,13 @@ exporter_exporter_nodes:
     port: 8081
 
 nginx_configuration:
-  - name: "{{ inventory_hostname }}"
+  - name: "{{ ansible_fqdn }}"
     url: "http://127.0.0.1:8081"
     location: /api/
     proxy_headers: { }
     enable_content_security: true
     http_redirection: false
     ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ canonical_hostname }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ canonical_hostname }}/client.pem"
-    server_name: "{{ inventory_hostname }}"
+    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
+    server_name: "{{ ansible_fqdn }}"

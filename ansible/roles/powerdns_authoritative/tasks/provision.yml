@@ -1,7 +1,7 @@
 ---
 - name: "Check if zone {{ item }}. exist"
   uri:
-    url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones/{{ item }}."
+    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones/{{ item }}."
     method: GET
     return_content: yes
     validate_certs: no
@@ -14,7 +14,7 @@
 
 - name: "POST zone {{ item }}."
   uri:
-    url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones"
+    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones"
     method: POST
     return_content: yes
     body_format: json
@@ -28,7 +28,7 @@
 
 - name: "PATCH zone {{ item }}."
   uri:
-    url: "https://{{ inventory_hostname }}/api/v1/servers/localhost/zones/{{ item }}."
+    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones/{{ item }}."
     method: PATCH
     return_content: yes
     body_format: json
