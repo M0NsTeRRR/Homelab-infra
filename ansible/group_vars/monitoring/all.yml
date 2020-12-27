@@ -1,9 +1,9 @@
 ---
 grafana_smtp_host: "{{ smtp_provider_host }}"
 grafana_smtp_port: "{{ smtp_provider_port }}"
-grafana_smtp_user: "{{ smtp_monitoring_email }}"
+grafana_smtp_user: "{{ monitoring_email }}"
 grafana_smtp_password: "{{ smtp_monitoring_password }}"
-grafana_smtp_from_address: "{{ smtp_monitoring_email }}"
+grafana_smtp_from_address: "{{ monitoring_email }}"
 
 vmware_exporter_vcenter_hostname: vsphere.unicornafk.fr
 vmware_exporter_vcenter_username: administrator@unicornafk.fr
@@ -15,13 +15,14 @@ unifi_poller_user: unifipoller
 snmp_exporter_user: admin
 
 alertmanager_smtp_smarthost: "{{ smtp_provider_host }}:{{ smtp_provider_port }}"
-alertmanager_smtp_from: "{{ smtp_monitoring_email }}"
+alertmanager_smtp_from: "{{ monitoring_email }}"
 alertmanager_smtp_require_tls: "true"
 alertmanager_smtp_hello: alertmanager
-alertmanager_smtp_auth_username: "{{ smtp_monitoring_email }}"
+alertmanager_smtp_auth_username: "{{ monitoring_email }}"
 alertmanager_smtp_auth_password: "{{ smtp_monitoring_password }}"
 alertmanager_receivers_email: "{{ email }}"
 
+prometheus_certs_dir: "{{ certs_dir }}exporter/"
 prometheus_clients_certs:
   - node-exporter
   - kea-exporter
@@ -113,6 +114,8 @@ nginx_configuration:
     enable_content_security: false
     http_redirection: true
     ssl_port: "443"
+    local_path_ssl_certificate: "{{ certs_dir }}www/monitoring.unicornafk.fr/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/monitoring.unicornafk.fr/client.pem"
     server_name: "{{ inventory_hostname }}"
   - name: "prometheus"
     url: "http://127.0.0.1:9090"
@@ -120,4 +123,6 @@ nginx_configuration:
     enable_content_security: true
     http_redirection: false
     ssl_port: "9091"
+    local_path_ssl_certificate: "{{ certs_dir }}www/monitoring.unicornafk.fr/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/monitoring.unicornafk.fr/client.pem"
     server_name: "{{ inventory_hostname }}"

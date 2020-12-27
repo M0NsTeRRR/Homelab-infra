@@ -45,32 +45,23 @@
     dest: /etc/node-exporter/
     state: directory
 
-- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
-  openssl_privatekey:
-    path: "/etc/node-exporter/server.pem"
+- name: Copy certificate to remote location
+  copy:
+    src: "{{ node_exporter_local_path_certificate }}"
+    dest: "/etc/ssl/certs/node-exporter.crt"
+  with_items: "{{ nginx_configuration }}"
   notify: restart node-exporter.service
 
-- name: Generate an OpenSSL Certificate Signing Request
-  openssl_csr:
-    path: "/etc/node-exporter/server.csr"
-    privatekey_path: "/etc/node-exporter/server.pem"
-    country_name: "{{ node_exporter_cert_country }}"
-    organization_name: "{{ node_exporter_cert_organization_name }}"
-    email_address: "{{ node_exporter_cert_email_address }}"
-  notify: restart node-exporter.service
-
-- name: Generate client OpenSSL certificate signed with our CA
-  openssl_certificate:
-    path: "/etc/node-exporter/server.crt"
-    ownca_path: "../../../certs/ca.crt"
-    ownca_privatekey_path: "../../../certs/ca.pem"
-    csr_path: "/etc/node-exporter/server.csr"
-    provider: ownca
+- name: Copy certificate key to remote location
+  copy:
+    src: "{{ node_exporter_local_path_certificate_key }}"
+    dest: "/etc/ssl/certs/node-exporter.pem"
+  with_items: "{{ nginx_configuration }}"
   notify: restart node-exporter.service
 
 - name: Add ca.crt
   copy:
-    src: ../../../certs/ca.crt
+    src: "{{ node_exporter_local_path_ca_certificate }}"
     dest: /etc/node-exporter/ca.crt
   notify: restart node-exporter.service
 

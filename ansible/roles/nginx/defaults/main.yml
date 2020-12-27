@@ -1,7 +1,7 @@
 ---
-nginx_cert_country: ""
-nginx_cert_organization_name: ""
-nginx_cert_email_address: ""
+nginx_cert_country: "FR"
+nginx_cert_organization_name: "example.fr"
+nginx_cert_email_address: "email@example.fr"
 nginx_configuration: []
 
 
@@ -9,9 +9,11 @@ nginx_configuration: []
 #   - name: "{{ inventory_hostname }}"
 #     url: "http://127.0.0.1:8000"
 #     location: /
-#     static:
+#     static: /var/www/html
 #     proxy_headers: { }
 #     enable_content_security: true
 #     http_redirection: true
 #     ssl_port: "443"
+#     local_path_ssl_certificate: "../../../certs/ca.crt"
+#     local_path_ssl_certificate_key: "../../../certs/ca.pem"
 #     server_name: "{{ inventory_hostname }}"

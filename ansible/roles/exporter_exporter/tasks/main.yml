@@ -50,51 +50,43 @@
   notify: restart exporter-exporter.service
   when: not exporter_exporter.stat.exists
 
-- name: Generate an OpenSSL private key
-  openssl_privatekey:
-    path: "/etc/ssl/certs/exporter_exporter.pem"
-    owner: exporter-exporter
-    group: exporter-exporter
-
-- name: Generate an OpenSSL Certificate Signing Request
-  openssl_csr:
-    path: "/etc/ssl/certs/exporter_exporter.csr"
-    privatekey_path: "/etc/ssl/certs/exporter_exporter.pem"
-    country_name: FR
-    organization_name: unicornafk.fr
-    email_address: admin@unicornafk.fr
-    common_name: "{{ ansible_hostname }}.unicornafk.fr"
-    owner: exporter-exporter
-    group: exporter-exporter
-
-- name: Generate an OpenSSL certificate
-  openssl_certificate:
-    path: "/etc/ssl/certs/exporter_exporter.crt"
-    privatekey_path: "/etc/ssl/certs/exporter_exporter.pem"
-    csr_path: "/etc/ssl/certs/exporter_exporter.csr"
-    provider: selfsigned
-    owner: exporter-exporter
-    group: exporter-exporter
-
 - name: Create exporter_exporter folder
   file:
-    state: directory
     name: /etc/exporter_exporter
+    state: directory
     owner: exporter-exporter
     group: exporter-exporter
+
+- name: Copy certificate to remote location
+  copy:
+    src: "{{ exporter_exporter_local_path_certificate }}"
+    dest: "/etc/ssl/certs/exporter_exporter.crt"
+    owner: exporter-exporter
+    group: exporter-exporter
+  with_items: "{{ nginx_configuration }}"
+  notify: restart exporter-exporter.service
+
+- name: Copy certificate key to remote location
+  copy:
+    src: "{{ exporter_exporter_local_path_certificate_key }}"
+    dest: "/etc/ssl/certs/exporter_exporter.pem"
+    owner: exporter-exporter
+    group: exporter-exporter
+  with_items: "{{ nginx_configuration }}"
+  notify: restart exporter-exporter.service
+
+- name: Add CA cert
+  template:
+    src: "{{ exporter_exporter_local_path_ca_certificate }}"
+    dest: /etc/exporter_exporter/ca.crt
+    owner: exporter-exporter
+    group: exporter-exporter
+  notify: restart exporter-exporter.service
 
 - name: Configure exporter_exporter
   template:
     src: exporter_exporter.yml.j2
     dest: "/etc/exporter_exporter/expexp.yaml"
-    owner: exporter-exporter
-    group: exporter-exporter
-  notify: restart exporter-exporter.service
-
-- name: Add CA cert
-  template:
-    src: "../../../certs/ca.crt"
-    dest: /etc/exporter_exporter/ca.crt
     owner: exporter-exporter
     group: exporter-exporter
   notify: restart exporter-exporter.service

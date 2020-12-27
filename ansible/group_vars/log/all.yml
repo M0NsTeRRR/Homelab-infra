@@ -5,9 +5,9 @@ graylog_transport_email_enabled: true
 graylog_transport_email_hostname: "{{ smtp_provider_host }}"
 graylog_transport_email_port: "{{ smtp_provider_port }}"
 graylog_transport_email_use_auth: true
-graylog_transport_email_auth_username: "{{ smtp_monitoring_email }}"
+graylog_transport_email_auth_username: "{{ monitoring_email }}"
 graylog_transport_email_subject_prefix: '[LOG] Unicornafk'
-graylog_transport_email_from_email: "{{ smtp_monitoring_email }}"
+graylog_transport_email_from_email: "{{ monitoring_email }}"
 graylog_transport_email_auth_password: "{{ smtp_monitoring_password }}"
 graylog_transport_email_use_tls: true
 graylog_transport_email_use_ssl: false
@@ -25,7 +25,7 @@ graylog_inputs:
 graylog_notifications:
   - title: Default
     type: email-notification-v1
-    sender: "{{ smtp_monitoring_email }}"
+    sender: "{{ monitoring_email }}"
     subject: "Graylog event notification: ${event_definition_title}"
     body_template: "--- [Event] ---------------------------\\nTitle:       ${event_definition_title}\\nDescription: ${event_definition_description}\\nTimestamp:   ${event.timestamp}\\nPriority:    ${event.priority}\\n\\n${if backlog}\\n--- [Backlog] ------------------------------------\\nLast messages accounting for this alert:\\n${foreach backlog message}\\nSource:      ${message.source}\\n${if message.fields.gl2_remote_ip}IP:          ${message.fields.gl2_remote_ip}${end}\\n${if message.fields.level}Level:       ${message.fields.level}${end}\\n${if message.fields.application_name}Application: ${message.fields.application_name}${end}\\n${if message.fields.facility}Facility:    ${message.fields.facility}${end}\\nMessage:     ${message.message}\\n--------------------------------------------------\\nRAW:         ${message}\\n\\n\\n\\n${end}\\n${end}\\n"
     user_recipients:
@@ -47,4 +47,6 @@ nginx_configuration:
     enable_content_security: false
     http_redirection: true
     ssl_port: "443"
+    local_path_ssl_certificate: "{{ certs_dir }}www/log.unicornafk.fr/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/log.unicornafk.fr/client.pem"
     server_name: "{{ inventory_hostname }}"

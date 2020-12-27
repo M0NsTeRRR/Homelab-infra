@@ -1,4 +1,7 @@
 exporter_exporter_name: rpki-exporter
+exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/rpki-exporter.crt"
+exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/rpki-exporter.pem"
 exporter_exporter_nodes:
   - name: rpki_rtr_server
     port: 8081
@@ -13,4 +16,6 @@ nginx_configuration:
     enable_content_security: true
     http_redirection: true
     ssl_port: "443"
+    local_path_ssl_certificate: "{{ certs_dir }}www/rpki.unicornafk.fr/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/rpki.unicornafk.fr/client.pem"
     server_name: "{{ inventory_hostname }}"

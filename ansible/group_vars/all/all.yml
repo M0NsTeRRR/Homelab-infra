@@ -2,11 +2,12 @@
 country: FR
 timezone: Europe/Paris
 organization: unicornafk
+certs_dir: ../../../certs/
 email: ludovic-ortega@adminafk.fr
+monitoring_email: monitoring@unicornafk.fr
+admin_email: admin@unicornafk.fr
 smtp_provider_host: mail.gandi.net
 smtp_provider_port: 587
-smtp_monitoring_email: monitoring@unicornafk.fr
-smtp_admin_email: admin@unicornafk.fr
 ipv4_subnets:
   - 192.168.4.0/24
   - 192.168.5.0/24

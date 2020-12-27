@@ -6,137 +6,122 @@ pdns_reverse_zones: '{{ reverse_zones }}'
 
 pdns_records:
   # unicornafk.fr
-  - canonical_hostname: dns1.unicornafk.fr.
-    ipv4: 192.168.10.21
-    ipv6: 2a0c:b641:02c0:110::21
+  - hostname: dns1.unicornafk.fr.
+    a: 192.168.10.21
+    aaaa: 2a0c:b641:02c0:110::21
     rdns: true
-  - canonical_hostname: dns2.unicornafk.fr.
-    ipv4: 192.168.10.22
-    ipv6: 2a0c:b641:02c0:110::22
+  - hostname: dns2.unicornafk.fr.
+    a: 192.168.10.22
+    aaaa: 2a0c:b641:02c0:110::22
     rdns: true
-  - canonical_hostname: dhcp1.unicornafk.fr.
-    ipv4: 192.168.10.23
-    ipv6: 2a0c:b641:02c0:110::23
+  - hostname: dhcp1.unicornafk.fr.
+    a: 192.168.10.23
+    aaaa: 2a0c:b641:02c0:110::23
     rdns: true
-  - canonical_hostname: dhcp2.unicornafk.fr.
-    ipv4: 192.168.10.24
-    ipv6: 2a0c:b641:02c0:110::24
+  - hostname: dhcp2.unicornafk.fr.
+    a: 192.168.10.24
+    aaaa: 2a0c:b641:02c0:110::24
     rdns: true
-  - canonical_hostname: rpki.unicornafk.fr.
-    ipv4: 192.168.10.31
-    ipv6: 2a0c:b641:02c0:110::31
+  - hostname: rpki.unicornafk.fr.
+    a: 192.168.10.31
+    aaaa: 2a0c:b641:02c0:110::31
     rdns: true
-  - canonical_hostname: lb.dmz.unicornafk.fr.
-    ipv4: 192.168.10.60
-    ipv6: 2a0c:b641:02c0:110::60
+  - hostname: lb.dmz.unicornafk.fr.
+    a: 192.168.10.60
+    aaaa: 2a0c:b641:02c0:110::60
     rdns: false
-  - canonical_hostname: nas.unicornafk.fr.
-    ipv4: 192.168.20.42
-    ipv6: 2a0c:b641:02c0:120::42
+  - hostname: nas.unicornafk.fr.
+    a: 192.168.20.42
+    aaaa: 2a0c:b641:02c0:120::42
     rdns: true
-  - canonical_hostname: ap1.unicornafk.fr.
-    ipv4: 192.168.20.51
-    ipv6: 2a0c:b641:02c0:120::51
+  - hostname: ap1.unicornafk.fr.
+    a: 192.168.20.51
+    aaaa: 2a0c:b641:02c0:120::51
     rdns: true
-  - canonical_hostname: r1.unicornafk.fr.
-    ipv4: 192.168.5.1
-    ipv6: 2a0c:b641:02c0:105::1
+  - hostname: r1.unicornafk.fr.
+    a: 192.168.5.1
+    aaaa: 2a0c:b641:02c0:105::1
     rdns: true
-  - canonical_hostname: sw1.unicornafk.fr.
-    ipv4: 192.168.40.2
-    ipv6: 2a0c:b641:02c0:140::2
+  - hostname: sw1.unicornafk.fr.
+    a: 192.168.40.2
+    aaaa: 2a0c:b641:02c0:140::2
     rdns: true
-  - canonical_hostname: sw2.unicornafk.fr.
-    ipv4: 192.168.40.3
-    ipv6: 2a0c:b641:02c0:140::3
+  - hostname: sw2.unicornafk.fr.
+    a: 192.168.40.3
+    aaaa: 2a0c:b641:02c0:140::3
     rdns: true
-  - canonical_hostname: sw3.unicornafk.fr.
-    ipv4: 192.168.40.4
-    ipv6: 2a0c:b641:02c0:140::4
+  - hostname: sw3.unicornafk.fr.
+    a: 192.168.40.4
+    aaaa: 2a0c:b641:02c0:140::4
     rdns: true
-  - canonical_hostname: vsphere.unicornafk.fr.
-    ipv4: 192.168.40.10
-    ipv6: 2a0c:b641:02c0:140::10
+  - hostname: vsphere.unicornafk.fr.
+    a: 192.168.40.10
+    aaaa: 2a0c:b641:02c0:140::10
     rdns: true
-  - canonical_hostname: server1.unicornafk.fr.
-    ipv4: 192.168.40.11
-    ipv6: 2a0c:b641:02c0:140::11
+  - hostname: server1.unicornafk.fr.
+    a: 192.168.40.11
+    aaaa: 2a0c:b641:02c0:140::11
     rdns: true
-  - canonical_hostname: server2.unicornafk.fr.
-    ipv4: 192.168.40.12
-    ipv6: 2a0c:b641:02c0:140::12
+  - hostname: server2.unicornafk.fr.
+    a: 192.168.40.12
+    aaaa: 2a0c:b641:02c0:140::12
     rdns: true
-  - canonical_hostname: server3.unicornafk.fr.
-    ipv4: 192.168.40.13
-    ipv6: 2a0c:b641:02c0:140::13
+  - hostname: server3.unicornafk.fr.
+    a: 192.168.40.13
+    aaaa: 2a0c:b641:02c0:140::13
     rdns: true
-  - canonical_hostname: pi1.unicornafk.fr.
-    ipv4: 192.168.40.32
-    ipv6: 2a0c:b641:02c0:140::32
+  - hostname: pi1.unicornafk.fr.
+    a: 192.168.40.32
+    aaaa: 2a0c:b641:02c0:140::32
     rdns: true
-  - canonical_hostname: idrac3.unicornafk.fr.
-    ipv4: 192.168.40.53
-    ipv6: 2a0c:b641:02c0:140::53
+  - hostname: idrac3.unicornafk.fr.
+    a: 192.168.40.53
+    aaaa: 2a0c:b641:02c0:140::53
     rdns: true
-  - canonical_hostname: samsung-tv.unicornafk.fr.
-    ipv4: 192.168.50.91
-    ipv6: 2a0c:b641:02c0:150::91
+  - hostname: samsung-tv.unicornafk.fr.
+    a: 192.168.50.91
+    aaaa: 2a0c:b641:02c0:150::91
     rdns: true
-  - canonical_hostname: nvidia-shield.unicornafk.fr.
-    ipv4: 192.168.50.92
-    ipv6: 2a0c:b641:02c0:150::92
+  - hostname: nvidia-shield.unicornafk.fr.
+    a: 192.168.50.92
+    aaaa: 2a0c:b641:02c0:150::92
     rdns: true
-  - canonical_hostname: hs110-rack1.unicornafk.fr.
-    ipv4: 192.168.50.101
-    ipv6: 2a0c:b641:02c0:150::101
+  - hostname: hs110-rack1.unicornafk.fr.
+    a: 192.168.50.101
+    aaaa: 2a0c:b641:02c0:150::101
     rdns: true
-  - canonical_hostname: hs110-rack2.unicornafk.fr.
-    ipv4: 192.168.50.102
-    ipv6: 2a0c:b641:02c0:150::102
+  - hostname: hs110-rack2.unicornafk.fr.
+    a: 192.168.50.102
+    aaaa: 2a0c:b641:02c0:150::102
     rdns: true
-  - canonical_hostname: hs110-chambre1.unicornafk.fr.
-    ipv4: 192.168.50.103
-    ipv6: 2a0c:b641:02c0:150::103
+  - hostname: hs110-chambre1.unicornafk.fr.
+    a: 192.168.50.103
+    aaaa: 2a0c:b641:02c0:150::103
     rdns: true
-  - canonical_hostname: xiaomi-bulb-chambre1.unicornafk.fr.
-    ipv4: 192.168.50.111
-    ipv6: 2a0c:b641:02c0:150::111
+  - hostname: xiaomi-bulb-chambre1.unicornafk.fr.
+    a: 192.168.50.111
+    aaaa: 2a0c:b641:02c0:150::111
     rdns: true
-  - canonical_hostname: xiaomi-vaccum.unicornafk.fr.
-    ipv4: 192.168.50.112
-    ipv6: 2a0c:b641:02c0:150::112
+  - hostname: xiaomi-vaccum.unicornafk.fr.
+    a: 192.168.50.112
+    aaaa: 2a0c:b641:02c0:150::112
     rdns: true
-  - canonical_hostname: xiaomi-gateway.unicornafk.fr.
-    ipv4: 192.168.50.113
-    ipv6: 2a0c:b641:02c0:150::113
+  - hostname: xiaomi-gateway.unicornafk.fr.
+    a: 192.168.50.113
+    aaaa: 2a0c:b641:02c0:150::113
     rdns: true
-  # adminafk.fr
-  - canonical_hostname: blog.adminafk.fr.
-    ipv4: 192.168.10.30
-    ipv6: 2a0c:b641:02c0:110::30
-    rdns: false
-  - canonical_hostname: wiki.adminafk.fr.
-    ipv4: 192.168.10.30
-    ipv6: 2a0c:b641:02c0:110::30
-    rdns: false
-  - canonical_hostname: monitoring.adminafk.fr.
-    ipv4: 192.168.10.30
-    ipv6: 2a0c:b641:02c0:110::30
-    rdns: false
-  - canonical_hostname: ludovic-ortega.adminafk.fr.
-    ipv4: 192.168.10.30
-    ipv6: 2a0c:b641:02c0:110::30
-    rdns: false
-  - canonical_hostname: api.ludovic-ortega.adminafk.fr.
-    ipv4: 192.168.10.30
-    ipv6: 2a0c:b641:02c0:110::30
-    rdns: false
-  - canonical_hostname: admin.ludovic-ortega.adminafk.fr.
-    ipv4: 192.168.10.30
-    ipv6: 2a0c:b641:02c0:110::30
-    rdns: false
+  # CNAME
+  - hostname: adminafk.unicornafk.fr.
+    cname: website.unicornafk.fr.
+  - hostname: as212510.unicornafk.fr.
+    cname: website.unicornafk.fr.
+  - hostname: lg.as212510.unicornafk.fr.
+    cname: website.unicornafk.fr.
 
 exporter_exporter_name: powerdns-exporter
+exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/powerdns-exporter.crt"
+exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/powerdns-exporter.pem"
 exporter_exporter_nodes:
   - name: powerdns-recursor
     port: 8082
@@ -151,4 +136,6 @@ nginx_configuration:
     enable_content_security: true
     http_redirection: false
     ssl_port: "443"
+    local_path_ssl_certificate: "{{ certs_dir }}www/.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/.pem"
     server_name: "{{ inventory_hostname }}"

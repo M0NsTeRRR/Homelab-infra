@@ -1,4 +1,5 @@
 ---
+prometheus_certs_dir:
 prometheus_clients_certs: []
 prometheus_targets: {}
 

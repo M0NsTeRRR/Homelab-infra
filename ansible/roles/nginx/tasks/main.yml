@@ -24,12 +24,21 @@
   with_items:
     - /etc/nginx/sites-available/default
     - /etc/nginx/sites-enabled/default
-  notify:
-    - restart nginx
+  notify: restart nginx
 
-- name: Setup certs
-  include_tasks: generate_certs.yml
+- name: Copy certificate to remote location
+  copy:
+    src: "{{ item.local_path_ssl_certificate }}"
+    dest: "/etc/ssl/certs/{{ item.name }}.crt"
   with_items: "{{ nginx_configuration }}"
+  notify: restart nginx
+
+- name: Copy certificate key to remote location
+  copy:
+    src: "{{ item.local_path_ssl_certificate_key }}"
+    dest: "/etc/ssl/certs/{{ item.name }}.pem"
+  with_items: "{{ nginx_configuration }}"
+  notify: restart nginx
 
 - name: Setup configurations
   include_tasks: configure.yml

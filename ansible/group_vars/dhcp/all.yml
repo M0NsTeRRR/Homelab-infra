@@ -125,6 +125,9 @@ kea_ipv6_subnets:
     reservations: []
 
 exporter_exporter_name: kea-exporter
+exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/kea-exporter.crt"
+exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/kea-exporter.pem"
 exporter_exporter_nodes:
   - name: kea_dhcp
     port: 9546
@@ -137,4 +140,6 @@ nginx_configuration:
     enable_content_security: false
     http_redirection: false
     ssl_port: "443"
+    local_path_ssl_certificate: "{{ certs_dir }}www/.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/.pem"
     server_name: "{{ inventory_hostname }}, {{ lookup('dig', inventory_hostname) }}, {{ lookup('dig', inventory_hostname, 'qtype=AAAA' ) }}"
