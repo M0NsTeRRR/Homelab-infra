@@ -5,7 +5,7 @@
     port: "9130"
     proto: tcp
 
-- name: Install required packages by PowerDNS
+- name: Install required packages by Unifi poller
   apt:
     pkg:
       - apt-transport-https
