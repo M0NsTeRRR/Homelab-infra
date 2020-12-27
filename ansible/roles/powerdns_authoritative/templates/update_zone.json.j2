@@ -4,7 +4,7 @@
       "name": "{{ item }}.",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ hostvars[groups[pdns_dns_group][0]].canonical_hostname }} admin.{{ hostvars[groups[pdns_dns_group][0]].canonical_hostname.split('.')[-3:]|join('.') }} {{ inception_date }} 10800 3600 604800 3600", "disabled": false }
+        { "content": "{{ hostvars[groups[pdns_dns_group][0]].hostname }} admin.{{ hostvars[groups[pdns_dns_group][0]].hostname.split('.')[-3:]|join('.') }} {{ inception_date }} 10800 3600 604800 3600", "disabled": false }
       ],
       "ttl": "3600",
       "type": "SOA"
@@ -13,43 +13,52 @@
       "changetype": "REPLACE",
       "records": [
         {% for host in groups[pdns_dns_group] %}
-        { "content": "{{ hostvars[host].canonical_hostname }}", "disabled": false }{% if not loop.last %},{% endif %}
+        { "content": "{{ hostvars[host].hostname }}", "disabled": false }{% if not loop.last %},{% endif %}
         {% endfor %}
       ],
       "ttl": "3600",
       "type": "NS"
-    }{% for host in pdns_records %}{% if item in host.canonical_hostname %},
+    }{% for host in pdns_records %}{% if host.hostname and item in host.hostname %},
     {
-      "name": "{{ host.canonical_hostname }}",
+      "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ host.ipv4 }}", "disabled": false }
+        { "content": "{{ host.a }}", "disabled": false }
       ],
       "ttl": "3600",
       "type": "A"
     },{
-      "name": "{{ host.canonical_hostname }}",
+      "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ host.ipv6 }}", "disabled": false }
+        { "content": "{{ host.aaaa }}", "disabled": false }
       ],
       "ttl": "3600",
       "type": "AAAA"
-    }{% endif %}{% endfor %}{% for host in pdns_records %}{% if item in host.ipv4|ipaddr("revdns") and host.rdns %},
+    }{% endif %}{% elif host.cname and item in host.hostname %},
     {
-      "name": "{{ host.ipv4|ipaddr('revdns') }}",
+      "name": "lg.as212510.unicornafk.fr.",
+      "changetype": "REPLACE",
+        "records": [
+          { "content": "website.unicornafk.fr.", "disabled": false }
+        ],
+        "ttl": 3600,
+        "type": "CNAME"
+    }{% endif %}{% if host.a and item in host.a|ipaddr("revdns") and host.rdns %},
+    {
+      "name": "{{ host.a|ipaddr('revdns') }}",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ host.canonical_hostname }}", "disabled": false }
+        { "content": "{{ host.hostname }}", "disabled": false }
       ],
       "ttl": "3600",
       "type": "PTR"
-    }{% endif %}{% endfor %}{% for host in pdns_records %}{% if item in host.ipv6|ipaddr("revdns") and host.rdns %},
+    }{% endif %}{% if host.aaaa and item in host.aaaa|ipaddr("revdns") and host.rdns %},
     {
-      "name": "{{ host.ipv6|ipaddr('revdns') }}",
+      "name": "{{ host.aaaa|ipaddr('revdns') }}",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ host.canonical_hostname }}", "disabled": false }
+        { "content": "{{ host.hostname }}", "disabled": false }
       ],
       "ttl": "3600",
       "type": "PTR"
