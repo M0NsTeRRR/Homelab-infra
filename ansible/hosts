@@ -36,6 +36,9 @@ unifi.unicornafk.fr
 [rpki]
 rpki.unicornafk.fr
 
+[website]
+website.unicornafk.fr
+
 [kubernetes:children]
 lb
 etcd

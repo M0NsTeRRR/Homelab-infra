@@ -1,0 +1,36 @@
+---
+as212510_net_server:
+  address: ":8080"
+  cwd: "/opt/as212510_net"
+
+nginx_configuration:
+  - name: "adminafk.unicornafk.fr"
+    url: "http://127.0.0.1:8080"
+    location: /
+    proxy_headers: { }
+    enable_content_security: true
+    http_redirection: true
+    ssl_port: "443"
+    local_path_ssl_certificate: "{{ certs_dir }}www/adminafk.unicornafk.fr/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/adminafk.unicornafk.fr/client.pem"
+    server_name: "adminafk.unicornafk.fr"
+  - name: "as212510.unicornafk.fr"
+    url: "http://127.0.0.1:8080"
+    location: /
+    proxy_headers: { }
+    enable_content_security: true
+    http_redirection: true
+    ssl_port: "443"
+    local_path_ssl_certificate: "{{ certs_dir }}www/as212510.unicornafk.fr/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/as212510.unicornafk.fr/client.pem"
+    server_name: "as212510.unicornafk.fr"
+  - name: "lg.as212510.unicornafk.fr"
+    url: "http://127.0.0.1:8080"
+    location: /
+    proxy_headers: { }
+    enable_content_security: true
+    http_redirection: true
+    ssl_port: "443"
+    local_path_ssl_certificate: "{{ certs_dir }}www/lg.as212510.unicornafk.fr/client.crt"
+    local_path_ssl_certificate_key: "{{ certs_dir }}www/lg.as212510.unicornafk.fr/client.pem"
+    server_name: "lg.as212510.unicornafk.fr"

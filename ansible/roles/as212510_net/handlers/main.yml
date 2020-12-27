@@ -1,0 +1,10 @@
+---
+- name: restart as212510_net.service
+  service:
+    name: as212510_net.service
+    state: restarted
+
+- name: enable as212510_net.service
+  service:
+    name: as212510_net.service
+    enabled: true

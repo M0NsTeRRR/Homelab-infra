@@ -1,0 +1,82 @@
+---
+- name: Add as212510_net group
+  group:
+    name: as212510_net
+    system: yes
+    state: present
+
+- name: Add as212510_net user
+  user:
+    name: as212510_net
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: as212510_net
+    append: yes
+
+- name: "Download as212510_net binary version {{ as212510_net_version }}"
+  get_url:
+    url: "https://github.com/M0NsTeRRR/as212510.net/releases/download/v{{ as212510_net_version }}/as212510.net_{{ as212510_net_version }}_linux_amd64.tar.gz"
+    dest: /tmp/as212510_net.tar.gz
+
+- name: Extract as212510_net binary
+  unarchive:
+    src: /tmp/as212510_net.tar.gz
+    dest: /tmp
+    remote_src: yes
+    list_files: yes
+  register: archive_contents
+
+- name: Copy as212510.net binary to /usr/local/bin
+  copy:
+    src: /tmp/as212510.net
+    dest: /usr/local/bin/as212510.net
+    owner: as212510_net
+    group: as212510_net
+    mode: 0700
+    remote_src: yes
+  notify: restart as212510_net.service
+
+- name: "Download as212510_net version {{ as212510_net_version }}"
+  get_url:
+    url: "https://github.com/M0NsTeRRR/as212510.net/archive/v{{ as212510_net_version }}.tar.gz"
+    dest: /tmp/as212510_net_source.tar.gz
+
+- name: Create as212510_net server directory
+  file:
+    dest: /opt/as212510_net/
+    state: directory
+    owner: as212510_net
+    group: as212510_net
+
+
+- name: Extract as212510_net files
+  unarchive:
+    src: /tmp/as212510_net_source.tar.gz
+    dest: /opt/as212510_net
+    owner: as212510_net
+    group: as212510_net
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+
+- name: Create as212510_net configuration directory
+  file:
+    dest: /etc/as212510_net/
+    state: directory
+    owner: as212510_net
+    group: as212510_net
+
+- name: Configure as212510_net
+  template:
+    src: as212510_net.yml.j2
+    dest: /etc/as212510_net/as212510_net.yml
+    owner: as212510_net
+    group: as212510_net
+  notify: restart as212510_net.service
+
+- name: Create systemd service file
+  template:
+    src: as212510_net.service.j2
+    dest: /etc/systemd/system/as212510_net.service
+  notify:
+    - enable as212510_net.service
+    - restart as212510_net.service

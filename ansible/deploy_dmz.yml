@@ -79,6 +79,13 @@
     - nginx
     - exporter_exporter
 
+- name: Configure Website
+  hosts: website
+  become: yes
+  roles:
+    - as212510_net
+    - nginx
+
 - name: Configure Reverse-proxy
   hosts: reverse_proxy
   become: yes
