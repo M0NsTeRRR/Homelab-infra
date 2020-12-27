@@ -1,5 +1,6 @@
 ---
 caddy_email: email@example.com
+caddy_exporter_port: 9998
 caddy_domains: []
 
 
