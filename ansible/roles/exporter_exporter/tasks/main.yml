@@ -63,7 +63,6 @@
     dest: "/etc/ssl/certs/exporter_exporter.crt"
     owner: exporter-exporter
     group: exporter-exporter
-  with_items: "{{ nginx_configuration }}"
   notify: restart exporter-exporter.service
 
 - name: Copy certificate key to remote location
@@ -72,7 +71,6 @@
     dest: "/etc/ssl/certs/exporter_exporter.pem"
     owner: exporter-exporter
     group: exporter-exporter
-  with_items: "{{ nginx_configuration }}"
   notify: restart exporter-exporter.service
 
 - name: Add CA cert
