@@ -76,6 +76,7 @@
   with_items:
       - { regexp: "^(# )?external_url", line: "external_url 'https://{{ inventory_hostname }}'" }
       - { regexp: "^(# )?letsencrypt\\['enable'\\] =", line: "letsencrypt['enable'] = false" }
+      - { regexp: "^(# )?nginx\\['listen_addresses'\\] =", line: "nginx['listen_addresses'] = ['0.0.0.0', '[::]']" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_enable'\\] =", line: "gitlab_rails['smtp_enable'] = {{ gitlab_smtp_enable }}" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_address'\\] =", line: "gitlab_rails['smtp_address'] = '{{ gitlab_smtp_address }}'" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_port'\\] =", line: "gitlab_rails['smtp_port'] = {{ gitlab_smtp_port }}" }
