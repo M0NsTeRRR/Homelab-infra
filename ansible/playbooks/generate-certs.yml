@@ -5,11 +5,12 @@
   vars:
     certs_dir: "../../certs/"
   vars_prompt:
-    - name: "certificate_group"
-      prompt: "Certificate group ?"
+    - name: "certificate_folder_path"
+      prompt: "Certificate folder path ? (must end with slash, eg. www/monsite.fr/)"
       private: no
-    - name: "certificate_name"
-      prompt: "Certificate name ?"
+    - name: "common_name"
+      prompt: "Common name ?"
+      default: "unicornafk.fr"
       private: no
   tasks:
     - name: Generate CertAuthority OpenSSL private key
@@ -39,34 +40,34 @@
         csr_path: "{{ certs_dir }}ca.csr"
         provider: selfsigned
 
-    - name: "Create {{ certificate_group }}{{ certificate_name }} folder"
+    - name: "Create {{ certificate_folder_path }} folder"
       file:
         state: directory
-        name: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}"
+        name: "{{ certs_dir }}{{ certificate_folder_path }}"
 
     - name: Add .gitkeep file
       copy:
         content: ""
-        dest: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/.gitkeep"
+        dest: "{{ certs_dir }}{{ certificate_folder_path }}.gitkeep"
         force: no
 
     - name: Generate client OpenSSL private key
       openssl_privatekey:
-        path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.pem"
+        path: "{{ certs_dir }}{{ certificate_folder_path }}/client.pem"
 
     - name: Generate client OpenSSL Certificate Signing Request
       openssl_csr:
-        path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.csr"
-        privatekey_path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.pem"
+        path: "{{ certs_dir }}{{ certificate_folder_path }}/client.csr"
+        privatekey_path: "{{ certs_dir }}{{ certificate_folder_path }}/client.pem"
         country_name: "{{ country }}"
         organization_name: "{{ organization }}"
         email_address: "{{ admin_email }}"
-        common_name: "{{ certificate_name }}"
+        common_name: "{{ common_name }}"
 
     - name: Generate client OpenSSL certificate signed with our CA
       openssl_certificate:
-        path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.crt"
+        path: "{{ certs_dir }}{{ certificate_folder_path }}/client.crt"
         ownca_path: "{{ certs_dir }}ca.crt"
         ownca_privatekey_path: "{{ certs_dir }}ca.pem"
-        csr_path: "{{ certs_dir }}{{ certificate_group }}{{ certificate_name }}/client.csr"
+        csr_path: "{{ certs_dir }}{{ certificate_folder_path }}/client.csr"
         provider: ownca
