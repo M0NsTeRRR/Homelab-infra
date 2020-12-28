@@ -91,7 +91,6 @@
   become: yes
   roles:
     - caddy
-    - exporter_exporter
 
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb

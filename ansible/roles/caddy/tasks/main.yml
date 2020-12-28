@@ -7,6 +7,7 @@
   with_items:
     - "80"
     - "443"
+    - "9982"
 
 - name: Add caddy group
   group:
@@ -35,6 +36,30 @@
   notify:
     - enable caddy.service
     - restart caddy.service
+
+- name: Copy certificate to remote location
+  copy:
+    src: "{{ caddy_exporter_local_path_certificate }}"
+    dest: "/etc/ssl/certs/caddy_exporter.crt"
+    owner: caddy
+    group: caddy
+  notify: restart caddy.service
+
+- name: Copy certificate key to remote location
+  copy:
+    src: "{{ caddy_exporter_local_path_certificate_key }}"
+    dest: "/etc/ssl/certs/caddy_exporter.pem"
+    owner: caddy
+    group: caddy
+  notify: restart caddy.service
+
+- name: Add CA cert
+  template:
+    src: "{{ caddy_exporter_local_path_ca_certificate }}"
+    dest: /etc/caddy/ca.crt
+    owner: caddy
+    group: caddy
+  notify: restart caddy.service
 
 - name: Create /etc/caddy/conf.d folder
   file:

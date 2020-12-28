@@ -97,7 +97,7 @@ prometheus_targets:
     - dns1.unicornafk.fr:9998
     - dns2.unicornafk.fr:9998
   caddy:
-    - reverse-proxy.unicornafk.fr:9998
+    - reverse-proxy.unicornafk.fr:9982
   tplink_plug:
     - hs110-rack1.unicornafk.fr
     - hs110-rack2.unicornafk.fr

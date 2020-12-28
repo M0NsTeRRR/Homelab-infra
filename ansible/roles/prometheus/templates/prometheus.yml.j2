@@ -26,7 +26,7 @@ scrape_configs:
     - source_labels: [__param_target]
       target_label: instance
     - target_label: __address__
-      replacement: {{ inventory_hostname }}:9605
+      replacement: {{ ansible_fqdn }}:9605
 
   - job_name: blackbox
     metrics_path: /probe
@@ -41,7 +41,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ inventory_hostname }}:9115
+        replacement: {{ ansible_fqdn }}:9115
 
   - job_name: vmware
     scrape_interval: 2m
@@ -58,7 +58,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ inventory_hostname }}:9272
+        replacement: {{ ansible_fqdn }}:9272
 
   - job_name: node_exporter
     metrics_path: '/metrics'
@@ -83,7 +83,7 @@ scrape_configs:
     - source_labels: [__param_target]
       target_label: instance
     - target_label: __address__
-      replacement: {{ inventory_hostname }}:9130
+      replacement: {{ ansible_fqdn }}:9130
 
   - job_name: snmp
     file_sd_configs:
@@ -98,7 +98,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ inventory_hostname }}:9116
+        replacement: {{ ansible_fqdn }}:9116
 
   - job_name: snmp_microtik
     file_sd_configs:
@@ -113,7 +113,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ inventory_hostname }}:9116
+        replacement: {{ ansible_fqdn }}:9116
 
   - job_name: snmp_brocade
     file_sd_configs:
@@ -128,7 +128,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ inventory_hostname }}:9116
+        replacement: {{ ansible_fqdn }}:9116
 
   - job_name: snmp_qnap
     file_sd_configs:
@@ -143,7 +143,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ inventory_hostname }}:9116
+        replacement: {{ ansible_fqdn }}:9116
 
   - job_name: wireguard
     scheme: https
@@ -222,13 +222,7 @@ scrape_configs:
     file_sd_configs:
     - files:
       - caddy/targets.json
-    metrics_path: /proxy
-    params:
-      module:
-      - caddy
-    relabel_configs:
-      - source_labels: [__param_target]
-        target_label: instance
+    metrics_path: /metrics
 
   - job_name: tplink_plug
     file_sd_configs:
@@ -241,7 +235,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ inventory_hostname }}:9233
+        replacement: {{ ansible_fqdn }}:9233
 
   - job_name: rpki_validator_3
     scheme: https

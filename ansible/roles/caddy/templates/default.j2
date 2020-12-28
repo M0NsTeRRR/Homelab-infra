@@ -1,8 +1,5 @@
 {
     email {{ caddy_email }}
-    admin localhost:2019 {
-		origins {{ ansible_fqdn }}:{{ caddy_exporter_port }} localhost:2019
-    }
 }
 
 # Add gzip compression to requests
@@ -20,6 +17,16 @@
     header_up X-Forwarded-Proto {scheme}
     header_up X-Url-Scheme {scheme}
     header_up X-Forwarded-Host {host}
+}
+
+{{ ansible_fqdn }}:9982 {
+	metrics
+	tls /etc/ssl/certs/caddy_exporter.crt /etc/ssl/certs/caddy_exporter.pem {
+	    client_auth {
+	        mode require_and_verify
+	        trusted_ca_cert_file /etc/caddy/ca.crt
+	    }
+	}
 }
 
 import /etc/caddy/conf.d/*.conf

@@ -1,6 +1,8 @@
 ---
 caddy_email: "{{ email }}"
-caddy_exporter_port: 9998
+caddy_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+caddy_exporter_local_path_certificate: "{{ certs_dir }}exporter/caddy-exporter/client.crt"
+caddy_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/caddy-exporter/client.pem"
 caddy_domains:
   - names:
       - wiki.unicornafk.fr
@@ -23,11 +25,3 @@ caddy_domains:
   - names:
       - lg.as212510.net
     backend_url: https://lg.as212510.unicornafk.fr
-
-exporter_exporter_name: caddy-exporter
-exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/caddy-exporter/client.crt"
-exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/caddy-exporter/client.pem"
-exporter_exporter_nodes:
-  - name: caddy
-    port: 2019
