@@ -3,9 +3,9 @@ nodejs_version: 12
 
 nginx_configuration:
   - name: "{{ ansible_fqdn }}"
-    url: "http://127.0.0.1:2368"
-    location: /
-    proxy_headers: { }
+    locations:
+      - location: /
+        proxy_pass: "http://127.0.0.1:2368"
     enable_content_security: true
     http_redirection: true
     ssl_port: "443"

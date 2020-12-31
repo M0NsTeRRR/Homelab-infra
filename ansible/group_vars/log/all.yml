@@ -40,10 +40,11 @@ graylog_events:
 
 nginx_configuration:
   - name: "{{ ansible_fqdn }}"
-    url: "http://127.0.0.1:9000"
-    location: /
-    nginx_proxy_headers:
-      X-Graylog-Server-URL: https://$server_name/
+    locations:
+      - location: /
+        proxy_pass: "http://127.0.0.1:9000"
+        proxy_headers:
+          X-Graylog-Server-URL: https://$server_name/
     enable_content_security: false
     http_redirection: true
     ssl_port: "443"

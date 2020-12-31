@@ -24,6 +24,7 @@
   with_items:
     - /etc/nginx/sites-available/default
     - /etc/nginx/sites-enabled/default
+    - /var/www/html
   notify: restart nginx
 
 - name: Copy certificate to remote location

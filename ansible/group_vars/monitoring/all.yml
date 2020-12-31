@@ -109,8 +109,9 @@ prometheus_targets:
 
 nginx_configuration:
   - name: "grafana"
-    url: "http://127.0.0.1:3000"
-    location: /
+    locations:
+      - location: /
+        proxy_pass: "http://127.0.0.1:3000"
     enable_content_security: false
     http_redirection: true
     ssl_port: "443"
@@ -118,8 +119,9 @@ nginx_configuration:
     local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
     server_name: "{{ ansible_fqdn }}"
   - name: "prometheus"
-    url: "http://127.0.0.1:9090"
-    location: /
+    locations:
+      - location: /
+        proxy_pass: "http://127.0.0.1:9090"
     enable_content_security: true
     http_redirection: false
     ssl_port: "9091"

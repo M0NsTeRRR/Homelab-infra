@@ -10,9 +10,9 @@ exporter_exporter_nodes:
 
 nginx_configuration:
   - name: "{{ ansible_fqdn }}"
-    url: "http://127.0.0.1:8080"
-    location: /
-    proxy_headers: { }
+    locations:
+      - location: /
+        proxy_pass: "http://127.0.0.1:8080"
     enable_content_security: true
     http_redirection: true
     ssl_port: "443"
