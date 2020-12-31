@@ -46,26 +46,17 @@
     update_cache: yes
     state: present
 
-- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
-  openssl_privatekey:
-    path: "/etc/ssl/certs/{{ inventory_hostname }}.key"
+- name: Copy certificate to remote location
+  copy:
+    src: "{{ gitlab_local_path_ssl_certificate }}"
+    dest: "/etc/gitlab/ssl/{{ ansible_fqdn }}.crt"
+  notify: restart gitlab
 
-- name: Generate an OpenSSL Certificate Signing Request
-  openssl_csr:
-    path: "/etc/ssl/certs/{{ inventory_hostname }}.csr"
-    privatekey_path: "/etc/ssl/certs/{{ inventory_hostname }}.key"
-    country_name: "{{ gitlab_cert_country }}"
-    organization_name: "{{ gitlab_cert_organization_name }}"
-    email_address: "{{ gitlab_cert_email_address }}"
-    common_name: "{{ inventory_hostname }}.unicornafk.fr"
-
-- name: Generate client OpenSSL certificate signed with our CA
-  openssl_certificate:
-    path: "/etc/ssl/certs/{ inventory_hostname }}.crt"
-    ownca_path: "../../../certs/ca.crt"
-    ownca_privatekey_path: "../../../certs/ca.pem"
-    csr_path: "/etc/ssl/certs/{{ inventory_hostname }}.csr"
-    provider: ownca
+- name: Copy certificate key to remote location
+  copy:
+    src: "{{ gitlab_local_path_ssl_certificate_key }}"
+    dest: "/etc/gitlab/ssl/{{ ansible_fqdn }}.pem"
+  notify: restart gitlab
 
 - name: Configure Gitlab
   lineinfile:
@@ -74,9 +65,11 @@
     line: "{{ item.line }}"
     state: "present"
   with_items:
-      - { regexp: "^(# )?external_url", line: "external_url 'https://{{ inventory_hostname }}'" }
+      - { regexp: "^(# )?external_url", line: "external_url 'https://{{ ansible_fqdn }}'" }
       - { regexp: "^(# )?letsencrypt\\['enable'\\] =", line: "letsencrypt['enable'] = false" }
       - { regexp: "^(# )?nginx\\['listen_addresses'\\] =", line: "nginx['listen_addresses'] = ['0.0.0.0', '[::]']" }
+      - { regexp: "^(# )?nginx\\['ssl_certificate'\\] =", line: "nginx['ssl_certificate'] = '/etc/gitlab/ssl/{{ ansible_fqdn }}.crt'" }
+      - { regexp: "^(# )?nginx\\['ssl_certificate_key'\\] =", line: "nginx['ssl_certificate_key'] = '/etc/gitlab/ssl/{{ ansible_fqdn }}.pem'" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_enable'\\] =", line: "gitlab_rails['smtp_enable'] = {{ gitlab_smtp_enable }}" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_address'\\] =", line: "gitlab_rails['smtp_address'] = '{{ gitlab_smtp_address }}'" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_port'\\] =", line: "gitlab_rails['smtp_port'] = {{ gitlab_smtp_port }}" }
