@@ -2,6 +2,7 @@
 country: FR
 timezone: Europe/Paris
 organization: unicornafk
+as: 212510
 certs_dir: ../../../certs/
 email: ludovic-ortega@adminafk.fr
 monitoring_email: monitoring@unicornafk.fr

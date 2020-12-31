@@ -1,0 +1,15 @@
+---
+primary_asn: {{ hyperglass_primary_asn }}
+org_name: "{{ hyperglass_primary_asn }} - {{ hyperglass_org_name }}"
+site_title: "AS{{ hyperglass_primary_asn }} - Looking Glass"
+site_description: "{{ hyperglass_primary_asn }} - Looking Glass"
+listen_address: "127.0.0.1"
+listen_port: 8001
+logging:
+  directory: '/opt/hyperglass'
+
+web:
+  greeting:
+    enable: true
+    title: "Welcome to AS{{ hyperglass_primary_asn }} - Looking Glass"
+    file: /etc/hyperglass/greeting.yaml

@@ -3,6 +3,11 @@ as212510_net_server:
   address: ":8080"
   cwd: "/opt/as212510_net"
 
+nodejs_version: 14
+
+hyperglass_primary_asn: "{{ as }}"
+hyperglass_org_name: "{{ organization }}"
+
 nginx_configuration:
   - name: "adminafk.unicornafk.fr"
     url: "http://127.0.0.1:8080"
@@ -25,7 +30,7 @@ nginx_configuration:
     local_path_ssl_certificate_key: "{{ certs_dir }}www/as212510.unicornafk.fr/client.pem"
     server_name: "as212510.unicornafk.fr"
   - name: "lg.as212510.unicornafk.fr"
-    url: "http://127.0.0.1:8080"
+    url: "http://127.0.0.1:8001"
     location: /
     proxy_headers: { }
     enable_content_security: true

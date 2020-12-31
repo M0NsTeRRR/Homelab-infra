@@ -84,6 +84,8 @@
   become: yes
   roles:
     - as212510_net
+    - nodejs
+    - hyperglass
     - nginx
 
 - name: Configure Reverse-proxy

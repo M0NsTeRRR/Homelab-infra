@@ -1,0 +1,11 @@
+[Unit]
+Description=hyperglass
+After=network.target
+
+[Service]
+User=hyperglass
+Group=hyperglass
+ExecStart=/opt/hyperglass/venv/bin/hyperglass start
+
+[Install]
+WantedBy=multi-user.target

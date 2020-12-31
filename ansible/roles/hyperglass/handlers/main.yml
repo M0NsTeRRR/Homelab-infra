@@ -1,0 +1,10 @@
+---
+- name: enable hyperglass.service
+  service:
+    name: hyperglass
+    enabled: true
+
+- name: restart hyperglass.service
+  service:
+    name: hyperglass
+    state: restarted

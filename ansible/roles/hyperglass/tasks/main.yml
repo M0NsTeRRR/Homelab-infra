@@ -1,0 +1,97 @@
+---
+- name: Add hyperglass group
+  group:
+    name: hyperglass
+    system: yes
+    state: present
+
+- name: Add hyperglass user
+  user:
+    name: hyperglass
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: hyperglass
+    append: yes
+
+- name: Add Yarn Apt signing key
+  apt_key:
+    url: "https://dl.yarnpkg.com/debian/pubkey.gpg"
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add Yarn Apt repository
+  apt_repository:
+    repo: "deb https://dl.yarnpkg.com/debian/ stable main"
+    state: present
+    filename: yarn
+
+- name: Install required dependencies
+  apt:
+    pkg:
+      - python3-pip
+      - yarn
+      - redis-server
+    state: present
+
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+
+- name: Create hyperglass directory
+  file:
+    dest: "{{ item }}"
+    owner: hyperglass
+    group: hyperglass
+    state: directory
+  with_items:
+    - /etc/hyperglass
+    - /opt/hyperglass
+    - /etc/hyperglass/static/ui
+    - /etc/hyperglass/static/images
+    - /etc/hyperglass/static/custom
+    - /etc/hyperglass/static/images/favicons
+
+- name: Install hyperglass
+  pip:
+    name: hyperglass
+    virtualenv: /opt/hyperglass/venv
+  notify: restart hyperglass.service
+
+- name: "Configure {{ item }}"
+  template:
+    src: "{{ item }}.yaml.j2"
+    dest: "/etc/hyperglass/{{ item }}.yaml"
+    owner: hyperglass
+    group: hyperglass
+  notify: restart hyperglass.service
+  with_items:
+    - hyperglass
+    - devices
+    - commands
+    - greeting
+
+- name: Build ui
+  shell: ". /opt/hyperglass/venv/bin/activate && hyperglass build-ui"
+  retries: 5
+  delay: 5
+  register: result
+  until: result.rc == 0
+
+- name: Chown static folder
+  file:
+    dest: "{{ item }}"
+    recurse: yes
+    owner: hyperglass
+    group: hyperglass
+  with_items:
+    - /etc/hyperglass/static
+    - /opt/hyperglass
+
+- name: Create systemd service file
+  template:
+    src: hyperglass.service.j2
+    dest: /etc/systemd/system/hyperglass.service
+  notify:
+    - enable hyperglass.service
+    - restart hyperglass.service
