@@ -1,4 +1,6 @@
 ---
+nodejs_version: 14
+
 postgresql_db: "wikijs"
 postgresql_user: "wikijs"
 
