@@ -2,12 +2,6 @@
 kea_dns_group: dns
 kea_dns_domains: '{{ domains }}'
 kea_ipv4_subnets:
-  - subnet: 192.168.10.0/24
-    pools:
-      - start: 192.168.10.201
-        end: 192.168.10.240
-    router: 192.168.10.2
-    reservations: []
   - subnet: 192.168.20.0/24
     pools:
       - start: 192.168.20.201
@@ -22,12 +16,6 @@ kea_ipv4_subnets:
       - start: 192.168.30.201
         end: 192.168.30.240
     router: 192.168.30.2
-    reservations: []
-  - subnet: 192.168.40.0/24
-    pools:
-      - start: 192.168.40.201
-        end: 192.168.40.240
-    router: 192.168.40.2
     reservations: []
   - subnet: 192.168.50.0/24
     pools:
@@ -66,11 +54,6 @@ kea_ipv4_subnets:
     router: 192.168.60.2
     reservations: []
 kea_ipv6_subnets:
-  - subnet: 2a0c:b641:02c0:110::/64
-    pools:
-      - start: 2a0c:b641:02c0:110::201
-        end: 2a0c:b641:02c0:110::240
-    reservations: []
   - subnet: 2a0c:b641:02c0:120::/64
     pools:
       - start: 2a0c:b641:02c0:120::201
@@ -83,11 +66,6 @@ kea_ipv6_subnets:
     pools:
       - start: 2a0c:b641:02c0:130::201
         end: 2a0c:b641:02c0:130::240
-    reservations: []
-  - subnet: 2a0c:b641:02c0:140::/64
-    pools:
-      - start: 2a0c:b641:02c0:140::201
-        end: 2a0c:b641:02c0:140::240
     reservations: []
   - subnet: 2a0c:b641:02c0:150::/64
     pools:
