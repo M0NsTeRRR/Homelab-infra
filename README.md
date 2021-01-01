@@ -26,11 +26,9 @@ fill all `secrets.yml` based on `secrets.example` in each subdirectory of `group
 ### Playbooks to create client certificate signed by a CA
 `ansible-playbook playbooks/generate-certs.yml`
 
-### Playbooks to deploy dmz
-`ansible-playbook -i hosts deploy_dmz.yml`
-
-### Playbooks to deploy lab
-`ansible-playbook -i hosts deploy_lab.yml`
+### Playbooks to deploy a zone
+`ansible-playbook -i hosts deploy_<zone>.yml`  
+Replace `<zone>` by the appropriate zone name
 
 # Packer
 `cd packer`

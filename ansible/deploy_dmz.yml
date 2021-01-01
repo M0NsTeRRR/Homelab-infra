@@ -70,15 +70,6 @@
     - unifi_poller
     - tplink_plug_exporter
 
-- name: Configure RPKI validator
-  hosts: rpki
-  become: yes
-  roles:
-    - rpki_validator_3
-    - rpki_rtr_server
-    - nginx
-    - exporter_exporter
-
 - name: Configure Website
   hosts: website
   become: yes
