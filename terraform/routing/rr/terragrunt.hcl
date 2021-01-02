@@ -8,7 +8,7 @@ include {
 
 inputs = {
   vsphere_host = "server3.unicornafk.fr"
-  vm_name      = "r3"
+  vm_name      = "rr"
   template     = "packer-ubuntu"
 
   hardware = {
