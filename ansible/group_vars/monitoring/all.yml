@@ -39,6 +39,9 @@ prometheus_targets:
     - https://unifi.unicornafk.fr:8443
     - https://nas.unicornafk.fr
     - https://log.unicornafk.fr
+    - https://as212510.unicornafk.fr
+    - https://lg.as212510.unicornafk.fr
+    - https://adminafk.unicornafk.fr
   fping:
     - 1.1.1.1              # cloudflare
     - 2606:4700:4700::1111 # cloudflare
