@@ -39,7 +39,7 @@ server {
   {% for location in item.locations %}
   location {{ location.location }} {
 
-    {% if location.proxy_pass %}
+    {% if location.proxy_pass is defined %}
     proxy_set_header        Host $host;
     proxy_set_header        X-Real-IP $remote_addr;
     proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -49,16 +49,18 @@ server {
     proxy_read_timeout      90;
     {% endif %}
 
-    {% if location.alias %}
+    {% if location.alias is defined %}
     alias {{ location.alias }};
     autoindex off;
     {% endif %}
 
+    {% if location.proxy_headers is defined %}
     {% for headerName, headerValue in location.proxy_headers.items() %}
     proxy_set_header        {{ headerName }} {{ headerValue }};
     {% endfor %}
+    {% endif %}
   }
-  {% endif %}
+  {% endfor %}
 }
 
 {% if item.http_redirection %}
