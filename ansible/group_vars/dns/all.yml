@@ -46,6 +46,10 @@ pdns_records:
     a: 192.168.40.5
     aaaa: 2a0c:b641:02c0:140::5
     rdns: true
+  - hostname: r3.unicornafk.fr.
+    a: 192.168.5.6
+    aaaa: 2a0c:b641:02c0:105::6
+    rdns: true
   - hostname: sw1.unicornafk.fr.
     a: 192.168.40.2
     aaaa: 2a0c:b641:02c0:140::2
