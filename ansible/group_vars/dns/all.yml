@@ -121,15 +121,18 @@ pdns_records:
   # CNAME
   - hostname: adminafk.unicornafk.fr.
     cname: website.unicornafk.fr.
+    rdns: false
   - hostname: as212510.unicornafk.fr.
     cname: website.unicornafk.fr.
+    rdns: false
   - hostname: lg.as212510.unicornafk.fr.
     cname: website.unicornafk.fr.
+    rdns: false
 
 exporter_exporter_name: powerdns-exporter
 exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/powerdns-exporter.crt"
-exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/powerdns-exporter.pem"
+exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/powerdns-exporter/client.crt"
+exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/powerdns-exporter/client.pem"
 exporter_exporter_nodes:
   - name: powerdns-recursor
     port: 8082

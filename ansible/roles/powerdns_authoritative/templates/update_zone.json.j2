@@ -18,7 +18,7 @@
       ],
       "ttl": "3600",
       "type": "NS"
-    }{% for host in pdns_records %}{% if host.hostname and item in host.hostname %},
+    }{% for host in pdns_records %}{% if host.a is defined and item in host.hostname %},
     {
       "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
@@ -27,7 +27,8 @@
       ],
       "ttl": "3600",
       "type": "A"
-    },{
+    }{% endif %}{% if host.aaaa is defined and item in host.hostname %},
+    {
       "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
       "records": [
@@ -35,16 +36,16 @@
       ],
       "ttl": "3600",
       "type": "AAAA"
-    }{% endif %}{% elif host.cname and item in host.hostname %},
+    }{% endif %}{% if host.cname is defined and item in host.hostname %},
     {
-      "name": "lg.as212510.unicornafk.fr.",
+      "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
         "records": [
-          { "content": "website.unicornafk.fr.", "disabled": false }
+          { "content": "{{ host.cname }}", "disabled": false }
         ],
         "ttl": 3600,
         "type": "CNAME"
-    }{% endif %}{% if host.a and item in host.a|ipaddr("revdns") and host.rdns %},
+    }{% endif %}{% if host.rdns and host.a is defined and item in host.a|ipaddr("revdns") %},
     {
       "name": "{{ host.a|ipaddr('revdns') }}",
       "changetype": "REPLACE",
@@ -53,7 +54,7 @@
       ],
       "ttl": "3600",
       "type": "PTR"
-    }{% endif %}{% if host.aaaa and item in host.aaaa|ipaddr("revdns") and host.rdns %},
+    }{% endif %}{% if host.rdns and host.aaaa is defined and item in host.aaaa|ipaddr("revdns") %},
     {
       "name": "{{ host.aaaa|ipaddr('revdns') }}",
       "changetype": "REPLACE",
