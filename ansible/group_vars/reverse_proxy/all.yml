@@ -18,10 +18,16 @@ caddy_domains:
       - adminafk.fr
       - ludovic-ortega.adminafk.fr
     backend_url: https://adminafk.unicornafk.fr
+    proxy_headers:
+      Host: adminafk.unicornafk.fr
   - names:
       - www.as212510.net
       - as212510.net
     backend_url: https://as212510.unicornafk.fr
+    proxy_headers:
+      Host: as212510.unicornafk.fr
   - names:
       - lg.as212510.net
     backend_url: https://lg.as212510.unicornafk.fr
+    proxy_headers:
+      Host: lg.as212510.unicornafk.fr

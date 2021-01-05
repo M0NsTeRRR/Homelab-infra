@@ -7,7 +7,6 @@ wireguard_dns_group: dns
 wireguard_domains: []
 wireguard_clients: {}
 
-
 # wireguard_domains:
 #   - unicornafk.fr
 #   - adminafk.fr

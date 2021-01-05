@@ -6,6 +6,12 @@
       }
 
       import defaultheaders
+
+      {% if item.proxy_headers is defined %}
+      {% for headerName, headerValue in item.proxy_headers.items() %}
+      header_up {{ headerName }} {{ headerValue }}
+      {% endfor %}
+      {% endif %}
     }
 
     import webconf
