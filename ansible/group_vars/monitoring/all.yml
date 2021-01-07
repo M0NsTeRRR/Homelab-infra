@@ -106,9 +106,11 @@ prometheus_targets:
     - hs110-rack2.unicornafk.fr
     - hs110-chambre1.unicornafk.fr
   rpki_validator_3:
-    - rpki.unicornafk.fr:9998
+    - rpki1.unicornafk.fr:9998
+    - rpki2.unicornafk.fr:9998
   rpki_rtr_server:
-    - rpki.unicornafk.fr:9998
+    - rpki1.unicornafk.fr:9998
+    - rpki2.unicornafk.fr:9998
 
 nginx_configuration:
   - name: "grafana"

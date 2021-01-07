@@ -22,10 +22,6 @@ pdns_records:
     a: 192.168.10.24
     aaaa: 2a0c:b641:02c0:110::24
     rdns: true
-  - hostname: rpki.unicornafk.fr.
-    a: 192.168.10.31
-    aaaa: 2a0c:b641:02c0:110::31
-    rdns: true
   - hostname: lb.dmz.unicornafk.fr.
     a: 192.168.10.60
     aaaa: 2a0c:b641:02c0:110::60
