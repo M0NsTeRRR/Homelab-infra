@@ -100,13 +100,13 @@ scrape_configs:
       - target_label: __address__
         replacement: {{ ansible_fqdn }}:9116
 
-  - job_name: snmp_microtik
+  - job_name: snmp_mikrotik
     file_sd_configs:
     - files:
-      - snmp_microtik/targets.json
+      - snmp_mikrotik/targets.json
     metrics_path: /snmp
     params:
-      module: [microtik]
+      module: [mikrotik]
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

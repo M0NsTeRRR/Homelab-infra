@@ -55,7 +55,7 @@ prometheus_targets:
     - "{{ unifi_poller_url }}"
   snmp:
     - sw2.unicornafk.fr
-  snmp_microtik:
+  snmp_mikrotik:
     - r1.unicornafk.fr
   snmp_brocade:
     - 192.168.10.2
