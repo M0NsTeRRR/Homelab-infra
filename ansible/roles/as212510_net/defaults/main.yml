@@ -1,7 +1,10 @@
 ---
-as212510_net_version: 1.1.1
+as212510_net_version: 1.2.1
 as212510_net_server: {}
 as212510_net_mikrotik: {}
+
+# as212510_net_sentry:
+#   dsn: "https://sentry.io"
 
 # as212510_net_server:
 #   address: ":8080"
