@@ -47,7 +47,7 @@
   become: yes
   become_user: idiotghost
   when: not ghost.stat.exists
-  notify: restart ghost
+  notify: restart ghost.service
 
 - name: Create Ghost configuration
   template:
@@ -56,4 +56,12 @@
     owner: idiotghost
     group: idiotghost
     mode: '0775'
-  notify: restart ghost
+  notify: restart ghost.service
+
+- name: Create systemd service file
+  template:
+    src: ghost.service.j2
+    dest: /etc/systemd/system/ghost.service
+  notify:
+    - enable ghost.service
+    - restart ghost.service

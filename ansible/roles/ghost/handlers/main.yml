@@ -1,7 +1,10 @@
 ---
-- name: restart ghost
-  command:
-    cmd: ghost start --enable
-    chdir: /var/www/ghost
-  become: yes
-  become_user: idiotghost
+- name: restart ghost.service
+  service:
+    name: ghost.service
+    state: restarted
+
+- name: enable ghost.service
+  service:
+    name: ghost.service
+    enabled: true
