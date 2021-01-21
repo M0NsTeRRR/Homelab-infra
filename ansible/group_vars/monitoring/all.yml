@@ -71,6 +71,7 @@ prometheus_targets:
     - dns2.unicornafk.fr:9100
     - git.unicornafk.fr:9100
     - ipam.unicornafk.fr:9100
+    - log.unicornafk.fr:9100
     - monitoring.unicornafk.fr:9100
     - reverse-proxy.unicornafk.fr:9100
     - unifi.unicornafk.fr:9100
