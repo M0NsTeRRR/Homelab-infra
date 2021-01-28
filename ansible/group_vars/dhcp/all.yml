@@ -16,7 +16,13 @@ kea_ipv4_subnets:
       - start: 192.168.30.201
         end: 192.168.30.240
     router: 192.168.30.2
-    reservations: []
+    reservations:
+      - hostname: desktop-ludo
+        hw_address: 24:BE:05:AC:89:D1
+        ip_address: 192.168.30.21
+      - hostname: laptop-ludo
+        hw_address: 30:9c:23:8f:c8:de
+        ip_address: 192.168.30.22
   - subnet: 192.168.50.0/24
     pools:
       - start: 192.168.50.201
@@ -66,7 +72,13 @@ kea_ipv6_subnets:
     pools:
       - start: 2a0c:b641:02c0:130::201
         end: 2a0c:b641:02c0:130::240
-    reservations: []
+    reservations:
+      - hostname: desktop-ludo
+        hw_address: 24:BE:05:AC:89:D1
+        ip_address: 2a0c:b641:02c0:130::21
+      - hostname: laptop-ludo
+        hw_address: 30:9c:23:8f:c8:de
+        ip_address: 2a0c:b641:02c0:130::22
   - subnet: 2a0c:b641:02c0:150::/64
     pools:
       - start: 2a0c:b641:02c0:150::201

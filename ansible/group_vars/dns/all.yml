@@ -35,16 +35,28 @@ pdns_records:
     aaaa: 2a0c:b641:02c0:120::51
     rdns: true
   - hostname: r1.unicornafk.fr.
-    a: 192.168.40.1
+    a: 192.168.5.1
     aaaa: 2a0c:b641:02c0:140::1
     rdns: true
   - hostname: r2.unicornafk.fr.
-    a: 192.168.40.5
+    a: 192.168.5.3
     aaaa: 2a0c:b641:02c0:140::5
     rdns: true
-  - hostname: rr.unicornafk.fr.
-    a: 192.168.5.6
-    aaaa: 2a0c:b641:02c0:105::6
+  - hostname: rr1.unicornafk.fr.
+    a: 192.168.5.14
+    aaaa: 2a0c:b641:02c0:105::14
+    rdns: true
+  - hostname: rr2.unicornafk.fr.
+    a: 192.168.5.18
+    aaaa: 2a0c:b641:02c0:105::18
+    rdns: true
+  - hostname: rpki1.unicornafk.fr.
+    a: 192.168.10.31
+    aaaa: 2a0c:b641:02c0:110::31
+    rdns: true
+  - hostname: rpki2.unicornafk.fr.
+    a: 192.168.10.32
+    aaaa: 2a0c:b641:02c0:110::32
     rdns: true
   - hostname: sw1.unicornafk.fr.
     a: 192.168.40.2
@@ -73,6 +85,10 @@ pdns_records:
   - hostname: server3.unicornafk.fr.
     a: 192.168.40.13
     aaaa: 2a0c:b641:02c0:140::13
+    rdns: true
+  - hostname: server4.unicornafk.fr.
+    a: 192.168.40.14
+    aaaa: 2a0c:b641:02c0:140::14
     rdns: true
   - hostname: pi1.unicornafk.fr.
     a: 192.168.40.32
