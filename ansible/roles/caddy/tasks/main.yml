@@ -1,13 +1,14 @@
 ---
-- name: "Open port {{ item }}"
+- name: "Open port {{ item.port }}/{{ item.proto }}"
   ufw:
     rule: allow
-    port: "{{ item }}"
-    proto: tcp
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
   with_items:
-    - "80"
-    - "443"
-    - "9982"
+    - { port: "80", proto: tcp }
+    - { port: "443", proto: tcp }
+    - { port: "443", proto: udp }
+    - { port: "9982", proto: tcp }
 
 - name: Add caddy group
   group:
