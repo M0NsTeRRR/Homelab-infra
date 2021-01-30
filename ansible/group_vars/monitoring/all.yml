@@ -43,12 +43,14 @@ prometheus_targets:
     - https://lg.as212510.unicornafk.fr
     - https://adminafk.unicornafk.fr
   fping:
-    - 1.1.1.1              # cloudflare
-    - 2606:4700:4700::1111 # cloudflare
-    - 8.8.8.8              # google
-    - 2001:4860:4860::8888 # google
-    - 192.168.5.1
-    - 2a0c:b641:02c0:105::1
+    - 1.1.1.1               # cloudflare
+    - 2606:4700:4700::1111  # cloudflare
+    - 8.8.8.8               # google
+    - 2001:4860:4860::8888  # google
+    - 192.168.5.1           # R1
+    - 2a0c:b641:02c0:105::1 # R1
+    - 192.168.5.3           # R2
+    - 2a0c:b641:02c0:105::3 # R2
   vmware_exporter:
     - "{{ vmware_exporter_vcenter_hostname }}"
   unifi_poller:
