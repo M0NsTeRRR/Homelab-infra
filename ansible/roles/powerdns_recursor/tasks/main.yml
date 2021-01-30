@@ -3,7 +3,10 @@
   ufw:
     rule: allow
     port: "53"
-    proto: udp
+    proto: {{ item }}
+  with_items:
+    - udp
+    - tcp
 
 - name: Add pdns group
   group:
