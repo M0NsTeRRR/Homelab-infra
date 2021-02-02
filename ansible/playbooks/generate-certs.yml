@@ -48,7 +48,7 @@
     - name: Add .gitkeep file
       copy:
         content: ""
-        dest: "{{ certs_dir }}{{ certificate_folder_path }}.gitkeep"
+        dest: "{{ certs_dir }}{{ certificate_folder_path }}/.gitkeep"
         force: no
 
     - name: Generate client OpenSSL private key
