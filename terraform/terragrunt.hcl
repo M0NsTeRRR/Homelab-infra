@@ -36,7 +36,7 @@ terraform {
 }
 
 provider "vsphere" {
-  vsphere_server = "vsphere.unicornafk.fr"
+  vsphere_server = "${local.vsphere_domain}"
   user           = "${local.vsphere_user}"
   password       = "${local.vsphere_password}"
 

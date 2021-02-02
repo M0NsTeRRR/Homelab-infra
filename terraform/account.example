@@ -1,4 +1,5 @@
 locals {
+  vsphere_domain   = ""
   vsphere_user     = ""
   vsphere_password = ""
 
