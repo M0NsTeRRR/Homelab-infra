@@ -49,14 +49,12 @@
   copy:
     src: "{{ node_exporter_local_path_certificate }}"
     dest: "/etc/ssl/certs/node-exporter.crt"
-  with_items: "{{ nginx_configuration }}"
   notify: restart node-exporter.service
 
 - name: Copy certificate key to remote location
   copy:
     src: "{{ node_exporter_local_path_certificate_key }}"
     dest: "/etc/ssl/certs/node-exporter.pem"
-  with_items: "{{ nginx_configuration }}"
   notify: restart node-exporter.service
 
 - name: Add ca.crt
