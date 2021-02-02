@@ -12,7 +12,7 @@ do
   read CHOICE
   case $CHOICE in
 	1)
-    vcenter_server='vsphere.unicornafk.fr'
+    vcenter_server='vcenter.unicornafk.fr'
     vcenter_username='administrator@unicornafk.fr'
 
     read -p 'Host ip: ' host_ip
