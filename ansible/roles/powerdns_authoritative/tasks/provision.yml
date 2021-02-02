@@ -25,6 +25,7 @@
       Content-Type: application/json
       X-Api-Key: "{{ pdns_api_key }}"
   when: zone.status == 404
+  changed_when: response.status == 201
 
 - name: "PATCH zone {{ item }}."
   uri:
@@ -38,3 +39,4 @@
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ pdns_api_key }}"
+  changed_when: response.status == 204

@@ -3,7 +3,7 @@
   ufw:
     rule: allow
     port: "53000"
-    proto: {{ item }}
+    proto: "{{ item }}"
   with_items:
     - udp
     - tcp
