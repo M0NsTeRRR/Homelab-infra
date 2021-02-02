@@ -32,6 +32,11 @@ prometheus_clients_certs:
   - caddy-exporter
 prometheus_targets:
   blackbox:
+    - https://vcenter.unicornafk.fr
+    - https://server1.unicornafk.fr
+    - https://server2.unicornafk.fr
+    - https://server3.unicornafk.fr
+    - https://nas.unicornafk.fr
     - https://ipam.unicornafk.fr
     - https://git.unicornafk.fr
     - https://wiki.unicornafk.fr
