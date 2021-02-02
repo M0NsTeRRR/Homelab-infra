@@ -26,10 +26,6 @@ pdns_records:
     a: 192.168.10.60
     aaaa: 2a0c:b641:02c0:110::60
     rdns: false
-  - hostname: nas.unicornafk.fr.
-    a: 192.168.20.42
-    aaaa: 2a0c:b641:02c0:120::42
-    rdns: true
   - hostname: ap1.unicornafk.fr.
     a: 192.168.20.51
     aaaa: 2a0c:b641:02c0:120::51
@@ -70,7 +66,7 @@ pdns_records:
     a: 192.168.40.4
     aaaa: 2a0c:b641:02c0:140::4
     rdns: true
-  - hostname: vsphere.unicornafk.fr.
+  - hostname: vcenter.unicornafk.fr.
     a: 192.168.40.10
     aaaa: 2a0c:b641:02c0:140::10
     rdns: true
@@ -97,6 +93,10 @@ pdns_records:
   - hostname: idrac3.unicornafk.fr.
     a: 192.168.40.53
     aaaa: 2a0c:b641:02c0:140::53
+    rdns: true
+  - hostname: nas.unicornafk.fr.
+    a: 192.168.50.42
+    aaaa: 2a0c:b641:02c0:150::42
     rdns: true
   - hostname: samsung-tv.unicornafk.fr.
     a: 192.168.50.91

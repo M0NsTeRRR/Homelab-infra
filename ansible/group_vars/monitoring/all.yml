@@ -63,7 +63,7 @@ prometheus_targets:
     - 192.168.10.2
     - 192.168.40.4
   snmp_qnap:
-    - 192.168.20.42
+    - 192.168.50.42
   node_exporter:
     - pi1.unicornafk.fr:9100
     - blog.unicornafk.fr:9100
