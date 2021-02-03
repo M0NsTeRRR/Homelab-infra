@@ -1,4 +1,9 @@
 ---
+- name: Remove popularity-contest
+  apt:
+    name: popularity-contest
+    state: absent
+
 - name: Install rng-tools
   apt:
     name: rng-tools
