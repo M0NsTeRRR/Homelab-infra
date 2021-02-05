@@ -3,8 +3,10 @@ locals {
   env_vars     = read_terragrunt_config(find_in_parent_folders("env.hcl"))
   network_vars = read_terragrunt_config(find_in_parent_folders("network.hcl"))
 
+  vsphere_server   = local.account_vars.locals.vsphere_server
   vsphere_user     = local.account_vars.locals.vsphere_user
   vsphere_password = local.account_vars.locals.vsphere_password
+
   powerdns_api_key = local.account_vars.locals.powerdns_api_key
 
   vm_user            = local.account_vars.locals.vm_user
@@ -36,7 +38,7 @@ terraform {
 }
 
 provider "vsphere" {
-  vsphere_server = "${local.vsphere_domain}"
+  vsphere_server = "${local.vsphere_server}"
   user           = "${local.vsphere_user}"
   password       = "${local.vsphere_password}"
 
