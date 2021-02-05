@@ -3,9 +3,9 @@
   hosts: dns
   become: yes
   roles:
+    - nginx
     - powerdns_recursor
     - powerdns_authoritative
-    - nginx
     - exporter_exporter
 
 - name: Configure DHCP servers

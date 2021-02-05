@@ -25,6 +25,7 @@
       Content-Type: application/json
       X-Api-Key: "{{ pdns_api_key }}"
   when: zone.status == 404
+  register: response
   changed_when: response.status == 201
 
 - name: "PATCH zone {{ item }}."
@@ -39,4 +40,5 @@
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ pdns_api_key }}"
+  register: response
   changed_when: response.status == 204
