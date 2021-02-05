@@ -17,3 +17,4 @@ wireguard_clients: {}
 #     ipv6: 2001:470:cace:104::11/128
 #     public_key: public_key
 #     private_key: private_key
+#     mobile: false
