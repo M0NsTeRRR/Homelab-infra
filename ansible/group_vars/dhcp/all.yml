@@ -116,8 +116,8 @@ kea_ipv6_subnets:
 
 exporter_exporter_name: kea-exporter
 exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/kea-exporter.crt"
-exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/kea-exporter.pem"
+exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/kea-exporter/client.crt"
+exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/kea-exporter/client.pem"
 exporter_exporter_nodes:
   - name: kea_dhcp
     port: 9546
