@@ -1,7 +1,7 @@
 exporter_exporter_name: rpki-exporter
 exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/rpki-exporter.crt"
-exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/rpki-exporter.pem"
+exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/rpki-exporter/client.crt"
+exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/rpki-exporter/client.pem"
 exporter_exporter_nodes:
   - name: rpki_rtr_server
     port: 8081
