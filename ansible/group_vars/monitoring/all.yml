@@ -70,6 +70,10 @@ prometheus_targets:
   snmp_qnap:
     - 192.168.50.42
   node_exporter:
+    - rpki1.unicornafk.fr:9100
+    - rpki2.unicornafk.fr:9100
+    - rr1.unicornafk.fr:9100
+    - rr2.unicornafk.fr:9100
     - pi1.unicornafk.fr:9100
     - blog.unicornafk.fr:9100
     - dhcp1.unicornafk.fr:9100
@@ -81,6 +85,7 @@ prometheus_targets:
     - log.unicornafk.fr:9100
     - monitoring.unicornafk.fr:9100
     - reverse-proxy.unicornafk.fr:9100
+    - website.unicornafk.fr:9100
     - unifi.unicornafk.fr:9100
     - vpn.unicornafk.fr:9100
     - wiki.unicornafk.fr:9100
