@@ -6,8 +6,8 @@ wireguard_domains: '{{ domains }}'
 
 exporter_exporter_name: wireguard-exporter
 exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/wireguard-exporter.crt"
-exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/wireguard-exporter.pem"
+exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/wireguard-exporter/client.crt"
+exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/wireguard-exporter/client.pem"
 exporter_exporter_nodes:
   - name: wireguard
     port: 9586
