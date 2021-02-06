@@ -2,7 +2,6 @@
     reverse_proxy {{ item.backend_url }} {
       transport http {
         tls
-        tls_insecure_skip_verify
       }
 
       import defaultheaders
