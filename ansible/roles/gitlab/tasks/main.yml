@@ -46,6 +46,11 @@
     update_cache: yes
     state: present
 
+- name: Create hyperglass directory
+  file:
+    dest: /etc/gitlab/ssl
+    state: directory
+
 - name: Copy certificate to remote location
   copy:
     src: "{{ gitlab_local_path_ssl_certificate }}"
