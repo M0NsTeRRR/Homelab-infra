@@ -12,8 +12,8 @@
   hosts: dhcp
   become: yes
   roles:
-    - kea_dhcp
     - nginx
+    - kea_dhcp
     - kea_exporter
     - exporter_exporter
 
@@ -27,39 +27,40 @@
   hosts: ipam
   become: yes
   roles:
+    - nginx
     - postgresql
     - netbox
-    - nginx
     - vcenter_netbox_sync
 
 - name: Configure Wiki
   hosts: wiki
   become: yes
   roles:
+    - nginx
     - nodejs
     - postgresql
     - wikijs
-    - nginx
 
 - name: Configure Blog
   hosts: blog
   become: yes
   roles:
+    - nginx
     - nodejs
     - ghost
-    - nginx
 
 - name: Configure Log
   hosts: log
   become: yes
   roles:
-    - graylog
     - nginx
+    - graylog
 
 - name: Configure Monitoring
   hosts: monitoring
   become: yes
   roles:
+    - nginx
     - prometheus
     - alertmanager
     - grafana
@@ -74,10 +75,10 @@
   hosts: website
   become: yes
   roles:
+    - nginx
     - as212510_net
     - nodejs
     - hyperglass
-    - nginx
 
 - name: Configure Reverse-proxy
   hosts: reverse_proxy
@@ -89,9 +90,9 @@
   hosts: rpki
   become: yes
   roles:
+    - nginx
     - rpki_validator_3
     - rpki_rtr_server
-    - nginx
     - exporter_exporter
 
 - name: Configure kubernetes loadbalancers
