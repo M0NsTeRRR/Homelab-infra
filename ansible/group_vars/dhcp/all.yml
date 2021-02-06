@@ -85,7 +85,7 @@ kea_ipv6_subnets:
         end: 2a0c:b641:02c0:130::240
     reservations:
       - hostname: desktop-ludo
-        hw_address: 24:BE:05:AC:89:D1
+        hw_address: 00:02:C9:4E:83:8E
         ip_address: 2a0c:b641:02c0:130::21
       - hostname: laptop-ludo
         hw_address: 30:9c:23:8f:c8:de
