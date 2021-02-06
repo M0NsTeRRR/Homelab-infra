@@ -1,6 +1,10 @@
 {
     email {{ caddy_email }}
-    experimental_http3
+    servers {
+		protocol {
+			experimental_http3
+		}
+	}
 }
 
 # Add gzip compression to requests
@@ -10,10 +14,8 @@
 
 # Add forward headers to requests
 (defaultheaders) {
-    header_up Host {host}
-    header_up X-Real-IP {remote}
-    header_up X-Forwarded-For {remote}
-    header_up X-Forwarded-Proto {scheme}
+    -Server
+    Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;"
 }
 
 {{ ansible_fqdn }}:9982 {
