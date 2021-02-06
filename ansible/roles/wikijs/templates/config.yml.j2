@@ -26,9 +26,9 @@ db:
   # PostgreSQL / MySQL / MariaDB / MS SQL Server only:
   host: localhost
   port: 5432
-  user: wikijs
+  user: {{ wiki_js_postgresql_user }}
   pass: {{ wiki_js_postgresql_password }}
-  db: wikijs
+  db: {{ wiki_js_postgresql_db }}
   ssl: false
 
   # Optional - PostgreSQL / MySQL / MariaDB only:

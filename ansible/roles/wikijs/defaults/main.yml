@@ -1,3 +1,5 @@
 ---
 wiki_js_version: 2.5.170
+wiki_js_postgresql_db: wikijs
+wiki_js_postgresql_user: wikijs
 wiki_js_postgresql_password: password
