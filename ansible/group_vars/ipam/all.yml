@@ -7,9 +7,6 @@ vcenter_netbox_sync_vcenter_hostname: '{{ vcenter_hostname }}'
 vcenter_netbox_sync_vcenter_port: '{{ vcenter_port }}'
 vcenter_netbox_sync_vcenter_username: '{{ vcenter_username }}'
 
-postgresql_db: "netbox"
-postgresql_user: "netbox"
-
 nginx_configuration:
   - name: "{{ ansible_fqdn }}"
     locations:
