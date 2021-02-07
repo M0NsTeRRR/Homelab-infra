@@ -1,11 +1,10 @@
 ---
-netbox_superuser_email: '{{ email }}'
-vcenter_netbox_sync_ipv4_subnets: '{{ ipv4_subnets }}'
-vcenter_netbox_sync_ipv6_subnets: '{{ ipv6_subnets }}'
+netbox_superuser_email: "{{ email }}"
+vcenter_netbox_sync_ipv4_subnets: "{{ ipv4_subnets }}"
+vcenter_netbox_sync_ipv6_subnets: "{{ ipv6_subnets }}"
 vcenter_netbox_sync_dns_group: dns
-vcenter_netbox_sync_vcenter_hostname: '{{ vcenter_hostname }}'
-vcenter_netbox_sync_vcenter_port: '{{ vcenter_port }}'
-vcenter_netbox_sync_vcenter_username: '{{ vcenter_username }}'
+vcenter_netbox_sync_vcenter_hostname: "{{ vcenter_hostname }}"
+vcenter_netbox_sync_vcenter_port: "{{ vcenter_port }}"
 
 nginx_configuration:
   - name: "{{ ansible_fqdn }}"
