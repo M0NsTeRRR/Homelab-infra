@@ -26,7 +26,7 @@ alertmanager_receivers_webhooks:
   - "http://127.0.0.1:9233"
 
 alertmanager_webhook_free_server:
-  address: ":9233"
+  address: ":9234"
 
 prometheus_certs_dir: "{{ certs_dir }}exporter/"
 prometheus_clients_certs:
