@@ -42,7 +42,6 @@ prometheus_targets:
     - https://server1.unicornafk.fr
     - https://server2.unicornafk.fr
     - https://server3.unicornafk.fr
-    - https://nas.unicornafk.fr
     - https://ipam.unicornafk.fr
     - https://git.unicornafk.fr
     - https://wiki.unicornafk.fr
