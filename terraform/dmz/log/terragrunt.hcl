@@ -12,7 +12,7 @@ inputs = {
   template     = "packer-ubuntu"
 
   hardware = {
-    num_cpus = 2
+    num_cpus = 3
     memory   = 8192
   }
 
