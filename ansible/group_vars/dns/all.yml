@@ -68,7 +68,6 @@ pdns_records:
     rdns: true
   - hostname: vcenter.unicornafk.fr.
     a: 192.168.40.10
-    aaaa: 2a0c:b641:02c0:140::10
     rdns: true
   - hostname: server1.unicornafk.fr.
     a: 192.168.40.11
