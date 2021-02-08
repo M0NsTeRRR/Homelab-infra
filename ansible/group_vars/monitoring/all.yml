@@ -47,7 +47,6 @@ prometheus_targets:
     - https://wiki.unicornafk.fr
     - https://blog.unicornafk.fr
     - https://unifi.unicornafk.fr:8443
-    - https://nas.unicornafk.fr
     - https://log.unicornafk.fr
     - https://as212510.unicornafk.fr
     - https://lg.as212510.unicornafk.fr
