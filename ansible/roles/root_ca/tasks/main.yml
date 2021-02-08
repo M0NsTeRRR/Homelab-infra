@@ -6,6 +6,6 @@
 
 - name: "Copy the certificate {{ root_ca_organization_name }}"
   copy:
-    src: ../../../certs/ca.crt
+    src: "{{ root_ca_local_path_ca_certificate }}"
     dest: "/usr/local/share/ca-certificates/{{ root_ca_organization_name }}.crt"
   notify: update ca-certificates

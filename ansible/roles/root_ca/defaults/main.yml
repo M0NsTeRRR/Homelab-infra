@@ -1,2 +1,3 @@
 ---
 root_ca_organization_name: example
+root_ca_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
