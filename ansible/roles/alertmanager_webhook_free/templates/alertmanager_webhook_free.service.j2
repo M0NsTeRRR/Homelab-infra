@@ -1,0 +1,15 @@
+[Unit]
+Description=alertmanager_webhook_free Free SMS alerting
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=alertmanager_webhook_free
+Group=alertmanager_webhook_free
+Type=simple
+CapabilityBoundingSet=CAP_NET_RAW
+AmbientCapabilities=CAP_NET_RAW
+ExecStart=/usr/local/bin/alertmanager-webhook-free -config=/etc/alertmanager_webhook_free/alertmanager_webhook_free.yml
+
+[Install]
+WantedBy=multi-user.target

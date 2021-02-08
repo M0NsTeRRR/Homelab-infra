@@ -1,0 +1,15 @@
+---
+alertmanager_webhook_free_version: 1.0.0
+alertmanager_webhook_free_sentry: {}
+alertmanager_webhook_free_server: {}
+alertmanager_webhook_free_free: {}
+
+# alertmanager_webhook_free_sentry:
+#   dsn: "https://sentry.io"
+
+# alertmanager_webhook_free_server:
+#   address: ":9233"
+
+# alertmanager_webhook_free_free:
+#   user: "xxxxxxx"
+#   pass: "yyyyyyy"

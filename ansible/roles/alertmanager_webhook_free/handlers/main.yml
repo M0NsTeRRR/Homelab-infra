@@ -1,0 +1,10 @@
+---
+- name: restart alertmanager_webhook_free.service
+  service:
+    name: alertmanager_webhook_free.service
+    state: restarted
+
+- name: enable alertmanager_webhook_free.service
+  service:
+    name: alertmanager_webhook_free.service
+    enabled: true

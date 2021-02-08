@@ -1,0 +1,60 @@
+---
+- name: Add alertmanager_webhook_free group
+  group:
+    name: alertmanager_webhook_free
+    system: yes
+    state: present
+
+- name: Add alertmanager_webhook_free user
+  user:
+    name: alertmanager_webhook_free
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: alertmanager_webhook_free
+    append: yes
+
+- name: "Download alertmanager_webhook_free binary version {{ alertmanager_webhook_free_version }}"
+  get_url:
+    url: "https://github.com/M0NsTeRRR/alertmanager-webhook-free/releases/download/v{{ alertmanager_webhook_free_version }}/alertmanager-webhook-free_{{ alertmanager_webhook_free_version }}_linux_amd64.tar.gz"
+    dest: /tmp/alertmanager_webhook_free.tar.gz
+
+- name: Extract alertmanager_webhook_free binary
+  unarchive:
+    src: /tmp/alertmanager_webhook_free.tar.gz
+    dest: /tmp
+    remote_src: yes
+    list_files: yes
+  register: archive_contents
+
+- name: Copy alertmanager-webhook-free binary to /usr/local/bin
+  copy:
+    src: /tmp/alertmanager-webhook-free
+    dest: /usr/local/bin/alertmanager-webhook-free
+    owner: alertmanager_webhook_free
+    group: alertmanager_webhook_free
+    mode: 0700
+    remote_src: yes
+  notify: restart alertmanager_webhook_free.service
+
+- name: Create alertmanager_webhook_free configuration directory
+  file:
+    dest: /etc/alertmanager_webhook_free/
+    state: directory
+    owner: alertmanager_webhook_free
+    group: alertmanager_webhook_free
+
+- name: Configure alertmanager_webhook_free
+  template:
+    src: alertmanager_webhook_free.yml.j2
+    dest: /etc/alertmanager_webhook_free/alertmanager_webhook_free.yml
+    owner: alertmanager_webhook_free
+    group: alertmanager_webhook_free
+  notify: restart alertmanager_webhook_free.service
+
+- name: Create systemd service file
+  template:
+    src: alertmanager_webhook_free.service.j2
+    dest: /etc/systemd/system/alertmanager_webhook_free.service
+  notify:
+    - enable alertmanager_webhook_free.service
+    - restart alertmanager_webhook_free.service

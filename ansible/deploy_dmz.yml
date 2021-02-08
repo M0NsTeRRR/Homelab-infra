@@ -63,6 +63,7 @@
     - nginx
     - prometheus
     - alertmanager
+    - alertmanager_webhook_free
     - grafana
     - snmp_exporter
     - blackbox_exporter
