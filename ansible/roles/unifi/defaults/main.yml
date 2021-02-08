@@ -1,2 +1,6 @@
 ---
 unifi_version: 6.0.45
+unifi_local_absolute_path_ca_certificate: "/etc/ssl/certs/ca.crt"
+unifi_local_path_certificate: "/etc/ssl/certs/cert.crt"
+unifi_local_path_certificate_key: "/etc/ssl/certs/cert.crt"
+unifi_pkcs12_password: pass
