@@ -1,0 +1,10 @@
+---
+- name: restart nginx-exporter.service
+  service:
+    name: nginx-exporter.service
+    state: restarted
+
+- name: enable nginx-exporter.service
+  service:
+    name: nginx-exporter.service
+    enabled: true

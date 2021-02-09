@@ -1,0 +1,4 @@
+---
+nginx_exporter_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
+nginx_exporter_local_path_certificate: "/etc/ssl/certs/cert.crt"
+nginx_exporter_local_path_certificate_key: "/etc/ssl/certs/cert.pem"

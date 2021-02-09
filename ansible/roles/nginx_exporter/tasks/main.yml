@@ -1,0 +1,77 @@
+---
+- name: Allow nginx-exporter
+  ufw:
+    rule: allow
+    port: "9113"
+    proto: tcp
+
+- name: Install golang package
+  apt:
+    name: golang
+    state: present
+
+- name: Create nginx-exporter folder
+  file:
+    state: directory
+    name: /opt/exporter/nginx-exporter
+
+- name: Check if wireguard-exporter is already installed
+  stat:
+    path: /usr/local/bin/nginx-exporter
+  register: nginx_exporter
+
+- name: "Download lastest version of nginx-exporter"
+  get_url:
+    url: "https://github.com/nginxinc/nginx-prometheus-exporter/archive/master.tar.gz"
+    dest: /tmp/nginx-prometheus-exporter.tar.gz
+  when: not nginx_exporter.stat.exists
+
+- name: Extract nginx-exporter files
+  unarchive:
+    src: /tmp/nginx-prometheus-exporter.tar.gz
+    dest: /opt/exporter/nginx-exporter
+    remote_src: yes
+    list_files: yes
+    extra_opts: ['--strip-components=1']
+  when: not nginx_exporter.stat.exists
+
+- name: Compile sources
+  shell: /usr/bin/go build -o /opt/exporter/nginx-exporter/exporter
+  args:
+    chdir: /opt/exporter/nginx-exporter
+  when: not nginx_exporter.stat.exists
+
+- name: Copy nginx-exporter binary to /usr/local/bin
+  copy:
+    src: /opt/exporter/nginx-exporter/exporter
+    dest: /usr/local/bin/nginx-exporter
+    mode: 0700
+    remote_src: yes
+  notify: restart nginx-exporter.service
+  when: not nginx_exporter.stat.exists
+
+- name: Copy certificate to remote location
+  copy:
+    src: "{{ nginx_exporter_local_path_certificate }}"
+    dest: "/etc/ssl/certs/nginx-exporter.crt"
+  notify: restart nginx-exporter.service
+
+- name: Copy certificate key to remote location
+  copy:
+    src: "{{ nginx_exporter_local_path_certificate_key }}"
+    dest: "/etc/ssl/certs/nginx-exporter.pem"
+  notify: restart nginx-exporter.service
+
+- name: Add ca.crt
+  copy:
+    src: "{{ nginx_exporter_local_path_ca_certificate }}"
+    dest: /etc/nginx-exporter/ca.crt
+  notify: restart nginx-exporter.service
+
+- name: Create systemd service file
+  template:
+    src: nginx-exporter.service.j2
+    dest: /etc/systemd/system/nginx-exporter.service
+  notify:
+    - enable nginx-exporter.service
+    - restart nginx-exporter.service

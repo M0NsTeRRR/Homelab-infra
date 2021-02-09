@@ -36,6 +36,7 @@ prometheus_clients_certs:
   - wireguard-exporter
   - rpki-exporter
   - caddy-exporter
+  - nginx-exporter
 prometheus_targets:
   blackbox:
     - https://vcenter.unicornafk.fr
@@ -105,6 +106,18 @@ prometheus_targets:
     - worker1.dmz.unicornafk.fr:9100
     - worker2.dmz.unicornafk.fr:9100
     - worker3.dmz.unicornafk.fr:9100
+  nginx:
+    - dns1.unicornafk.fr:9113
+    - dns2.unicornafk.fr:9113
+    - dhcp1.unicornafk.fr:9113
+    - dhcp2.unicornafk.fr:9113
+    - ipam.unicornafk.fr:9113
+    - blog.unicornafk.fr:9113
+    - log.unicornafk.fr:9113
+    - monitoring.unicornafk.fr:9113
+    - website.unicornafk.fr:9113
+    - rpki1.unicornafk.fr:9113
+    - rpki2.unicornafk.fr:9113
   wireguard:
     - vpn.unicornafk.fr:9998
   kea_dhcp:
@@ -150,3 +163,7 @@ nginx_configuration:
     local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
     local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
     server_name: "{{ ansible_fqdn }}"
+
+nginx_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+nginx_exporter_local_path_certificate: "{{ certs_dir }}exporter/nginx-exporter/client.crt"
+nginx_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/nginx-exporter/client.pem"

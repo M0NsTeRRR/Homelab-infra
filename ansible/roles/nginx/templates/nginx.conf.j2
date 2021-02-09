@@ -56,4 +56,13 @@ http {
 
   include /etc/nginx/conf.d/*.conf;
   include /etc/nginx/sites-enabled/*;
+
+  server {
+    listen 127.0.0.1:8090;
+    server_name 127.0.0.1;
+
+    location /stub_status {
+      stub_status;
+    }
+  }
 }

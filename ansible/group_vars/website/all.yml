@@ -39,3 +39,7 @@ nginx_configuration:
     local_path_ssl_certificate: "{{ certs_dir }}www/lg.as212510.unicornafk.fr/client.crt"
     local_path_ssl_certificate_key: "{{ certs_dir }}www/lg.as212510.unicornafk.fr/client.pem"
     server_name: "lg.as212510.unicornafk.fr"
+
+nginx_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+nginx_exporter_local_path_certificate: "{{ certs_dir }}exporter/nginx-exporter/client.crt"
+nginx_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/nginx-exporter/client.pem"

@@ -144,3 +144,7 @@ nginx_configuration:
     local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
     local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
     server_name: "{{ ansible_fqdn }}, {{ lookup('dig', ansible_fqdn) }}, {{ lookup('dig', ansible_fqdn, 'qtype=AAAA' ) }}"
+
+nginx_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+nginx_exporter_local_path_certificate: "{{ certs_dir }}exporter/nginx-exporter/client.crt"
+nginx_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/nginx-exporter/client.pem"

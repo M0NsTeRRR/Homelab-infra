@@ -6,6 +6,7 @@
     - nginx
     - powerdns_recursor
     - powerdns_authoritative
+    - nginx_exporter
     - exporter_exporter
 
 - name: Configure DHCP servers
@@ -15,6 +16,7 @@
     - nginx
     - kea_dhcp
     - kea_exporter
+    - nginx_exporter
     - exporter_exporter
 
 - name: Configure Git
@@ -31,6 +33,7 @@
     - postgresql
     - netbox
     - vcenter_netbox_sync
+    - nginx_exporter
 
 - name: Configure Wiki
   hosts: wiki
@@ -40,6 +43,7 @@
     - nodejs
     - postgresql
     - wikijs
+    - nginx_exporter
 
 - name: Configure Blog
   hosts: blog
@@ -48,6 +52,7 @@
     - nginx
     - nodejs
     - ghost
+    - nginx_exporter
 
 - name: Configure Log
   hosts: log
@@ -55,6 +60,7 @@
   roles:
     - nginx
     - graylog
+    - nginx_exporter
 
 - name: Configure Monitoring
   hosts: monitoring
@@ -71,6 +77,7 @@
     - vmware_exporter
     - unifi_poller
     - tplink_plug_exporter
+    - nginx_exporter
 
 - name: Configure Website
   hosts: website
@@ -80,6 +87,7 @@
     - as212510_net
     - nodejs
     - hyperglass
+    - nginx_exporter
 
 - name: Configure Reverse-proxy
   hosts: reverse_proxy
@@ -94,6 +102,7 @@
     - nginx
     - rpki_validator_3
     - rpki_rtr_server
+    - nginx_exporter
     - exporter_exporter
 
 - name: Configure kubernetes loadbalancers

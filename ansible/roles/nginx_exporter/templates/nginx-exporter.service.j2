@@ -1,0 +1,18 @@
+[Unit]
+Description=Nginx Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+CapabilityBoundingSet=CAP_NET_RAW
+AmbientCapabilities=CAP_NET_RAW
+ExecStart=/usr/local/bin/nginx-exporter \
+    -nginx.scrape-uri=http://127.0.0.1:8090/stub_status \
+    -web.listen-address=:9113 \
+    -web.secured-metrics=true \
+    -web.ssl-server-cert=/etc/ssl/certs/nginx-exporter.crt \
+    -web.ssl-server-key=/etc/ssl/certs/nginx-exporter.pem
+
+[Install]
+WantedBy=multi-user.target
