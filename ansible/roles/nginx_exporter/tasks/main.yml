@@ -12,10 +12,13 @@
 
 - name: Create nginx-exporter folder
   file:
+    name: "{{ item }}"
     state: directory
-    name: /opt/exporter/nginx-exporter
+  with_items:
+    - /opt/exporter/nginx-exporter
+    - /etc/nginx-exporter
 
-- name: Check if wireguard-exporter is already installed
+- name: Check if nginx-exporter is already installed
   stat:
     path: /usr/local/bin/nginx-exporter
   register: nginx_exporter
