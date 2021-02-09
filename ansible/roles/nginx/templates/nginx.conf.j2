@@ -21,6 +21,8 @@ http {
   include mime.types;
   default_type application/octet-stream;
 
+  server_tokens off;
+
   # SSL Settings
 
   ssl_protocols TLSv1.2 TLSv1.3;
@@ -32,6 +34,7 @@ http {
   ssl_session_tickets off;
 
   # OCSP stapling
+
   ssl_stapling on;
   ssl_stapling_verify on;
 
