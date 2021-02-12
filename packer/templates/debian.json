@@ -2,7 +2,7 @@
   "variables": {
     "host_ip": "",
     "http_port": "8888",
-    "version": "10.7.0",
+    "version": "10.8.0",
     "vcenter_server": "",
     "vcenter_username": "",
     "vcenter_password": "",
