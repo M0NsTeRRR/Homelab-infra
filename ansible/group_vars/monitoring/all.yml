@@ -66,6 +66,8 @@ prometheus_targets:
   unifi_poller:
     - "{{ unifi_poller_url }}"
   snmp:
+    - rr1.unicornafk.fr
+    - rr2.unicornafk.fr
     - sw2.unicornafk.fr
   snmp_mikrotik:
     - r1.unicornafk.fr
