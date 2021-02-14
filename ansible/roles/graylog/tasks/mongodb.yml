@@ -8,7 +8,7 @@
 
 - name: Add mongodb Apt repository
   apt_repository:
-    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} focal/mongodb-org/4.4 multiverse"
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/4.4 multiverse"
     state: present
     filename: mongodb
 
