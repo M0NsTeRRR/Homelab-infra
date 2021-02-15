@@ -1,0 +1,6 @@
+---
+snmpd_user: admin
+snmpd_pass: password
+snmpd_private: private
+snmpd_syslocation: rack
+snmpd_syscontact: email@example.com

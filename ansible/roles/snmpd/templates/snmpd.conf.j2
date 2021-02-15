@@ -1,0 +1,26 @@
+sysLocation    {{ snmpd_syslocation }}
+sysContact     {{ snmpd_syscontact }}
+
+master  agentx
+agentAddress udp:161,udp6:161
+
+rouser {{ snmpd_user }}
+
+# This is the default view
+view all    included  .1 80
+# Remove ipRouteTable from view
+view all    excluded  .1.3.6.1.2.1.4.21
+# Remove ipNetToMediaTable from view
+view all    excluded  .1.3.6.1.2.1.4.22
+# Remove ipNetToPhysicalPhysAddress from view
+view all    excluded  .1.3.6.1.2.1.4.35
+# Remove ipCidrRouteTable  from view
+view all    excluded  .1.3.6.1.2.1.4.24
+# Optionally protect SNMP private/secret values
+view all    excluded  .1.3.6.1.6.3.15
+view all    excluded  .1.3.6.1.6.3.16
+view all    excluded  .1.3.6.1.6.3.18
+# Optionally allow SNMP public info (sysName, location, etc)
+view system included  .1.3.6.1.2.1.1
+
+createUser {{ snmpd_user }} SHA {{ snmpd_pass }} AES {{ snmpd_private }}
