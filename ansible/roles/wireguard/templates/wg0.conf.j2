@@ -10,6 +10,7 @@ PostDown = iptables -D FORWARD -i %i -j ACCEPT; ip6tables -D FORWARD -i %i -j AC
 [Peer]
 # Name = {{ key }}
 PublicKey = {{ client.public_key }}
+PresharedKey = {{ client.preshared_key }}
 AllowedIPs = {{ client.ipv4 }},{{ client.ipv6 }}
 
 {% endfor %}

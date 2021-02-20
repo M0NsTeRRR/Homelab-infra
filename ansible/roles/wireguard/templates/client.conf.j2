@@ -5,6 +5,7 @@ DNS = {{ groups[wireguard_dns_group]|join(',') }}, {% for host in groups[wiregua
 
 [Peer]
 PublicKey = {{ wireguard_server_public_key }}
+PresharedKey = {{ item.value.preshared_key }}
 AllowedIPs = 0.0.0.0/0,::/0
 Endpoint = {{ inventory_hostname }}:51820
 PersistentKeepalive = 25
