@@ -130,6 +130,12 @@ pdns_records:
     aaaa: 2a0c:b641:02c0:150::113
     rdns: true
   # CNAME
+  - hostname: ntp1.unicornafk.fr.
+    cname: dhcp1.unicornafk.fr.
+    rdns: false
+  - hostname: ntp2.unicornafk.fr.
+    cname: dhcp2.unicornafk.fr.
+    rdns: false
   - hostname: adminafk.unicornafk.fr.
     cname: website.unicornafk.fr.
     rdns: false

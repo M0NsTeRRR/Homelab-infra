@@ -13,6 +13,7 @@
   hosts: dhcp
   become: yes
   roles:
+    - ntp
     - nginx
     - kea_dhcp
     - kea_exporter
