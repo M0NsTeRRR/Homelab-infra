@@ -6,6 +6,7 @@
     - ufw
     - motd
     - node_exporter
+    - systemd_timesyncd
     - rsyslog
     - sshd
     - fail2ban
