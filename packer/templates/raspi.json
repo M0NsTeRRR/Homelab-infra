@@ -1,6 +1,6 @@
 {
   "variables": {
-    "version": "20.04.1",
+    "version": "20.04.2",
     "ssh_username": "",
     "ssh_password": "",
     "main_password": ""
