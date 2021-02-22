@@ -1,7 +1,8 @@
 ---
-as212510_net_version: 1.2.1
+as212510_net_version: 1.2.2
 as212510_net_sentry: {}
 as212510_net_server: {}
+as212510_net_asn: 212510
 as212510_net_mikrotik: {}
 
 # as212510_net_sentry:
@@ -10,6 +11,8 @@ as212510_net_mikrotik: {}
 # as212510_net_server:
 #   address: ":8080"
 #   cwd: "/opt/as212510_net"
+
+# as212510_net_asn: 212510
 
 # as212510_net_mikrotik:
 #   address: 192.168.0.1:8728

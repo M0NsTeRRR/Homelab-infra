@@ -3,6 +3,8 @@ as212510_net_server:
   address: ":8080"
   cwd: "/opt/as212510_net"
 
+as212510_net_asn: 212510
+
 nodejs_version: 14
 
 hyperglass_primary_asn: "{{ as }}"
