@@ -20,7 +20,6 @@
     create_home: false
     shell: /usr/sbin/nologin
     group: pdns
-    append: yes
 
 - name: Install required packages by PowerDNS
   apt:

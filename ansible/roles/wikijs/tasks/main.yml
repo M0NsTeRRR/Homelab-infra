@@ -11,7 +11,6 @@
     create_home: false
     shell: /usr/sbin/nologin
     group: wikijs
-    append: yes
 
 - name: Create wiki-js folder
   file:

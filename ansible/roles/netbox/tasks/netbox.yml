@@ -50,7 +50,6 @@
     create_home: false
     shell: /usr/sbin/nologin
     group: netbox
-    append: yes
 
 - name: Fix permissions on /opt/netbox/netbox/media/
   file:

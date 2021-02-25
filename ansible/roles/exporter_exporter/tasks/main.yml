@@ -17,7 +17,6 @@
     create_home: false
     shell: /usr/sbin/nologin
     group: exporter-exporter
-    append: yes
 
 - name: Check if exporter_exporter is already installed
   stat:
