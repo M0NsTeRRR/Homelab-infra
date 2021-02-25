@@ -6,7 +6,7 @@
     certs_dir: "../../certs/"
   vars_prompt:
     - name: "certificate_folder_path"
-      prompt: "Certificate folder path ? (must end with slash, eg. www/monsite.fr/)"
+      prompt: "Certificate folder path ? (eg. www/monsite.fr)"
       private: no
     - name: "common_name"
       prompt: "Common name ?"
