@@ -5,6 +5,8 @@ grafana_smtp_user: "{{ monitoring_email }}"
 grafana_smtp_password: "{{ smtp_monitoring_password }}"
 grafana_smtp_from_address: "{{ monitoring_email }}"
 
+ipmi_exporter_user: root
+
 vmware_exporter_vcenter_hostname: "{{ vcenter_hostname }}"
 vmware_exporter_vcenter_username: "{{ vcenter_username }}"
 vmware_exporter_vcenter_password: "{{ vcenter_password }}"
@@ -43,6 +45,8 @@ prometheus_targets:
     - https://server1.unicornafk.fr
     - https://server2.unicornafk.fr
     - https://server3.unicornafk.fr
+    - https://server4.unicornafk.fr
+    - https://san.unicornafk.fr
     - https://ipam.unicornafk.fr
     - https://git.unicornafk.fr
     - https://wiki.unicornafk.fr
@@ -65,6 +69,9 @@ prometheus_targets:
     - "{{ vmware_exporter_vcenter_hostname }}"
   unifi_poller:
     - "{{ unifi_poller_url }}"
+  ipmi:
+    - ipmi3.unicornafk.fr
+    - ipmi4.unicornafk.fr
   snmp:
     - rr1.unicornafk.fr
     - rr2.unicornafk.fr

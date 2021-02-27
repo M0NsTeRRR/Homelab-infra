@@ -73,6 +73,7 @@
     - alertmanager_webhook_free
     - grafana
     - snmp_exporter
+    - ipmi_exporter
     - blackbox_exporter
     - fping_exporter
     - vmware_exporter

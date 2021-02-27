@@ -1,0 +1,13 @@
+[Unit]
+Description=ipmi-exporter allows you to get ipmi metric using prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+CapabilityBoundingSet=CAP_NET_RAW
+AmbientCapabilities=CAP_NET_RAW
+ExecStart=/usr/local/bin/ipmi-exporter --config.file=/etc/ipmi-exporter/ipmi.yml --web.listen-address=127.0.0.1:9290
+
+[Install]
+WantedBy=multi-user.target

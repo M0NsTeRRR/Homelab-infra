@@ -1,0 +1,10 @@
+---
+- name: restart ipmi-exporter.service
+  service:
+    name: ipmi-exporter.service
+    state: restarted
+
+- name: enable ipmi-exporter.service
+  service:
+    name: ipmi-exporter.service
+    enabled: true

@@ -1,0 +1,4 @@
+---
+ipmi_exporter_version: 1.3.2
+ipmi_exporter_user: user
+ipmi_exporter_pass: pass
