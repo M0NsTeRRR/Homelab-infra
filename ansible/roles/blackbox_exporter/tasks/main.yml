@@ -1,10 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "9115"
-    proto: tcp
-
 - name: Check if blackbox-exporter is already installed
   stat:
     path: /usr/local/bin/blackbox_exporter

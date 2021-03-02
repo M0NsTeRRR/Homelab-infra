@@ -11,7 +11,6 @@
     create_home: false
     shell: /usr/sbin/nologin
     group: alertmanager_webhook_free
-    append: yes
 
 - name: "Download alertmanager_webhook_free binary version {{ alertmanager_webhook_free_version }}"
   get_url:

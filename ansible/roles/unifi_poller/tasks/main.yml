@@ -1,10 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "9130"
-    proto: tcp
-
 - name: Install required packages by Unifi poller
   apt:
     pkg:

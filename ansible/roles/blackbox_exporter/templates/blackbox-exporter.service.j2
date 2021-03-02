@@ -9,7 +9,9 @@ Group=prometheus
 Type=simple
 CapabilityBoundingSet=CAP_NET_RAW
 AmbientCapabilities=CAP_NET_RAW
-ExecStart=/usr/local/bin/blackbox_exporter --config.file /etc/blackbox_exporter/blackbox.yml
+ExecStart=/usr/local/bin/blackbox_exporter \
+    --web.listen-address="127.0.0.1:9115" \
+    --config.file /etc/blackbox_exporter/blackbox.yml
 
 [Install]
 WantedBy=multi-user.target

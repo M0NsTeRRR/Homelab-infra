@@ -39,6 +39,7 @@ prometheus_clients_certs:
   - rpki-exporter
   - caddy-exporter
   - nginx-exporter
+  - monitoring-exporter
 prometheus_targets:
   blackbox:
     - https://vcenter.unicornafk.fr
@@ -176,3 +177,28 @@ nginx_configuration:
 nginx_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
 nginx_exporter_local_path_certificate: "{{ certs_dir }}exporter/nginx-exporter/client.crt"
 nginx_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/nginx-exporter/client.pem"
+
+exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/monitoring-exporter/client.crt"
+exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/monitoring-exporter/client.pem"
+exporter_exporter_nodes:
+  - name: blackbox
+    port: 9115
+    path: /probe
+  - name: fping
+    port: 9605
+    path: /probe
+  - name: snmp
+    port: 9116
+    path: /snmp
+  - name: tplink_plug
+    port: 9233
+    path: /scrape
+  - name: unifi_poller
+    port: 9130
+    path: /scrape
+  - name: vmware_exporter
+    port: 9272
+  - name: ipmi
+    port: 9290
+    path: /ipmi

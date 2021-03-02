@@ -1,10 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "9605"
-    proto: tcp
-
 - name: Install required packages
   apt:
     pkg:

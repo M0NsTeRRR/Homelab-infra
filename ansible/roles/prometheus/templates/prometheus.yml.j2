@@ -16,7 +16,15 @@ rule_files:
 scrape_configs:
   - job_name: fping
     scrape_interval: 5s
-    metrics_path: /probe
+    metrics_path: /proxy
+    params:
+      module:
+        - fping
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
     file_sd_configs:
     - files:
       - fping/targets.json
@@ -26,12 +34,19 @@ scrape_configs:
     - source_labels: [__param_target]
       target_label: instance
     - target_label: __address__
-      replacement: {{ ansible_fqdn }}:9605
+      replacement: {{ ansible_fqdn }}:9998
 
   - job_name: blackbox
-    metrics_path: /probe
+    metrics_path: /proxy
     params:
-      module: [http_2xx]
+      module:
+        - blackbox
+        - http_2xx
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
     file_sd_configs:
     - files:
       - blackbox/targets.json
@@ -41,27 +56,35 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9115
+        replacement: {{ ansible_fqdn }}:9998
 
   - job_name: vmware
     scrape_interval: 2m
     scrape_timeout: 2m
-    metrics_path: '/metrics'
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
     file_sd_configs:
     - files:
       - vmware_exporter/targets.json
     params:
-      section: [default]
+      section:
+        - default
+      module:
+        - vmware
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9272
+        replacement: {{ ansible_fqdn }}:9998
 
   - job_name: node_exporter
-    metrics_path: '/metrics'
+    metrics_path: /metrics
     scheme: https
     tls_config:
       cert_file: /etc/prometheus/certs/node-exporter/client.crt
@@ -73,90 +96,134 @@ scrape_configs:
 
   - job_name: unifi_poller
     scrape_interval: 5s
-    metrics_path: /scrape
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
     file_sd_configs:
     - files:
       - unifi_poller/targets.json
+    params:
+      module:
+        - unifi_poller
     relabel_configs:
     - source_labels: [__address__]
       target_label: __param_target
     - source_labels: [__param_target]
       target_label: instance
     - target_label: __address__
-      replacement: {{ ansible_fqdn }}:9130
+      replacement: {{ ansible_fqdn }}:9998
 
   - job_name: ipmi
     file_sd_configs:
     - files:
       - ipmi/targets.json
-    metrics_path: /ipmi
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
+    params:
+      module:
+        - ipmi
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9290
+        replacement: {{ ansible_fqdn }}:9998
 
   - job_name: snmp
     file_sd_configs:
     - files:
       - snmp/targets.json
-    metrics_path: /snmp
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
     params:
-      module: [if_mib]
+      module:
+        - snmp
+        - if_mib
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9116
+        replacement: {{ ansible_fqdn }}:9998
 
   - job_name: snmp_mikrotik
     file_sd_configs:
     - files:
       - snmp_mikrotik/targets.json
-    metrics_path: /snmp
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
     params:
-      module: [mikrotik]
+      module:
+        - snmp
+        - mikrotik
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9116
+        replacement: {{ ansible_fqdn }}:9998
 
   - job_name: snmp_brocade
     file_sd_configs:
     - files:
       - snmp_brocade/targets.json
-    metrics_path: /snmp
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
     params:
-      module: [brocade]
+      module:
+        - snmp
+        - brocade
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9116
+        replacement: {{ ansible_fqdn }}:9998
 
   - job_name: snmp_qnap
     file_sd_configs:
     - files:
       - snmp_qnap/targets.json
-    metrics_path: /snmp
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
     params:
-      module: [qnap]
+      module:
+        - snmp
+        - qnap
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9116
+        replacement: {{ ansible_fqdn }}:9998
 
   - job_name: nginx
     scheme: https
@@ -252,14 +319,22 @@ scrape_configs:
     file_sd_configs:
     - files:
       - tplink_plug/targets.json
-    metrics_path: /scrape
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
+    params:
+      module:
+      - tplink_plug
     relabel_configs:
       - source_labels : [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9233
+        replacement: {{ ansible_fqdn }}:9998
 
   - job_name: rpki_validator_3
     scheme: https

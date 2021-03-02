@@ -4,4 +4,7 @@ modules:
     method: http
     http:
        port: {{ node.port }}
+{% if node.path is defined %}
+       path: {{ node.path }}
+{% endif %}
 {% endfor %}

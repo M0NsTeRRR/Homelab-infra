@@ -1,10 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "9272"
-    proto: tcp
-
 - name: Create vmware-exporter build directory
   file:
     dest: /opt/vmware_exporter/

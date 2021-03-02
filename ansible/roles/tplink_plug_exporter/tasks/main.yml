@@ -1,10 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "9233"
-    proto: tcp
-
 - name: Check if tplink-plug-exporter is already installed
   stat:
     path: /usr/local/bin/tplink_plug_exporter

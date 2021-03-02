@@ -1,10 +1,4 @@
 ---
-- name: Open required ports
-  ufw:
-    rule: allow
-    port: "9116"
-    proto: tcp
-
 - name: Create snmp-exporter folder
   file:
     state: directory

@@ -80,6 +80,7 @@
     - unifi_poller
     - tplink_plug_exporter
     - nginx_exporter
+    - exporter_exporter
 
 - name: Configure Website
   hosts: website
