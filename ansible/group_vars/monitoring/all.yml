@@ -197,7 +197,7 @@ exporter_exporter_nodes:
   - name: unifi_poller
     port: 9130
     path: /scrape
-  - name: vmware_exporter
+  - name: vmware
     port: 9272
   - name: ipmi
     port: 9290
