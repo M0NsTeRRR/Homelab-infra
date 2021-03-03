@@ -54,6 +54,10 @@ pdns_records:
     a: 192.168.10.52
     aaaa: 2a0c:b641:02c0:110::52
     rdns: true
+  - hostname: san.unicornafk.fr.
+    a: 192.168.10.53
+    aaaa: 2a0c:b641:02c0:110::53
+    rdns: true
   - hostname: sw1.unicornafk.fr.
     a: 192.168.40.2
     aaaa: 2a0c:b641:02c0:140::2
