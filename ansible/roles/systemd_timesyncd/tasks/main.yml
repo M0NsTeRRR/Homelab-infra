@@ -6,6 +6,8 @@
     owner: root
     group: root
     mode: 0644
+  notify:
+    - restart systemd-timesyncd
 
 - name: Enable ntp synchronization
   command: timedatectl set-ntp true
