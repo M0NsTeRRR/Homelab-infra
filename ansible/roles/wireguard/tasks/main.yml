@@ -19,17 +19,15 @@
       - qrencode
     state: present
 
-- name: Enable IPv4 forwarding
+- name: Update sysctl config
   sysctl:
-    name: net.ipv4.ip_forward
-    value: '1'
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
     reload: yes
-
-- name: Enable IPv6 forwarding
-  sysctl:
-    name: net.ipv6.conf.all.forwarding
-    value: '1'
-    reload: yes
+  with_items:
+    - { name: 'net.ipv4.ip_forward', value: '1' }
+    - { name: 'net.ipv6.conf.all.forwarding', value: '1' }
 
 - name: Setup clients
   include_tasks: clients.yml
