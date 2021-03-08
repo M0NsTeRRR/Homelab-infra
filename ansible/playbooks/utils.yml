@@ -9,6 +9,21 @@
     name: rng-tools
     state: present
 
+- name: Install sysstat
+  apt:
+    name: sysstat
+    state: present
+
+- name: Install apt-show-versions
+  apt:
+    name: apt-show-versions
+    state: present
+
+- name: Install debsums
+  apt:
+    name: debsums
+    state: present
+
 - name: Install cloud-initramfs-growroot
   apt:
     name: cloud-initramfs-growroot
