@@ -1,38 +1,4 @@
 ---
-- set_fact:
-    ssh_pub_keys: "{{ lookup('fileglob', '../ssh_pub_keys/*.pub', wantlist=True) }}"
-
-- name: Create wheel group
-  group:
-    name: wheel
-    state: present
-
-- name: Allow wheel group to have passwordless sudo
-  lineinfile:
-    dest: /etc/sudoers
-    state: present
-    regexp: '^%wheel'
-    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
-
-- name: Add users
-  user:
-    name: "{{ item | basename | replace('.pub', '') }}"
-    group: wheel
-    append: yes
-    state: present
-    createhome: yes
-    shell: /bin/bash
-  with_items: "{{ ssh_pub_keys }}"
-
-- name: Set authorized key for each user
-  authorized_key:
-    user: "{{ item | basename | replace('.pub', '') }}"
-    state: present
-    key: "{{ lookup('file', item) }}"
-    exclusive: yes
-  with_items: "{{ ssh_pub_keys }}"
-
 - name: Set sshd configuration
   lineinfile:
     dest: "/etc/ssh/sshd_config"
@@ -41,6 +7,15 @@
     state: "present"
   with_items:
     - { regexp: '^#?PrintMotd', line: 'PrintMotd no' }
+    - { regexp: '^#?LogLevel', line: 'LogLevel VERBOSE' }
+    - { regexp: '^#?MaxAuthTries', line: 'MaxAuthTries 3' }
+    - { regexp: '^#?MaxSessions', line: 'MaxSessions 2' }
+    - { regexp: '^#?AllowAgentForwarding', line: 'AllowAgentForwarding no' }
+    - { regexp: '^#?AllowTcpForwarding', line: 'AllowTcpForwarding no' }
+    - { regexp: '^#?TCPKeepAlive', line: 'TCPKeepAlive no' }
+    - { regexp: '^#?Compression', line: 'Compression no' }
+    - { regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval 120' }
+    - { regexp: '^#?ClientAliveCountMax', line: 'ClientAliveCountMax 2' }
     - { regexp: '^#?X11Forwarding', line: 'X11Forwarding no' }
     - { regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval 120' }
     - { regexp: '^#?ClientAliveCountMax', line: 'ClientAliveCountMax 5' }
@@ -51,7 +26,7 @@
     - { regexp: '^#?UsePAM', line: 'UsePAM yes' }
     - { regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
     - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
-    - { regexp: '^#?AllowGroups', line: 'AllowGroups wheel' }
+    - { regexp: '^#?AllowGroups', line: 'AllowGroups {% for group in sshd_allow_groups %}{{ group }}{% if not loop.last %} {% endif %}{% endfor %}' }
     - { regexp: '^#?RekeyLimit', line: 'RekeyLimit 1G 1H' }
     - { regexp: '^#?KexAlgorithms', line: 'KexAlgorithms diffie-hellman-group16-sha512,diffie-hellman-group-exchange-sha256,curve25519-sha256,curve25519-sha256@libssh.org' }
     - { regexp: '^#?Ciphers', line: 'Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr' }
