@@ -3,11 +3,17 @@
   hosts: default
   become: true
   roles:
+    - modprobe
+    - grub
+    - compiler
+    - auditd
+    - sysctl
     - ufw
     - motd
     - node_exporter
     - systemd_timesyncd
     - rsyslog
+    - user
     - sshd
     - fail2ban
     - root_ca
