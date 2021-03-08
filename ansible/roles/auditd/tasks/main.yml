@@ -1,0 +1,23 @@
+---
+- name: Install auditd
+  apt:
+    name: auditd
+    state: present
+  notify:
+    - restart auditd
+
+- name: Configure auditd rules
+  template:
+    src: audit.rules.j2
+    dest: /etc/audit/audit.rules
+  notify:
+    - restart auditd
+
+- name: Forward auditd logs to local rsyslog
+  lineinfile:
+    dest: "/etc/audit/audit.rules"
+    regexp: "^(# )?active"
+    line: "active = yes"
+    state: "present"
+  notify:
+    - restart auditd
