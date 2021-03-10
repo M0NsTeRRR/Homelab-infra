@@ -26,7 +26,6 @@ do
 
     packer build \
       -var "host_ip=$host_ip" \
-      -var "distribution=$distribution" \
       -var "vcenter_server=$vcenter_server" \
       -var "vcenter_username=$vcenter_username" \
       -var "vcenter_password=$vcenter_password" \
@@ -34,7 +33,7 @@ do
       -var "ssh_password=$ssh_password" \
       -var "main_password=$main_password" \
       -timestamp-ui \
-      templates/"$distribution".json
+      templates/"$distribution".pkr.hcl
 		break
 		;;
 	2)
