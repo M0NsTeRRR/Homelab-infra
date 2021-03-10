@@ -6,6 +6,22 @@ pdns_reverse_zones: '{{ reverse_zones }}'
 
 pdns_records:
   # unicornafk.fr
+  - hostname: rr1.unicornafk.fr.
+    a: 192.168.5.13
+    aaaa: 2a0c:b641:02c0:105::d
+    rdns: true
+  - hostname: rr2.unicornafk.fr.
+    a: 192.168.5.17
+    aaaa: 2a0c:b641:02c0:105::11
+    rdns: true
+  - hostname: r1.unicornafk.fr.
+    a: 192.168.6.1
+    aaaa: 2a0c:b641:02c0:106::1
+    rdns: true
+  - hostname: r2.unicornafk.fr.
+    a: 192.168.6.3
+    aaaa: 2a0c:b641:02c0:106::3
+    rdns: true
   - hostname: dns1.unicornafk.fr.
     a: 192.168.10.21
     aaaa: 2a0c:b641:02c0:110::21
@@ -22,30 +38,6 @@ pdns_records:
     a: 192.168.10.24
     aaaa: 2a0c:b641:02c0:110::24
     rdns: true
-  - hostname: lb.dmz.unicornafk.fr.
-    a: 192.168.10.60
-    aaaa: 2a0c:b641:02c0:110::60
-    rdns: false
-  - hostname: ap1.unicornafk.fr.
-    a: 192.168.20.51
-    aaaa: 2a0c:b641:02c0:120::51
-    rdns: true
-  - hostname: r1.unicornafk.fr.
-    a: 192.168.5.1
-    aaaa: 2a0c:b641:02c0:105::1
-    rdns: true
-  - hostname: r2.unicornafk.fr.
-    a: 192.168.5.3
-    aaaa: 2a0c:b641:02c0:105::5
-    rdns: true
-  - hostname: rr1.unicornafk.fr.
-    a: 192.168.5.13
-    aaaa: 2a0c:b641:02c0:105::d
-    rdns: true
-  - hostname: rr2.unicornafk.fr.
-    a: 192.168.5.17
-    aaaa: 2a0c:b641:02c0:105::11
-    rdns: true
   - hostname: rpki1.unicornafk.fr.
     a: 192.168.10.51
     aaaa: 2a0c:b641:02c0:110::51
@@ -57,6 +49,14 @@ pdns_records:
   - hostname: san.unicornafk.fr.
     a: 192.168.10.53
     aaaa: 2a0c:b641:02c0:110::53
+    rdns: true
+  - hostname: lb.dmz.unicornafk.fr.
+    a: 192.168.10.60
+    aaaa: 2a0c:b641:02c0:110::60
+    rdns: false
+  - hostname: ap1.unicornafk.fr.
+    a: 192.168.20.51
+    aaaa: 2a0c:b641:02c0:120::51
     rdns: true
   - hostname: sw1.unicornafk.fr.
     a: 192.168.40.2
