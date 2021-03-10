@@ -19,7 +19,6 @@
   user:
     name: "{{ item | basename | replace('.pub', '') }}"
     group: "{{ user_passwordless_sudo_group }}"
-    append: yes
     state: present
     createhome: yes
     shell: /bin/bash
@@ -35,16 +34,9 @@
 
 - name: Enforce umask to 027
   lineinfile:
-    dest: "/etc/powerdns/pdns.conf"
+    dest: "/etc/pam.d/common-session"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: "present"
   with_items:
     - { regexp: '^(# )?session optional        pam_umask.so', line: 'session optional        pam_umask.so umask=027' }
-
-- name: Enforce umask in /etc/login.defs
-  lineinfile:
-    dest: "/etc/profile"
-    regexp: "^(# )?UMASK"
-    line: "UMASK 027"
-    state: "present"
