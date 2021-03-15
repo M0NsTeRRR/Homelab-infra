@@ -9,6 +9,7 @@ Group=prometheus
 Type=simple
 CapabilityBoundingSet=CAP_NET_RAW
 AmbientCapabilities=CAP_NET_RAW
+Environment=REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 ExecStart=/opt/vmware_exporter/venv/bin/vmware_exporter -a 127.0.0.1 -c /etc/vmware_exporter/config.yml
 
 [Install]
