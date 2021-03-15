@@ -181,6 +181,28 @@ scrape_configs:
       - target_label: __address__
         replacement: {{ ansible_fqdn }}:9998
 
+  - job_name: snmp_juniper
+    file_sd_configs:
+    - files:
+      - snmp_juniper/targets.json
+    metrics_path: /proxy
+    scheme: https
+    tls_config:
+      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
+      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
+      insecure_skip_verify: true
+    params:
+      module:
+        - snmp
+        - juniper
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: {{ ansible_fqdn }}:9998
+
   - job_name: snmp_brocade
     file_sd_configs:
     - files:
