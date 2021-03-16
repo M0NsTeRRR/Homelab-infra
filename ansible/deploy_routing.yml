@@ -1,1 +1,7 @@
 ---
+- name: Configure Route Reflector
+  hosts: rr
+  become: yes
+  roles:
+    - snmpd
+    - frr

@@ -1,0 +1,23 @@
+---
+snmpd_syslocation: Rack
+snmpd_syscontact: "{{ admin_email }}"
+
+frr_daemons:
+  zebra: false
+  bgpd: true
+  ospfd: true
+  ospfd_instances: 1
+  ospf6d: true
+  ripd: false
+  ripngd: false
+  isisd: false
+  pimd: false
+  ldpd: false
+  nhrpd: false
+  eigrpd: false
+  babeld: false
+  sharpd: false
+  staticd: true
+  pbrd: false
+  bfdd: false
+  fabricd: false

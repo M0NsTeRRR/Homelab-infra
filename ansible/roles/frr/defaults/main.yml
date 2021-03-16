@@ -1,0 +1,20 @@
+---
+frr_daemons:
+  zebra: false
+  bgpd: false
+  ospfd: false
+  ospfd_instances: 1
+  ospf6d: false
+  ripd: false
+  ripngd: false
+  isisd: false
+  pimd: false
+  ldpd: false
+  nhrpd: false
+  eigrpd: false
+  babeld: false
+  sharpd: false
+  staticd: false
+  pbrd: false
+  bfdd: false
+  fabricd: false
