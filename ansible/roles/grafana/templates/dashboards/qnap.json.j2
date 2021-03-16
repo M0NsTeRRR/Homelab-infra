@@ -17,7 +17,8 @@
   "editable": true,
   "gnetId": 9330,
   "graphTooltip": 0,
-  "iteration": 1596294638709,
+  "id": 11,
+  "iteration": 1615938591163,
   "links": [],
   "panels": [
     {
@@ -73,9 +74,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.4.3",
       "targets": [
         {
           "expr": "sysUpTime{instance=~\"$host\"}/100",
@@ -96,9 +98,7 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {
-            "align": null
-          },
+          "custom": {},
           "decimals": 1,
           "mappings": [],
           "thresholds": {
@@ -139,9 +139,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.4.3",
       "targets": [
         {
           "expr": "(sysVolumeTotalSizeEX{instance=~\"$host\"} - sysVolumeFreeSizeEX{instance=~\"$host\"}) / sysVolumeTotalSizeEX{instance=~\"$host\"}",
@@ -210,9 +211,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.4.3",
       "targets": [
         {
           "expr": "sysVolumeStatusEX{instance=~\"$host\"}",
@@ -233,9 +235,7 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {
-            "align": null
-          },
+          "custom": {},
           "mappings": [
             {
               "from": "",
@@ -292,9 +292,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.4.3",
       "targets": [
         {
           "expr": "hdSmartInfo{instance=~\"$host\"}",
@@ -346,8 +347,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -445,8 +449,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -541,8 +548,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -641,8 +651,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.1",
+      "pluginVersion": "7.4.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -711,7 +724,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "Prometheus",
@@ -724,11 +737,13 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "192.168.20.42",
-          "value": "192.168.20.42"
+          "text": "192.168.50.42",
+          "value": "192.168.50.42"
         },
         "datasource": "Prometheus",
-        "definition": "label_values({__name__=~\"hdSmartInfoEX\"}, instance)",
+        "definition": "label_values(sysVolumeTotalSizeEX, instance)",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -737,11 +752,14 @@
         "options": [
           {
             "selected": true,
-            "text": "192.168.20.42",
-            "value": "192.168.20.42"
+            "text": "192.168.50.42",
+            "value": "192.168.50.42"
           }
         ],
-        "query": "label_values({__name__=~\"hdSmartInfoEX\"}, instance)",
+        "query": {
+          "query": "label_values(sysVolumeTotalSizeEX, instance)",
+          "refId": "StandardVariableQuery"
+        },
         "refresh": 0,
         "regex": "",
         "skipUrlSync": false,
@@ -785,6 +803,6 @@
   "timezone": "browser",
   "title": "QNAP",
   "uid": "bgJAbrYmz",
-  "version": 2
+  "version": 1
 }
 {% endraw %}
