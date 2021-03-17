@@ -48,6 +48,7 @@
     pkg:
       - frr
       - frr-pythontools
+      - frr-snmp
     state: present
 
 - name: Remove global FRR configuration

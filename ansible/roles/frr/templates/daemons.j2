@@ -40,10 +40,10 @@ fabricd={% if frr_daemons.fabricd %}yes{% else %}no{% endif %}
 # Check /etc/pam.d/frr if you intend to use "vtysh"!
 #
 vtysh_enable=yes
-zebra_options=" -s 90000000 --daemon -A 127.0.0.1"
-bgpd_options=" --daemon -A 127.0.0.1"
-ospfd_options=" --daemon -A 127.0.0.1"
-ospf6d_options=" --daemon -A ::1"
+zebra_options=" -s 90000000 --daemon -A 127.0.0.1 -M snmp"
+bgpd_options=" --daemon -A 127.0.0.1 -M snmp"
+ospfd_options=" --daemon -A 127.0.0.1 -M snmp"
+ospf6d_options=" --daemon -A ::1 -M snmp"
 ripd_options=" --daemon -A 127.0.0.1"
 ripngd_options=" --daemon -A ::1"
 isisd_options=" --daemon -A 127.0.0.1"
