@@ -16,6 +16,10 @@ vmware_exporter_vcenter_password: "{{ vcenter_password }}"
 unifi_poller_url: https://unifi.unicornafk.fr:8443
 unifi_poller_user: unifipoller
 
+snmp_exporter_user: "{{ snmp_user }}"
+snmp_exporter_pass: "{{ snmp_pass }}"
+snmp_exporter_private: "{{ snmp_private }}"
+
 alertmanager_smtp_smarthost: "{{ smtp_provider_host }}:{{ smtp_provider_port }}"
 alertmanager_smtp_from: "{{ monitoring_email }}"
 alertmanager_smtp_require_tls: "true"

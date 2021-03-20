@@ -1,6 +1,9 @@
 ---
 snmpd_syslocation: Rack
 snmpd_syscontact: "{{ admin_email }}"
+snmpd_user: "{{ snmp_user }}"
+snmpd_pass: "{{ snmp_pass }}"
+snmpd_private: "{{ snmp_private }}"
 
 frr_daemons:
   zebra: false
