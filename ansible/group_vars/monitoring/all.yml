@@ -4,6 +4,10 @@ grafana_smtp_port: "{{ smtp_provider_port }}"
 grafana_smtp_user: "{{ monitoring_email }}"
 grafana_smtp_password: "{{ smtp_monitoring_password }}"
 grafana_smtp_from_address: "{{ monitoring_email }}"
+grafana_plugins:
+  - grafana-piechart-panel
+  - grafana-clock-panel
+  - agenty-flowcharting-panel
 
 vmware_exporter_vcenter_hostname: "{{ vcenter_hostname }}"
 vmware_exporter_vcenter_username: "{{ vcenter_username }}"
