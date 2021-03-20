@@ -23,11 +23,22 @@
     shell: /usr/sbin/nologin
     group: caddy
 
+- name: Add PowerDNS Apt signing key
+  apt_key:
+    id: 155B6D79CA56EA34
+    url: "https://dl.cloudsmith.io/public/caddy/stable/gpg.key"
+    state: present
+  retries: 3
+  delay: 3
+
 - name: Add Caddy Apt repository
   apt_repository:
-    repo: "deb [trusted=yes] https://apt.fury.io/caddy/ /"
+    repo: "{{ item }}"
     state: present
-    filename: caddy-fury
+    filename: caddy-stable
+  with_items:
+    - "deb https://dl.cloudsmith.io/public/caddy/testing/deb/debian any-version main"
+    - "deb-src https://dl.cloudsmith.io/public/caddy/testing/deb/debian any-version main"
 
 - name: Install Caddy
   apt:
