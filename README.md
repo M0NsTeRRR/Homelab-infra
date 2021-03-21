@@ -44,7 +44,7 @@ To delete the rules `netsh interface portproxy del v4tov4 listenport=<PORT> list
 Supported distributions :
 
 **VM**
-- Debian (10.8.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.7.0-amd64-netinst.iso)
+- Debian (10.8.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.8.0-amd64-netinst.iso)
 - Ubuntu (20.04.2) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.2/release/ubuntu-20.04.2-legacy-server-amd64.iso)
 
 **Raspberry Pi (v3/v4)**
@@ -59,10 +59,6 @@ Supported distributions :
 Install dependencies `apt install -y ipv6calc jq`
 
 fill `account.hcl` based on `account.example`
-
-Infrastructure is split in 2 parts :  
-- dmz
-- lab
 
 **Command must be run in one of this two directories (dmz/lab/vpn)**
 

@@ -3,8 +3,7 @@
 192.168.10.22 ipv6=2a0c:b641:02c0:110::22 hostname=dns2.unicornafk.fr.
 
 [dhcp]
-dhcp1.unicornafk.fr
-dhcp2.unicornafk.fr
+dhcp[1:2].unicornafk.fr
 
 [reverse_proxy]
 reverse-proxy.unicornafk.fr
@@ -34,12 +33,10 @@ monitoring.unicornafk.fr
 unifi.unicornafk.fr
 
 [rpki]
-rpki1.unicornafk.fr
-rpki2.unicornafk.fr
+rpki[1:2].unicornafk.fr
 
 [rr]
-rr1.unicornafk.fr
-rr2.unicornafk.fr
+rr[1:2].unicornafk.fr
 
 [website]
 website.unicornafk.fr
