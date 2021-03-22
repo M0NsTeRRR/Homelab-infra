@@ -1,5 +1,5 @@
 ---
-alertmanager_webhook_free_version: 1.0.0
+alertmanager_webhook_free_version: 1.1.0
 alertmanager_webhook_free_sentry: {}
 alertmanager_webhook_free_server: {}
 alertmanager_webhook_free_free: {}
