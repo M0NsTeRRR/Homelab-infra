@@ -44,6 +44,25 @@
       - { regexp: '^(#)?transport_email_web_interface_url =', line: 'transport_email_web_interface_url = https://{{ ansible_hostname }}' }
   notify: restart graylog-server
 
+
+- name: Copy certificate to remote location
+  copy:
+    src: "{{ rsyslog_local_path_certificate }}"
+    dest: "/etc/ssl/certs/graylog.crt"
+  notify: restart graylog-server
+
+- name: Copy certificate key to remote location
+  copy:
+    src: "{{ rsyslog_local_path_certificate_key }}"
+    dest: "/etc/ssl/certs/graylog.pem"
+  notify: restart graylog-server
+
+- name: Add ca.crt
+  copy:
+    src: "{{ rsyslog_local_path_ca_certificate }}"
+    dest: /etc/graylog/ca.crt
+  notify: restart graylog-server
+
 - meta: flush_handlers
 
 - name: Wait graylog-server restart

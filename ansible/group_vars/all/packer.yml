@@ -4,6 +4,11 @@ root_ca_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
 node_exporter_local_path_ca_certificate: "{{ root_ca_local_path_ca_certificate }}"
 node_exporter_local_path_certificate: "{{ certs_dir }}exporter/node-exporter/client.crt"
 node_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/node-exporter/client.pem"
+rsyslog_server: log.unicornafk.fr
+rsyslog_port: 1514
+rsyslog_local_path_ca_certificate: "{{ root_ca_local_path_ca_certificate }}"
+rsyslog_local_path_certificate: "{{ certs_dir }}rsyslog/client.crt"
+rsyslog_local_path_certificate_key: "{{ certs_dir }}rsyslog/client.pem"
 systemd_timesyncd_ntp:
   - ntp1.unicornafk.fr
   - ntp2.unicornafk.fr

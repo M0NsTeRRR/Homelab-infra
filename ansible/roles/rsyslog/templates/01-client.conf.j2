@@ -1,1 +1,19 @@
-*.*                         @log.unicornafk.fr:1514
+global(
+preserveFQDN="on"
+DefaultNetstreamDriver="gtls"
+DefaultNetstreamDriverCAFile="/etc/rsyslog.d/ca.crt"
+DefaultNetstreamDriverCertFile="/etc/ssl/certs/rsyslog.crt"
+DefaultNetstreamDriverKeyFile="/etc/ssl/certs/rsyslog.pem"
+)
+
+# set up the action for all messages
+action(
+type="omfwd"
+target="{{ rsyslog_server }}"
+protocol="tcp"
+port="{{ rsyslog_port }}"
+StreamDriver="gtls"
+StreamDriverMode="1" # run driver in TLS-only mode
+StreamDriverAuthMode="x509/name"
+StreamDriverPermittedPeers="{{ rsyslog_server }}"
+)

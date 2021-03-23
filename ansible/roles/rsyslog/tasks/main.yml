@@ -1,4 +1,27 @@
 ---
+- name: Install rsyslog-gnutls
+  apt:
+    name: rsyslog-gnutls
+    state: present
+
+- name: Copy certificate to remote location
+  copy:
+    src: "{{ rsyslog_local_path_certificate }}"
+    dest: "/etc/ssl/certs/rsyslog.crt"
+  notify: restart rsyslog
+
+- name: Copy certificate key to remote location
+  copy:
+    src: "{{ rsyslog_local_path_certificate_key }}"
+    dest: "/etc/ssl/certs/rsyslog.pem"
+  notify: restart rsyslog
+
+- name: Add ca.crt
+  copy:
+    src: "{{ rsyslog_local_path_ca_certificate }}"
+    dest: /etc/rsyslog.d/ca.crt
+  notify: restart rsyslog
+
 - name: Configure rsyslog
   template:
     src: 01-client.conf.j2
