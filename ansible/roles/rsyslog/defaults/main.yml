@@ -1,0 +1,6 @@
+---
+rsyslog_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
+rsyslog_local_path_certificate: "/etc/ssl/certs/cert.crt"
+rsyslog_local_path_certificate_key: "/etc/ssl/certs/cert.pem"
+rsyslog_server: log.example.net
+rsyslog_port: 514
