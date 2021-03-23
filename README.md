@@ -63,10 +63,10 @@ fill `account.hcl` based on `account.example`
 **Command must be run in one of this two directories (dmz/lab/vpn)**
 
 ### Create an execution plan
-`terragrunt plan-all`
+`terragrunt run-all plan`
 
 ### Deploy/update infrastructure
-`terragrunt apply-all`
+`terragrunt run-all apply`
 
 # Licence
 

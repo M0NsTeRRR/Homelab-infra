@@ -41,17 +41,11 @@ provider "vsphere" {
   vsphere_server = "${local.vsphere_server}"
   user           = "${local.vsphere_user}"
   password       = "${local.vsphere_password}"
-
-  # If you have a self-signed cert
-  allow_unverified_ssl = true
 }
 
 provider "powerdns" {
   api_key    = "${local.powerdns_api_key}"
   server_url = "https://dns1.unicornafk.fr"
-
-  # If you have a self-signed cert
-  insecure_https = true
 }
 EOF
 }
