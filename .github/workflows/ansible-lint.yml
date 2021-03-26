@@ -13,8 +13,12 @@ jobs:
         targets: |
            ansible/deploy_dmz.yml
            ansible/deploy_lab.yml
+           ansible/deploy_packer.yml
+           ansible/deploy_routing.yml
+           ansible/deploy_vpn.yml
            ansible/playbooks/add-ssh-keys.yml
            ansible/playbooks/generate-certs.yml
+           ansible/playbooks/utils.yml
            terraform/modules/vsphere_vm/disable_slaac.yml
            terraform/modules/vsphere_vm/lvm_resize.yml
            packer/scripts/main.yml
