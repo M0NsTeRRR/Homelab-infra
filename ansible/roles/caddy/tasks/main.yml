@@ -23,7 +23,7 @@
     shell: /usr/sbin/nologin
     group: caddy
 
-- name: Add PowerDNS Apt signing key
+- name: Add Caddy Apt signing key
   apt_key:
     id: 155B6D79CA56EA34
     url: "https://dl.cloudsmith.io/public/caddy/stable/gpg.key"
