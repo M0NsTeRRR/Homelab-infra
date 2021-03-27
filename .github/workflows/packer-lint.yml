@@ -8,8 +8,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Lint Packer Template
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: validate
-          arguments: -syntax-only
-          target: packer/templates
+      uses: hashicorp/packer-github-actions@master
+      with:
+        command: validate
+        arguments: -syntax-only
+        target: packer/templates
