@@ -21,5 +21,4 @@ jobs:
            ansible/playbooks/utils.yml
            terraform/modules/vsphere_vm/disable_slaac.yml
            terraform/modules/vsphere_vm/lvm_resize.yml
-           packer/scripts/main.yml
         args: "-x 204 -x 301 -x 305 -x 401"

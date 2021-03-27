@@ -13,7 +13,7 @@
       ansible.builtin.command: pvresize /dev/sda5
 
     - name: "Extend {{ item.key }}-root with all free spaces "
-      ansible.general.lvol:
+      community.general.lvol:
         vg: "{{ item.key }}"
         lv: root
         size: 100%FREE

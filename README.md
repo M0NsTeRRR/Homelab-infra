@@ -2,6 +2,7 @@ This is my Homelab infrastructure.
 
 ![Ansible Lint](https://github.com/M0NsTeRRR/Homelab-infra/workflows/Ansible%20Lint/badge.svg)
 ![Packer Lint](https://github.com/M0NsTeRRR/Homelab-infra/workflows/Packer%20Lint/badge.svg)
+![Terraform Lint](https://github.com/M0NsTeRRR/Homelab-infra/workflows/Terraform%20Lint/badge.svg)
 
 # Requirements
 
