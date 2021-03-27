@@ -21,7 +21,7 @@
   when: not wireguard_exporter.stat.exists
 
 - name: Extract wireguard-exporter files
- ansible.builtin. unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/wireguard-exporter.tar.gz
     dest: /opt/exporter/wireguard/build
     remote_src: yes

@@ -12,6 +12,4 @@ jobs:
       with:
         command: validate
         arguments: -syntax-only
-        target:
-          - packer/templates/debian.pkr.hcl
-          - packer/templates/ubuntu.pkr.hcl
+        target: packer/templates/debian.pkr.hcl packer/templates/ubuntu.pkr.hcl
