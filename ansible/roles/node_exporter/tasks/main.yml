@@ -25,7 +25,7 @@
     dest: /tmp/node-exporter.tar.gz
 
 - name: Extract latest binary of node-exporter
-  ansible.builtin.narchive:
+  ansible.builtin.archive:
     src: /tmp/node-exporter.tar.gz
     dest: /opt/exporter/node-exporter
     remote_src: yes
