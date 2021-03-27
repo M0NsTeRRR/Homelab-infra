@@ -34,7 +34,7 @@
           - digitalSignature
 
     - name: Generate CertAuthority OpenSSL certificate
-      community.crypto.openssl_certificate:
+      community.crypto.x509_certificate:
         path: "{{ certs_dir }}ca.crt"
         privatekey_path: "{{ certs_dir }}ca.pem"
         csr_path: "{{ certs_dir }}ca.csr"
@@ -65,7 +65,7 @@
         common_name: "{{ common_name }}"
 
     - name: Generate client OpenSSL certificate signed with our CA
-      community.crypto.openssl_certificate:
+      community.crypto.x509_certificate:
         path: "{{ certs_dir }}{{ certificate_folder_path }}/client.crt"
         ownca_path: "{{ certs_dir }}ca.crt"
         ownca_privatekey_path: "{{ certs_dir }}ca.pem"
