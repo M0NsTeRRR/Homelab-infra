@@ -11,6 +11,8 @@ jobs:
       uses: autero1/action-terragrunt@v1.0.0
       with:
         terragrunt_version: 0.28.16
+    - name: Create an empty account.hcl
+      run: mv terraform/account.example terraform/account.hcl
     - name: Lint DMZ Terraform Template
       run: terragrunt run-all validate --terragrunt-working-dir terraform/dmz
     - name: Lint LAB Terraform Template

@@ -31,8 +31,8 @@
   run_once: true
   when: '"primitive virtual-IP-rsc IPaddr2 \\" not in pacemaker_configuration.stdout_lines'
 
-- ansible.builtin.include_tasks: haproxy.yml
-  tags: [ 'haproxy' ]
+- name: Flush handlers
+  ansible.builtin.include_tasks: haproxy.yml
   when:
     - pacemaker_lb_service_type is defined
     - pacemaker_lb_service_type == "haproxy"

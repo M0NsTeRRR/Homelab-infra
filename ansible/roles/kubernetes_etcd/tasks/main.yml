@@ -11,7 +11,8 @@
     dest: /etc/systemd/system/kubelet.service.d/20-etcd-service-manager.conf
   notify: restart kubelet
 
-- ansible.builtin.meta: flush_handlers
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Checking if /etc/kubernetes/pki/etcd/ca.crt
   ansible.builtin.stat:

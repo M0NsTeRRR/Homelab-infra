@@ -34,4 +34,5 @@
     dest: /etc/docker/daemon.json
   notify: restart docker
 
-- ansible.builtin.meta: flush_handlers
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers

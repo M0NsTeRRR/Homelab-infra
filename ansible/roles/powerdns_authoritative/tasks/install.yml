@@ -147,7 +147,8 @@
   when: inventory_hostname != play_hosts[0]
   notify: restart pdns
 
-- ansible.builtin.meta: flush_handlers
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Wait pdns restart
   ansible.builtin.uri:

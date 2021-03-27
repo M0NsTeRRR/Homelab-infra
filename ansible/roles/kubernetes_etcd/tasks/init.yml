@@ -64,7 +64,8 @@
   ansible.builtin.shell: kubeadm init phase etcd local --config=/home/{{ ansible_user }}/{{ inventory_hostname }}/kubeadmcfg.yaml
   notify: restart kubelet
 
-- ansible.builtin.meta: flush_handlers
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Wait for port 2379 to become open on the host
   ansible.builtin.wait_for:
