@@ -1,0 +1,10 @@
+---
+- name: restart netbox-sync.timer
+  ansible.builtin.service:
+    name: netbox-sync.timer
+    state: restarted
+
+- name: enable netbox-sync.timer
+  ansible.builtin.service:
+    name: netbox-sync.timer
+    enabled: yes

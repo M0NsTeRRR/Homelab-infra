@@ -1,0 +1,59 @@
+---
+- name: Install required packages
+  ansible.builtin.apt:
+    pkg:
+      - git
+      - python3-pip
+    state: present
+
+- name: Install required python packages
+  ansible.builtin.pip:
+    name:
+      - virtualenv
+
+- name: Create netbox-sync folder
+  ansible.builtin.file:
+    state: directory
+    name: /opt/netbox-sync
+
+- name: Check if netbox-sync is already installed
+  ansible.builtin.stat:
+    path: /opt/netbox-sync/requirements.txt
+  register: netbox_sync
+
+- name: "Download netbox-sync version {{ netbox_sync_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/bb-Ricardo/netbox-sync/archive/v{{ netbox_sync_version }}.tar.gz"
+    dest: /tmp/netbox-sync.tar.gz
+  when: not netbox_sync.stat.exists
+
+- name: Extract netbox-sync
+  ansible.builtin.unarchive:
+    src: /tmp/netbox-sync.tar.gz
+    dest: /opt/netbox-sync
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+  when: not netbox_sync.stat.exists
+
+- name: Install netbox-sync python packages
+  ansible.builtin.pip:
+    requirements: /opt/netbox-sync/requirements.txt
+    virtualenv: /opt/netbox-sync/venv
+
+- name: Configure netbox-sync
+  ansible.builtin.template:
+    src: settings.ini.j2
+    dest: /opt/netbox-sync/settings.ini
+
+- name: Configure netbox-sync.service
+  ansible.builtin.template:
+    src: netbox-sync.service.j2
+    dest: /etc/systemd/system/netbox-sync.service
+
+- name: Configure netbox-sync.timer
+  ansible.builtin.template:
+    src: netbox-sync.timer.j2
+    dest: /etc/systemd/system/netbox-sync.timer
+  notify:
+    - restart netbox-sync.timer
+    - enable netbox-sync.timer

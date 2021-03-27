@@ -1,0 +1,13 @@
+[Unit]
+Description=sync netbox with vcenter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/netbox-sync
+Environment=REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ExecStart=/opt/netbox-sync/venv/bin/python netbox-sync.py -c settings.ini
+
+[Install]
+WantedBy=multi-user.target
