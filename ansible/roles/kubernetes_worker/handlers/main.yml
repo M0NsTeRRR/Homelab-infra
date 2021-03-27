@@ -1,6 +1,6 @@
 ---
 - name: Recreate kube-dns
-  command: kubectl --kubeconfig=/etc/kubernetes/admin.conf -n kube-system delete pods -l k8s-app=kube-dns
+  ansible.builtin.command: kubectl --kubeconfig=/etc/kubernetes/admin.conf -n kube-system delete pods -l k8s-app=kube-dns
   delegate_to: "{{ groups[control_plane_group][0] }}"
   run_once: true
   ignore_errors: true

@@ -1,5 +1,5 @@
 ---
 - name: restart pdns-recursor
-  service:
+  ansible.builtin.service:
     name: pdns-recursor
     state: restarted

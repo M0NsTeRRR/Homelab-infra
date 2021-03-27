@@ -1,6 +1,6 @@
 ---
 - name: Install Postgresql
-  apt:
+  ansible.builtin.apt:
     name: postgresql
     state: present
   notify:
@@ -8,23 +8,23 @@
     - restart postgresql
 
 - name: Install pip3
-  apt:
+  ansible.builtin.apt:
     name: python3-pip
     state: present
 
 - name: Install required python package
-  pip:
+  ansible.builtin.pip:
     name: psycopg2-binary
 
 - name: "Create {{ postgresql_user }} postgresql user"
-  postgresql_user:
+  ansible.builtin.postgresql_user:
     name: "{{ postgresql_user }}"
     password: "{{ postgresql_password }}"
   become: yes
   become_user: postgres
 
 - name: "Create {{ postgresql_db }} postgresql database"
-  postgresql_db:
+  ansible.builtin.postgresql_db:
     name: "{{ postgresql_db }}"
     owner: "{{ postgresql_user }}"
   become: yes

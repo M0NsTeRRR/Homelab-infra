@@ -1,10 +1,10 @@
 ---
 - name: restart rpki-validator-3
-  service:
+  ansible.builtin.service:
     name: rpki-validator-3
     state: restarted
 
 - name: enable rpki-validator-3
-  service:
+  ansible.builtin.service:
     name: rpki-validator-3
     enabled: true

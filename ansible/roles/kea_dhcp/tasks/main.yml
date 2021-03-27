@@ -1,6 +1,6 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item }}"
     proto: udp
@@ -9,32 +9,31 @@
     - "547"
 
 - name: Install kea-dhcp4-server kea-dhcp6-server kea-ctrl-agent
-  apt:
+  ansible.builtin.apt:
     pkg:
       - kea-dhcp4-server
       - kea-dhcp6-server
       - kea-ctrl-agent
     state: present
-
-- name: Enable kea-ctrl-agent
-  service:
-    name: kea-ctrl-agent
-    enabled: yes
+  notify:
+    - enable kea-dhcp4-server
+    - enable kea-dhcp6-server
+    - enable kea-ctrl-agent
 
 - name: Configure kea-dhcp4-server
-  template:
+  ansible.builtin.template:
     src: kea-dhcp4.conf.j2
     dest: /etc/kea/kea-dhcp4.conf
   notify: restart kea-dhcp4-server
 
 - name: Configure kea-dhcp6-server
-  template:
+  ansible.builtin.template:
     src: kea-dhcp6.conf.j2
     dest: /etc/kea/kea-dhcp6.conf
   notify: restart kea-dhcp6-server
 
 - name: Configure kea-ctrl-agent
-  template:
+  ansible.builtin.template:
     src: kea-ctrl-agent.conf.j2
     dest: /etc/kea/kea-ctrl-agent.conf
   notify: restart kea-ctrl-agent

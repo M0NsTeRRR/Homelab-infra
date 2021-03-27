@@ -1,11 +1,11 @@
 ---
 - name: Install ca-certificates
-  apt:
+  ansible.builtin.apt:
     name: ca-certificates
     state: present
 
 - name: "Copy the certificate {{ root_ca_organization_name }}"
-  copy:
+  ansible.builtin.copy:
     src: "{{ root_ca_local_path_ca_certificate }}"
     dest: "/usr/local/share/ca-certificates/{{ root_ca_organization_name }}.crt"
   notify: update ca-certificates

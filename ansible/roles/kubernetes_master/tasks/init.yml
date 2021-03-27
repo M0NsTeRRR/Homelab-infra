@@ -1,9 +1,9 @@
 ---
 - name: Reset Kubernetes component
-  shell: "kubeadm reset --force"
+  ansible.builtin.shell: "kubeadm reset --force"
 
 - name: Archive certificate to copy
-  archive:
+  ansible.builtin.archive:
     path:
       - /etc/kubernetes/pki/etcd/ca.crt
       - /etc/kubernetes/pki/apiserver-etcd-client.crt
@@ -12,31 +12,31 @@
   delegate_to: "{{ groups[k8s_etcd_group][0] }}"
 
 - name: Fetch certificates from first etcd node
-  fetch:
+  ansible.builtin.fetch:
     src: "/home/{{ ansible_user }}/pki.tgz"
     dest: "/tmp/pki.tgz"
     flat: yes
   delegate_to: "{{ groups[k8s_etcd_group][0] }}"
 
 - name: Copy certificates to first control plane node
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/tmp/pki.tgz"
     dest: "/home/{{ ansible_user }}"
 
 - name: Create /etc/kubernetes/pki/etcd if it does not exist
-  file:
+  ansible.builtin.file:
     path: /etc/kubernetes/pki/etcd
     state: directory
     mode: '600'
 
 - name: Move certificates to first control plane node
-  shell: |
+  ansible.builtin.shell: |
     mv /home/{{ ansible_user }}/etcd /etc/kubernetes/pki/
     mv /home/{{ ansible_user }}/apiserver-etcd-client.crt /etc/kubernetes/pki
     mv /home/{{ ansible_user }}/apiserver-etcd-client.key /etc/kubernetes/pki
 
 - name: Fix permissions on certificates
-  file:
+  ansible.builtin.file:
     path: '{{ item.path }}'
     owner: root
     group: root
@@ -47,29 +47,29 @@
     - { 'path': '/etc/kubernetes/pki/apiserver-etcd-client.key', 'mode': '0600'}
 
 - name: Configure control plane node
-  template:
+  ansible.builtin.template:
     src: kubeadm-config.yaml.j2
     dest: /home/{{ ansible_user }}/kubeadm-config.yaml
 
 - name: Init first control plane node
-  command: "kubeadm init --config /home/{{ ansible_user }}/kubeadm-config.yaml --upload-certs"
+  ansible.builtin.command: "kubeadm init --config /home/{{ ansible_user }}/kubeadm-config.yaml --upload-certs"
 
 - name: Get Kubernetes version for Weave installation
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     kubectl --kubeconfig /etc/kubernetes/admin.conf version | base64 | tr -d '\n'
   register: cni_version
 
 - name: Configure Weave networking
-  shell: "kubectl apply --kubeconfig /etc/kubernetes/admin.conf -f https://cloud.weave.works/k8s/net?k8s-version={{ cni_version.stdout_lines[0] }}"
+  ansible.builtin.shell: "kubectl apply --kubeconfig /etc/kubernetes/admin.conf -f https://cloud.weave.works/k8s/net?k8s-version={{ cni_version.stdout_lines[0] }}"
 
 - name: Wait for port 10250 to become open on the host
-  wait_for:
+  ansible.builtin.wait_for:
     port: 10250
     delay: 10
 
 - name: Clean files on master nodes
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     state: absent
   delegate_to: "{{ item.host }}"
@@ -80,13 +80,13 @@
 
 - name: Clean files on localhost
   become: no
-  file:
+  ansible.builtin.file:
     path: /tmp/pki.tgz
     state: absent
   delegate_to: localhost
 
 - name: Copy admin.conf on localhost
-  fetch:
+  ansible.builtin.fetch:
     src: "/etc/kubernetes/admin.conf"
     dest: "/tmp/config"
     flat: yes

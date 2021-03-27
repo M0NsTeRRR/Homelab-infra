@@ -1,6 +1,6 @@
 ---
 - name: Install required packages by Docker
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - ca-certificates
@@ -8,20 +8,20 @@
     state: present
 
 - name: Add Docker Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg"
     state: present
   retries: 3
   delay: 3
 
 - name: Add Docker Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb [arch=amd64] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} stable"
     state: present
     filename: docker
 
 - name: Install Docker
-  apt:
+  ansible.builtin.apt:
     pkg:
       - docker-ce
       - docker-ce-cli
@@ -29,9 +29,9 @@
     state: present
 
 - name: Setup daemon
-  template:
+  ansible.builtin.template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
   notify: restart docker
 
-- meta: flush_handlers
+- ansible.builtin.meta: flush_handlers

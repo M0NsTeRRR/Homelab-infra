@@ -1,5 +1,5 @@
 ---
 - name: restart unifi-poller.service
-  service:
+  ansible.builtin.service:
     name: unifi-poller.service
     state: restarted

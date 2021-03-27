@@ -1,25 +1,25 @@
 ---
 - name: Create kea-exporter build directory
-  file:
+  ansible.builtin.file:
     dest: /opt/kea_exporter/
     state: directory
 
 - name: Install pip3
-  apt:
+  ansible.builtin.apt:
     name: python3-pip
     state: present
 
 - name: Install virtualenv
-  pip:
+  ansible.builtin.pip:
     name: virtualenv
 
 - name: Install kea_exporter
-  pip:
+  ansible.builtin.pip:
     name: kea-exporter
     virtualenv: /opt/kea_exporter/venv
 
 - name: Create systemd service file
-  template:
+  ansible.builtin.template:
     src: kea-exporter.service.j2
     dest: /etc/systemd/system/kea-exporter.service
   notify:

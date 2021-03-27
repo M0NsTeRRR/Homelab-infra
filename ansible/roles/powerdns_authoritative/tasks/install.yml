@@ -1,6 +1,6 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "53000"
     proto: "{{ item }}"
@@ -9,27 +9,27 @@
     - tcp
 
 - name: Add pdns group
-  group:
+  ansible.builtin.group:
     name: pdns
     system: yes
     state: present
 
 - name: Add pdns user
-  user:
+  ansible.builtin.user:
     name: pdns
     create_home: false
     shell: /usr/sbin/nologin
     group: pdns
 
 - name: Install required packages by PowerDNS
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - gnupg-agent
     state: present
 
 - name: Add PowerDNS Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     id: "{{ pdns_repository_key }}"
     url: "https://repo.powerdns.com/{{ pdns_repository_key }}-pub.asc"
     state: present
@@ -37,13 +37,13 @@
   delay: 3
 
 - name: Add PowerDNS Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb [arch=amd64] http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-auth-{{ pdns_version }} main"
     state: present
     filename: pdns-auth
 
 - name: Configure apt preferences
-  template:
+  ansible.builtin.template:
     src: apt-preferences.j2
     dest: /etc/apt/preferences.d/pdns
     owner: root
@@ -51,13 +51,13 @@
     mode: 0644
 
 - name: Disable and stop systemd-resolved
-  systemd:
+  ansible.builtin.service:
     name: systemd-resolved
     state: stopped
     enabled: false
 
 - name: Install PowerDNS
-  apt:
+  ansible.builtin.apt:
     pkg:
       - pdns-server
       - sqlite3
@@ -65,7 +65,7 @@
     state: present
 
 - name: Fix perms on PowerDNS configuration
-  file:
+  ansible.builtin.file:
     name: "/etc/powerdns/pdns.conf"
     owner: "root"
     group: "pdns"
@@ -73,7 +73,7 @@
     state: file
 
 - name: Ensure that the directories containing the PowerDNS SQLite databases exist
-  file:
+  ansible.builtin.file:
     name: "/var/lib/powerdns"
     owner: "pdns"
     group: "pdns"
@@ -81,17 +81,17 @@
     state: directory
 
 - name: Check if database exist
-  stat:
+  ansible.builtin.stat:
     path: "/var/lib/powerdns/db.sqlite"
   register: pdns_db
 
 - name: Create the PowerDNS SQLite databases
-  shell: "sqlite3 /var/lib/powerdns/db.sqlite < /usr/share/doc/pdns-backend-sqlite3/schema.sqlite3.sql"
+  ansible.builtin.shell: "sqlite3 /var/lib/powerdns/db.sqlite < /usr/share/doc/pdns-backend-sqlite3/schema.sqlite3.sql"
   when: not pdns_db.stat.exists
   notify: restart pdns
 
 - name: Fix perms on PowerDNS SQLite databases
-  file:
+  ansible.builtin.file:
     name: "/var/lib/powerdns/db.sqlite"
     owner: "pdns"
     group: "pdns"
@@ -99,7 +99,7 @@
     state: file
 
 - name: Configure PowerDNS
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/powerdns/pdns.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -122,7 +122,7 @@
   notify: restart pdns
 
 - name: Configure master
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/powerdns/pdns.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -135,7 +135,7 @@
   notify: restart pdns
 
 - name: Configure slave
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/powerdns/pdns.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
@@ -147,10 +147,10 @@
   when: inventory_hostname != play_hosts[0]
   notify: restart pdns
 
-- meta: flush_handlers
+- ansible.builtin.meta: flush_handlers
 
 - name: Wait pdns restart
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones"
     status_code: 401
     validate_certs: no

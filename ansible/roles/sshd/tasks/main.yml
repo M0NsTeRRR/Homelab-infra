@@ -1,6 +1,6 @@
 ---
 - name: Set sshd configuration
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/ssh/sshd_config"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"

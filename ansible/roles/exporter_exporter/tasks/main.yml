@@ -1,36 +1,36 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "9998"
     proto: tcp
 
 - name: Add exporter-exporter group
-  group:
+  ansible.builtin.group:
     name: exporter-exporter
     system: yes
     state: present
 
 - name: Add exporter-exporter user
-  user:
+  ansible.builtin.user:
     name: exporter-exporter
     create_home: false
     shell: /usr/sbin/nologin
     group: exporter-exporter
 
 - name: Check if exporter_exporter is already installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/local/bin/exporter_exporter
   register: exporter_exporter
 
 - name: "Download exporter_exporter version {{ exporter_exporter_version }}"
-  get_url:
+  ansible.builtin.get_url:
     url: "https://github.com/QubitProducts/exporter_exporter/releases/download/v{{ exporter_exporter_version }}/exporter_exporter-{{ exporter_exporter_version }}.linux-amd64.tar.gz"
     dest: /tmp/exporter_exporter.tar.gz
   when: not exporter_exporter.stat.exists
 
 - name: Extract exporter_exporter binary
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/exporter_exporter.tar.gz
     dest: /tmp
     remote_src: yes
@@ -39,7 +39,7 @@
   when: not exporter_exporter.stat.exists
 
 - name: Copy exporter_exporter binary to /usr/local/bin
-  copy:
+  ansible.builtin.copy:
     src: /tmp/{{ archive_contents.files[0] }}exporter_exporter
     dest: /usr/local/bin/exporter_exporter
     owner: exporter-exporter
@@ -50,14 +50,14 @@
   when: not exporter_exporter.stat.exists
 
 - name: Create exporter_exporter folder
-  file:
+  ansible.builtin.file:
     name: /etc/exporter_exporter
     state: directory
     owner: exporter-exporter
     group: exporter-exporter
 
 - name: Copy certificate to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ exporter_exporter_local_path_certificate }}"
     dest: "/etc/ssl/certs/exporter_exporter.crt"
     owner: exporter-exporter
@@ -65,7 +65,7 @@
   notify: restart exporter-exporter.service
 
 - name: Copy certificate key to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ exporter_exporter_local_path_certificate_key }}"
     dest: "/etc/ssl/certs/exporter_exporter.pem"
     owner: exporter-exporter
@@ -73,7 +73,7 @@
   notify: restart exporter-exporter.service
 
 - name: Add CA cert
-  template:
+  ansible.builtin.template:
     src: "{{ exporter_exporter_local_path_ca_certificate }}"
     dest: /etc/exporter_exporter/ca.crt
     owner: exporter-exporter
@@ -81,7 +81,7 @@
   notify: restart exporter-exporter.service
 
 - name: Configure exporter_exporter
-  template:
+  ansible.builtin.template:
     src: exporter_exporter.yml.j2
     dest: "/etc/exporter_exporter/expexp.yaml"
     owner: exporter-exporter
@@ -89,7 +89,7 @@
   notify: restart exporter-exporter.service
 
 - name: Create systemd service file
-  template:
+  ansible.builtin.template:
     src: exporter_exporter.service.j2
     dest: /etc/systemd/system/exporter-exporter.service
   notify:

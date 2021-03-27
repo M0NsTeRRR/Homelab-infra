@@ -1,19 +1,19 @@
 ---
 - name: Add elasticsearch Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
     state: present
   retries: 3
   delay: 3
 
 - name: Add elastic Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb https://artifacts.elastic.co/packages/oss-{{ graylog_elasticsearch_version }}.x/apt stable main"
     state: present
     filename: elastic
 
 - name: Install elasticsearch
-  apt:
+  ansible.builtin.apt:
     name: elasticsearch-oss
     state: present
   notify:
@@ -21,7 +21,7 @@
     - enable elasticsearch
 
 - name: Configure elasticsearch
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/elasticsearch/elasticsearch.yml"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"

@@ -1,6 +1,6 @@
 ---
 - name: Install required packages by kubernetes
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - curl
@@ -8,7 +8,7 @@
 
 - name: Update kernel settings
   become: yes
-  sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     sysctl_set: yes
@@ -19,54 +19,54 @@
     - { name: 'net.bridge.bridge-nf-call-iptables', value: '1' }
 
 - name: Disable SWAP
-  shell: |
+  ansible.builtin.shell: |
     swapoff -a
 
 - name: Disable SWAP in fstab
-  replace:
+  ansible.builtin.replace:
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
 
 - name: Check if br_netfilter module is loaded
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     lsmod | grep br_netfilter
   register: status_br_netfilter
 
 - name: Load the br_netfilter module
-  modprobe:
+  community.general.modprobe:
     name: br_netfilter
     state: present
   when: '"br_netfilter" not in status_br_netfilter.stdout'
 
 - name: Enable the br_netfilter module at boot
-  template:
+  ansible.builtin.template:
     src: br_netfilter.conf.j2
     dest: /etc/modprobe.d/br_netfilter.conf
 
 - name: Add kubernetes Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
   retries: 3
   delay: 3
 
 - name: Add kubernetes Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
     state: present
     filename: kubernetes
 
 - name: Install kubelet and kubeadm
-  apt:
+  ansible.builtin.apt:
     pkg:
       - kubelet
       - kubeadm
     state: present
 
 - name: Mark kubelet and kubeadm packages as hold
-  dpkg_selections:
+  ansible.builtin.dpkg_selections:
     name: "{{ item.name }}"
     selection: hold
   with_items:

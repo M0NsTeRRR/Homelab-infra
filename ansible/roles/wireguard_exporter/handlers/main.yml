@@ -1,10 +1,10 @@
 ---
 - name: restart wireguard-exporter.service
-  service:
+  ansible.builtin.service:
     name: wireguard-exporter.service
     state: restarted
 
 - name: enable wireguard-exporter.service
-  service:
+  ansible.builtin.service:
     name: wireguard-exporter.service
     enabled: true

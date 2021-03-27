@@ -1,6 +1,6 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item }}"
     proto: tcp
@@ -9,7 +9,7 @@
     - "443"
 
 - name: Install required packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - curl
       - ca-certificates
@@ -18,53 +18,53 @@
     state: present
 
 - name: Check if GitLab is already installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/bin/gitlab-ctl
   register: gitlab
 
 - name: Add Gitlab Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://packages.gitlab.com/gpg.key
     state: present
   retries: 3
   delay: 3
 
 - name: Download GitLab script
-  get_url:
+  ansible.builtin.get_url:
     url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
     dest: /tmp/gitlab.deb.sh
     mode: 0744
   when: not gitlab.stat.exists
 
 - name: Install GitLab repository
-  command: bash /tmp/gitlab.deb.sh
+  ansible.builtin.command: bash /tmp/gitlab.deb.sh
   when: not gitlab.stat.exists
 
 - name: Install GitLab
-  apt:
+  ansible.builtin.apt:
     name: gitlab-ce
     update_cache: yes
     state: present
 
 - name: Create hyperglass directory
-  file:
+  ansible.builtin.file:
     dest: /etc/gitlab/ssl
     state: directory
 
 - name: Copy certificate to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ gitlab_local_path_ssl_certificate }}"
     dest: "/etc/gitlab/ssl/{{ ansible_fqdn }}.crt"
   notify: restart gitlab
 
 - name: Copy certificate key to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ gitlab_local_path_ssl_certificate_key }}"
     dest: "/etc/gitlab/ssl/{{ ansible_fqdn }}.pem"
   notify: restart gitlab
 
 - name: Configure Gitlab
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/gitlab/gitlab.rb"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"

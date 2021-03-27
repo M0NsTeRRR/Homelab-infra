@@ -1,17 +1,17 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "8323"
     proto: tcp
 
 - name: "Install rpki-rtr-server {{ rpki_rtr_server_version }}"
-  apt:
+  ansible.builtin.apt:
     deb: "https://ftp.ripe.net/ripe/tools/rpki/validator3/prod/deb/rpki-rtr-server-{{ rpki_rtr_server_version }}.deb"
   notify: enable rpki-rtr-server
 
 - name: Configure rpki-rtr-server
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/rpki-rtr-server/application.properties"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"

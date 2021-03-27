@@ -13,7 +13,7 @@
     ssh_known_hosts: "{{ groups['all'] }}"
   tasks:
   - name: For each host, scan for its ssh public key
-    shell: "ssh-keyscan {{ item }},`dig +short {{ item }}`"
+    ansible.builtin.shell: "ssh-keyscan {{ item }},`dig +short {{ item }}`"
     with_items: "{{ ssh_known_hosts }}"
     register: ssh_known_host_results
     ignore_errors: yes
@@ -21,7 +21,7 @@
       - ssh
 
   - name: Remove the public key in the '{{ ssh_known_hosts_file }}'
-    known_hosts:
+    ansible.builtin.known_hosts:
       name: "{{ item.item }}"
       state: "absent"
       path: "{{ ssh_known_hosts_file }}"
@@ -30,7 +30,7 @@
       - ssh
 
   - name: Add/update the public key in the '{{ ssh_known_hosts_file }}'
-    known_hosts:
+    ansible.builtin.known_hosts:
       name: "{{ item.item }}"
       key: "{{ item.stdout }}"
       state: "present"
@@ -40,7 +40,7 @@
       - ssh
 
   - name: For each host, ssh-copy-id my ssh public keys to the host
-    shell: "sshpass -p {{ ansible_ssh_pass }} ssh-copy-id {{ item }}"
+    ansible.builtin.shell: "sshpass -p {{ ansible_ssh_pass }} ssh-copy-id {{ item }}"
     with_items: "{{ ssh_known_hosts }}"
     when: not (( ansible_ssh_pass is undefined ) or ( ansible_ssh_pass is none ) or ( not (ansible_ssh_pass | trim)))
     tags:

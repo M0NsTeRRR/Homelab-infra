@@ -1,5 +1,5 @@
 ---
 - name: restart systemd-timesyncd
-  service:
+  ansible.builtin.service:
     name: systemd-timesyncd
     state: restarted

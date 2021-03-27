@@ -1,27 +1,27 @@
 ---
 - name: Install golang
-  apt:
+  ansible.builtin.apt:
     name: golang
     state: present
 
 - name: Create wireguard-exporter folder
-  file:
+  ansible.builtin.file:
     state: directory
     name: /opt/exporter/wireguard/build
 
 - name: Check if wireguard-exporter is already installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/local/bin/wireguard_exporter
   register: wireguard_exporter
 
 - name: "Download wireguard-exporter version {{ wireguard_exporter_version }}"
-  get_url:
+  ansible.builtin.get_url:
     url: "https://github.com/mdlayher/wireguard_exporter/archive/v{{ wireguard_exporter_version }}.tar.gz"
     dest: /tmp/wireguard-exporter.tar.gz
   when: not wireguard_exporter.stat.exists
 
 - name: Extract wireguard-exporter files
-  unarchive:
+ ansible.builtin. unarchive:
     src: /tmp/wireguard-exporter.tar.gz
     dest: /opt/exporter/wireguard/build
     remote_src: yes
@@ -30,13 +30,13 @@
   when: not wireguard_exporter.stat.exists
 
 - name: Compile sources
-  shell: /usr/bin/go build -o /opt/exporter/wireguard/build/cmd/wireguard_exporter
+  ansible.builtin.shell: /usr/bin/go build -o /opt/exporter/wireguard/build/cmd/wireguard_exporter
   args:
     chdir: /opt/exporter/wireguard/build/cmd/wireguard_exporter
   when: not wireguard_exporter.stat.exists
 
 - name: Copy wireguard-exporter binary to /usr/local/bin
-  copy:
+  ansible.builtin.copy:
     src: /opt/exporter/wireguard/build/cmd/wireguard_exporter/wireguard_exporter
     dest: /usr/local/bin/wireguard_exporter
     mode: 0700
@@ -45,18 +45,18 @@
   when: not wireguard_exporter.stat.exists
 
 - name: Create wireguard-exporter configuration directory
-  file:
+  ansible.builtin.file:
     dest: /etc/wireguard_exporter/
     state: directory
 
 - name: Configure wireguard-exporter
-  template:
+  ansible.builtin.template:
     src: peers.toml.j2
     dest: /etc/wireguard_exporter/peers.toml
   notify: restart wireguard-exporter.service
 
 - name: Create systemd service file
-  template:
+  ansible.builtin.template:
     src: wireguard-exporter.service.j2
     dest: /etc/systemd/system/wireguard-exporter.service
   notify:

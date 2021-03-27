@@ -1,7 +1,7 @@
 ---
 # some protocols ports are missing
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
@@ -12,39 +12,39 @@
     - { port: "646", proto: udp, open: "{{ frr_daemons.ldpd }}" }
 
 - name: Enable IPv4 forwarding
-  sysctl:
+  ansible.posix.sysctl:
     name: net.ipv4.ip_forward
     value: '1'
     reload: yes
 
 - name: Enable IPv6 forwarding
-  sysctl:
+  ansible.posix.sysctl:
     name: net.ipv6.conf.all.forwarding
     value: '1'
     reload: yes
 
 - name: Install required packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - ca-certificates
       - snmpd
     state: present
 
 - name: Add FRR Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "https://deb.frrouting.org/frr/keys.asc"
     state: present
   retries: 3
   delay: 3
 
 - name: Add FRR Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb https://deb.frrouting.org/frr {{ ansible_distribution_release|lower }} frr-stable"
     state: present
     filename: frr
 
 - name: Install FRR
-  apt:
+  ansible.builtin.apt:
     pkg:
       - frr
       - frr-pythontools
@@ -52,7 +52,7 @@
     state: present
 
 - name: Remove global FRR configuration
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   with_items:
@@ -61,7 +61,7 @@
   notify: restart frr
 
 - name: Configure vtysh
-  template:
+  ansible.builtin.template:
     src: vtysh.conf.j2
     dest: /etc/frr/vtysh.conf
     owner: frr
@@ -70,7 +70,7 @@
   notify: restart frr
 
 - name: Configure FRR daemons
-  template:
+  ansible.builtin.template:
     src: daemons.j2
     dest: /etc/frr/daemons
     owner: frr

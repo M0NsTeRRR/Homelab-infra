@@ -1,10 +1,10 @@
 ---
 - name: restart fping-exporter.service
-  service:
+  ansible.builtin.service:
     name: fping-exporter.service
     state: restarted
 
 - name: enable fping-exporter.service
-  service:
+  ansible.builtin.service:
     name: fping-exporter.service
     enabled: true

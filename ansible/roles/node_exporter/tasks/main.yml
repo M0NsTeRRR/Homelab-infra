@@ -1,31 +1,31 @@
 ---
 - name: Allow node-exporter
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "9100"
     proto: tcp
 
 - name: Install pip3
-  apt:
+  ansible.builtin.apt:
     name: python3-pip
     state: present
 
 - name: Install required python package
-  pip:
+  ansible.builtin.pip:
     name: cryptography
 
 - name: Create node-exporter folder
-  file:
+  ansible.builtin.file:
     state: directory
     name: /opt/exporter/node-exporter
 
 - name: Download last version of node-exporter
-  get_url:
+  ansible.builtin.get_url:
     url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-amd64.tar.gz"
     dest: /tmp/node-exporter.tar.gz
 
 - name: Extract latest binary of node-exporter
-  unarchive:
+  ansible.builtin.narchive:
     src: /tmp/node-exporter.tar.gz
     dest: /opt/exporter/node-exporter
     remote_src: yes
@@ -33,7 +33,7 @@
   register: archive_contents
 
 - name: Copy node-exporter binary to /usr/local/bin
-  copy:
+  ansible.builtin.copy:
     src: "/opt/exporter/node-exporter/{{ archive_contents.files[0] }}node_exporter"
     dest: /usr/local/bin/node-exporter
     mode: 0700
@@ -41,36 +41,36 @@
   notify: restart node-exporter.service
 
 - name: Create node-exporter configuration directory
-  file:
+  ansible.builtin.file:
     dest: /etc/node-exporter/
     state: directory
 
 - name: Copy certificate to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ node_exporter_local_path_certificate }}"
     dest: "/etc/ssl/certs/node-exporter.crt"
   notify: restart node-exporter.service
 
 - name: Copy certificate key to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ node_exporter_local_path_certificate_key }}"
     dest: "/etc/ssl/certs/node-exporter.pem"
   notify: restart node-exporter.service
 
 - name: Add ca.crt
-  copy:
+  ansible.builtin.copy:
     src: "{{ node_exporter_local_path_ca_certificate }}"
     dest: /etc/node-exporter/ca.crt
   notify: restart node-exporter.service
 
 - name: Configure node-exporter
-  template:
+  ansible.builtin.template:
     src: web-config.yml.j2
     dest: /etc/node-exporter/web-config.yml
   notify: restart node-exporter.service
 
 - name: Create systemd service file
-  template:
+  ansible.builtin.template:
     src: node-exporter.service.j2
     dest: /etc/systemd/system/node-exporter.service
   notify:

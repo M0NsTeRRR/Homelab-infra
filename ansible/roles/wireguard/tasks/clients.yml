@@ -1,35 +1,35 @@
 ---
 - name: Create /etc/wireguard/clients directory
-  file:
+  ansible.builtin.file:
     dest: /etc/wireguard/clients
     state: directory
 
 - name: Get existing clients
-  command: ls /etc/wireguard/clients
+  ansible.builtin.command: ls /etc/wireguard/clients
   register: clients
 
 - name: Delete old clients
-  file:
+  ansible.builtin.file:
     path: "/etc/wireguard/clients/{{ item }}/"
     state: absent
   when: item not in wireguard_clients
   with_items: "{{ clients.stdout_lines }}"
 
 - name: Create new clients
-  file:
+  ansible.builtin.file:
     path: "/etc/wireguard/clients/{{ item.key }}"
     state: directory
   with_dict: "{{ wireguard_clients }}"
 
 - name: Generate clients configuration
-  template:
+  ansible.builtin.template:
     src: client.conf.j2
     dest: "/etc/wireguard/clients/{{ item.key }}/client.conf"
     mode: 0600
   with_dict: "{{ wireguard_clients }}"
 
 - name: Fix perms on clients configuration
-  file:
+  ansible.builtin.file:
     name: /etc/wireguard/clients
     mode: 0600
     recurse: yes

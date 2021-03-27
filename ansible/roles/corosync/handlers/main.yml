@@ -1,10 +1,10 @@
 ---
 - name: restart corosync
-  service:
+  ansible.builtin.service:
     name: corosync
     state: restarted
 
 - name: enable corosync
-  service:
+  ansible.builtin.service:
     name: corosync
     enabled: true

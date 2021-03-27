@@ -1,6 +1,6 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
@@ -18,38 +18,38 @@
     - { port: 1900, proto: udp }
 
 - name: Install gnupg-agent
-  apt:
+  ansible.builtin.apt:
     name: gnupg-agent
     state: present
 
 - name: Install pip3
-  apt:
+  ansible.builtin.apt:
     name: python3-pip
     state: present
 
 - name: Install pyOpenSSL
-  pip:
+  ansible.builtin.pip:
     name: pyOpenSSL
 
 - name: Add MongoDB Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "https://www.mongodb.org/static/pgp/server-3.6.asc"
     state: present
   retries: 3
   delay: 3
 
 - name: Add MongoDB Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb [arch=amd64] http://repo.mongodb.org/apt/{{ ansible_distribution|lower }} xenial/mongodb-org/3.6 multiverse"
     state: present
     filename: mongodb-org
 
 - name: Install libssl1.0.0
-  apt:
+  ansible.builtin.apt:
     deb: http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5.6_amd64.deb
 
 - name: Install openjdk-8-jre and mongodb-org
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     pkg:
       - openjdk-8-jre-headless
@@ -61,33 +61,33 @@
     state: present
 
 - name: Install unifi
-  apt:
+  ansible.builtin.apt:
     deb: 'https://dl.ui.com/unifi/{{ unifi_version }}/unifi_sysvinit_all.deb'
   notify: restart unifi
 
 - name: Copy certificate key to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ unifi_local_path_certificate_key }}"
     dest: /var/lib/unifi/client.pem
 
 - name: Get certificate content
-  set_fact:
+  ansible.builtin.set_fact:
     unifi_cert_content: "{{ lookup('file', unifi_local_path_certificate) }}"
 
 - name: Find root certificate
-  certificate_complete_chain:
+  community.crypto.certificate_complete_chain:
     input_chain: "{{ unifi_cert_content }}"
     root_certificates: "{{ unifi_local_absolute_path_ca_certificate }}"
   delegate_to: localhost
   register: fullchain
 
 - name: Save fullchain certificate
-  copy:
+  ansible.builtin.copy:
     content: "{{ ''.join(fullchain.complete_chain) }}"
     dest: /var/lib/unifi/fullchain.crt
 
 - name: Generate PKCS#12 file
-  openssl_pkcs12:
+  community.crypto.openssl_pkcs12:
     action: export
     path: /var/lib/unifi/cert.p12
     privatekey_path: /var/lib/unifi/client.pem
@@ -97,7 +97,7 @@
     state: present
 
 - name: Import SSL certificate to unifi keystore
-  java_cert:
+  community.general.java_cert:
     pkcs12_path: /var/lib/unifi/cert.p12
     pkcs12_password: "{{ unifi_pkcs12_password }}"
     pkcs12_alias: unifi

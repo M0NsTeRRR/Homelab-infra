@@ -1,24 +1,24 @@
 ---
 - name: Install pip3
-  apt:
+  ansible.builtin.apt:
     name: python3-pip
     state: present
 
 - name: Install required python package
-  pip:
+  ansible.builtin.pip:
     name: cryptography
 
 - name: Install Nginx
-  apt:
+  ansible.builtin.apt:
     name: nginx
     state: present
 
 - name: Generate Diffie-Hellman parameters
-  openssl_dhparam:
+  community.crypto.openssl_dhparam:
     path: /etc/nginx/dhparam.pem
 
 - name: Remove default Nginx configuration
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   with_items:
@@ -28,26 +28,26 @@
   notify: restart nginx
 
 - name: Configure default Nginx configuration
-  template:
+  ansible.builtin.template:
     src: nginx.conf.j2
     dest: "/etc/nginx/nginx.conf"
   notify:
     - restart nginx
 
 - name: Copy certificate to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.local_path_ssl_certificate }}"
     dest: "/etc/ssl/certs/{{ item.name }}.crt"
   with_items: "{{ nginx_configuration }}"
   notify: restart nginx
 
 - name: Copy certificate key to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.local_path_ssl_certificate_key }}"
     dest: "/etc/ssl/certs/{{ item.name }}.pem"
   with_items: "{{ nginx_configuration }}"
   notify: restart nginx
 
 - name: Setup configurations
-  include_tasks: configure.yml
+  ansible.builtin.include_tasks: configure.yml
   with_items: "{{ nginx_configuration }}"

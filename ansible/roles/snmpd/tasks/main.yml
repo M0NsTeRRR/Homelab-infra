@@ -1,17 +1,17 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "161"
     proto: udp
 
 - name: Install snmpd
-  apt:
+  ansible.builtin.apt:
     name: snmpd
     state: present
 
 - name: Configure snmpd
-  template:
+  ansible.builtin.template:
     src: snmpd.conf.j2
     dest: /etc/snmp/snmpd.conf
     mode: '0600'

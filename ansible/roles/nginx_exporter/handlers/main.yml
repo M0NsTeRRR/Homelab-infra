@@ -1,10 +1,10 @@
 ---
 - name: restart nginx-exporter.service
-  service:
+  ansible.builtin.service:
     name: nginx-exporter.service
     state: restarted
 
 - name: enable nginx-exporter.service
-  service:
+  ansible.builtin.service:
     name: nginx-exporter.service
     enabled: true

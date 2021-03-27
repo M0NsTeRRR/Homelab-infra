@@ -1,26 +1,26 @@
 ---
 - name: Open port 80
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "80"
     proto: tcp
   when: item.http_redirection
 
 - name: "Open port {{ item.ssl_port }}"
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item.ssl_port }}"
     proto: tcp
 
 - name: Configure Nginx
-  template:
+  ansible.builtin.template:
     src: site.conf.j2
     dest: "/etc/nginx/sites-available/{{ item.name }}"
   notify:
     - restart nginx
 
 - name: Create symlink sites-available to sites-enabled
-  file:
+  ansible.builtin.file:
     src: "/etc/nginx/sites-available/{{ item.name }}"
     dest: "/etc/nginx/sites-enabled/{{ item.name }}"
     state: link

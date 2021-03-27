@@ -1,27 +1,27 @@
 ---
 - name: Install freeipmi-tools
-  apt:
+  ansible.builtin.apt:
     name: freeipmi-tools
     state: present
 
 - name: Create ipmi-exporter folder
-  file:
+  ansible.builtin.file:
     state: directory
     name: /opt/exporter/ipmi-exporter
 
 - name: Check if ipmi-exporter is already installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/local/bin/ipmi-exporter
   register: ipmi_exporter
 
 - name: "Download ipmi-exporter {{ ipmi_exporter_version }}"
-  get_url:
+  ansible.builtin.get_url:
     url: https://github.com/soundcloud/ipmi_exporter/releases/download/v{{ ipmi_exporter_version }}/ipmi_exporter-v{{ ipmi_exporter_version }}.linux-amd64.tar.gz
     dest: /tmp/ipmi-exporter.tar.gz
   when: not ipmi_exporter.stat.exists
 
 - name: Extract binary of ipmi-exporter
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/ipmi-exporter.tar.gz
     dest: /opt/exporter/ipmi-exporter
     remote_src: yes
@@ -29,7 +29,7 @@
   when: not ipmi_exporter.stat.exists
 
 - name: Copy ipmi-exporter binary to /usr/local/bin
-  copy:
+  ansible.builtin.copy:
     src: "/opt/exporter/ipmi-exporter/ipmi_exporter"
     dest: /usr/local/bin/ipmi-exporter
     mode: 0700
@@ -38,18 +38,18 @@
   notify: restart ipmi-exporter.service
 
 - name: Create ipmi-exporter configuration directory
-  file:
+  ansible.builtin.file:
     dest: /etc/ipmi-exporter/
     state: directory
 
 - name: Configure ipmi-exporter
-  template:
+  ansible.builtin.template:
     src: ipmi.yml.j2
     dest: /etc/ipmi-exporter/ipmi.yml
   notify: restart ipmi-exporter.service
 
 - name: Create systemd service file
-  template:
+  ansible.builtin.template:
     src: ipmi-exporter.service.j2
     dest: /etc/systemd/system/ipmi-exporter.service
   notify:

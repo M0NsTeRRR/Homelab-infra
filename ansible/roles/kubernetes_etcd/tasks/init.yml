@@ -1,9 +1,9 @@
 ---
 - name: Reset Kubernetes component
-  shell: "kubeadm reset --force"
+  ansible.builtin.shell: "kubeadm reset --force"
 
 - name: Create directory for each kubeadmcfg on first etcd node
-  file:
+  ansible.builtin.file:
     path: /home/{{ ansible_user }}/{{ item }}
     state: directory
     mode: '0755'
@@ -11,7 +11,7 @@
   with_items: "{{ ansible_play_hosts }}"
 
 - name: Configure kubeadm
-  template:
+  ansible.builtin.template:
     src: kubeadmcfg.yaml.j2
     dest: "/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml"
   vars:
@@ -20,11 +20,11 @@
   with_items: "{{ ansible_play_hosts }}"
 
 - name: Generating certificate authority files
-  shell: kubeadm init phase certs etcd-ca
+  ansible.builtin.shell: kubeadm init phase certs etcd-ca
   run_once: true
 
 - name: Create certificates for each member
-  shell: |
+  ansible.builtin.shell: |
     kubeadm init phase certs etcd-server --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
     kubeadm init phase certs etcd-peer --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
     kubeadm init phase certs etcd-healthcheck-client --config=/home/{{ ansible_user }}/{{ item }}/kubeadmcfg.yaml
@@ -35,7 +35,7 @@
   with_items: "{{ ansible_play_hosts }}"
 
 - name: Archive configuration files to copy
-  archive:
+  ansible.builtin.archive:
     path: "/home/{{ ansible_user }}/{{ item }}"
     dest: "{{ item }}.tgz"
   run_once: true
@@ -43,7 +43,7 @@
   when: item != play_hosts[0]
 
 - name: Fetch archive configuration files from first node
-  fetch:
+  ansible.builtin.fetch:
     src: "/home/{{ ansible_user }}/{{ item }}.tgz"
     dest: "/tmp/{{ item }}.tgz"
     flat: yes
@@ -52,34 +52,34 @@
   when: item != play_hosts[0]
 
 - name: Unarchive configuration paired files to others nodes
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/tmp/{{ inventory_hostname }}.tgz"
     dest: "/home/{{ ansible_user }}"
   when: inventory_hostname != play_hosts[0]
 
 - name: Move pki to /etc/kubernetes/
-  shell: mv -fi /home/{{ ansible_user }}/{{ inventory_hostname }}/pki /etc/kubernetes/
+  ansible.builtin.shell: mv -fi /home/{{ ansible_user }}/{{ inventory_hostname }}/pki /etc/kubernetes/
 
 - name: Create the static pod manifests
-  shell: kubeadm init phase etcd local --config=/home/{{ ansible_user }}/{{ inventory_hostname }}/kubeadmcfg.yaml
+  ansible.builtin.shell: kubeadm init phase etcd local --config=/home/{{ ansible_user }}/{{ inventory_hostname }}/kubeadmcfg.yaml
   notify: restart kubelet
 
-- meta: flush_handlers
+- ansible.builtin.meta: flush_handlers
 
 - name: Wait for port 2379 to become open on the host
-  wait_for:
+  ansible.builtin.wait_for:
     port: 2379
     delay: 10
 
 - name: Clean files on etcd nodes
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   with_items: "{{ ansible_play_hosts }} + {{ ansible_play_hosts | map('regex_replace', '(.*)', '\\1.tgz') | list }}"
 
 - name: Clean files on localhost
   become: no
-  file:
+  ansible.builtin.file:
     path: /tmp/{{ item }}
     state: absent
   delegate_to: localhost

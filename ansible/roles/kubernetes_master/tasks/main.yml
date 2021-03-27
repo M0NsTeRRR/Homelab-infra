@@ -1,6 +1,6 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
@@ -12,23 +12,23 @@
     - { "port": "10250:10252", "proto": "tcp" }
 
 - name: Check if kubeadm has already run
-  stat:
+  ansible.builtin.stat:
     path: "/etc/kubernetes/pki/ca.crt"
   register: kubeadm_ca
 
 - name: Init cluster if needed
-  include_tasks: init.yml
+  ansible.builtin.include_tasks: init.yml
   when:
     - not kubeadm_ca.stat.exists
     - inventory_hostname == play_hosts[0]
 
 - name: Check if kubeadm_admin exists
-  stat:
+  ansible.builtin.stat:
     path: "/etc/kubernetes/admin.conf"
   register: kubeadm_admin
 
 - name: Join master cluster if needed
-  include_tasks: join.yml
+  ansible.builtin.include_tasks: join.yml
   when:
     - not kubeadm_admin.stat.exists
     - inventory_hostname != play_hosts[0]

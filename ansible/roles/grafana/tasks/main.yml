@@ -1,15 +1,15 @@
 ---
 - name: Install pip3
-  apt:
+  ansible.builtin.apt:
     name: python3-pip
     state: present
 
 - name: Install required python package
-  pip:
+  ansible.builtin.pip:
     name: cryptography
 
 - name: Install required packages by Grafana
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - gnupg-agent
@@ -17,60 +17,60 @@
     state: present
 
 - name: Add Grafana Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "https://packages.grafana.com/gpg.key"
     state: present
   retries: 3
   delay: 3
 
 - name: Add Grafana Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb https://packages.grafana.com/oss/deb stable main"
     state: present
     filename: grafana
 
 - name: Install Grafana
-  apt:
+  ansible.builtin.apt:
     name: grafana
     state: present
   notify:
     - enable grafana-server
 
 - name: Configure Grafana
-  template:
+  ansible.builtin.template:
     src: grafana.ini.j2
     dest: /etc/grafana/grafana.ini
   notify:
     - restart grafana-server
 
 - name: Create grafana dashboards directory
-  file:
+  ansible.builtin.file:
     dest: /var/lib/grafana/dashboards
     state: directory
 
 - name: Configure dashboards
-  template:
+  ansible.builtin.template:
     group: grafana
     mode: 0640
     src: dashboards.yml.j2
     dest: /etc/grafana/provisioning/dashboards/dashboards.yml
 
 - name: Configure datasources
-  template:
+  ansible.builtin.template:
     group: grafana
     mode: 0640
     src: datasources.yml.j2
     dest: /etc/grafana/provisioning/datasources/datasources.yml
 
 - name: Configure notifiers
-  template:
+  ansible.builtin.template:
     group: grafana
     mode: 0640
     src: notifiers.yml.j2
     dest: /etc/grafana/provisioning/notifiers/notifiers.yml
 
 - name: Install grafana plugins
-  include_tasks: plugins.yml
+  ansible.builtin.include_tasks: plugins.yml
 
 - name: Add grafana dashboards
-  include_tasks: dashboards.yml
+  ansible.builtin.include_tasks: dashboards.yml

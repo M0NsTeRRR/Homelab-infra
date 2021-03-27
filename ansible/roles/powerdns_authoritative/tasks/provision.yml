@@ -1,6 +1,6 @@
 ---
 - name: "Check if zone {{ item }}. exist"
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones/{{ item }}."
     method: GET
     return_content: yes
@@ -13,7 +13,7 @@
   register: zone
 
 - name: "POST zone {{ item }}."
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones"
     method: POST
     return_content: yes
@@ -29,7 +29,7 @@
   changed_when: response.status == 201
 
 - name: "PATCH zone {{ item }}."
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones/{{ item }}."
     method: PATCH
     return_content: yes

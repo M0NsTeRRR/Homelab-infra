@@ -1,6 +1,6 @@
 ---
 - name: Install Pacemaker and CLI configuration/management
-  apt:
+  ansible.builtin.apt:
     pkg:
       - pacemaker
       - crmsh
@@ -10,7 +10,7 @@
     - enable pacemaker
 
 - name: Configure haproxy ocf ressource
-  template:
+  ansible.builtin.template:
     src: haproxy.j2
     dest: /usr/lib/ocf/resource.d/heartbeat/haproxy
     mode: 0744
@@ -18,20 +18,20 @@
     - restart pacemaker
 
 - name: Get pacemaker configuration
-  command: "crm configure show"
+  ansible.builtin.command: "crm configure show"
   register: pacemaker_configuration
 
 - name: Disable stonith
-  command: "crm configure property stonith-enabled=false"
+  ansible.builtin.command: "crm configure property stonith-enabled=false"
   run_once: true
   when: '"\tstonith-enabled=false \\" not in pacemaker_configuration.stdout_lines'
 
 - name: Configure Virtual IP ressource
-  command: "crm configure primitive virtual-IP-rsc ocf:heartbeat:IPaddr2 params ip='{{ lookup('dig', pacemaker_lb_ip) }}'"
+  ansible.builtin.command: "crm configure primitive virtual-IP-rsc ocf:heartbeat:IPaddr2 params ip='{{ lookup('dig', pacemaker_lb_ip) }}'"
   run_once: true
   when: '"primitive virtual-IP-rsc IPaddr2 \\" not in pacemaker_configuration.stdout_lines'
 
-- include_tasks: haproxy.yml
+- ansible.builtin.include_tasks: haproxy.yml
   tags: [ 'haproxy' ]
   when:
     - pacemaker_lb_service_type is defined

@@ -1,15 +1,15 @@
 ---
 - name: Reset Kubernetes component
-  shell: "kubeadm reset --force"
+  ansible.builtin.shell: "kubeadm reset --force"
 
 - name: Create a new bootstrap token
-  shell: kubeadm token create
+  ansible.builtin.shell: kubeadm token create
   delegate_to: "{{ groups[k8s_ontrol_plane_group][0] }}"
   run_once: true
   register: token
 
 - name: Get root ca cert fingerprint
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
   delegate_to: "{{ groups[k8s_ontrol_plane_group][0] }}"
@@ -17,7 +17,7 @@
   register: root_ca
 
 - name: Archive configuration files to copy
-  archive:
+  ansible.builtin.archive:
     path:
       - /etc/kubernetes/pki/ca.crt
       - /etc/kubernetes/pki/ca.key
@@ -33,7 +33,7 @@
   delegate_to: "{{ groups[k8s_ontrol_plane_group][0] }}"
 
 - name: Fetch configuration files from first node
-  fetch:
+  ansible.builtin.fetch:
     src: "/home/{{ ansible_user }}/pki.tgz"
     dest: "/tmp/pki.tgz"
     flat: yes
@@ -41,22 +41,22 @@
   delegate_to: "{{ groups[k8s_ontrol_plane_group][0] }}"
 
 - name: Create pki directory
-  file:
+  ansible.builtin.file:
     path: /etc/kubernetes/pki
     state: directory
     mode: '0600'
 
 - name: Copy configuration paired files to others nodes
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/tmp/pki.tgz"
     dest: "/etc/kubernetes/pki"
 
 - name: Join control plane cluster
-  shell: "kubeadm join --token {{ token.stdout }} --discovery-token-ca-cert-hash sha256:{{ root_ca.stdout }} --control-plane {{ k8s_lb_ip }}:{{ k8s_lb_port }}"
+  ansible.builtin.shell: "kubeadm join --token {{ token.stdout }} --discovery-token-ca-cert-hash sha256:{{ root_ca.stdout }} --control-plane {{ k8s_lb_ip }}:{{ k8s_lb_port }}"
 
 - name: Clean files on localhost
   become: no
-  file:
+  ansible.builtin.file:
     path: /tmp/pki.tgz
     state: absent
   delegate_to: localhost

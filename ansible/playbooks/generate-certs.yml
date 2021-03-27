@@ -14,17 +14,17 @@
       private: no
   tasks:
     - name: Generate CertAuthority OpenSSL private key
-      openssl_privatekey:
+      community.crypto.openssl_privatekey:
         path: "{{ certs_dir }}ca.pem"
 
     - name: Generate CertAuthority OpenSSL Certificate Signing Request
-      openssl_csr:
+      community.crypto.openssl_csr:
         path: "{{ certs_dir }}ca.csr"
         privatekey_path: "{{ certs_dir }}ca.pem"
-        country_name: FR
-        organization_name: unicornafk
-        email_address: admin@unicornafk.fr
-        common_name: "unicornafk"
+        country_name: "{{ country }}"
+        organization_name: "{{ organization }}"
+        email_address: "{{ admin_email }}"
+        common_name: "{{ common_name }}"
         basic_constraints:
           - CA:TRUE
           - pathlen:1
@@ -34,29 +34,29 @@
           - digitalSignature
 
     - name: Generate CertAuthority OpenSSL certificate
-      openssl_certificate:
+      community.crypto.openssl_certificate:
         path: "{{ certs_dir }}ca.crt"
         privatekey_path: "{{ certs_dir }}ca.pem"
         csr_path: "{{ certs_dir }}ca.csr"
         provider: selfsigned
 
     - name: "Create {{ certificate_folder_path }} folder"
-      file:
+      ansible.builtin.file:
         state: directory
         name: "{{ certs_dir }}{{ certificate_folder_path }}"
 
     - name: Add .gitkeep file
-      copy:
+      ansible.builtin.copy:
         content: ""
         dest: "{{ certs_dir }}{{ certificate_folder_path }}/.gitkeep"
         force: no
 
     - name: Generate client OpenSSL private key
-      openssl_privatekey:
+      community.crypto.openssl_privatekey:
         path: "{{ certs_dir }}{{ certificate_folder_path }}/client.pem"
 
     - name: Generate client OpenSSL Certificate Signing Request
-      openssl_csr:
+      community.crypto.openssl_csr:
         path: "{{ certs_dir }}{{ certificate_folder_path }}/client.csr"
         privatekey_path: "{{ certs_dir }}{{ certificate_folder_path }}/client.pem"
         country_name: "{{ country }}"
@@ -65,7 +65,7 @@
         common_name: "{{ common_name }}"
 
     - name: Generate client OpenSSL certificate signed with our CA
-      openssl_certificate:
+      community.crypto.openssl_certificate:
         path: "{{ certs_dir }}{{ certificate_folder_path }}/client.crt"
         ownca_path: "{{ certs_dir }}ca.crt"
         ownca_privatekey_path: "{{ certs_dir }}ca.pem"

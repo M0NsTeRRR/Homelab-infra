@@ -1,28 +1,28 @@
 ---
 - name: Install pip3
-  apt:
+  ansible.builtin.apt:
     name: python3-pip
     state: present
 
 - name: Install required python packages
-  pip:
+  ansible.builtin.pip:
     name: pexpect
 
 - name: Add ghost group
-  group:
+  ansible.builtin.group:
     name: idiotghost
     system: yes
     state: present
 
 - name: Add ghost user
-  user:
+  ansible.builtin.user:
     name: idiotghost
     create_home: false
     shell: /usr/sbin/nologin
     group: idiotghost
 
 - name: Create ghost directory
-  file:
+  ansible.builtin.file:
     path: /var/www/ghost
     state: directory
     owner: idiotghost
@@ -30,17 +30,17 @@
     mode: '0775'
 
 - name: Install ghost-cli@latest node.js package globally
-  npm:
+  community.general.npm:
     name: ghost-cli@latest
     global: yes
 
 - name: Check if ghost is already install
-  stat:
+  ansible.builtin.stat:
     path: /var/www/ghost/config.production.json
   register: ghost
 
 - name: Install ghost
-  command:
+  ansible.builtin.command:
     cmd: ghost install --db sqlite3 --no-setup --no-stack --no-start
     chdir: /var/www/ghost
   become: yes
@@ -49,7 +49,7 @@
   notify: restart ghost.service
 
 - name: Create Ghost configuration
-  template:
+  ansible.builtin.template:
     src: config.production.json.j2
     dest: /var/www/ghost/config.production.json
     owner: idiotghost
@@ -58,7 +58,7 @@
   notify: restart ghost.service
 
 - name: Create systemd service file
-  template:
+  ansible.builtin.template:
     src: ghost.service.j2
     dest: /etc/systemd/system/ghost.service
   notify:

@@ -1,18 +1,18 @@
 ---
 - name: Ensure dependencies are present
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - gnupg2
     state: present
 
 - name: Add Nodesource apt key
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     state: present
 
 - name: Add NodeSource repositories for Node.js
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ item }}"
     state: present
   with_items:
@@ -20,6 +20,6 @@
     - "deb-src https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
 
 - name: Ensure dependencies are present
-  apt:
+  ansible.builtin.apt:
     name: nodejs
     state: present

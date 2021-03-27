@@ -1,13 +1,13 @@
 ---
 - name: Set fact notifications
-  set_fact:
+  ansible.builtin.set_fact:
     notifications_match: "{{ notifications.json.notifications | selectattr('title','equalto',item.title) | list }}"
 - name: Set fact notification_found
-  set_fact:
+  ansible.builtin.set_fact:
     notification_found: "{{ notifications_match | length > 0 }}"
 
 - name: "Notification {{ item.title }} updated"
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}/api/events/notifications/{{ notifications_match[0].id }}"
     user: admin
     password: "{{ graylog_root_password }}"
@@ -23,7 +23,7 @@
   when: notification_found
 
 - name: "Notification {{ item.title }} created"
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}/api/events/notifications"
     user: admin
     password: "{{ graylog_root_password }}"

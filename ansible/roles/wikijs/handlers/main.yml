@@ -1,9 +1,9 @@
 - name: restart wikijs.service
-  service:
+  ansible.builtin.service:
     name: wikijs.service
     state: restarted
 
 - name: enable wikijs.service
-  service:
+  ansible.builtin.service:
     name: wikijs.service
     enabled: true

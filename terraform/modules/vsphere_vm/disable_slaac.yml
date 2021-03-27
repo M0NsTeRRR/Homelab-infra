@@ -4,7 +4,7 @@
   become: true
   tasks:
     - name: Disable SLAAC
-      sysctl:
+      ansible.posix.sysctl:
         name: "{{ item }}"
         value: '0'
       with_items:
@@ -18,7 +18,7 @@
       when: ansible_distribution == "Debian"
 
     - name: Disable SLAAC
-      lineinfile:
+      ansible.builtin.lineinfile:
         dest: /etc/netplan/99-netcfg-vmware.yaml
         regexp: '^\s\s\s\sens[0-9]+:\s\s\s\s\s(accept-ra:)?'
         line: '      accept-ra: no'
@@ -27,6 +27,6 @@
 
   handlers:
     - name: reboot the host
-      reboot:
+      ansible.builtin.reboot:
     - name: netplan apply
-      shell: netplan apply
+      ansible.builtin.shell: netplan apply

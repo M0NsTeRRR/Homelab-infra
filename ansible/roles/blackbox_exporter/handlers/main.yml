@@ -1,10 +1,10 @@
 ---
 - name: restart blackbox-exporter.service
-  service:
+  ansible.builtin.service:
     name: blackbox-exporter.service
     state: restarted
 
 - name: enable blackbox-exporter.service
-  service:
+  ansible.builtin.service:
     name: blackbox-exporter.service
     enabled: true

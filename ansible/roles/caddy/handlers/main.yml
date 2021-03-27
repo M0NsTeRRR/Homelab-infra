@@ -1,10 +1,10 @@
 ---
 - name: restart caddy.service
-  service:
+  ansible.builtin.service:
     name: caddy.service
     state: restarted
 
 - name: enable caddy.service
-  service:
+  ansible.builtin.service:
     name: caddy.service
     enabled: true

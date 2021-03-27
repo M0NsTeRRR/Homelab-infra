@@ -1,6 +1,6 @@
 ---
 - name: "Open port {{ item.port }}/{{ item.proto }}"
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
@@ -11,20 +11,20 @@
     - { port: "9982", proto: tcp }
 
 - name: Add caddy group
-  group:
+  ansible.builtin.group:
     name: caddy
     system: yes
     state: present
 
 - name: Add caddy user
-  user:
+  ansible.builtin.user:
     name: caddy
     home: /var/lib/caddy
     shell: /usr/sbin/nologin
     group: caddy
 
 - name: Add Caddy Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     id: 155B6D79CA56EA34
     url: "https://dl.cloudsmith.io/public/caddy/stable/gpg.key"
     state: present
@@ -32,7 +32,7 @@
   delay: 3
 
 - name: Add Caddy Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{ item }}"
     state: present
     filename: caddy-stable
@@ -41,7 +41,7 @@
     - "deb-src https://dl.cloudsmith.io/public/caddy/testing/deb/debian any-version main"
 
 - name: Install Caddy
-  apt:
+  ansible.builtin.apt:
     name: caddy
     state: present
   notify:
@@ -49,7 +49,7 @@
     - restart caddy.service
 
 - name: Copy certificate to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ caddy_exporter_local_path_certificate }}"
     dest: "/etc/ssl/certs/caddy_exporter.crt"
     owner: caddy
@@ -57,7 +57,7 @@
   notify: restart caddy.service
 
 - name: Copy certificate key to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ caddy_exporter_local_path_certificate_key }}"
     dest: "/etc/ssl/certs/caddy_exporter.pem"
     owner: caddy
@@ -65,7 +65,7 @@
   notify: restart caddy.service
 
 - name: Add CA cert
-  template:
+  ansible.builtin.template:
     src: "{{ caddy_exporter_local_path_ca_certificate }}"
     dest: /etc/caddy/ca.crt
     owner: caddy
@@ -73,14 +73,14 @@
   notify: restart caddy.service
 
 - name: Create /etc/caddy/conf.d folder
-  file:
+  ansible.builtin.file:
     state: directory
     name: /etc/caddy/conf.d
     owner: caddy
     group: caddy
 
 - name: Configure default Caddy config
-  template:
+  ansible.builtin.template:
     src: default.j2
     dest: /etc/caddy/Caddyfile
     owner: caddy
@@ -89,7 +89,7 @@
     - restart caddy.service
 
 - name: Configure Caddy
-  template:
+  ansible.builtin.template:
     src: Caddyfile.j2
     dest: "/etc/caddy/conf.d/{{ item.names[0] }}.conf"
     owner: caddy

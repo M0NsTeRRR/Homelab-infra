@@ -1,18 +1,18 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "5405"
     proto: udp
 
 - name: Install Corosync
-  apt:
+  ansible.builtin.apt:
     name: corosync
     state: present
   notify: enable corosync
 
 - name: Deleting /etc/corosync/authkey
-  file:
+  ansible.builtin.file:
     path: /etc/corosync/authkey
     state: absent
   run_once: true
@@ -20,30 +20,30 @@
         corosync_force_regenerate_authkey
 
 - name: Checking if /etc/corosync/authkey exists
-  stat:
+  ansible.builtin.stat:
     path: /etc/corosync/authkey
   register: check_authkey_file
 
 - name: Install haveged to increase entropy for corosync-keygen
-  apt:
+  ansible.builtin.apt:
     name: haveged
     state: present
   run_once: true
   when: not check_authkey_file.stat.exists
 
 - name: Generating /etc/corosync/authkey file
-  command: /usr/sbin/corosync-keygen
+  ansible.builtin.command: /usr/sbin/corosync-keygen
   run_once: true
   when: not check_authkey_file.stat.exists
 
 - name: Waiting for /etc/corosync/authkey file
-  wait_for:
+  ansible.builtin.wait_for:
     path: /etc/corosync/authkey
     timeout: 30
   when: inventory_hostname == play_hosts[0]
 
 - name: Fetching /etc/corosync/authkey to /tmp
-  fetch:
+  ansible.builtin.fetch:
     src: /etc/corosync/authkey
     dest: /tmp/authkey
     flat: yes
@@ -51,7 +51,7 @@
   register: authkey
 
 - name: Synchronizing /etc/corosync/authkey everywhere
-  copy:
+  ansible.builtin.copy:
     src: /tmp/authkey
     dest: /etc/corosync/authkey
     mode: 0400
@@ -59,16 +59,16 @@
 
 - name: Cleaning /tmp/authkey file for security reason
   become: no
-  file:
+  ansible.builtin.file:
     path: /tmp/authkey
     state: absent
   delegate_to: localhost
 
 - name: Configure corosync
-  template:
+  ansible.builtin.template:
     src: corosync.conf.j2
     dest: /etc/corosync/corosync.conf
   notify:
     - restart corosync
 
-- meta: flush_handlers
+- ansible.builtin.meta: flush_handlers

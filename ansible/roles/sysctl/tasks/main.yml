@@ -1,6 +1,6 @@
 ---
 - name: Update sysctl config
-  sysctl:
+  ansible.builtin.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: present

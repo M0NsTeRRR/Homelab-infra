@@ -1,10 +1,10 @@
 ---
 - name: restart node-exporter.service
-  service:
+  ansible.builtin.service:
     name: node-exporter.service
     state: restarted
 
 - name: enable node-exporter.service
-  service:
+  ansible.builtin.service:
     name: node-exporter.service
     enabled: true

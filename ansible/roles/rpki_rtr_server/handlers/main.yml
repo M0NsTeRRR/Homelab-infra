@@ -1,10 +1,10 @@
 ---
 - name: restart rpki-rtr-server
-  service:
+  ansible.builtin.service:
     name: rpki-rtr-server
     state: restarted
 
 - name: enable rpki-rtr-server
-  service:
+  ansible.builtin.service:
     name: rpki-rtr-server
     enabled: true

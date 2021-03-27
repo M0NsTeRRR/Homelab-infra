@@ -1,17 +1,17 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "123"
     proto: udp
 
 - name: Install ntp
-  apt:
+  ansible.builtin.apt:
     name: ntp
     state: present
 
 - name: Configure ntp server
-  template:
+  ansible.builtin.template:
     src: ntp.conf.j2
     dest: /etc/ntp.conf
     owner: root

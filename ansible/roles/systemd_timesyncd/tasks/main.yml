@@ -1,6 +1,6 @@
 ---
 - name: Configure systemd-timesyncd
-  template:
+  ansible.builtin.template:
     src: timesyncd.conf.j2
     dest: /etc/systemd/timesyncd.conf
     owner: root
@@ -10,4 +10,4 @@
     - restart systemd-timesyncd
 
 - name: Enable ntp synchronization
-  command: timedatectl set-ntp true
+  ansible.builtin.command: timedatectl set-ntp true

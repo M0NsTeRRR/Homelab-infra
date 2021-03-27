@@ -1,11 +1,11 @@
 ---
 - name: Install Prometheus
-  apt:
+  ansible.builtin.apt:
     name: prometheus
     state: present
 
 - name: Configure Prometheus
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/default/prometheus"
     regexp: "^(# )?ARGS="
     line: 'ARGS="--web.listen-address=127.0.0.1:9090 --web.external-url=https://{{ inventory_hostname }}:9091"'
@@ -13,24 +13,24 @@
   notify: restart prometheus
 
 - name: Configure Prometheus
-  template:
+  ansible.builtin.template:
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
   notify: restart prometheus
 
 - name: "Create {{ item.key }} folder in prometheus folder"
-  file:
+  ansible.builtin.file:
     state: directory
     name: "/etc/prometheus/{{ item.key }}"
   with_dict: "{{ prometheus_targets }}"
 
 - name: "Create {{ item.key }} target file"
-  template:
+  ansible.builtin.template:
     src: targets.json.j2
     dest: "/etc/prometheus/{{ item.key }}/targets.json"
   with_dict: "{{ prometheus_targets }}"
   notify: restart prometheus
 
 - name: Include certs
-  include_tasks: certs.yml
+  ansible.builtin.include_tasks: certs.yml
   with_items: "{{ prometheus_clients_certs }}"

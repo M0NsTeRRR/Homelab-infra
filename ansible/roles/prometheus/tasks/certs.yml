@@ -1,17 +1,17 @@
 ---
 - name: Create certs folder
-  file:
+  ansible.builtin.file:
     state: directory
     name: "/etc/prometheus/certs/{{ item }}"
 
 - name: "Add {{ item }}.crt"
-  template:
+  ansible.builtin.template:
     src: "{{ prometheus_certs_dir }}{{ item }}/client.crt"
     dest: "/etc/prometheus/certs/{{ item }}/client.crt"
   notify: restart prometheus
 
 - name: "Add {{ item }}.pem"
-  template:
+  ansible.builtin.template:
     src: "{{ prometheus_certs_dir }}{{ item }}/client.pem"
     dest: "/etc/prometheus/certs/{{ item }}/client.pem"
   notify: restart prometheus

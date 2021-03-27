@@ -1,10 +1,10 @@
 ---
 - name: restart snmp-exporter.service
-  service:
+  ansible.builtin.service:
     name: snmp-exporter.service
     state: restarted
 
 - name: enable snmp-exporter.service
-  service:
+  ansible.builtin.service:
     name: snmp-exporter.service
     enabled: true

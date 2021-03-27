@@ -1,10 +1,10 @@
 ---
 - name: restart pacemaker
-  service:
+  ansible.builtin.service:
     name: pacemaker
     state: restarted
 
 - name: enable pacemaker
-  service:
+  ansible.builtin.service:
     name: pacemaker
     enabled: yes

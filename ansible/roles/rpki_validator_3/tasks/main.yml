@@ -1,13 +1,13 @@
 ---
 - name: "Install rpki-validator {{ rpki_validator_3_version }}"
-  apt:
+  ansible.builtin.apt:
     deb: "https://ftp.ripe.net/ripe/tools/rpki/validator3/prod/deb/rpki-validator-{{ rpki_validator_3_version }}.deb"
   notify:
     - enable rpki-validator-3
     - restart rpki-validator-3
 
 - name: Download ARIN TALs
-  get_url:
+  ansible.builtin.get_url:
     url: https://www.arin.net/resources/manage/rpki/arin.tal
     dest: /var/lib/rpki-validator/preconfigured-tals/arin.tal
     owner: rpki

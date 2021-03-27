@@ -1,34 +1,34 @@
 ---
 - name: Install required packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - git
       - python3-pip
     state: present
 
 - name: Install required python packages
-  pip:
+  ansible.builtin.pip:
     name:
       - virtualenv
 
 - name: Create vcenter-netbox-sync folder
-  file:
+  ansible.builtin.file:
     state: directory
     name: /opt/vcenter-netbox-sync
 
 - name: Check if vcenter-netbox-sync is already installed
-  stat:
+  ansible.builtin.stat:
     path: /opt/vcenter-netbox-sync/requirements.txt
   register: vcenter_netbox_sync
 
 - name: "Download vcenter-netbox-sync version {{ vcenter_netbox_sync_version }}"
-  get_url:
+  ansible.builtin.get_url:
     url: "https://github.com/synackray/vcenter-netbox-sync/archive/v{{ vcenter_netbox_sync_version }}.tar.gz"
     dest: /tmp/vcenter-netbox-sync.tar.gz
   when: not vcenter_netbox_sync.stat.exists
 
 - name: Extract vcenter-netbox-sync
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/vcenter-netbox-sync.tar.gz
     dest: /opt/vcenter-netbox-sync
     remote_src: yes
@@ -36,22 +36,22 @@
   when: not vcenter_netbox_sync.stat.exists
 
 - name: Install vcenter-netbox-sync python packages
-  pip:
+  ansible.builtin.pip:
     requirements: /opt/vcenter-netbox-sync/requirements.txt
     virtualenv: /opt/vcenter-netbox-sync/venv
 
 - name: Configure vcenter-netbox-sync
-  template:
+  ansible.builtin.template:
     src: settings.py.j2
     dest: /opt/vcenter-netbox-sync/settings.py
 
 - name: Configure vcenter-netbox-sync.service
-  template:
+  ansible.builtin.template:
     src: vcenter-netbox-sync.service.j2
     dest: /etc/systemd/system/vcenter-netbox-sync.service
 
 - name: Configure vcenter-netbox-sync.timer
-  template:
+  ansible.builtin.template:
     src: vcenter-netbox-sync.timer.j2
     dest: /etc/systemd/system/vcenter-netbox-sync.timer
   notify:

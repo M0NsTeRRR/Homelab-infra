@@ -1,10 +1,10 @@
 ---
 - name: restart ghost.service
-  service:
+  ansible.builtin.service:
     name: ghost.service
     state: restarted
 
 - name: enable ghost.service
-  service:
+  ansible.builtin.service:
     name: ghost.service
     enabled: true

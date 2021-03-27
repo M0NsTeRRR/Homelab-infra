@@ -1,22 +1,22 @@
 ---
 - name: Disable SWAP
-  shell: |
+  ansible.builtin.shell: |
     swapoff -a
 
 - name: Disable SWAP in fstab
-  replace:
+  ansible.builtin.replace:
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
 
 - name: Delete local rsyslog config
-  file:
+  ansible.builtin.file:
     path: /etc/rsyslog.d/01-client.conf
     state: absent
   notify: restart rsyslog
 
 - name: Install required packages
-  apt:
+  ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - openjdk-8-jre-headless
@@ -25,16 +25,16 @@
     state: present
 
 - name: Install mongodb
-  include_tasks: mongodb.yml
+  ansible.builtin.include_tasks: mongodb.yml
 
 - name: Install elasticsearch
-  include_tasks: elasticsearch.yml
+  ansible.builtin.include_tasks: elasticsearch.yml
 
 - name: Install graylog
-  include_tasks: graylog.yml
+  ansible.builtin.include_tasks: graylog.yml
 
 - name: Get all inputs
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}/api/system/inputs"
     user: admin
     password: "{{ graylog_root_password }}"
@@ -48,11 +48,11 @@
   when: graylog_inputs | length > 0
 
 - name: Provision inputs graylog
-  include_tasks: provision_inputs.yml
+  ansible.builtin.include_tasks: provision_inputs.yml
   with_items: "{{ graylog_inputs }}"
 
 - name: Get all notifications
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}/api/events/notifications"
     user: admin
     password: "{{ graylog_root_password }}"
@@ -66,11 +66,11 @@
   when: graylog_notifications | length > 0
 
 - name: Provision notifications graylog
-  include_tasks: provision_notifications.yml
+  ansible.builtin.include_tasks: provision_notifications.yml
   with_items: "{{ graylog_notifications }}"
 
 - name: Get all notifications
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}/api/events/notifications"
     user: admin
     password: "{{ graylog_root_password }}"
@@ -84,7 +84,7 @@
   when: graylog_notifications | length > 0
 
 - name: Get all events
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}/api/events/definitions"
     user: admin
     password: "{{ graylog_root_password }}"
@@ -98,5 +98,5 @@
   when: graylog_events | length > 0
 
 - name: Provision events graylog
-  include_tasks: provision_events.yml
+  ansible.builtin.include_tasks: provision_events.yml
   with_items: "{{ graylog_events }}"

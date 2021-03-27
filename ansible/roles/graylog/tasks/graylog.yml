@@ -1,19 +1,19 @@
 ---
 - name: Add graylog Apt signing key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "https://packages.graylog2.org/repo/debian/keyring.gpg"
     state: present
   retries: 3
   delay: 3
 
 - name: Add graylog Apt repository
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb https://packages.graylog2.org/repo/debian/ stable {{ graylog_server_version }}"
     state: present
     filename: graylog
 
 - name: Install graylog-server
-  apt:
+  ansible.builtin.apt:
     name: graylog-server
     state: present
   notify:
@@ -21,7 +21,7 @@
     - enable graylog-server
 
 - name: Configure graylog-server
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/graylog/server/server.conf"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"

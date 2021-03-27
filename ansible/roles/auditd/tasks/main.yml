@@ -1,20 +1,20 @@
 ---
 - name: Install auditd
-  apt:
+  ansible.builtin.apt:
     name: auditd
     state: present
   notify:
     - restart auditd
 
 - name: Configure auditd rules
-  template:
+  ansible.builtin.template:
     src: audit.rules.j2
     dest: /etc/audit/audit.rules
   notify:
     - restart auditd
 
 - name: Forward auditd logs to local rsyslog
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "/etc/audit/audit.rules"
     regexp: "^(# )?active"
     line: "active = yes"

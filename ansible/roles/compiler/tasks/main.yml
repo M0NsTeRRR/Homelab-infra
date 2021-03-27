@@ -1,6 +1,6 @@
 ---
 - name: "Remove read/execution for others on {{ item }}"
-  file:
+  ansible.builtin.file:
     name: "{{ item }}"
     mode: o-rx
     state: file

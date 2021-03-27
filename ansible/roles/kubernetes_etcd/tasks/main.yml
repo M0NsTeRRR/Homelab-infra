@@ -1,23 +1,23 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "2379:2380"
     proto: tcp
 
 - name: Configure etcd service manager
-  template:
+  ansible.builtin.template:
     src: 20-etcd-service-manager.conf.j2
     dest: /etc/systemd/system/kubelet.service.d/20-etcd-service-manager.conf
   notify: restart kubelet
 
-- meta: flush_handlers
+- ansible.builtin.meta: flush_handlers
 
 - name: Checking if /etc/kubernetes/pki/etcd/ca.crt
-  stat:
+  ansible.builtin.stat:
     path: /etc/kubernetes/pki/etcd/ca.crt
   register: check_ca_crt_file
 
 - name: Init cluster if needed
-  include_tasks: init.yml
+  ansible.builtin.include_tasks: init.yml
   when: not check_ca_crt_file.stat.exists

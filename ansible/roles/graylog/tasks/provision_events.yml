@@ -1,13 +1,13 @@
 ---
 - name: Set fact events
-  set_fact:
+  ansible.builtin.set_fact:
     events_match: "{{ events.json.event_definitions | selectattr('title','equalto',item.title) | list }}"
 - name: Set fact event_found
   set_fact:
     event_found: "{{ events_match | length > 0 }}"
 
 - name: "Event {{ item.title }} updated"
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}/api/events/definitions/{{ events_match[0].id }}"
     user: admin
     password: "{{ graylog_root_password }}"
@@ -23,7 +23,7 @@
   when: event_found
 
 - name: "Event {{ item.title }} created"
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}/api/events/definitions"
     user: admin
     password: "{{ graylog_root_password }}"

@@ -1,25 +1,25 @@
 ---
 - name: Allow nginx-exporter
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "9113"
     proto: tcp
 
 - name: Add nginx_exporter group
-  group:
+  ansible.builtin.group:
     name: nginx_exporter
     system: yes
     state: present
 
 - name: Add nginx_exporter user
-  user:
+  ansible.builtin.user:
     name: nginx_exporter
     create_home: false
     shell: /usr/sbin/nologin
     group: nginx_exporter
 
 - name: Create nginx-exporter folder
-  file:
+  ansible.builtin.file:
     name: "{{ item }}"
     state: directory
     owner: nginx_exporter
@@ -29,18 +29,18 @@
     - /etc/nginx-exporter
 
 - name: Check if nginx-exporter is already installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/local/bin/nginx-exporter
   register: nginx_exporter
 
 - name: "Download nginx-exporter binary version {{ nginx_exporter_version }}"
-  get_url:
+  ansible.builtin.get_url:
     url: "https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v{{ nginx_exporter_version }}/nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_amd64.tar.gz"
     dest: /tmp/nginx-prometheus-exporter.tar.gz
   when: not nginx_exporter.stat.exists
 
 - name: Extract nginx-prometheus-exporter binary
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/nginx-prometheus-exporter.tar.gz
     dest: /tmp
     remote_src: yes
@@ -49,7 +49,7 @@
   when: not nginx_exporter.stat.exists
 
 - name: Copy nginx-exporter binary to /usr/local/bin
-  copy:
+  ansible.builtin.copy:
     src: /opt/exporter/nginx-exporter/exporter
     dest: /usr/local/bin/nginx-exporter
     owner: nginx_exporter
@@ -60,25 +60,25 @@
   when: not nginx_exporter.stat.exists
 
 - name: Copy certificate to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ nginx_exporter_local_path_certificate }}"
     dest: "/etc/ssl/certs/nginx-exporter.crt"
   notify: restart nginx-exporter.service
 
 - name: Copy certificate key to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ nginx_exporter_local_path_certificate_key }}"
     dest: "/etc/ssl/certs/nginx-exporter.pem"
   notify: restart nginx-exporter.service
 
 - name: Add ca.crt
-  copy:
+  ansible.builtin.copy:
     src: "{{ nginx_exporter_local_path_ca_certificate }}"
     dest: /etc/nginx-exporter/ca.crt
   notify: restart nginx-exporter.service
 
 - name: Create systemd service file
-  template:
+  ansible.builtin.template:
     src: nginx-exporter.service.j2
     dest: /etc/systemd/system/nginx-exporter.service
   notify:

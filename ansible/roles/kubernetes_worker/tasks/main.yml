@@ -1,6 +1,6 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
@@ -11,10 +11,10 @@
     - { "port": "30000:32767", "proto": "tcp" }
 
 - name: Check if kubelet.conf exists
-  stat:
+  ansible.builtin.stat:
     path: "/etc/kubernetes/kubelet.conf"
   register: kubelet_conf
 
 - name: Join to cluster if needed
-  include_tasks: join.yml
+  ansible.builtin.include_tasks: join.yml
   when: not kubelet_conf.stat.exists

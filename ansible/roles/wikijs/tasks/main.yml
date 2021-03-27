@@ -1,55 +1,55 @@
 ---
 - name: Add wikijs group
-  group:
+  ansible.builtin.group:
     name: wikijs
     system: yes
     state: present
 
 - name: Add wikijs user
-  user:
+  ansible.builtin.user:
     name: wikijs
     create_home: false
     shell: /usr/sbin/nologin
     group: wikijs
 
 - name: Create wiki-js folder
-  file:
+  ansible.builtin.file:
     state: directory
     name: /opt/wikijs
 
 - name: Check if wikijs is already installed and configured
-  stat:
+  ansible.builtin.stat:
     path: /opt/wikijs/config.yml
   register: wikijs
 
 - name: Download last version of wiki.js
-  get_url:
+  ansible.builtin.get_url:
     url: 'https://github.com/Requarks/wiki/releases/download/{{ wiki_js_version }}/wiki-js.tar.gz'
     dest: /tmp/wiki-js.tar.gz
   when: not wikijs.stat.exists
 
 - name: Extract wiki.js files
-  unarchive:
+  ansible.builtin.unarchive:
     src: /tmp/wiki-js.tar.gz
     dest: /opt/wikijs
     remote_src: yes
   when: not wikijs.stat.exists
 
 - name: Configure wiki.js
-  template:
+  ansible.builtin.template:
     src: config.yml.j2
     dest: /opt/wikijs/config.yml
   notify:
     - restart wikijs.service
 
 - name: Fix perms on wikijs data folder
-  file:
+  ansible.builtin.file:
     name: "/opt/wikijs/data"
     owner: "wikijs"
     group: "wikijs"
 
 - name: Create systemd service file
-  template:
+  ansible.builtin.template:
     src: wikijs.service.j2
     dest: /etc/systemd/system/wikijs.service
   notify:
