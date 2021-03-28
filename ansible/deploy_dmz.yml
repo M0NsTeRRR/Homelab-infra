@@ -33,7 +33,7 @@
     - nginx
     - postgresql
     - netbox
-    - vcenter_netbox_sync
+    - netbox_sync
     - nginx_exporter
 
 - name: Configure Wiki
