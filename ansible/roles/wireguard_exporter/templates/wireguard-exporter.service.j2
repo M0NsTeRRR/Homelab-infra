@@ -1,11 +1,11 @@
 [Unit]
 Description=Prometheus WireGuard Exporter
-After=network.target
+After=network-online.target
 
 [Service]
 Type=simple
-Restart=always
-ExecStart=/usr/local/bin/wireguard_exporter -metrics.addr 127.0.0.1:9586 -wireguard.peer-file /etc/wireguard_exporter/peers.toml
+WorkingDirectory=/etc/wireguard_exporter
+ExecStart=/usr/local/bin/wireguard_exporter -metrics.addr 127.0.0.1:9586 -wireguard.peer-file peers.toml
 
 [Install]
 WantedBy=multi-user.target

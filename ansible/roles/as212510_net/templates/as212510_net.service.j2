@@ -1,15 +1,13 @@
 [Unit]
 Description=as212510_net website
-Wants=network-online.target
 After=network-online.target
 
 [Service]
 User=as212510_net
 Group=as212510_net
 Type=simple
-CapabilityBoundingSet=CAP_NET_RAW
-AmbientCapabilities=CAP_NET_RAW
-ExecStart=/usr/local/bin/as212510.net -config=/etc/as212510_net/as212510_net.yml
+WorkingDirectory=/etc/as212510_net
+ExecStart=/usr/local/bin/as212510.net -config=as212510_net.yml
 
 [Install]
 WantedBy=multi-user.target

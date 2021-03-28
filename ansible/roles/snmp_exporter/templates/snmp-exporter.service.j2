@@ -1,17 +1,15 @@
 [Unit]
 Description=snmp-exporter allows you to get SNMP metric using prometheus
-Wants=network-online.target
 After=network-online.target
 
 [Service]
+Type=simple
 User=prometheus
 Group=prometheus
-Type=simple
-CapabilityBoundingSet=CAP_NET_RAW
-AmbientCapabilities=CAP_NET_RAW
+WorkingDirectory=/etc/snmp-exporter
 ExecStart=/usr/local/bin/snmp-exporter \
     --web.listen-address="127.0.0.1:9116" \
-    --config.file=/etc/snmp-exporter/snmp.yml
+    --config.file=snmp.yml
 
 [Install]
 WantedBy=multi-user.target

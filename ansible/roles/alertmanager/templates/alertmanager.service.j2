@@ -1,13 +1,13 @@
 [Unit]
 Description=Alertmanager allows you to get notifications with prometheus
-Wants=network-online.target
 After=network-online.target
 
 [Service]
 User=prometheus
 Group=prometheus
 Type=simple
-ExecStart=/usr/local/bin/alertmanager --config.file=/etc/alertmanager/alertmanager.yml --storage.path /var/lib/alertmanager/
+WorkingDirectory=/etc/alertmanager
+ExecStart=/usr/local/bin/alertmanager --config.file=alertmanager.yml --storage.path /var/lib/alertmanager/
 
 [Install]
 WantedBy=multi-user.target

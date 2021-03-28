@@ -1,14 +1,11 @@
 [Unit]
 Description=tplink-plug-exporter allows you to monitors tp link smartplugs
-Wants=network-online.target
 After=network-online.target
 
 [Service]
+Type=simple
 User=prometheus
 Group=prometheus
-Type=simple
-CapabilityBoundingSet=CAP_NET_RAW
-AmbientCapabilities=CAP_NET_RAW
 ExecStart=/usr/local/bin/tplink_plug_exporter -metrics.listen-addr 127.0.0.1:9233
 
 [Install]

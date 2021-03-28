@@ -1,6 +1,5 @@
 [Unit]
 Description=blackbox-exporter allows you to get HTTP/HTTPS/DNS/TCP/ICMP metric using prometheus
-Wants=network-online.target
 After=network-online.target
 
 [Service]
@@ -9,9 +8,10 @@ Group=prometheus
 Type=simple
 CapabilityBoundingSet=CAP_NET_RAW
 AmbientCapabilities=CAP_NET_RAW
+WorkingDirectory=/etc/blackbox_exporter
 ExecStart=/usr/local/bin/blackbox_exporter \
     --web.listen-address="127.0.0.1:9115" \
-    --config.file /etc/blackbox_exporter/blackbox.yml
+    --config.file blackbox.yml
 
 [Install]
 WantedBy=multi-user.target

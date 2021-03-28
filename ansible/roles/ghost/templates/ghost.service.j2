@@ -1,14 +1,14 @@
 [Unit]
 Description=Ghost blog
+After=network-online.target
 
 [Service]
 Type=simple
-WorkingDirectory=/var/www/ghost
 User=idiotghost
 Group=idiotghost
+WorkingDirectory=/var/www/ghost
 Environment="NODE_ENV=production"
 ExecStart=/usr/bin/node /usr/bin/ghost run
-Restart=always
 
 [Install]
 WantedBy=multi-user.target
