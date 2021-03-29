@@ -1,3 +1,0 @@
----
-sshd_allow_groups:
-  - wheel

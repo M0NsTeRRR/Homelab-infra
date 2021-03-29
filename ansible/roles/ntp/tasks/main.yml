@@ -7,8 +7,9 @@
 
 - name: Install ntp
   ansible.builtin.apt:
-    name: ntp
-    state: present
+    name: "ntp{% if ntp_version is defined %}={{ ntp_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ ntp_package_state }}"
 
 - name: Configure ntp server
   ansible.builtin.template:

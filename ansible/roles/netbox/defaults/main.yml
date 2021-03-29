@@ -1,5 +1,8 @@
 ---
 netbox_version: 2.10.4
+netbox_force_install: false
+# netbox_redis_version:
+netbox_redis_package_state: latest
 netbox_postgresql_password: password
 netbox_superuser_password: password
 netbox_secret_key: secret_key

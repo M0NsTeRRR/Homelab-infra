@@ -30,15 +30,15 @@
 
 - name: Add PowerDNS Apt signing key
   ansible.builtin.apt_key:
-    id: "{{ pdns_repository_key }}"
-    url: "https://repo.powerdns.com/{{ pdns_repository_key }}-pub.asc"
+    id: "{{ powerdns_recursor_repository_key }}"
+    url: "https://repo.powerdns.com/{{ powerdns_recursor_repository_key }}-pub.asc"
     state: present
   retries: 3
   delay: 3
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-rec-{{ pdns_version }} main"
+    repo: "deb [arch=amd64] http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-rec-{{ powerdns_recursor_repo_version }} main"
     state: present
     filename: pdns-rec
 
@@ -56,10 +56,11 @@
     state: stopped
     enabled: false
 
-- name: Install PowerDNS
+- name: Install pdns-recursor
   ansible.builtin.apt:
-    name: pdns-recursor
-    state: present
+    name: "pdns-recursor{% if powerdns_recursor_version is defined %}={{ powerdns_recursor_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ powerdns_recursor_package_state }}"
 
 - name: Fix perms on PowerDNS configuration
   ansible.builtin.file:
@@ -71,7 +72,7 @@
 
 - name: Set DNS list ipv4
   ansible.builtin.set_fact:
-    dns_list: "{{ (groups[pdns_dns_group] | join(':53000;')) + ':53000' }}"
+    dns_list: "{{ (groups[powerdns_recursor_dns_group] | join(':53000;')) + ':53000' }}"
 
 - name: Configure PowerDNS
   ansible.builtin.lineinfile:
@@ -84,9 +85,9 @@
       - { regexp: '^(# )?setuid=', line: 'setuid=pdns' }
       - { regexp: '^(# )?local-address=', line: 'local-address=0.0.0.0, ::' }
       - { regexp: '^(# )?allow-from=', line: 'allow-from=0.0.0.0/0, ::/0' }
-      - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ pdns_domains | join("=" + dns_list + ", ") + "=" + dns_list }}, {{ pdns_reverse_zones | join("=" + dns_list + ", ") + "=" + dns_list }}' }
+      - { regexp: '^(# )?forward-zones=', line: 'forward-zones={{ powerdns_recursor_domains | join("=" + dns_list + ", ") + "=" + dns_list }}, {{ powerdns_recursor_reverse_zones | join("=" + dns_list + ", ") + "=" + dns_list }}' }
       - { regexp: '^(# )?serve-rfc1918=', line: 'serve-rfc1918=no' }
-      - { regexp: '^(# )?api-key=', line: 'api-key={{ pdns_api_key }}' }
+      - { regexp: '^(# )?api-key=', line: 'api-key={{ powerdns_recursor_api_key }}' }
       - { regexp: '^(# )?webserver=', line: 'webserver=yes' }
       - { regexp: '^(# )?webserver-address=', line: 'webserver-address=127.0.0.1' }
       - { regexp: '^(# )?webserver-password=', line: 'webserver-password=' }

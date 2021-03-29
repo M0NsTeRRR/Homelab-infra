@@ -18,7 +18,8 @@
 
 - name: Add Grafana Apt signing key
   ansible.builtin.apt_key:
-    url: "https://packages.grafana.com/gpg.key"
+    id: 4E40DDF6D76E284A4A6780E48C8C34C524098CB6
+    url: https://packages.grafana.com/gpg.key
     state: present
   retries: 3
   delay: 3
@@ -31,8 +32,9 @@
 
 - name: Install Grafana
   ansible.builtin.apt:
-    name: grafana
-    state: present
+    name: "grafana{% if grafana_version is defined %}={{ grafana_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ grafana_package_state }}"
   notify:
     - enable grafana-server
 

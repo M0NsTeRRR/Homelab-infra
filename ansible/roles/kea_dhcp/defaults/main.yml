@@ -1,4 +1,10 @@
 ---
+# kea_dhcp4_server_version:
+kea_dhcp4_server_package_state: latest
+#kea_dhcp6_server_version:
+kea_dhcp6_server_package_state: latest
+# kea_ctrl_agent_version:
+kea_ctrl_agent_package_state: latest
 kea_dns_group: dns
 kea_dns_domains: []
 kea_ipv4_subnets: []

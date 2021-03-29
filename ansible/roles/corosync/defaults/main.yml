@@ -1,2 +1,4 @@
 ---
+# corosync_version:
+corosync_package_state: latest
 corosync_lb_ip: 192.168.0.1

@@ -1,8 +1,9 @@
 ---
 - name: Install rsyslog-gnutls
   ansible.builtin.apt:
-    name: rsyslog-gnutls
-    state: present
+    name: "rsyslog-gnutls{% if rsyslog_gnutls_version is defined %}={{ rsyslog_gnutls_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ rsyslog_gnutls_package_state }}"
 
 - name: Copy certificate to remote location
   ansible.builtin.copy:

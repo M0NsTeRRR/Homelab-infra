@@ -8,17 +8,26 @@
     - "67"
     - "547"
 
-- name: Install kea-dhcp4-server kea-dhcp6-server kea-ctrl-agent
+- name: Install kea-dhcp4-server
   ansible.builtin.apt:
-    pkg:
-      - kea-dhcp4-server
-      - kea-dhcp6-server
-      - kea-ctrl-agent
-    state: present
-  notify:
-    - enable kea-dhcp4-server
-    - enable kea-dhcp6-server
-    - enable kea-ctrl-agent
+    name: "kea-dhcp4-server{% if kea_dhcp4_server_version is defined %}={{ kea_dhcp4_server_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ kea_dhcp4_server_package_state }}"
+  notify: enable kea-dhcp4-server
+
+- name: Install kea-dhcp6-server
+  ansible.builtin.apt:
+    name: "kea-dhcp6-server{% if kea_dhcp6_server_version is defined %}={{ kea_dhcp6_server_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ kea_dhcp6_server_package_state }}"
+  notify: enable kea-dhcp6-server
+
+- name: Install kea-ctrl-agent
+  ansible.builtin.apt:
+    name: "kea-ctrl-agent{% if kea_ctrl_agent_version is defined %}={{ kea_ctrl_agent_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ kea_ctrl_agent_package_state }}"
+  notify: enable kea-ctrl-agent
 
 - name: Configure kea-dhcp4-server
   ansible.builtin.template:

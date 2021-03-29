@@ -1,6 +1,6 @@
 ---
-root_ca_organization_name: "{{ organization }}"
-root_ca_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+ca_certificates_organization_name: "{{ organization }}"
+ca_certificates_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
 node_exporter_local_path_ca_certificate: "{{ root_ca_local_path_ca_certificate }}"
 node_exporter_local_path_certificate: "{{ certs_dir }}exporter/node-exporter/client.crt"
 node_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/node-exporter/client.pem"

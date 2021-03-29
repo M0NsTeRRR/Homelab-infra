@@ -15,7 +15,8 @@
 
 - name: Install kea_exporter
   ansible.builtin.pip:
-    name: kea-exporter
+    name: "kea-exporter{% if kea_exporter_version is defined %}={{ kea_exporter_version }}{% endif %}"
+    state: "{{ kea_exporter_package_state }}"
     virtualenv: /opt/kea_exporter/venv
 
 - name: Create systemd service file

@@ -13,7 +13,7 @@
   ansible.builtin.get_url:
     url: https://github.com/prometheus/snmp_exporter/releases/download/v{{ snmp_exporter_version }}/snmp_exporter-{{ snmp_exporter_version }}.linux-amd64.tar.gz
     dest: /tmp/snmp-exporter.tar.gz
-  when: not snmp_exporter.stat.exists
+  when: not snmp_exporter.stat.exists or snmp_exporter_force_install
 
 - name: Extract binary of snmp-exporter
   ansible.builtin.unarchive:
@@ -21,7 +21,7 @@
     dest: /opt/exporter/snmp-exporter
     remote_src: yes
     extra_opts: [--strip-components=1]
-  when: not snmp_exporter.stat.exists
+  when: not snmp_exporter.stat.exists or snmp_exporter_force_install
 
 - name: Copy snmp-exporter binary to /usr/local/bin
   ansible.builtin.copy:
@@ -31,7 +31,7 @@
     group: prometheus
     mode: 0700
     remote_src: yes
-  when: not snmp_exporter.stat.exists
+  when: not snmp_exporter.stat.exists or snmp_exporter_force_install
   notify: restart snmp-exporter.service
 
 - name: Create snmp-exporter configuration directory

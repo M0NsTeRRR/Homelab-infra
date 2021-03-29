@@ -7,8 +7,9 @@
 
 - name: Install Corosync
   ansible.builtin.apt:
-    name: corosync
-    state: present
+    name: "corosync{% if corosync_version is defined %}={{ corosync_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ corosync_package_state }}"
   notify: enable corosync
 
 - name: Deleting /etc/corosync/authkey

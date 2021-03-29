@@ -37,7 +37,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v{{ nginx_exporter_version }}/nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_amd64.tar.gz"
     dest: /tmp/nginx-prometheus-exporter.tar.gz
-  when: not nginx_exporter.stat.exists
+  when: not nginx_exporter.stat.exists or nginx_exporter_force_install
 
 - name: Extract nginx-prometheus-exporter binary
   ansible.builtin.unarchive:
@@ -46,7 +46,7 @@
     remote_src: yes
     list_files: yes
   register: archive_contents
-  when: not nginx_exporter.stat.exists
+  when: not nginx_exporter.stat.exists or nginx_exporter_force_install
 
 - name: Copy nginx-exporter binary to /usr/local/bin
   ansible.builtin.copy:
@@ -57,7 +57,7 @@
     mode: 0700
     remote_src: yes
   notify: restart nginx-exporter.service
-  when: not nginx_exporter.stat.exists
+  when: not nginx_exporter.stat.exists or nginx_exporter_force_install
 
 - name: Copy certificate to remote location
   ansible.builtin.copy:

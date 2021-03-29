@@ -1,4 +1,8 @@
 ---
+# hyperglass_version:
+hyperglass_package_state: latest
+# hyperglass_redis_version:
+hyperglass_redis_package_state: latest
 hyperglass_primary_asn: 212510
 hyperglass_org_name: example
 hyperglass_routers: {}

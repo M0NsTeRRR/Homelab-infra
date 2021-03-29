@@ -1,8 +1,12 @@
 ---
-pdns_dns_group: dns
-pdns_domains: '{{ domains }}'
-pdns_subdomains: '{{ subdomains }}'
-pdns_reverse_zones: '{{ reverse_zones }}'
+powerdns_recursor_dns_group: dns
+powerdns_recursor_domains: '{{ domains }}'
+powerdns_recursor_reverse_zones: '{{ reverse_zones }}'
+
+powerdns_authoritative_dns_group: dns
+powerdns_authoritative_domains: '{{ domains }}'
+powerdns_authoritative_subdomains: '{{ subdomains }}'
+powerdns_authoritative_reverse_zones: '{{ reverse_zones }}'
 
 pdns_records:
   # unicornafk.fr

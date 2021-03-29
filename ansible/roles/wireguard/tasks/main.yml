@@ -12,12 +12,16 @@
     filename: buster-backports
   when: ansible_distribution == "Debian"
 
-- name: Install Wireguard and Qrencode
+- name: Install qrencode
   apt:
-    pkg:
-      - wireguard
-      - qrencode
+    name: qrencode
     state: present
+
+- name: Install wireguard
+  apt:
+    name: "wireguard{% if wireguard_version is defined %}={{ wireguard_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ wireguard_package_state }}"
 
 - name: Update sysctl config
   sysctl:

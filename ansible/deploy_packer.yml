@@ -14,9 +14,9 @@
     - systemd_timesyncd
     - rsyslog
     - user
-    - sshd
+    - openssh_server
     - fail2ban
-    - root_ca
+    - ca_certificates
   pre_tasks:
     - name: Update and upgrade all packages
       apt:

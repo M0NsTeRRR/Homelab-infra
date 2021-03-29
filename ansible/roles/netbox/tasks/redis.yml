@@ -1,5 +1,6 @@
 ---
 - name: Install redis-server
   ansible.builtin.apt:
-    name: redis-server
-    state: present
+    name: "redis-server{% if netbox_redis_version is defined %}={{ netbox_redis_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ netbox_redis_package_state }}"

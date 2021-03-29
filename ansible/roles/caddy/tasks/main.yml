@@ -26,7 +26,7 @@
 - name: Add Caddy Apt signing key
   ansible.builtin.apt_key:
     id: 155B6D79CA56EA34
-    url: "https://dl.cloudsmith.io/public/caddy/stable/gpg.key"
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
     state: present
   retries: 3
   delay: 3
@@ -42,8 +42,9 @@
 
 - name: Install Caddy
   ansible.builtin.apt:
-    name: caddy
-    state: present
+    name: "caddy{% if caddy_version is defined %}={{ caddy_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ caddy_package_state }}"
   notify:
     - enable caddy.service
     - restart caddy.service

@@ -21,13 +21,13 @@
   ansible.builtin.git:
     repo: https://github.com/schweikert/fping-exporter.git
     dest: /opt/exporter/fping/build
-  when: not fping_exporter.stat.exists
+  when: not fping_exporter.stat.exists or fping_exporter_force_install
 
 - name: Compile sources
   ansible.builtin.shell: /usr/bin/go build -o /opt/exporter/fping/build
   args:
     chdir: /opt/exporter/fping/build
-  when: not fping_exporter.stat.exists
+  when: not fping_exporter.stat.exists or fping_exporter_force_install
 
 - name: Copy fping-exporter binary to /usr/local/bin
   ansible.builtin.copy:
@@ -37,6 +37,7 @@
     group: prometheus
     mode: 0700
     remote_src: yes
+  when: not fping_exporter.stat.exists or fping_exporter_force_install
   notify: restart fping-exporter.service
 
 - name: Create systemd service file

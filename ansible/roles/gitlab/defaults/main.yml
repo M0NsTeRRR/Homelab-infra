@@ -1,4 +1,7 @@
 ---
+# gitlab_version:
+gitlab_package_state: latest
+gitlab_force_install: false
 gitlab_cert_country: FR
 gitlab_cert_organization_name: example.com
 gitlab_cert_email_address: admin@example.com

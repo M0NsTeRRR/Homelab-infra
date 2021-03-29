@@ -1,0 +1,5 @@
+---
+# pacemaker_version
+pacemaker_package_state: latest
+# pacemaker_crmsh_version
+pacemaker_crmsh_package_state: latest

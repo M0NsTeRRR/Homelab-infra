@@ -9,6 +9,7 @@
 
 - name: Add Docker Apt signing key
   ansible.builtin.apt_key:
+    id: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
     url: "https://download.docker.com/linux/{{ ansible_distribution|lower }}/gpg"
     state: present
   retries: 3
@@ -20,13 +21,23 @@
     state: present
     filename: docker
 
-- name: Install Docker
+- name: Install docker-ce
   ansible.builtin.apt:
-    pkg:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-    state: present
+    name: "docker-ce{% if docker_ce_version is defined %}={{ docker_ce_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ docker_ce_package_state }}"
+
+- name: Install docker-ce-cli
+  ansible.builtin.apt:
+    name: "docker-ce-cli{% if docker_ce_cli_package_state_version is defined %}={{ docker_ce_cli_package_state_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ docker_ce_cli_package_state_package_state }}"
+
+- name: Install containerd.io
+  ansible.builtin.apt:
+    name: "containerd.io{% if docker_containerd_io_version is defined %}={{ docker_containerd_io_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ docker_containerd_io_package_state }}"
 
 - name: Setup daemon
   ansible.builtin.template:

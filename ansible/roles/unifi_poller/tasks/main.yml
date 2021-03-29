@@ -13,6 +13,14 @@
   retries: 3
   delay: 3
 
+- name: Add golift Apt signing key
+  ansible.builtin.apt_key:
+    id: B93DD66EF98E54E2EAE025BA0166AD34ABC5A57C
+    url: https://golift.io/gpgkey
+    state: present
+  retries: 3
+  delay: 3
+
 - name: Add golift Apt repository
   ansible.builtin.apt_repository:
     repo: deb https://dl.bintray.com/golift/ubuntu bionic main
@@ -21,8 +29,9 @@
 
 - name: Install unifi-poller
   ansible.builtin.apt:
-    name: unifi-poller
-    state: present
+    name: "unifi-poller{% if unifi_poller_version is defined %}={{ unifi_poller_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ unifi_poller_package_state }}"
 
 - name: Create unifi-poller configuration directory
   ansible.builtin.file:

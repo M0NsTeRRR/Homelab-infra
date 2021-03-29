@@ -10,8 +10,9 @@
 
 - name: Install Nginx
   ansible.builtin.apt:
-    name: nginx
-    state: present
+    name: "nginx{% if nginx_version is defined %}={{ nginx_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ nginx_package_state }}"
 
 - name: Generate Diffie-Hellman parameters
   community.crypto.openssl_dhparam:

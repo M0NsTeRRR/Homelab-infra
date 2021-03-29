@@ -25,7 +25,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/bb-Ricardo/netbox-sync/archive/v{{ netbox_sync_version }}.tar.gz"
     dest: /tmp/netbox-sync.tar.gz
-  when: not netbox_sync.stat.exists
+  when: not netbox_sync.stat.exists or netbox_sync_force_install
 
 - name: Extract netbox-sync
   ansible.builtin.unarchive:
@@ -33,7 +33,7 @@
     dest: /opt/netbox-sync
     remote_src: yes
     extra_opts: [--strip-components=1]
-  when: not netbox_sync.stat.exists
+  when: not netbox_sync.stat.exists or netbox_sync_force_install
 
 - name: Install netbox-sync python packages
   ansible.builtin.pip:

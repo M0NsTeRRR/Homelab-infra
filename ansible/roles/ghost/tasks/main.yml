@@ -32,7 +32,10 @@
 - name: Install ghost-cli@latest node.js package globally
   community.general.npm:
     name: ghost-cli@latest
+    production: yes
     global: yes
+    version: "{{ ghost_cli_version | default(omit) }}"
+    state: "{{ ghost_cli_package_state }}"
 
 - name: Check if ghost is already install
   ansible.builtin.stat:

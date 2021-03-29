@@ -1,22 +1,23 @@
 ---
 - name: Add mongodb Apt signing key
   ansible.builtin.apt_key:
-    url: "https://www.mongodb.org/static/pgp/server-4.4.asc"
+    id: 20691EEC35216C63CAF66CE1656408E390CFB1F5
+    url: https://www.mongodb.org/static/pgp/server-4.4.asc
     state: present
   retries: 3
   delay: 3
 
 - name: Add mongodb Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/4.4 multiverse"
+    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/{{ graylog_mongodb_repo_version }} multiverse"
     state: present
     filename: mongodb
 
 - name: Install mongodb
   ansible.builtin.apt:
+    name: "mongodb-org{% if graylog_mongodb_version is defined %}={{ graylog_mongodb_version }}{% endif %}"
     update_cache: yes
-    name: mongodb-org
-    state: present
+    state: "{{ graylog_mongodb_package_state }}"
   notify:
     - enable mongod
     - restart mongod

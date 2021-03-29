@@ -1,0 +1,5 @@
+---
+# common_kubernetes_kubelet_version:
+common_kubernetes_kubelet_package_state: latest
+# common_kubernetes_kubeadm_version:
+common_kubernetes_kubeadm_package_state: latest

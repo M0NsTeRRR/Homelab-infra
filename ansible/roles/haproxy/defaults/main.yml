@@ -1,3 +1,5 @@
 ---
+# haproxy_version:
+haproxy_package_state: latest
 haproxy_lb_port: 2000
 haproxy_servers_group: etcd

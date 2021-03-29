@@ -28,7 +28,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/netbox-community/netbox/archive/v{{ netbox_version }}.tar.gz"
     dest: /tmp/netbox.tar.gz
-  when: not netbox.stat.exists
+  when: not netbox.stat.exists or netbox_force_install
 
 - name: Extract netbox files
   ansible.builtin.unarchive:
@@ -36,7 +36,7 @@
     dest: /opt/netbox
     remote_src: yes
     extra_opts: [--strip-components=1]
-  when: not netbox.stat.exists
+  when: not netbox.stat.exists or netbox_force_install
 
 - name: Add netbox group
   ansible.builtin.group:

@@ -34,19 +34,19 @@
     url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
     dest: /tmp/gitlab.deb.sh
     mode: 0744
-  when: not gitlab.stat.exists
+  when: not gitlab.stat.exists or gitlab_force_install
 
 - name: Install GitLab repository
   ansible.builtin.command: bash /tmp/gitlab.deb.sh
-  when: not gitlab.stat.exists
+  when: not gitlab.stat.exists or gitlab_force_install
 
 - name: Install GitLab
   ansible.builtin.apt:
-    name: gitlab-ce
+    name: "gitlab-ce{% if gitlab_version is defined %}={{ gitlab_version }}{% endif %}"
     update_cache: yes
-    state: present
+    state: "{{ gitlab_package_state }}"
 
-- name: Create hyperglass directory
+- name: Create ssl directory
   ansible.builtin.file:
     dest: /etc/gitlab/ssl
     state: directory

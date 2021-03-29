@@ -1,4 +1,6 @@
 ---
+# rsyslog_gnutls_version:
+rsyslog_gnutls_package_state: latest
 rsyslog_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
 rsyslog_local_path_certificate: "/etc/ssl/certs/cert.crt"
 rsyslog_local_path_certificate_key: "/etc/ssl/certs/cert.pem"

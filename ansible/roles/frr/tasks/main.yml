@@ -25,14 +25,12 @@
 
 - name: Install required packages
   ansible.builtin.apt:
-    pkg:
-      - ca-certificates
-      - snmpd
+    name: ca-certificates
     state: present
 
 - name: Add FRR Apt signing key
   ansible.builtin.apt_key:
-    url: "https://deb.frrouting.org/frr/keys.asc"
+    url: https://deb.frrouting.org/frr/keys.asc
     state: present
   retries: 3
   delay: 3
@@ -43,13 +41,23 @@
     state: present
     filename: frr
 
-- name: Install FRR
+- name: Install frr
   ansible.builtin.apt:
-    pkg:
-      - frr
-      - frr-pythontools
-      - frr-snmp
-    state: present
+    name: "frr{% if frr_version is defined %}={{ frr_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ frr_package_state }}"
+
+- name: Install frr-pythontools
+  ansible.builtin.apt:
+    name: "frr-pythontools{% if frr_pythontools_version is defined %}={{ frr_pythontools_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ frr_pythontools_package_state }}"
+
+- name: Install frr-snmp
+  ansible.builtin.apt:
+    name: "frr-snmp{% if frr_snmp_version is defined %}={{ frr_snmp_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ frr_snmp_package_state }}"
 
 - name: Remove global FRR configuration
   ansible.builtin.file:

@@ -1,13 +1,18 @@
 ---
-- name: Install Pacemaker and CLI configuration/management
+- name: Install pacemaker
   ansible.builtin.apt:
-    pkg:
-      - pacemaker
-      - crmsh
-    state: present
+    name: "pacemaker{% if pacemaker_package_state is defined %}={{ pacemaker_package_state }}{% endif %}"
+    update_cache: yes
+    state: "{{ pacemaker_package_state }}"
   notify:
     - restart pacemaker
     - enable pacemaker
+
+- name: Install crmsh
+  ansible.builtin.apt:
+    name: "crmsh{% if pacemaker_crmsh_version is defined %}={{ pacemaker_crmsh_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ pacemaker_crmsh_package_state }}"
 
 - name: Configure haproxy ocf ressource
   ansible.builtin.template:

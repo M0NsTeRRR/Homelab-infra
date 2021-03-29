@@ -1,4 +1,8 @@
 ---
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
 - name: Open required ports
   community.general.ufw:
     rule: allow
@@ -33,14 +37,15 @@
 
 - name: Add MongoDB Apt signing key
   ansible.builtin.apt_key:
-    url: "https://www.mongodb.org/static/pgp/server-3.6.asc"
+    id: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+    url: https://www.mongodb.org/static/pgp/server-3.6.asc
     state: present
   retries: 3
   delay: 3
 
 - name: Add MongoDB Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] http://repo.mongodb.org/apt/{{ ansible_distribution|lower }} xenial/mongodb-org/3.6 multiverse"
+    repo: "deb [arch=amd64] http://repo.mongodb.org/apt/{{ ansible_distribution|lower }} xenial/mongodb-org/{{ unifi_mongodb_repo_version }} multiverse"
     state: present
     filename: mongodb-org
 
@@ -48,21 +53,27 @@
   ansible.builtin.apt:
     deb: http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5.6_amd64.deb
 
-- name: Install openjdk-8-jre and mongodb-org
+- name: Install openjdk-8-jre
   ansible.builtin.apt:
+    name: openjdk-8-jre-headless
     update_cache: yes
-    pkg:
-      - openjdk-8-jre-headless
-      - mongodb-org=3.6.20
-      - mongodb-org-server=3.6.20
-      - mongodb-org-shell=3.6.20
-      - mongodb-org-mongos=3.6.20
-      - mongodb-org-tools=3.6.20
     state: present
+
+- name: Install mongodb-org
+  ansible.builtin.apt:
+    pkg:
+      - "mongodb-org{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
+      - "mongodb-org-server{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
+      - "mongodb-org-shell{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
+      - "mongodb-org-mongos{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
+      - "mongodb-org-tools{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ unifi_mongodb_force_install }}"
 
 - name: Install unifi
   ansible.builtin.apt:
     deb: 'https://dl.ui.com/unifi/{{ unifi_version }}/unifi_sysvinit_all.deb'
+  when: "'unifi' not in ansible_facts.packages or unifi_force_install"
   notify: restart unifi
 
 - name: Copy certificate key to remote location

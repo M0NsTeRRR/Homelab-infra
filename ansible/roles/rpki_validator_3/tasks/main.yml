@@ -1,7 +1,12 @@
 ---
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
 - name: "Install rpki-validator {{ rpki_validator_3_version }}"
   ansible.builtin.apt:
     deb: "https://ftp.ripe.net/ripe/tools/rpki/validator3/prod/deb/rpki-validator-{{ rpki_validator_3_version }}.deb"
+  when: "'rpki-validator' not in ansible_facts.packages or rpki_validator_3_force_install"
   notify:
     - enable rpki-validator-3
     - restart rpki-validator-3

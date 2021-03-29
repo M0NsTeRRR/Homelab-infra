@@ -1,8 +1,9 @@
 ---
 - name: Install Prometheus
   ansible.builtin.apt:
-    name: prometheus
-    state: present
+    name: "prometheus{% if prometheus_version is defined %}={{ prometheus_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ prometheus_package_state }}"
 
 - name: Configure Prometheus
   ansible.builtin.lineinfile:

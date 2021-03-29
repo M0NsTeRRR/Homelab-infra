@@ -8,7 +8,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
     dest: /tmp/alertmanager.tar.gz
-  when: not alertmanager.stat.exists
+  when: not alertmanager.stat.exists or alertmanager_force_install
 
 - name: Extract alertmanager binary
   ansible.builtin.unarchive:
@@ -17,7 +17,7 @@
     remote_src: yes
     list_files: yes
   register: archive_contents
-  when: not alertmanager.stat.exists
+  when: not alertmanager.stat.exists or alertmanager_force_install
 
 - name: Copy alertmanager binary to /usr/local/bin
   ansible.builtin.copy:
@@ -28,7 +28,7 @@
     mode: 0700
     remote_src: yes
   notify: restart alertmanager.service
-  when: not alertmanager.stat.exists
+  when: not alertmanager.stat.exists or alertmanager_force_install
 
 - name: Create alertmanager configuration directory
   ansible.builtin.file:

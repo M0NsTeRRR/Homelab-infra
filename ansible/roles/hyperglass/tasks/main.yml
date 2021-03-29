@@ -14,7 +14,8 @@
 
 - name: Add Yarn Apt signing key
   ansible.builtin.apt_key:
-    url: "https://dl.yarnpkg.com/debian/pubkey.gpg"
+    id: 72ECF46A56B4AD39C907BBB71646B01B86E50310
+    url: https://dl.yarnpkg.com/debian/pubkey.gpg
     state: present
   retries: 3
   delay: 3
@@ -30,8 +31,13 @@
     pkg:
       - python3-pip
       - yarn
-      - redis-server
     state: present
+
+- name: Install redis-server
+  ansible.builtin.apt:
+    name: "redis-server{% if hyperglass_redis_version is defined %}={{ hyperglass_redis_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ hyperglass_redis_package_state }}"
 
 - name: Install virtualenv
   ansible.builtin.pip:
@@ -53,7 +59,8 @@
 
 - name: Install hyperglass
   ansible.builtin.pip:
-    name: hyperglass
+    name: "hyperglass{% if hyperglass_version is defined %}={{ hyperglass_version }}{% endif %}"
+    state: "{{ hyperglass_package_state }}"
     virtualenv: /opt/hyperglass/venv
   notify: restart hyperglass.service
 

@@ -15,7 +15,8 @@
 
 - name: Install vmware_exporter
   ansible.builtin.pip:
-    name: vmware-exporter
+    name: "vmware-exporter{% if vmware_exporter_version is defined %}={{ vmware_exporter_version }}{% endif %}"
+    state: "{{ vmware_exporter_package_state }}"
     virtualenv: /opt/vmware_exporter/venv
 
 - name: Create vmware-exporter configuration directory

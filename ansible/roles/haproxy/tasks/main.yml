@@ -7,8 +7,9 @@
 
 - name: Install Haproxy
   ansible.builtin.apt:
-    name: haproxy
-    state: present
+    name: "haproxy{% if haproxy_version is defined %}={{ haproxy_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ haproxy_package_state }}"
 
 - name: Configure haproxy
   ansible.builtin.template:

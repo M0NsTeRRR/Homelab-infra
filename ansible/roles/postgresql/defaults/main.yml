@@ -1,4 +1,6 @@
 ---
+# postgresql_version:
+postgresql_package_state: latest
 postgresql_db: application
 postgresql_user: application
 postgresql_password: application

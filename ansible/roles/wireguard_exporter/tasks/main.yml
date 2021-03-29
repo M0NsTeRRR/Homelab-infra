@@ -18,7 +18,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/mdlayher/wireguard_exporter/archive/v{{ wireguard_exporter_version }}.tar.gz"
     dest: /tmp/wireguard-exporter.tar.gz
-  when: not wireguard_exporter.stat.exists
+  when: not wireguard_exporter.stat.exists or wireguard_exporter_force_install
 
 - name: Extract wireguard-exporter files
   ansible.builtin.unarchive:
@@ -27,13 +27,13 @@
     remote_src: yes
     list_files: yes
     extra_opts: ['--strip-components=1']
-  when: not wireguard_exporter.stat.exists
+  when: not wireguard_exporter.stat.exists or wireguard_exporter_force_install
 
 - name: Compile sources
   ansible.builtin.shell: /usr/bin/go build -o /opt/exporter/wireguard/build/cmd/wireguard_exporter
   args:
     chdir: /opt/exporter/wireguard/build/cmd/wireguard_exporter
-  when: not wireguard_exporter.stat.exists
+  when: not wireguard_exporter.stat.exists or wireguard_exporter_force_install
 
 - name: Copy wireguard-exporter binary to /usr/local/bin
   ansible.builtin.copy:
@@ -42,7 +42,7 @@
     mode: 0700
     remote_src: yes
   notify: restart wireguard-exporter.service
-  when: not wireguard_exporter.stat.exists
+  when: not wireguard_exporter.stat.exists or wireguard_exporter_force_install
 
 - name: Create wireguard-exporter configuration directory
   ansible.builtin.file:

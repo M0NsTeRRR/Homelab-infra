@@ -1,4 +1,6 @@
 ---
+# unifi_poller_version:
+unifi_poller_package_state: latest
 unifi_poller_url: https://127.0.0.1:8443
 unifi_poller_user: user
 unifi_poller_pass: pass

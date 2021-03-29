@@ -12,10 +12,16 @@
     shell: /usr/sbin/nologin
     group: as212510_net
 
+- name: Check if as212510_net is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/as212510.net
+  register: as212510_net
+
 - name: "Download as212510_net binary version {{ as212510_net_version }}"
   ansible.builtin.get_url:
     url: "https://github.com/M0NsTeRRR/as212510.net/releases/download/v{{ as212510_net_version }}/as212510.net_{{ as212510_net_version }}_linux_amd64.tar.gz"
     dest: /tmp/as212510_net.tar.gz
+  when: not as212510_net.stat.exists or as212510_net_force_install
 
 - name: Extract as212510_net binary
   ansible.builtin.unarchive:
@@ -24,6 +30,7 @@
     remote_src: yes
     list_files: yes
   register: archive_contents
+  when: not as212510_net.stat.exists or as212510_net_force_install
 
 - name: Copy as212510.net binary to /usr/local/bin
   ansible.builtin.copy:
@@ -34,11 +41,13 @@
     mode: 0700
     remote_src: yes
   notify: restart as212510_net.service
+  when: not as212510_net.stat.exists or as212510_net_force_install
 
 - name: "Download as212510_net version {{ as212510_net_version }}"
   ansible.builtin.get_url:
     url: "https://github.com/M0NsTeRRR/as212510.net/archive/v{{ as212510_net_version }}.tar.gz"
     dest: /tmp/as212510_net_source.tar.gz
+  when: not as212510_net.stat.exists or as212510_net_force_install
 
 - name: Create as212510_net server directory
   ansible.builtin.file:
@@ -46,7 +55,6 @@
     state: directory
     owner: as212510_net
     group: as212510_net
-
 
 - name: Extract as212510_net files
   ansible.builtin.unarchive:
@@ -56,6 +64,7 @@
     group: as212510_net
     remote_src: yes
     extra_opts: [--strip-components=1]
+  when: not as212510_net.stat.exists or as212510_net_force_install
 
 - name: Create as212510_net configuration directory
   ansible.builtin.file:

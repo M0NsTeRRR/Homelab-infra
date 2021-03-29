@@ -1,4 +1,10 @@
 ---
+- name: Install openssh-server
+  ansible.builtin.apt:
+    name: "openssh-server{% if openssh_server_version is defined %}={{ openssh_server_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ openssh_server_package_state }}"
+
 - name: Set sshd configuration
   ansible.builtin.lineinfile:
     dest: "/etc/ssh/sshd_config"
@@ -26,7 +32,7 @@
     - { regexp: '^#?UsePAM', line: 'UsePAM yes' }
     - { regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no' }
     - { regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no' }
-    - { regexp: '^#?AllowGroups', line: 'AllowGroups {% for group in sshd_allow_groups %}{{ group }}{% if not loop.last %} {% endif %}{% endfor %}' }
+    - { regexp: '^#?AllowGroups', line: 'AllowGroups {% for group in openssh_server_allow_groups %}{{ group }}{% if not loop.last %} {% endif %}{% endfor %}' }
     - { regexp: '^#?RekeyLimit', line: 'RekeyLimit 1G 1H' }
     - { regexp: '^#?KexAlgorithms', line: 'KexAlgorithms diffie-hellman-group16-sha512,diffie-hellman-group-exchange-sha256,curve25519-sha256,curve25519-sha256@libssh.org' }
     - { regexp: '^#?Ciphers', line: 'Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr' }

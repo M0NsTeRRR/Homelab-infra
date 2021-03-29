@@ -1,4 +1,6 @@
 ---
+# grafana_version:
+grafana_package_state: latest
 grafana_admin_password: password
 grafana_secret_key: secret_key
 grafana_smtp_host: smtp.exemple.com

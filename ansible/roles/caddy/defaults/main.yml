@@ -1,4 +1,6 @@
 ---
+# caddy_version:
+caddy_package_state: latest
 caddy_email: email@example.com
 caddy_exporter_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
 caddy_exporter_local_path_certificate: "/etc/ssl/certs/caddy_exporter.crt"

@@ -1,6 +1,13 @@
 ---
-graylog_server_version: 4.0
-graylog_elasticsearch_version: 7
+# graylog_server_version:
+graylog_server_repo_version: 4.0
+graylog_server_package_state: latest
+# graylog_elasticsearch_version:
+graylog_elasticsearch_repo_version: 7
+graylog_elasticsearch_package_state: latest
+# graylog_mongodb_version:
+graylog_mongodb_repo_version: 4.4
+graylog_mongodb_package_state: latest
 
 graylog_password_secret: password_secret
 graylog_root_password: root_password

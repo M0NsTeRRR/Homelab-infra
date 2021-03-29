@@ -47,6 +47,7 @@
 
 - name: Add kubernetes Apt signing key
   ansible.builtin.apt_key:
+    id: 54A647F9048D5688D7DA2ABE6A030B21BA07F4FB
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
   retries: 3
@@ -54,21 +55,18 @@
 
 - name: Add kubernetes Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://apt.kubernetes.io/ kubernetes-xenial main"
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
     state: present
     filename: kubernetes
 
-- name: Install kubelet and kubeadm
+- name: Install kubelet
   ansible.builtin.apt:
-    pkg:
-      - kubelet
-      - kubeadm
-    state: present
+    name: "kubelet{% if common_kubernetes_kubelet_version is defined %}={{ common_kubernetes_kubelet_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ common_kubernetes_kubelet_package_state }}"
 
-- name: Mark kubelet and kubeadm packages as hold
-  ansible.builtin.dpkg_selections:
-    name: "{{ item.name }}"
-    selection: hold
-  with_items:
-    - { name: 'kubelet' }
-    - { name: 'kubeadm' }
+- name: Install kubeadm
+  ansible.builtin.apt:
+    name: "kubeadm{% if common_kubernetes_kubeadm_version is defined %}={{ common_kubernetes_kubeadm_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ common_kubernetes_kubeadm_package_state }}"

@@ -1,0 +1,7 @@
+---
+# docker_ce_version:
+docker_ce_package_state: latest
+# docker_ce_cli_version:
+docker_ce_cli_package_state: latest
+# docker_containerd_io_version:
+docker_containerd_io_package_state: latest

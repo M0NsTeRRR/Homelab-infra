@@ -7,8 +7,9 @@
 
 - name: Install snmpd
   ansible.builtin.apt:
-    name: snmpd
-    state: present
+    name: "snmpd{% if snmpd_version is defined %}={{ snmpd_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ snmpd_package_state }}"
 
 - name: Configure snmpd
   ansible.builtin.template:

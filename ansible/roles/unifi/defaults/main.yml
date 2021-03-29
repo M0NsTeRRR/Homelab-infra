@@ -1,5 +1,9 @@
 ---
-unifi_version: 6.0.45
+unifi_version: 6.1.71
+unifi_force_install: false
+unifi_mongodb_repo_version: 3.6
+# unifi_mongodb_version:
+unifi_mongodb_force_install: latest
 unifi_local_absolute_path_ca_certificate: "/etc/ssl/certs/ca.crt"
 unifi_local_path_certificate: "/etc/ssl/certs/cert.crt"
 unifi_local_path_certificate_key: "/etc/ssl/certs/cert.crt"

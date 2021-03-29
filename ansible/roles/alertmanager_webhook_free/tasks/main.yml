@@ -12,10 +12,16 @@
     shell: /usr/sbin/nologin
     group: alertmanager_webhook_free
 
+- name: Check if alertmanager_webhook_free is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/alertmanager-webhook-free
+  register: alertmanager_webhook_free
+
 - name: "Download alertmanager_webhook_free binary version {{ alertmanager_webhook_free_version }}"
   ansible.builtin.get_url:
     url: "https://github.com/M0NsTeRRR/alertmanager-webhook-free/releases/download/v{{ alertmanager_webhook_free_version }}/alertmanager-webhook-free_{{ alertmanager_webhook_free_version }}_linux_amd64.tar.gz"
     dest: /tmp/alertmanager_webhook_free.tar.gz
+  when: not alertmanager_webhook_free.stat.exists or alertmanager_webhook_free_force_install
 
 - name: Extract alertmanager_webhook_free binary
   ansible.builtin.unarchive:
@@ -24,6 +30,7 @@
     remote_src: yes
     list_files: yes
   register: archive_contents
+  when: not alertmanager_webhook_free.stat.exists or alertmanager_webhook_free_force_install
 
 - name: Copy alertmanager-webhook-free binary to /usr/local/bin
   ansible.builtin.copy:
@@ -34,6 +41,7 @@
     mode: 0700
     remote_src: yes
   notify: restart alertmanager_webhook_free.service
+  when: not alertmanager_webhook_free.stat.exists or alertmanager_webhook_free_force_install
 
 - name: Create alertmanager_webhook_free configuration directory
   ansible.builtin.file:

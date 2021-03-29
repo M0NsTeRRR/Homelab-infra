@@ -19,10 +19,16 @@
     state: directory
     name: /opt/exporter/node-exporter
 
+- name: Check if node-exporter is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/node-exporter
+  register: node_exporter
+
 - name: Download last version of node-exporter
   ansible.builtin.get_url:
     url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-amd64.tar.gz"
     dest: /tmp/node-exporter.tar.gz
+  when: not node_exporter.stat.exists or node_exporter_force_install
 
 - name: Extract latest binary of node-exporter
   ansible.builtin.archive:
@@ -31,6 +37,7 @@
     remote_src: yes
     list_files: yes
   register: archive_contents
+  when: not node_exporter.stat.exists or node_exporter_force_install
 
 - name: Copy node-exporter binary to /usr/local/bin
   ansible.builtin.copy:
@@ -39,6 +46,7 @@
     mode: 0700
     remote_src: yes
   notify: restart node-exporter.service
+  when: not node_exporter.stat.exists or node_exporter_force_install
 
 - name: Create node-exporter configuration directory
   ansible.builtin.file:

@@ -8,14 +8,14 @@
   ansible.builtin.get_url:
     url: "https://github.com/fffonion/tplink-plug-exporter/releases/download/v{{ tplink_plug_exporter_version }}/tplink-plug-exporter_{{ tplink_plug_exporter_version }}_linux_x86_64.tar.gz"
     dest: /tmp/tplink-plug-exporter.tar.gz
-  when: not tplink_plug_exporter.stat.exists
+  when: not tplink_plug_exporter.stat.exists or tplink_plug_exporter_force_install
 
 - name: Extract tplink-plug-exporter binary
   ansible.builtin.unarchive:
     src: /tmp/tplink-plug-exporter.tar.gz
     dest: /tmp
     remote_src: yes
-  when: not tplink_plug_exporter.stat.exists
+  when: not tplink_plug_exporter.stat.exists or tplink_plug_exporter_force_install
 
 - name: Copy tplink-plug-exporter binary to /usr/local/bin
   ansible.builtin.copy:
@@ -26,7 +26,7 @@
     mode: 0700
     remote_src: yes
   notify: restart tplink-plug-exporter.service
-  when: not tplink_plug_exporter.stat.exists
+  when: not tplink_plug_exporter.stat.exists or tplink_plug_exporter_force_install
 
 - name: Create systemd service file
   ansible.builtin.template:

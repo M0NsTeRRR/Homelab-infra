@@ -1,4 +1,10 @@
 ---
+# frr_version:
+frr_package_state: latest
+# frr_pythontools_version:
+frr_pythontools_package_state: latest
+# frr_snmp_version:
+frr_snmp_package_state: latest
 frr_daemons:
   zebra: false
   bgpd: false

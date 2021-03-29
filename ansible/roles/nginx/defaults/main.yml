@@ -1,7 +1,6 @@
 ---
-nginx_cert_country: "FR"
-nginx_cert_organization_name: "example.fr"
-nginx_cert_email_address: "email@example.fr"
+# nginx_version:
+nginx_package_state: latest
 nginx_configuration: []
 
 

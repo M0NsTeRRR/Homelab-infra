@@ -1,5 +1,6 @@
 ---
 wireguard_exporter_version: 0.1.2
+wireguard_exporter_force_install: false
 wireguard_exporter_peers: []
 
 

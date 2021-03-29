@@ -26,14 +26,14 @@
   ansible.builtin.get_url:
     url: 'https://github.com/Requarks/wiki/releases/download/{{ wiki_js_version }}/wiki-js.tar.gz'
     dest: /tmp/wiki-js.tar.gz
-  when: not wikijs.stat.exists
+  when: not wikijs.stat.exists or wikijs_force_install
 
 - name: Extract wiki.js files
   ansible.builtin.unarchive:
     src: /tmp/wiki-js.tar.gz
     dest: /opt/wikijs
     remote_src: yes
-  when: not wikijs.stat.exists
+  when: not wikijs.stat.exists or wikijs_force_install
 
 - name: Configure wiki.js
   ansible.builtin.template:

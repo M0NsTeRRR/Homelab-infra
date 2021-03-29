@@ -27,7 +27,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/QubitProducts/exporter_exporter/releases/download/v{{ exporter_exporter_version }}/exporter_exporter-{{ exporter_exporter_version }}.linux-amd64.tar.gz"
     dest: /tmp/exporter_exporter.tar.gz
-  when: not exporter_exporter.stat.exists
+  when: not exporter_exporter.stat.exists or exporter_exporter_force_install
 
 - name: Extract exporter_exporter binary
   ansible.builtin.unarchive:
@@ -36,7 +36,7 @@
     remote_src: yes
     list_files: yes
   register: archive_contents
-  when: not exporter_exporter.stat.exists
+  when: not exporter_exporter.stat.exists or exporter_exporter_force_install
 
 - name: Copy exporter_exporter binary to /usr/local/bin
   ansible.builtin.copy:
@@ -47,7 +47,7 @@
     mode: 0700
     remote_src: yes
   notify: restart exporter-exporter.service
-  when: not exporter_exporter.stat.exists
+  when: not exporter_exporter.stat.exists or exporter_exporter_force_install
 
 - name: Create exporter_exporter folder
   ansible.builtin.file:

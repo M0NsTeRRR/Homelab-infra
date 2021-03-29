@@ -1,8 +1,9 @@
 ---
 - name: Install auditd
   ansible.builtin.apt:
-    name: auditd
-    state: present
+    name: "auditd{% if auditd_version is defined %}={{ auditd_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ auditd_package_state }}"
   notify:
     - restart auditd
 

@@ -1,4 +1,6 @@
 ---
+# snmpd_version:
+snmpd_package_state: latest
 snmpd_user: admin
 snmpd_pass: password
 snmpd_private: private

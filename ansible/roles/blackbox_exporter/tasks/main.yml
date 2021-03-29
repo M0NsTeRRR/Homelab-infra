@@ -8,7 +8,7 @@
   ansible.builtin.get_url:
     url: "https://github.com/prometheus/blackbox_exporter/releases/download/v{{ blackbox_exporter_version }}/blackbox_exporter-{{ blackbox_exporter_version }}.linux-amd64.tar.gz"
     dest: /tmp/blackbox-exporter.tar.gz
-  when: not blackbox_exporter.stat.exists
+  when: not blackbox_exporter.stat.exists or blackbox_exporter_force_install
 
 - name: Extract blackbox-exporter binary
   ansible.builtin.unarchive:
@@ -17,7 +17,7 @@
     remote_src: yes
     list_files: yes
   register: archive_contents
-  when: not blackbox_exporter.stat.exists
+  when: not blackbox_exporter.stat.exists or blackbox_exporter_force_install
 
 - name: Copy blackbox-exporter binary to /usr/local/bin
   ansible.builtin.copy:
@@ -28,7 +28,7 @@
     mode: 0700
     remote_src: yes
   notify: restart blackbox-exporter.service
-  when: not blackbox_exporter.stat.exists
+  when: not blackbox_exporter.stat.exists or blackbox_exporter_force_install
 
 - name: Create blackbox-exporter configuration directory
   ansible.builtin.file:

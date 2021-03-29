@@ -1,8 +1,9 @@
 ---
 - name: Install Postgresql
   ansible.builtin.apt:
-    name: postgresql
-    state: present
+    name: "postgresql{% if postgresql_version is defined %}={{ postgresql_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ postgresql_package_state }}"
   notify:
     - enable postgresql
     - restart postgresql
