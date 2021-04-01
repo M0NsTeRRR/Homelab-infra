@@ -1,9 +1,34 @@
 ---
-- name: Install Prometheus
-  ansible.builtin.apt:
-    name: "prometheus{% if prometheus_version is defined %}={{ prometheus_version }}{% endif %}"
-    update_cache: yes
-    state: "{{ prometheus_package_state }}"
+- name: Check if prometheus is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/prometheus
+  register: prometheus
+
+- name: "Download prometheus version {{ prometheus_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/prometheus/prometheus/releases/download/v{{ alertmanager_version }}/prometheus-{{ alertmanager_version }}.linux-amd64.tar.gz"
+    dest: /tmp/prometheus.tar.gz
+  when: not prometheus.stat.exists or prometheus_force_install
+
+- name: Extract prometheus binary
+  ansible.builtin.unarchive:
+    src: /tmp/prometheus.tar.gz
+    dest: /tmp
+    remote_src: yes
+    list_files: yes
+  register: archive_contents
+  when: not prometheus.stat.exists or prometheus_force_install
+
+- name: Copy prometheus binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: /tmp/{{ archive_contents.files[0] }}prometheus
+    dest: /usr/local/bin/prometheus
+    owner: prometheus
+    group: prometheus
+    mode: 0700
+    remote_src: yes
+  notify: restart prometheus.service
+  when: not prometheus.stat.exists or prometheus_force_install
 
 - name: Configure Prometheus
   ansible.builtin.lineinfile:
@@ -11,13 +36,13 @@
     regexp: "^(# )?ARGS="
     line: 'ARGS="--web.listen-address=127.0.0.1:9090 --web.external-url=https://{{ inventory_hostname }}:9091"'
     state: "present"
-  notify: restart prometheus
+  notify: restart prometheus.service
 
 - name: Configure Prometheus
   ansible.builtin.template:
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
-  notify: restart prometheus
+  notify: restart prometheus.service
 
 - name: "Create {{ item.key }} folder in prometheus folder"
   ansible.builtin.file:
@@ -30,7 +55,15 @@
     src: targets.json.j2
     dest: "/etc/prometheus/{{ item.key }}/targets.json"
   with_dict: "{{ prometheus_targets }}"
-  notify: restart prometheus
+  notify: restart prometheus.service
+
+- name: Create systemd service file
+  ansible.builtin.template:
+    src: prometheus.service.j2
+    dest: /etc/systemd/system/prometheus.service
+  notify:
+    - enable prometheus.service
+    - restart prometheus.service
 
 - name: Include certs
   ansible.builtin.include_tasks: certs.yml

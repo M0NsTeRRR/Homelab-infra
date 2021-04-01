@@ -1,6 +1,6 @@
 ---
-# prometheus_version:
-prometheus_package_state: latest
+prometheus_version: 2.26.0
+prometheus_force_install: false
 prometheus_certs_dir:
 prometheus_clients_certs: []
 prometheus_targets: {}
