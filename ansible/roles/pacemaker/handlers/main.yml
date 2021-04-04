@@ -1,10 +1,14 @@
 ---
 - name: restart pacemaker
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: pacemaker
     state: restarted
 
 - name: enable pacemaker
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: pacemaker
     enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

@@ -63,5 +63,6 @@
     src: alertmanager_webhook_free.service.j2
     dest: /etc/systemd/system/alertmanager_webhook_free.service
   notify:
+    - daemon-reload
     - enable alertmanager_webhook_free.service
     - restart alertmanager_webhook_free.service

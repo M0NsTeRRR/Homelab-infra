@@ -10,7 +10,10 @@
     name: "corosync{% if corosync_version is defined %}={{ corosync_version }}{% endif %}"
     update_cache: yes
     state: "{{ corosync_package_state }}"
-  notify: enable corosync
+  notify:
+    - daemon-reload
+    - enable corosync
+    - restart corosync
 
 - name: Deleting /etc/corosync/authkey
   ansible.builtin.file:

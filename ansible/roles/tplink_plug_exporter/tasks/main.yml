@@ -33,5 +33,6 @@
     src: tplink-plug-exporter.service.j2
     dest: /etc/systemd/system/tplink-plug-exporter.service
   notify:
+    - daemon-reload
     - enable tplink-plug-exporter.service
     - restart tplink-plug-exporter.service

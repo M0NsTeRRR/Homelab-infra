@@ -93,5 +93,6 @@
     src: exporter_exporter.service.j2
     dest: /etc/systemd/system/exporter-exporter.service
   notify:
+    - daemon-reload
     - enable exporter-exporter.service
     - restart exporter-exporter.service

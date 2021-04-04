@@ -5,6 +5,7 @@
     update_cache: yes
     state: "{{ pacemaker_package_state }}"
   notify:
+    - daemon-reload
     - restart pacemaker
     - enable pacemaker
 

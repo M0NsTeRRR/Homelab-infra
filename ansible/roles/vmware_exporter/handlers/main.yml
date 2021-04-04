@@ -1,10 +1,14 @@
 ---
 - name: restart vmware-exporter.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: vmware-exporter.service
     state: restarted
 
 - name: enable vmware-exporter.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: vmware-exporter.service
-    enabled: true
+    enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

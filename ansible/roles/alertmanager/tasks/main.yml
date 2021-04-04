@@ -53,6 +53,7 @@
     src: alertmanager.service.j2
     dest: /etc/systemd/system/alertmanager.service
   notify:
+    - daemon-reload
     - enable alertmanager.service
     - restart alertmanager.service
 

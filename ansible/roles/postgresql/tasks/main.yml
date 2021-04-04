@@ -5,6 +5,7 @@
     update_cache: yes
     state: "{{ postgresql_package_state }}"
   notify:
+    - daemon-reload
     - enable postgresql
     - restart postgresql
 

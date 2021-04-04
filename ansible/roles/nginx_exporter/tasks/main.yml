@@ -82,5 +82,6 @@
     src: nginx-exporter.service.j2
     dest: /etc/systemd/system/nginx-exporter.service
   notify:
+    - daemon-reload
     - enable nginx-exporter.service
     - restart nginx-exporter.service

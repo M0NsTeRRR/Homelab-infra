@@ -1,9 +1,13 @@
 - name: restart wikijs.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: wikijs.service
     state: restarted
 
 - name: enable wikijs.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: wikijs.service
-    enabled: true
+    enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

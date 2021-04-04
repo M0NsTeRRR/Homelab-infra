@@ -53,5 +53,6 @@
     src: wikijs.service.j2
     dest: /etc/systemd/system/wikijs.service
   notify:
+    - daemon-reload
     - enable wikijs.service
     - restart wikijs.service

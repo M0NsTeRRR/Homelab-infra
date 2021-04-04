@@ -82,5 +82,6 @@
     src: node-exporter.service.j2
     dest: /etc/systemd/system/node-exporter.service
   notify:
+    - daemon-reload
     - enable node-exporter.service
     - restart node-exporter.service

@@ -1,10 +1,10 @@
 ---
 - name: restart ipmi-exporter.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: ipmi-exporter.service
     state: restarted
 
 - name: enable ipmi-exporter.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: ipmi-exporter.service
-    enabled: true
+    enabled: yes

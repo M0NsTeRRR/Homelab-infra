@@ -46,6 +46,7 @@
     update_cache: yes
     state: "{{ caddy_package_state }}"
   notify:
+    - daemon-reload
     - enable caddy.service
     - restart caddy.service
 

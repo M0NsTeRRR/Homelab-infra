@@ -1,10 +1,10 @@
 ---
 - name: enable hyperglass.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: hyperglass
     enabled: true
 
 - name: restart hyperglass.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: hyperglass
     state: restarted

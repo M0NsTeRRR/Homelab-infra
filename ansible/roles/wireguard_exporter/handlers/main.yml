@@ -1,10 +1,14 @@
 ---
 - name: restart wireguard-exporter.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: wireguard-exporter.service
     state: restarted
 
 - name: enable wireguard-exporter.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: wireguard-exporter.service
-    enabled: true
+    enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

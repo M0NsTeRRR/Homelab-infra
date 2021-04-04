@@ -1,10 +1,14 @@
 ---
 - name: restart caddy.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: caddy.service
     state: restarted
 
 - name: enable caddy.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: caddy.service
-    enabled: true
+    enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

@@ -1,6 +1,9 @@
 ---
 - name: restart docker
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: docker
-    daemon_reload: yes
     state: restarted
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

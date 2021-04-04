@@ -1,10 +1,14 @@
 ---
 - name: restart rpki-validator-3
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: rpki-validator-3
     state: restarted
 
 - name: enable rpki-validator-3
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: rpki-validator-3
-    enabled: true
+    enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

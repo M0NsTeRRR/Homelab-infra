@@ -1,10 +1,14 @@
 ---
 - name: enable wireguard
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: "wg-quick@wg0"
-    enabled: true
+    enabled: yes
 
 - name: restart wireguard
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: "wg-quick@wg0"
     state: restarted
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

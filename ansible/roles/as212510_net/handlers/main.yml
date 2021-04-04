@@ -1,10 +1,14 @@
 ---
 - name: restart as212510_net.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: as212510_net.service
     state: restarted
 
 - name: enable as212510_net.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: as212510_net.service
-    enabled: true
+    enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

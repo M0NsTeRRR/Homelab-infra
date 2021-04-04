@@ -1,5 +1,5 @@
 ---
 - name: restart ntp
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: ntp
     state: restarted

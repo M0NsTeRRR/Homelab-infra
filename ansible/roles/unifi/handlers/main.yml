@@ -1,5 +1,5 @@
 ---
 - name: restart unifi
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: unifi
     state: restarted

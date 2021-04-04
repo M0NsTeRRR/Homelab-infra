@@ -42,5 +42,6 @@
     dest: "/etc/wireguard/wg0.conf"
     mode: 0600
   notify:
+    - daemon-reload
     - restart wireguard
     - enable wireguard

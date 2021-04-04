@@ -1,10 +1,14 @@
 ---
 - name: restart snmp-exporter.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: snmp-exporter.service
     state: restarted
 
 - name: enable snmp-exporter.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: snmp-exporter.service
-    enabled: true
+    enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

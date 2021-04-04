@@ -1,10 +1,14 @@
 ---
 - name: restart ghost.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: ghost.service
     state: restarted
 
 - name: enable ghost.service
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: ghost.service
-    enabled: true
+    enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

@@ -1,10 +1,14 @@
 ---
 - name: restart netbox-sync.timer
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: netbox-sync.timer
     state: restarted
 
 - name: enable netbox-sync.timer
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: netbox-sync.timer
     enabled: yes
+
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes

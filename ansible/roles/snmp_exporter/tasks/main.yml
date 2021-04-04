@@ -50,5 +50,6 @@
     src: snmp-exporter.service.j2
     dest: /etc/systemd/system/snmp-exporter.service
   notify:
+    - daemon-reload
     - enable snmp-exporter.service
     - restart snmp-exporter.service

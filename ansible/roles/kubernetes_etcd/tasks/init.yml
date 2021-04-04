@@ -62,7 +62,9 @@
 
 - name: Create the static pod manifests
   ansible.builtin.shell: kubeadm init phase etcd local --config=/home/{{ ansible_user }}/{{ inventory_hostname }}/kubeadmcfg.yaml
-  notify: restart kubelet
+  notify:
+    - daemon-reload
+    - restart kubelet
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers

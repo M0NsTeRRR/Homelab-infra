@@ -46,5 +46,6 @@
     src: blackbox-exporter.service.j2
     dest: /etc/systemd/system/blackbox-exporter.service
   notify:
+    - daemon-reload
     - enable blackbox-exporter.service
     - restart blackbox-exporter.service

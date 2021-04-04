@@ -86,5 +86,6 @@
     src: as212510_net.service.j2
     dest: /etc/systemd/system/as212510_net.service
   notify:
+    - daemon-reload
     - enable as212510_net.service
     - restart as212510_net.service

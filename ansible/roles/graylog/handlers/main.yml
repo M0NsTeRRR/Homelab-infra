@@ -1,35 +1,35 @@
 ---
 - name: restart rsyslog
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: rsyslog
     state: restarted
 
 - name: restart mongod
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: mongod
     state: restarted
 
 - name: enable mongod
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: mongod
-    enabled: true
+    enabled: yes
 
 - name: restart elasticsearch
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: elasticsearch
     state: restarted
 
 - name: enable elasticsearch
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: elasticsearch
-    enabled: true
+    enabled: yes
 
 - name: restart graylog-server
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: graylog-server
     state: restarted
 
 - name: enable graylog-server
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: graylog-server
-    enabled: true
+    enabled: yes
