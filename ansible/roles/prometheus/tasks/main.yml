@@ -6,7 +6,7 @@
 
 - name: "Download prometheus version {{ prometheus_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/prometheus/releases/download/v{{ alertmanager_version }}/prometheus-{{ alertmanager_version }}.linux-amd64.tar.gz"
+    url: "https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
     dest: /tmp/prometheus.tar.gz
   when: not prometheus.stat.exists or prometheus_force_install
 
