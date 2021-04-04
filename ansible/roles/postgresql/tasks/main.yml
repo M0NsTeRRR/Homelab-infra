@@ -18,14 +18,14 @@
     name: psycopg2-binary
 
 - name: "Create {{ postgresql_user }} postgresql user"
-  ansible.builtin.postgresql_user:
+  community.postgresql.postgresql_user:
     name: "{{ postgresql_user }}"
     password: "{{ postgresql_password }}"
   become: yes
   become_user: postgres
 
 - name: "Create {{ postgresql_db }} postgresql database"
-  ansible.builtin.postgresql_db:
+  community.postgresql.postgresql_db:
     name: "{{ postgresql_db }}"
     owner: "{{ postgresql_user }}"
   become: yes
