@@ -75,7 +75,6 @@
     - snmp_exporter
     - ipmi_exporter
     - blackbox_exporter
-    - fping_exporter
     - vmware_exporter
     - unifi_poller
     - tplink_plug_exporter

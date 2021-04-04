@@ -45,7 +45,7 @@ prometheus_clients_certs:
   - nginx-exporter
   - monitoring-exporter
 prometheus_targets:
-  blackbox:
+  blackbox_http:
     - https://vcenter.unicornafk.fr
     - https://server1.unicornafk.fr
     - https://server2.unicornafk.fr
@@ -61,7 +61,7 @@ prometheus_targets:
     - https://as212510.unicornafk.fr
     - https://lg.as212510.unicornafk.fr
     - https://adminafk.unicornafk.fr
-  fping:
+  blackbox_icmp:
     - 1.1.1.1               # cloudflare
     - 2606:4700:4700::1111  # cloudflare
     - 8.8.8.8               # google
