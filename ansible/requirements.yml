@@ -1,0 +1,6 @@
+---
+collections:
+  - community.crypto
+  - community.general
+  - community.postgresql
+  - ansible.posix

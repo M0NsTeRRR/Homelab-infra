@@ -18,7 +18,9 @@ This is my Homelab infrastructure.
 
 Fill certs folders
 
-Install dependencies `pip3 install -r requirements.txt`
+Install python dependencies `pip3 install -r requirements.txt`
+
+Install ansible galaxy dependencies `ansible-galaxy install -r requirements.yml`
 
 fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`
 
