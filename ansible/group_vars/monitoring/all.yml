@@ -191,9 +191,6 @@ exporter_exporter_nodes:
   - name: blackbox
     port: 9115
     path: /probe
-  - name: fping
-    port: 9605
-    path: /probe
   - name: snmp
     port: 9116
     path: /snmp

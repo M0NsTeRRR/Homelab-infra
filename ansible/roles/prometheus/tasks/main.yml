@@ -1,4 +1,18 @@
 ---
+- name: Add prometheus group
+  ansible.builtin.group:
+    name: prometheus
+    system: yes
+    state: present
+
+- name: Add prometheus user
+  ansible.builtin.user:
+    name: prometheus
+    create_home: false
+    shell: /usr/sbin/nologin
+    home: /var/lib/prometheus
+    group: prometheus
+
 - name: Check if prometheus is already installed
   ansible.builtin.stat:
     path: /usr/local/bin/prometheus
@@ -31,29 +45,33 @@
   when: not prometheus.stat.exists or prometheus_force_install
 
 - name: Configure Prometheus
-  ansible.builtin.lineinfile:
-    dest: "/etc/default/prometheus"
-    regexp: "^(# )?ARGS="
-    line: 'ARGS="--web.listen-address=127.0.0.1:9090 --web.external-url=https://{{ inventory_hostname }}:9091"'
-    state: "present"
-  notify: restart prometheus.service
-
-- name: Configure Prometheus
   ansible.builtin.template:
     src: prometheus.yml.j2
     dest: /etc/prometheus/prometheus.yml
   notify: restart prometheus.service
 
+- name: Create prometheus system user
+  ansible.builtin.file:
+    path: /var/lib/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+    mode: 0755
+
 - name: "Create {{ item.key }} folder in prometheus folder"
   ansible.builtin.file:
     state: directory
     name: "/etc/prometheus/{{ item.key }}"
+    owner: prometheus
+    group: prometheus
   with_dict: "{{ prometheus_targets }}"
 
 - name: "Create {{ item.key }} target file"
   ansible.builtin.template:
     src: targets.json.j2
     dest: "/etc/prometheus/{{ item.key }}/targets.json"
+    owner: prometheus
+    group: prometheus
   with_dict: "{{ prometheus_targets }}"
   notify: restart prometheus.service
 

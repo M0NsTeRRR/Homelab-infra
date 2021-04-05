@@ -5,8 +5,12 @@ Documentation=https://prometheus.io/docs/introduction/overview/
 [Service]
 Restart=always
 User=prometheus
-EnvironmentFile=/etc/default/prometheus
-ExecStart=/usr/local/bin/prometheus $ARGS
+Group=prometheus
+WorkingDirectory=/etc/prometheus
+ExecStart=/usr/local/bin/prometheus \
+  --web.listen-address=127.0.0.1:9090 \
+  --web.external-url=https://{{ inventory_hostname }}:9091 \
+  --storage.tsdb.path=/var/lib/prometheus
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=20s
 SendSIGKILL=no
