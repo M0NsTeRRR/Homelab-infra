@@ -3,3 +3,5 @@
 pacemaker_package_state: latest
 # pacemaker_crmsh_version
 pacemaker_crmsh_package_state: latest
+pacemaker_lb_ip: 192.168.0.1
+pacemaker_lb_service_type: haproxy
