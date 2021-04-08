@@ -17,6 +17,7 @@
 - name: Add ghost user
   ansible.builtin.user:
     name: idiotghost
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: idiotghost

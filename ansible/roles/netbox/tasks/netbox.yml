@@ -47,6 +47,7 @@
 - name: Add netbox user
   ansible.builtin.user:
     name: netbox
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: netbox

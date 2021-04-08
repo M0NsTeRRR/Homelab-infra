@@ -8,6 +8,7 @@
 - name: Add prometheus user
   ansible.builtin.user:
     name: prometheus
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     home: /var/lib/prometheus

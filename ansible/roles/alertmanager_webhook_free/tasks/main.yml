@@ -8,6 +8,7 @@
 - name: Add alertmanager_webhook_free user
   ansible.builtin.user:
     name: alertmanager_webhook_free
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: alertmanager_webhook_free

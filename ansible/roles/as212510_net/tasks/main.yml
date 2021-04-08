@@ -8,6 +8,7 @@
 - name: Add as212510_net user
   ansible.builtin.user:
     name: as212510_net
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: as212510_net

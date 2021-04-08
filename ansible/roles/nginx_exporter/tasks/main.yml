@@ -14,6 +14,7 @@
 - name: Add nginx_exporter user
   ansible.builtin.user:
     name: nginx_exporter
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: nginx_exporter

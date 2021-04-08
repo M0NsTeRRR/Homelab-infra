@@ -19,6 +19,7 @@
 - name: Add caddy user
   ansible.builtin.user:
     name: caddy
+    system: yes
     home: /var/lib/caddy
     shell: /usr/sbin/nologin
     group: caddy

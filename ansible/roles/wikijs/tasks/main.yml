@@ -8,6 +8,7 @@
 - name: Add wikijs user
   ansible.builtin.user:
     name: wikijs
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: wikijs

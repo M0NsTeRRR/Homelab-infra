@@ -8,6 +8,7 @@
 - name: Add hyperglass user
   ansible.builtin.user:
     name: hyperglass
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: hyperglass
