@@ -36,7 +36,16 @@
       ],
       "ttl": "3600",
       "type": "AAAA"
-    }{% endif %}{% if host.cname is defined and item in host.hostname %},
+    }{% endif %}{% if host.sshfp is defined and item in host.hostname %}{% for sshfp in host.sshfp %},
+    {
+      "name": "{{ host.hostname }}",
+      "changetype": "REPLACE",
+      "records": [
+        { "content": "{{ sshfp.algorithm }} {{ sshfp.type }} {{ sshfp.fingerprint }}", "disabled": false }
+      ],
+      "ttl": "3600",
+      "type": "SSHFP"
+    }{% if not loop.last %},{% endif %}{% endfor %}{% endif %}{% if host.cname is defined and item in host.hostname %},
     {
       "name": "{{ host.hostname }}",
       "changetype": "REPLACE",

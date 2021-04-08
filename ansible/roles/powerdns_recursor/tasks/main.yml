@@ -17,6 +17,7 @@
 - name: Add pdns user
   ansible.builtin.user:
     name: pdns
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: pdns

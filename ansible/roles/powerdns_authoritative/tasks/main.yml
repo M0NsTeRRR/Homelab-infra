@@ -11,4 +11,4 @@
   ansible.builtin.include_tasks: provision.yml
   when: inventory_hostname == play_hosts[0]
   run_once: true
-  with_items: "{{ pdns_domains + pdns_subdomains + pdns_reverse_zones }}"
+  with_items: "{{ powerdns_authoritative_domains + powerdns_authoritative_subdomains + powerdns_authoritative_reverse_zones }}"

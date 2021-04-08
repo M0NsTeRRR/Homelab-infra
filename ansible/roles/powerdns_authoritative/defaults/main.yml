@@ -1,5 +1,5 @@
 ---
-powerdns_authoritative_repo_version: 45
+powerdns_authoritative_repo_version: 44
 # powerdns_authoritative_version:
 powerdns_authoritative_repository_key: FD380FBB
 powerdns_authoritative_package_state: latest
@@ -26,6 +26,10 @@ powerdns_authoritative_records: []
 #   - 10.168.192.in-addr.arpa
 # powerdns_authoritative_records:
 #   - canonical_hostname: dns1.unicornafk.fr.
-#     ipv4: 192.168.10.21
-#     ipv6: 2a0c:b641:02c0:110::21
+#     a: 192.168.10.21
+#     aaaa: 2a0c:b641:02c0:110::21
+#    sshfp:
+#      - algorithm: 1
+#        type: 2
+#        fingerprint: F537A260E2626BFEC959303F0F786F3BC986152E48A0E26C68499C0E79C27797
 #     rdns: true

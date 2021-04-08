@@ -17,6 +17,7 @@
 - name: Add pdns user
   ansible.builtin.user:
     name: pdns
+    system: yes
     create_home: false
     shell: /usr/sbin/nologin
     group: pdns
@@ -31,7 +32,7 @@
 
 - name: Add PowerDNS Apt signing key
   ansible.builtin.apt_key:
-    id: "{{ pdns_repository_key }}"
+    id: "{{ powerdns_authoritative_repository_key }}"
     url: "https://repo.powerdns.com/{{ powerdns_authoritative_repository_key }}-pub.asc"
     state: present
   retries: 3
