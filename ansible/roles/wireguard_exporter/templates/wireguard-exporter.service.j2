@@ -6,6 +6,8 @@ After=network-online.target
 Type=simple
 WorkingDirectory=/etc/wireguard_exporter
 ExecStart=/usr/local/bin/wireguard_exporter -metrics.addr 127.0.0.1:9586 -wireguard.peer-file peers.toml
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

@@ -9,6 +9,8 @@ Group=idiotghost
 WorkingDirectory=/var/www/ghost
 Environment="NODE_ENV=production"
 ExecStart=/usr/bin/node /usr/bin/ghost run
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

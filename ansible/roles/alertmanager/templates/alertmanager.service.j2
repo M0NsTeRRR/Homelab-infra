@@ -8,6 +8,8 @@ Group=prometheus
 Type=simple
 WorkingDirectory=/etc/alertmanager
 ExecStart=/usr/local/bin/alertmanager --config.file=alertmanager.yml --storage.path /var/lib/alertmanager/
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

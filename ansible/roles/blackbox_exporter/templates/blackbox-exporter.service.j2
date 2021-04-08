@@ -12,6 +12,8 @@ WorkingDirectory=/etc/blackbox_exporter
 ExecStart=/usr/local/bin/blackbox_exporter \
     --web.listen-address="127.0.0.1:9115" \
     --config.file blackbox.yml
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

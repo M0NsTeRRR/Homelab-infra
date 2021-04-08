@@ -5,6 +5,8 @@ After=kea-ctrl-agent.service
 [Service]
 Type=simple
 ExecStart=/opt/kea_exporter/venv/bin/kea-exporter --address 127.0.0.1 --port 9546 --interval 30 /tmp/kea-dhcp4-ctrl.sock /tmp/kea-dhcp6-ctrl.sock
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

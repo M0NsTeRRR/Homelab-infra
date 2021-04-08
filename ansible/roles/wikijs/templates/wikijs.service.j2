@@ -8,6 +8,8 @@ User=wikijs
 WorkingDirectory=/opt/wikijs
 Environment=NODE_ENV=production
 ExecStart=/usr/bin/node server
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

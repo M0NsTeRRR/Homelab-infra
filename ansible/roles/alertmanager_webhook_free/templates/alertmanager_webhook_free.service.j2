@@ -8,6 +8,8 @@ Group=alertmanager_webhook_free
 Type=simple
 WorkingDirectory=/etc/alertmanager_webhook_free
 ExecStart=/usr/local/bin/alertmanager-webhook-free -config=alertmanager_webhook_free.yml
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

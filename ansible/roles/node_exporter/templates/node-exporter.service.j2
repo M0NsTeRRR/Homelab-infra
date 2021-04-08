@@ -6,6 +6,8 @@ After=network-online.target
 Type=simple
 WorkingDirectory=/etc/node-exporter
 ExecStart=/usr/local/bin/node-exporter --web.config="web-config.yml"
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

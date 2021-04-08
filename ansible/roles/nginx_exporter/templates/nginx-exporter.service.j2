@@ -12,6 +12,8 @@ ExecStart=/usr/local/bin/nginx-exporter \
     -web.secured-metrics=true \
     -web.ssl-server-cert=/etc/ssl/certs/nginx-exporter.crt \
     -web.ssl-server-key=/etc/ssl/certs/nginx-exporter.pem
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

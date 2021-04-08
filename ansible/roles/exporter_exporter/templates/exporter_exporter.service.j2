@@ -15,6 +15,8 @@ ExecStart=/usr/local/bin/exporter_exporter \
     -web.tls.key=/etc/ssl/certs/exporter_exporter.pem \
     -web.tls.ca=ca.crt \
     -web.tls.verify
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

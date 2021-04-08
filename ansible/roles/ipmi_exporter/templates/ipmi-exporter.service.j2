@@ -8,6 +8,8 @@ WorkingDirectory=/etc/ipmi-exporter
 ExecStart=/usr/local/bin/ipmi-exporter \
     --web.listen-address=127.0.0.1:9290 \
     --config.file=ipmi.yml
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

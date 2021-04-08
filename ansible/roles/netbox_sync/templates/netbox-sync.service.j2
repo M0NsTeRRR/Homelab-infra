@@ -7,6 +7,8 @@ Type=simple
 WorkingDirectory=/opt/netbox-sync
 Environment=REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 ExecStart=/opt/netbox-sync/venv/bin/python netbox-sync.py -c settings.ini
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

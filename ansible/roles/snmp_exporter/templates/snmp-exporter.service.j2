@@ -10,6 +10,8 @@ WorkingDirectory=/etc/snmp-exporter
 ExecStart=/usr/local/bin/snmp-exporter \
     --web.listen-address="127.0.0.1:9116" \
     --config.file=snmp.yml
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

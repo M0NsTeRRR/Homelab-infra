@@ -9,6 +9,8 @@ Group=prometheus
 WorkingDirectory=/etc/vmware_exporter
 Environment=REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
 ExecStart=/opt/vmware_exporter/venv/bin/vmware_exporter -a 127.0.0.1 -c config.yml
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target

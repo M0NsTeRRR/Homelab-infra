@@ -8,6 +8,8 @@ Group=as212510_net
 Type=simple
 WorkingDirectory=/etc/as212510_net
 ExecStart=/usr/local/bin/as212510.net -config=as212510_net.yml
+RestartSec=10
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
