@@ -113,7 +113,7 @@ resource "powerdns_record" "dns_PTR_ipv4" {
 }
 
 data "external" "reverse_ptr_ipv6" {
-  program = ["/bin/bash", "${path.module}/reverse_ptr_ipv6.sh", var.vm_ip6]
+  program = ["python3", "${path.module}/reverse_ptr_ipv6.py", var.vm_ip6]
 }
 
 resource "powerdns_record" "dns_PTR_ipv6" {
@@ -122,4 +122,22 @@ resource "powerdns_record" "dns_PTR_ipv6" {
   type    = "PTR"
   ttl     = 3600
   records = ["${var.vm_name}.${var.domain}."]
+
+  depends_on = [data.external.reverse_ptr_ipv6]
+}
+
+data "external" "sshfp" {
+  program = ["python3", "${path.module}/sshfp.py", "${var.vm_name}.${var.domain}"]
+
+  depends_on = [vsphere_virtual_machine.vm]
+}
+
+resource "powerdns_record" "dns_SSHFP" {
+  zone    = "${var.domain}."
+  name    = "${var.vm_name}.${var.domain}."
+  type    = "SSHFP"
+  ttl     = 3600
+  records = [data.external.sshfp.result.sshfp]
+
+  depends_on = [data.external.sshfp]
 }

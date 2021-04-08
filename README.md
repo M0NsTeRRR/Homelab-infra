@@ -60,7 +60,7 @@ Supported distributions :
 # Terraform
 `cd terraform`  
 
-Install dependencies `apt install -y ipv6calc jq`
+Install dependencies `pip3 install paramiko`
 
 fill `account.hcl` based on `account.example`
 

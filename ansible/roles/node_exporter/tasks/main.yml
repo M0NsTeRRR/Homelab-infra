@@ -31,7 +31,7 @@
   when: not node_exporter.stat.exists or node_exporter_force_install
 
 - name: Extract latest binary of node-exporter
-  ansible.builtin.archive:
+  ansible.builtin.unarchive:
     src: /tmp/node-exporter.tar.gz
     dest: /opt/exporter/node-exporter
     remote_src: yes
