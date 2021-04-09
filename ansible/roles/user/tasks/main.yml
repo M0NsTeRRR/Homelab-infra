@@ -8,6 +8,11 @@
     name: "{{ user_passwordless_sudo_group }}"
     state: present
 
+- name: Restrict access to /etc/sudoers.d
+  ansible.builtin.file:
+    path: /etc/sudoers.d
+    mode: '0750'
+
 - name: "Allow {{ user_passwordless_sudo_group }} group to have passwordless sudo"
   ansible.builtin.lineinfile:
     dest: /etc/sudoers
@@ -35,9 +40,10 @@
 
 - name: Enforce umask to 027
   ansible.builtin.lineinfile:
-    dest: "/etc/pam.d/common-session"
+    dest: "{{ file }}"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: "present"
   with_items:
-    - { regexp: '^(# )?session optional        pam_umask.so', line: 'session optional        pam_umask.so umask=027' }
+    - { regexp: '^(# )?session optional        pam_umask.so', line: 'session optional        pam_umask.so umask=027', file: "/etc/pam.d/common-session" }
+    - { regexp: '^(# )?UMASK', line: 'UMASK           022', file: "/etc/login.defs" }
