@@ -46,4 +46,4 @@
     state: "present"
   with_items:
     - { regexp: '^(# )?session optional        pam_umask.so', line: 'session optional        pam_umask.so umask=027', file: "/etc/pam.d/common-session" }
-    - { regexp: '^(# )?UMASK', line: 'UMASK           022', file: "/etc/login.defs" }
+    - { regexp: '^(# )?UMASK', line: 'UMASK           027', file: "/etc/login.defs" }
