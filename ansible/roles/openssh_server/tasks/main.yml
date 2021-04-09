@@ -23,8 +23,6 @@
     - { regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval 120' }
     - { regexp: '^#?ClientAliveCountMax', line: 'ClientAliveCountMax 2' }
     - { regexp: '^#?X11Forwarding', line: 'X11Forwarding no' }
-    - { regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval 120' }
-    - { regexp: '^#?ClientAliveCountMax', line: 'ClientAliveCountMax 5' }
     - { regexp: '^#?AuthenticationMethods', line: 'AuthenticationMethods publickey' }
     - { regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no' }
     - { regexp: '^#?ChallengeResponseAuthentication', line: 'ChallengeResponseAuthentication no' }
