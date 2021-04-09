@@ -76,6 +76,21 @@
   when: "'unifi' not in ansible_facts.packages or unifi_force_install"
   notify: restart unifi
 
+- name: Configure Unifi
+  ansible.builtin.lineinfile:
+    dest: "/var/lib/unifi/system.properties"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+    - { regexp: '^(# )?unifi.https.hsts=', line: 'unifi.https.hsts=true' }
+    - { regexp: '^(# )?unifi.https.ciphers=', line: 'unifi.https.ciphers=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256' }
+    - { regexp: '^(# )?unifi.https.sslEnabledProtocols=', line: 'unifi.https.sslEnabledProtocols=TLSv2' }
+    - { regexp: '^(# )?unifi.https.hsts.max_age=', line: 'unifi.https.hsts.max_age=31536000' }
+    - { regexp: '^(# )?unifi.https.hsts.preload=', line: 'unifi.https.hsts.preload=true' }
+    - { regexp: '^(# )?unifi.https.hsts.subdomain=', line: 'unifi.https.hsts.subdomain=true' }
+  notify: restart unifi
+
 - name: Copy certificate key to remote location
   ansible.builtin.copy:
     src: "{{ unifi_local_path_certificate_key }}"
