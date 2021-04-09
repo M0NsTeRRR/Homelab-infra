@@ -10,7 +10,7 @@
 - name: Configure auditd rules
   ansible.builtin.template:
     src: audit.rules.j2
-    dest: /etc/audit/audit.rules
+    dest: /etc/audit/rules.d/audit.rules
   notify:
     - restart auditd
 
