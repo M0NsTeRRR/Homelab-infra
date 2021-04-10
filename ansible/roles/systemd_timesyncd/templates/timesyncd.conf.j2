@@ -12,7 +12,8 @@
 # See timesyncd.conf(5) for details.
 
 [Time]
-NTP={% for ntp in systemd_timesyncd_ntp %}{{ ntp }}{% if not loop.last %},{% endif %}{% endfor %}
+NTP={% for ntp in systemd_timesyncd_ntp %}{{ ntp }}{% if not loop.last %} {% endif %}{% endfor %}
+
 FallbackNTP=0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org
 #RootDistanceMaxSec=5
 #PollIntervalMinSec=32
