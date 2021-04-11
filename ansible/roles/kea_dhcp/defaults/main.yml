@@ -9,8 +9,14 @@ kea_dns_group: dns
 kea_dns_domains: []
 kea_ipv4_subnets: []
 kea_ipv6_subnets: []
+kea_ipv4_ntp_servers: []
+kea_ipv6_ntp_servers: []
+kea_ipv4_unifi_controller:
+kea_ipv6_unifi_controller:
 
 
+# kea_dns_domains:
+#   - example.com
 # kea_ipv4_subnets:
 #   - subnet: 192.168.50.0/24
 #     pools:
@@ -30,3 +36,9 @@ kea_ipv6_subnets: []
 #       - hostname: samsung-tv
 #         hw_address: 44:5c:e9:9d:8b:28
 #         ip_address: 2a0c:b641:02c0:150::91
+# kea_ipv4_ntp_servers:
+#   - 192.168.0.1
+# kea_ipv6_ntp_servers:
+#   - 2a0c:b641:02c0::
+# kea_ipv4_unifi_controller: 192.168.0.1
+# kea_ipv6_unifi_controller: 2a0c:b641:02c0::

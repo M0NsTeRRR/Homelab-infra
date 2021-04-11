@@ -50,6 +50,15 @@
         "renew-timer": 900,
         "rebind-timer": 1800,
         "valid-lifetime": 3600,
+        "option-def": [
+            {
+                "name": "unifi-address",
+                "code": 1,
+                "space": "ubnt",
+                "type": "ipv4-address",
+                "encapsulate": ""
+            }
+        ],
         "option-data": [
             {
                 "name": "domain-name-servers",
@@ -58,6 +67,15 @@
             {
                 "name": "domain-search",
                 "data": "{{ kea_dns_domains|join(',') }}"
+            },
+            {
+                "name": "ntp-servers",
+                "data": "{{ kea_ipv4_ntp_servers|join(',') }}"
+            },
+            {	"name": "unifi-address",
+                "space": "ubnt",
+                "code": 1,
+                "data": "{{ kea_ipv4_unifi_controller }}"
             }
         ],
         "subnet4": [

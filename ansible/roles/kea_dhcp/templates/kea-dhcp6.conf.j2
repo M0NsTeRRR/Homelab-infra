@@ -51,6 +51,15 @@
         "rebind-timer": 2000,
         "preferred-lifetime": 3000,
         "valid-lifetime": 4000,
+        "option-def": [
+            {
+                "name": "unifi-address",
+                "code": 1,
+                "space": "ubnt",
+                "type": "ipv6-address",
+                "encapsulate": ""
+            }
+        ],
         "option-data": [
             {
                 "name": "dns-servers",
@@ -59,6 +68,15 @@
             {
                 "name": "domain-search",
                 "data": "{{ kea_dns_domains|join(',') }}"
+            },
+            {
+                "name": "sntp-servers",
+                "data": "{{ kea_ipv6_ntp_servers|join(',') }}"
+            },
+            {	"name": "unifi-address",
+                "space": "ubnt",
+                "code": 1,
+                "data": "{{ kea_ipv6_unifi_controller }}"
             }
         ],
         "subnet6": [

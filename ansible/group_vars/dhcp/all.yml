@@ -124,6 +124,10 @@ kea_ipv6_subnets:
       - start: 2a0c:b641:02c0:160::201
         end: 2a0c:b641:02c0:160::240
     reservations: []
+kea_ipv4_ntp_servers: "{{ ntp_servers.ipv4 }}"
+kea_ipv6_ntp_servers: "{{ ntp_servers.ipv6 }}"
+kea_ipv4_unifi_controller: "{{ unifi_controller.ipv4 }}"
+kea_ipv6_unifi_controller: "{{ unifi_controller.ipv6 }}"
 
 exporter_exporter_name: kea-exporter
 exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
