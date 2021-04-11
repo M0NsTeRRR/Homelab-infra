@@ -65,7 +65,8 @@
     dest: /etc/graylog/ca.crt
   notify: restart graylog-server
 
-- meta: flush_handlers
+- name: Flush handlers
+  meta: flush_handlers
 
 - name: Wait graylog-server restart
   uri:

@@ -1,30 +1,30 @@
 ---
 - name: Open required ports
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "51820"
     proto: udp
 
 - name: Add Debian buster-backports
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "deb http://deb.debian.org/debian buster-backports main"
     state: present
     filename: buster-backports
   when: ansible_distribution == "Debian"
 
 - name: Install qrencode
-  apt:
+  ansible.builtin.apt:
     name: qrencode
     state: present
 
 - name: Install wireguard
-  apt:
+  ansible.builtin.apt:
     name: "wireguard{% if wireguard_version is defined %}={{ wireguard_version }}{% endif %}"
     update_cache: yes
     state: "{{ wireguard_package_state }}"
 
 - name: Update sysctl config
-  sysctl:
+  ansible.builtin.sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
     state: present
@@ -34,10 +34,10 @@
     - { name: 'net.ipv6.conf.all.forwarding', value: '1' }
 
 - name: Setup clients
-  include_tasks: clients.yml
+  ansible.builtin.include_tasks: clients.yml
 
 - name: Setup interface and peers
-  template:
+  ansible.builtin.template:
     src: wg0.conf.j2
     dest: "/etc/wireguard/wg0.conf"
     mode: 0600
