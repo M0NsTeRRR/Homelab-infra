@@ -1,7 +1,7 @@
 ---
 gitlab_cert_country: "{{ country }}"
 gitlab_cert_organization_name: "{{ organization }}"
-gitlab_cert_email_address: "{{ smtp_admin_email }}"
+gitlab_cert_email_address: "{{ admin_email }}"
 gitlab_local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
 gitlab_local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
 gitlab_smtp_enable: 'true'
