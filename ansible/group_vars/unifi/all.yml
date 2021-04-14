@@ -1,4 +1,2 @@
 ---
-unifi_local_absolute_path_ca_certificate: "{{ role_path }}/{{ certs_dir }}ca.crt"
-unifi_local_path_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
-unifi_local_path_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
+unifi_pkcs12_remote_path: "/var/lib/unifi/ssl/{{ inventory_hostname }}.p12"
