@@ -12,6 +12,10 @@
       prompt: "Common name ?"
       default: "unicornafk.fr"
       private: no
+    - name: "ownca_not_after"
+      prompt: "Expiration date ?"
+      default: "+90d"
+      private: no
   tasks:
     - name: Generate CertAuthority OpenSSL private key
       community.crypto.openssl_privatekey:
@@ -70,4 +74,5 @@
         ownca_path: "{{ certs_dir }}ca.crt"
         ownca_privatekey_path: "{{ certs_dir }}ca.pem"
         csr_path: "{{ certs_dir }}{{ certificate_folder_path }}/client.csr"
+        ownca_not_after: "{{ ownca_not_after }}"
         provider: ownca
