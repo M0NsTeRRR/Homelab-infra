@@ -4,3 +4,4 @@
   become: yes
   roles:
     - unifi
+    - self_signed_cert
