@@ -1,0 +1,38 @@
+---
+- name: Check that cert exist
+  ansible.builtin.stat:
+    path: "{{ item.cert_remote_folder_path }}/{{ item.common_name }}.crt"
+  register: self_signed_cert_stat
+
+- name: Check that private key exist
+  ansible.builtin.stat:
+    path: "{{ item.private_key_remote_folder_path }}/{{ item.common_name }}.pem"
+  register: self_signed_private_key_stat
+
+- name: Check that private key exist
+  ansible.builtin.stat:
+    path: "{{ item.private_key_remote_folder_path }}/{{ item.common_name }}.p12"
+  register: self_signed_pkcs12_stat
+
+- name: Check if that cert is missing
+  ansible.builtin.set_fact:
+    self_signed_cert_missing: "{{ self_signed_cert_stat.stat.path is not defined }}"
+
+- name: Check if that private key is missing
+  ansible.builtin.set_fact:
+    self_signed_private_key_missing: "{{ self_signed_private_key_stat.stat.path is not defined }}"
+
+- name: Check if that cert pkcs12 is missing
+  ansible.builtin.set_fact:
+    self_signed_pkcs12_missing: "{{ self_signed_pkcs12_stat.stat.path is not defined }}"
+
+- name: Get information on certificate
+  community.crypto.x509_certificate_info:
+    path: "{{ self_signed_cert_stat.stat.path }}"
+  register: self_signed_cert_info
+  when: not self_signed_cert_missing
+
+- name: Check if a cert is expired
+  ansible.builtin.set_fact:
+    self_signed_cert_expired: "{{ self_signed_cert_info.expired }}"
+  when: not self_signed_cert_missing
