@@ -74,7 +74,7 @@
   register: copy_files
   with_items:
     - { src: "/tmp/{{ item.common_name }}.crt", dst: "{{ item.cert_remote_folder_path }}/{{ item.common_name }}.crt", mode: "0640", upload: true }
-    - { src: "/tmp/{{ item.common_name }}.pem", dst: "{{ item.private_key_remote_folder_path }}/{{ item.common_name }}.pem') | path_join", mode: "0600", upload: "{{ item.upload_pem }}" }
+    - { src: "/tmp/{{ item.common_name }}.pem", dst: "{{ item.private_key_remote_folder_path }}/{{ item.common_name }}.pem", mode: "0600", upload: "{{ item.upload_pem }}" }
     - { src: "/tmp/{{ item.common_name }}.p12", dst: "{{ item.private_key_remote_folder_path }}/{{ item.common_name }}.p12", mode: "0640", upload: "{{ item.generate_pkcs12 }}" }
   loop_control:
     loop_var: file
@@ -94,11 +94,12 @@
     keystore_pass: "{{ item.keystore_pass }}"
     keystore_create: yes
     state: present
-  when: item.force_renew or
+  when: item.generate_pkcs12 and
+    (item.force_renew or
     self_signed_cert_missing or
     (item.upload_pem and self_signed_private_key_missing) or
     (item.generate_pkcs12 and self_signed_pkcs12_missing) or
-    self_signed_cert_expired
+    self_signed_cert_expired)
 
 - name: Restart services that use SSL cert
   ansible.builtin.systemd:
