@@ -43,11 +43,10 @@ do
     export main_password
 
     packer build \
-      -var "ssh_username=$ssh_username" \
-      -var "ssh_password=$ssh_password" \
-      -var "main_password=$main_password" \
+      -var "username=$ssh_username" \
+      -var "password=$main_password" \
       -timestamp-ui \
-      templates/raspi.json
+      templates/raspi.pkr.hcl
 		break
 		;;
   *)
