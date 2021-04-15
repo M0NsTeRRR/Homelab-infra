@@ -28,7 +28,7 @@ fill all `secrets.yml` based on `secrets.example` in each subdirectory of `group
 `ansible-playbook -i hosts playbooks/add-ssh-keys.yml`
 
 ### Playbooks to create client certificate signed by a CA
-`ansible-playbook playbooks/generate-certs.yml`
+`ansible-playbook -i hosts playbooks/generate-certs.yml`
 
 ### Playbooks to deploy a zone
 `ansible-playbook -i hosts deploy_<zone>.yml`  
@@ -64,7 +64,7 @@ Install dependencies `pip3 install paramiko`
 
 fill `account.hcl` based on `account.example`
 
-**Command must be run in one of this two directories (dmz/lab/vpn)**
+**Command must be run in one of this directories (dmz/lab/vpn)**
 
 ### Create an execution plan
 `terragrunt run-all plan`
