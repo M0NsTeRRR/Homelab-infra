@@ -86,6 +86,7 @@
     self_signed_cert_expired)
 
 - name: Restart services that use SSL cert
+  # noqa 503
   ansible.builtin.systemd:
     name: "{{ service }}"
     state: restarted

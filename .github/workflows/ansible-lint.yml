@@ -11,14 +11,15 @@ jobs:
       uses: ansible/ansible-lint-action@master
       with:
         targets: |
-           ansible/deploy_dmz.yml
-           ansible/deploy_lab.yml
-           ansible/deploy_packer.yml
-           ansible/deploy_routing.yml
-           ansible/deploy_vpn.yml
-           ansible/playbooks/add-ssh-keys.yml
-           ansible/playbooks/generate-certs.yml
-           ansible/playbooks/utils.yml
-           terraform/modules/vsphere_vm/disable_slaac.yml
-           terraform/modules/vsphere_vm/lvm_resize.yml
+          ansible/deploy_dmz.yml
+          ansible/deploy_lab.yml
+          ansible/deploy_packer.yml
+          ansible/deploy_routing.yml
+          ansible/deploy_terraform.yml
+          ansible/deploy_vpn.yml
+          ansible/playbooks/add-ssh-keys.yml
+          ansible/playbooks/disable_slaac.yml
+          ansible/playbooks/generate-certs.yml
+          ansible/playbooks/lvm_resize.yml
+          ansible/playbooks/utils.yml
         args: "-x 204 -x 301 -x 305 -x 401"

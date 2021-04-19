@@ -1,7 +1,7 @@
 ---
 - name: Get certificate content
   ansible.builtin.set_fact:
-    self_signed_cert_content: "{{ lookup('file', '/tmp/{{ item.common_name }}.crt') }}"
+    self_signed_cert_content: "{{ lookup('file', '/tmp/' ~ item.common_name ~  '.crt') }}"
 
 - name: Set absolute root ca cert path
   set_fact:
