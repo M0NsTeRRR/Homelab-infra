@@ -9,15 +9,13 @@ self_signed_certs: []
 #     admin_email: "admin@example.com"
 #     ca_cert_local_path: "./certs/ca.crt"
 #     ca_private_local_path: "./certs/ca.pem"
-#     cert_remote_folder_path: "/etc/nginx/ssl"
-#     private_key_remote_folder_path: "/etc/nginx/ssl"
-#     owner: app
-#     group: app
+#     cert_remote_folder:
+#      - { path: /etc/nginx/ssl, owner: root, group: root }
 #     ownca_not_after: "+90d"
 #     pkcs12_friendly_name: example
 #     pkcs12_passphrase: password
 #     upload_pem: true
 #     generate_pkcs12: true
-#     systemd_services:
+#     restart_systemd_services:
 #       - app
 #     force_renew: true

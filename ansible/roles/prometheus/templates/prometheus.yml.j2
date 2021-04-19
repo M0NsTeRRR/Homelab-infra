@@ -22,9 +22,9 @@ scrape_configs:
         - http_2xx
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - blackbox_http/targets.json
@@ -34,7 +34,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: blackbox_icmp
     metrics_path: /proxy
@@ -44,9 +44,9 @@ scrape_configs:
         - icmp
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - blackbox_icmp/targets.json
@@ -56,7 +56,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: vmware
     scrape_interval: 2m
@@ -64,9 +64,9 @@ scrape_configs:
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - vmware_exporter/targets.json
@@ -81,27 +81,33 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: node_exporter
-    metrics_path: /metrics
+    metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/node-exporter/client.crt
-      key_file: /etc/prometheus/certs/node-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - node_exporter/targets.json
-
+    params:
+      module:
+        - node-exporter
+    relabel_configs:
+      - source_labels: [__param_target]
+        target_label: instance
+    
   - job_name: unifi_poller
     scrape_interval: 5s
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - unifi_poller/targets.json
@@ -109,12 +115,8 @@ scrape_configs:
       module:
         - unifi_poller
     relabel_configs:
-    - source_labels: [__address__]
-      target_label: __param_target
-    - source_labels: [__param_target]
-      target_label: instance
-    - target_label: __address__
-      replacement: {{ ansible_fqdn }}:9998
+      - source_labels: [__param_target]
+        target_label: instance
 
   - job_name: ipmi
     file_sd_configs:
@@ -123,9 +125,9 @@ scrape_configs:
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     params:
       module:
         - ipmi
@@ -135,7 +137,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: snmp
     file_sd_configs:
@@ -144,9 +146,9 @@ scrape_configs:
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     params:
       module:
         - snmp
@@ -157,7 +159,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: snmp_mikrotik
     file_sd_configs:
@@ -166,9 +168,9 @@ scrape_configs:
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     params:
       module:
         - snmp
@@ -179,7 +181,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: snmp_juniper
     file_sd_configs:
@@ -188,9 +190,9 @@ scrape_configs:
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     params:
       module:
         - snmp
@@ -201,7 +203,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: snmp_brocade
     file_sd_configs:
@@ -210,9 +212,9 @@ scrape_configs:
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     params:
       module:
         - snmp
@@ -223,7 +225,7 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: snmp_qnap
     file_sd_configs:
@@ -232,9 +234,9 @@ scrape_configs:
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     params:
       module:
         - snmp
@@ -245,25 +247,31 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: nginx
-    scheme: https
-    tls_config:
-      cert_file: /etc/prometheus/certs/nginx-exporter/client.crt
-      key_file: /etc/prometheus/certs/nginx-exporter/client.pem
-      insecure_skip_verify: true
     file_sd_configs:
     - files:
       - nginx/targets.json
     metrics_path: /metrics
+    scheme: https
+    tls_config:
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
+    params:
+      module:
+        - nginx
+    relabel_configs:
+      - source_labels: [__param_target]
+        target_label: instance
 
   - job_name: wireguard
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/wireguard-exporter/client.crt
-      key_file: /etc/prometheus/certs/wireguard-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - wireguard/targets.json
@@ -278,9 +286,9 @@ scrape_configs:
   - job_name: kea_dhcp
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/kea-exporter/client.crt
-      key_file: /etc/prometheus/certs/kea-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - kea_dhcp/targets.json
@@ -295,9 +303,9 @@ scrape_configs:
   - job_name: powerdns_authoritative
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/powerdns-exporter/client.crt
-      key_file: /etc/prometheus/certs/powerdns-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - powerdns_authoritative/targets.json
@@ -312,9 +320,9 @@ scrape_configs:
   - job_name: powerdns_recursor
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/powerdns-exporter/client.crt
-      key_file: /etc/prometheus/certs/powerdns-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - powerdns_recursor/targets.json
@@ -329,9 +337,9 @@ scrape_configs:
   - job_name: caddy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/caddy-exporter/client.crt
-      key_file: /etc/prometheus/certs/caddy-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - caddy/targets.json
@@ -344,9 +352,9 @@ scrape_configs:
     metrics_path: /proxy
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/monitoring-exporter/client.crt
-      key_file: /etc/prometheus/certs/monitoring-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     params:
       module:
       - tplink_plug
@@ -356,14 +364,14 @@ scrape_configs:
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: {{ ansible_fqdn }}:9998
+        replacement: {{ inventory_hostname }}:9998
 
   - job_name: rpki_validator_3
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/rpki-exporter/client.crt
-      key_file: /etc/prometheus/certs/rpki-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - rpki_validator_3/targets.json
@@ -378,9 +386,9 @@ scrape_configs:
   - job_name: rpki_rtr_server
     scheme: https
     tls_config:
-      cert_file: /etc/prometheus/certs/rpki-exporter/client.crt
-      key_file: /etc/prometheus/certs/rpki-exporter/client.pem
-      insecure_skip_verify: true
+      ca_file: /etc/prometheus/ssl/ca.crt
+      cert_file: /etc/prometheus/ssl/client.crt
+      key_file: /etc/prometheus/ssl/client.pem
     file_sd_configs:
     - files:
       - rpki_rtr_server/targets.json

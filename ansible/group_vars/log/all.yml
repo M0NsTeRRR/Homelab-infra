@@ -12,6 +12,10 @@ graylog_transport_email_auth_password: "{{ smtp_monitoring_password }}"
 graylog_transport_email_use_tls: true
 graylog_transport_email_use_ssl: false
 
+graylog_local_path_ca_certificate: "{{ certs_dir }}rsyslog-client/client.crt"
+graylog_local_path_certificate: "{{ certs_dir }}rsyslog-server/client.crt"
+graylog_local_path_certificate_key: "{{ certs_dir }}rsyslog-server/client.pem"
+
 graylog_inputs:
   - title: Syslog UDP
     port: 1514
@@ -29,7 +33,7 @@ graylog_notifications:
     subject: "Graylog event notification: ${event_definition_title}"
     body_template: "--- [Event] ---------------------------\\nTitle:       ${event_definition_title}\\nDescription: ${event_definition_description}\\nTimestamp:   ${event.timestamp}\\nPriority:    ${event.priority}\\n\\n${if backlog}\\n--- [Backlog] ------------------------------------\\nLast messages accounting for this alert:\\n${foreach backlog message}\\nSource:      ${message.source}\\n${if message.fields.gl2_remote_ip}IP:          ${message.fields.gl2_remote_ip}${end}\\n${if message.fields.level}Level:       ${message.fields.level}${end}\\n${if message.fields.application_name}Application: ${message.fields.application_name}${end}\\n${if message.fields.facility}Facility:    ${message.fields.facility}${end}\\nMessage:     ${message.message}\\n--------------------------------------------------\\nRAW:         ${message}\\n\\n\\n\\n${end}\\n${end}\\n"
     user_recipients:
-      - "admin"
+      - admin
     email_recipients: []
 
 graylog_events:
@@ -39,19 +43,34 @@ graylog_events:
     query: level:<3
 
 nginx_configuration:
-  - name: "{{ ansible_fqdn }}"
+  - server_name: "{{ inventory_hostname }}"
     locations:
       - location: /
-        proxy_pass: "http://127.0.0.1:9000"
+        proxy_pass: http://127.0.0.1:9000
         proxy_headers:
           X-Graylog-Server-URL: https://$server_name/
     enable_content_security: false
     http_redirection: true
-    ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
-    server_name: "{{ ansible_fqdn }}"
+    ssl_port: 443
 
-nginx_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-nginx_exporter_local_path_certificate: "{{ certs_dir }}exporter/nginx-exporter/client.crt"
-nginx_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/nginx-exporter/client.pem"
+exporter_exporter_nodes:
+  - name: nginx
+    port: 9113
+
+self_signed_certs:
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/nginx/ssl, owner: root, group: root }
+      - { path: /etc/graylog/ssl, owner: root, group: root }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - nginx
+      - graylog
+    force_renew: false

@@ -8,12 +8,12 @@ User=exporter-exporter
 Group=exporter-exporter
 WorkingDirectory=/etc/exporter_exporter
 ExecStart=/usr/local/bin/exporter_exporter \
-    -config.file=expexp.yaml \
+    -config.dirs=/etc/exporter_exporter/expexp.d/ \
     -web.listen-address=\
     -web.tls.listen-address=:9998 \
-    -web.tls.cert=/etc/ssl/certs/exporter_exporter.crt \
-    -web.tls.key=/etc/ssl/certs/exporter_exporter.pem \
-    -web.tls.ca=ca.crt \
+    -web.tls.cert=ssl/{{ exporter_exporter_certificate_name }} \
+    -web.tls.key=ssl/{{ exporter_exporter_certificate_key_name }} \
+    -web.tls.ca=ssl/ca.crt \
     -web.tls.verify
 RestartSec=10
 Restart=always

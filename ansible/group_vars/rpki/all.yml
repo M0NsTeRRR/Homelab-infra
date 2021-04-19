@@ -1,25 +1,32 @@
-exporter_exporter_name: rpki-exporter
-exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/rpki-exporter/client.crt"
-exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/rpki-exporter/client.pem"
 exporter_exporter_nodes:
   - name: rpki_rtr_server
     port: 8081
   - name: rpki_validator_3
     port: 8080
+  - name: nginx
+    port: 9113
 
 nginx_configuration:
-  - name: "{{ ansible_fqdn }}"
+  - server_name: "{{ inventory_hostname }}"
     locations:
       - location: /
-        proxy_pass: "http://127.0.0.1:8080"
+        proxy_pass: http://127.0.0.1:8080
     enable_content_security: true
     http_redirection: true
-    ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
-    server_name: "{{ ansible_fqdn }}"
+    ssl_port: 443
 
-nginx_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-nginx_exporter_local_path_certificate: "{{ certs_dir }}exporter/nginx-exporter/client.crt"
-nginx_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/nginx-exporter/client.pem"
+self_signed_certs:
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/nginx/ssl, owner: root, group: root }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - nginx
+    force_renew: false

@@ -1,7 +1,7 @@
 ---
 as212510_net_server:
   address: ":8080"
-  cwd: "/opt/as212510_net"
+  cwd: /opt/as212510_net
 
 as212510_net_asn: 212510
 
@@ -11,37 +11,76 @@ hyperglass_primary_asn: "{{ as }}"
 hyperglass_org_name: "{{ organization }}"
 
 nginx_configuration:
-  - name: "adminafk.unicornafk.fr"
+  - server_name: adminafk.unicornafk.fr
     locations:
       - location: /
-        proxy_pass: "http://127.0.0.1:8080"
+        proxy_pass: http://127.0.0.1:8080
     enable_content_security: true
     http_redirection: true
-    ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/adminafk.unicornafk.fr/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/adminafk.unicornafk.fr/client.pem"
-    server_name: "adminafk.unicornafk.fr"
-  - name: "as212510.unicornafk.fr"
+    ssl_port: 443
+  - server_name: as212510.unicornafk.fr
     locations:
       - location: /
-        proxy_pass: "http://127.0.0.1:8080"
+        proxy_pass: http://127.0.0.1:8080
     enable_content_security: true
     http_redirection: true
-    ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/as212510.unicornafk.fr/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/as212510.unicornafk.fr/client.pem"
-    server_name: "as212510.unicornafk.fr"
-  - name: "lg.as212510.unicornafk.fr"
+    ssl_port: 443
+  - name: lg.as212510.unicornafk.fr
     locations:
       - location: /
-        proxy_pass: "http://127.0.0.1:8001"
+        proxy_pass: http://127.0.0.1:8001
     enable_content_security: true
     http_redirection: true
-    ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/lg.as212510.unicornafk.fr/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/lg.as212510.unicornafk.fr/client.pem"
-    server_name: "lg.as212510.unicornafk.fr"
+    ssl_port: 443
 
-nginx_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-nginx_exporter_local_path_certificate: "{{ certs_dir }}exporter/nginx-exporter/client.crt"
-nginx_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/nginx-exporter/client.pem"
+exporter_exporter_nodes:
+  - name: nginx
+    port: 9113
+
+self_signed_certs:
+  - common_name: adminafk.unicornafk.fr
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder_path:
+      - /etc/nginx/ssl
+    private_key_remote_folder_path:
+      - /etc/nginx/ssl
+    owner: root
+    group: root
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - nginx
+    force_renew: false
+  - common_name: as212510.unicornafk.fr
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/nginx/ssl, owner: root, group: root }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - nginx
+    force_renew: false
+  - common_name: lg.as212510.unicornafk.fr
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/nginx/ssl, owner: root, group: root }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - nginx
+    force_renew: false

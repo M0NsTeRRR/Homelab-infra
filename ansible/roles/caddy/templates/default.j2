@@ -18,12 +18,12 @@
     Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;"
 }
 
-{{ ansible_fqdn }}:9982 {
+:9982 {
 	metrics
-	tls /etc/ssl/certs/caddy_exporter.crt /etc/ssl/certs/caddy_exporter.pem {
+	tls /etc/caddy/ssl/{{ caddy_exporter_certificate_name }} /etc/caddy/ssl/{{ caddy_exporter_certificate_key_name }} {
 	    client_auth {
 	        mode require_and_verify
-	        trusted_ca_cert_file /etc/caddy/ca.crt
+	        trusted_ca_cert_file /etc/caddy/ssl/client.crt
 	    }
 	}
 }

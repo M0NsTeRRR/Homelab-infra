@@ -1,10 +1,4 @@
 ---
-- name: Allow nginx-exporter
-  community.general.ufw:
-    rule: allow
-    port: "9113"
-    proto: tcp
-
 - name: Add nginx_exporter group
   ansible.builtin.group:
     name: nginx_exporter
@@ -59,24 +53,6 @@
     remote_src: yes
   notify: restart nginx-exporter.service
   when: not nginx_exporter.stat.exists or nginx_exporter_force_install
-
-- name: Copy certificate to remote location
-  ansible.builtin.copy:
-    src: "{{ nginx_exporter_local_path_certificate }}"
-    dest: "/etc/ssl/certs/nginx-exporter.crt"
-  notify: restart nginx-exporter.service
-
-- name: Copy certificate key to remote location
-  ansible.builtin.copy:
-    src: "{{ nginx_exporter_local_path_certificate_key }}"
-    dest: "/etc/ssl/certs/nginx-exporter.pem"
-  notify: restart nginx-exporter.service
-
-- name: Add ca.crt
-  ansible.builtin.copy:
-    src: "{{ nginx_exporter_local_path_ca_certificate }}"
-    dest: /etc/nginx-exporter/ca.crt
-  notify: restart nginx-exporter.service
 
 - name: Create systemd service file
   ansible.builtin.template:

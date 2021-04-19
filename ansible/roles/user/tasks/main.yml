@@ -40,7 +40,7 @@
 
 - name: Enforce umask to 027
   ansible.builtin.lineinfile:
-    dest: "{{ file }}"
+    dest: "{{ item.file }}"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
     state: "present"

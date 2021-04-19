@@ -1,2 +1,10 @@
 ---
 unifi_pkcs12_remote_path: "/var/lib/unifi/ssl/{{ inventory_hostname }}.p12"
+
+unifi_poller_url: https://unifi.unicornafk.fr:8443
+unifi_poller_user: unifipoller
+
+exporter_exporter_nodes:
+  - name: unifi_poller
+    port: 9130
+    path: /metrics

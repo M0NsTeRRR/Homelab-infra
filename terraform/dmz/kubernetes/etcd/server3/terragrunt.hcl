@@ -1,5 +1,5 @@
 terraform {
-  source = "../../../../modules/vsphere_vm"
+  source = "../../../../modules//vsphere_vm"
 }
 
 include {

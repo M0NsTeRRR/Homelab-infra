@@ -5,13 +5,30 @@ postgresql_db: "wikijs"
 wiki_js_postgresql_db: "{{ postgresql_db }}"
 
 nginx_configuration:
-  - name: "{{ ansible_fqdn }}"
+  - name: "{{ inventory_hostname }}"
     locations:
       - location: /
-        proxy_pass: "http://127.0.0.1:3000"
+        proxy_pass: http://127.0.0.1:3000
     enable_content_security: false
     http_redirection: true
-    ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
-    server_name: "{{ ansible_fqdn }}"
+    ssl_port: 443
+
+exporter_exporter_nodes:
+  - name: nginx
+    port: 9113
+
+self_signed_certs:
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/nginx/ssl, owner: root, group: root }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - nginx
+    force_renew: false

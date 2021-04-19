@@ -5,8 +5,8 @@ gitlab_force_install: false
 gitlab_cert_country: FR
 gitlab_cert_organization_name: example.com
 gitlab_cert_email_address: admin@example.com
-gitlab_local_path_ssl_certificate: /etc/ssl/certs/cert.crt
-gitlab_local_path_ssl_certificate_key: /etc/ssl/certs/cert.pem
+gitlab_certificate_name: "{{ inventory_hostname }}.crt"
+gitlab_certificate_key_name: "{{ inventory_hostname }}.pem"
 gitlab_smtp_enable: true
 gitlab_smtp_address: mail.example.com
 gitlab_smtp_port: 587

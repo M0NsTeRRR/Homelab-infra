@@ -46,23 +46,6 @@
     update_cache: yes
     state: "{{ gitlab_package_state }}"
 
-- name: Create ssl directory
-  ansible.builtin.file:
-    dest: /etc/gitlab/ssl
-    state: directory
-
-- name: Copy certificate to remote location
-  ansible.builtin.copy:
-    src: "{{ gitlab_local_path_ssl_certificate }}"
-    dest: "/etc/gitlab/ssl/{{ ansible_fqdn }}.crt"
-  notify: restart gitlab
-
-- name: Copy certificate key to remote location
-  ansible.builtin.copy:
-    src: "{{ gitlab_local_path_ssl_certificate_key }}"
-    dest: "/etc/gitlab/ssl/{{ ansible_fqdn }}.pem"
-  notify: restart gitlab
-
 - name: Configure Gitlab
   ansible.builtin.lineinfile:
     dest: "/etc/gitlab/gitlab.rb"
@@ -73,8 +56,8 @@
       - { regexp: "^(# )?external_url", line: "external_url 'https://{{ ansible_fqdn }}'" }
       - { regexp: "^(# )?letsencrypt\\['enable'\\] =", line: "letsencrypt['enable'] = false" }
       - { regexp: "^(# )?nginx\\['listen_addresses'\\] =", line: "nginx['listen_addresses'] = ['0.0.0.0', '[::]']" }
-      - { regexp: "^(# )?nginx\\['ssl_certificate'\\] =", line: "nginx['ssl_certificate'] = '/etc/gitlab/ssl/{{ ansible_fqdn }}.crt'" }
-      - { regexp: "^(# )?nginx\\['ssl_certificate_key'\\] =", line: "nginx['ssl_certificate_key'] = '/etc/gitlab/ssl/{{ ansible_fqdn }}.pem'" }
+      - { regexp: "^(# )?nginx\\['ssl_certificate'\\] =", line: "nginx['ssl_certificate'] = '/etc/gitlab/ssl/{{ gitlab_certificate_name }}'" }
+      - { regexp: "^(# )?nginx\\['ssl_certificate_key'\\] =", line: "nginx['ssl_certificate_key'] = '/etc/gitlab/ssl/{{ gitlab_certificate_key_name }}'" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_enable'\\] =", line: "gitlab_rails['smtp_enable'] = {{ gitlab_smtp_enable }}" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_address'\\] =", line: "gitlab_rails['smtp_address'] = '{{ gitlab_smtp_address }}'" }
       - { regexp: "^(# )?gitlab_rails\\['smtp_port'\\] =", line: "gitlab_rails['smtp_port'] = {{ gitlab_smtp_port }}" }

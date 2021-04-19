@@ -80,11 +80,18 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   provisioner "local-exec" {
+    working_dir = "${var.terraform_root_dir}/../ansible/playbooks"
     command = "ansible-playbook -i ${var.vm_ip}, lvm_resize.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_password}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
   }
 
   provisioner "local-exec" {
+    working_dir = "${var.terraform_root_dir}/../ansible/playbooks"
     command = "ansible-playbook -i ${var.vm_ip}, disable_slaac.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_password}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
+  }
+
+  provisioner "local-exec" {
+    working_dir = "${var.terraform_root_dir}/../ansible"
+    command = "ANSIBLE_VAULT_PASS=${var.ansible_vault_pass} ansible-playbook -i ${var.vm_ip}, deploy_terraform.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_password} inventory_hostname=${var.vm_name}.${var.domain}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
   }
 }
 

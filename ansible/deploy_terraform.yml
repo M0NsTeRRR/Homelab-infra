@@ -1,0 +1,27 @@
+---
+- name: Provision VM
+  hosts: all
+  become: true
+  vars:
+    certs_dir: "../ssl/"
+    exporter_exporter_nodes:
+      - name: node_exporter
+        port: 9100
+    self_signed_certs:
+      - common_name: "{{ inventory_hostname }}"
+        country: "{{ country }}"
+        organization: "{{ organization }}"
+        admin_email: "{{ admin_email }}"
+        ca_cert_local_path: "{{ certs_dir }}ca.crt"
+        ca_private_local_path: "{{ certs_dir }}ca.pem"
+        cert_remote_folder:
+          - { path: /etc/exporter_exporter/ssl, owner: exporter-exporter, group: exporter-exporter }
+        ownca_not_after: +90d
+        upload_pem: true
+        generate_pkcs12: false
+        systemd_services:
+          - exporter-exporter
+        force_renew: false
+  roles:
+    - exporter_exporter
+    - self_signed_cert

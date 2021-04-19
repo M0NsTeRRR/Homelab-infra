@@ -1,9 +1,9 @@
 global(
 preserveFQDN="on"
 DefaultNetstreamDriver="gtls"
-DefaultNetstreamDriverCAFile="/etc/rsyslog.d/ca.crt"
-DefaultNetstreamDriverCertFile="/etc/ssl/certs/rsyslog.crt"
-DefaultNetstreamDriverKeyFile="/etc/ssl/certs/rsyslog.pem"
+DefaultNetstreamDriverCAFile="/etc/rsyslog.d/ssl/ca.crt"
+DefaultNetstreamDriverCertFile="/etc/rsyslog.d/ssl/client.crt"
+DefaultNetstreamDriverKeyFile="/etc/rsyslog.d/ssl/client.pem"
 )
 
 # set up the action for all messages

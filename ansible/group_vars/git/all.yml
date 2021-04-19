@@ -2,13 +2,29 @@
 gitlab_cert_country: "{{ country }}"
 gitlab_cert_organization_name: "{{ organization }}"
 gitlab_cert_email_address: "{{ admin_email }}"
-gitlab_local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
-gitlab_local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
-gitlab_smtp_enable: 'true'
+gitlab_certificate_name: "{{ inventory_hostname }}.crt"
+gitlab_certificate_key_name: "{{ inventory_hostname }}.pem"
+gitlab_smtp_enable: true
 gitlab_smtp_address: "{{ smtp_provider_host }}"
 gitlab_smtp_port: "{{ smtp_provider_port }}"
 gitlab_smtp_user_name: "{{ admin_email }}"
 gitlab_smtp_password: "{{ smtp_admin_password }}"
 gitlab_smtp_domain: unicornafk.fr
 gitlab_smtp_authentication: plain
-gitlab_smtp_enable_starttls_auto: 'true'
+gitlab_smtp_enable_starttls_auto: true
+
+self_signed_certs:
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/gitlab/ssl, owner: root, group: root }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - gitlab-runsvdir
+    force_renew: false

@@ -3,7 +3,7 @@
   hosts: localhost
   connection: local
   vars:
-    certs_dir: "../../certs/"
+    certs_dir: "../../ssl/"
   vars_prompt:
     - name: "certificate_folder_path"
       prompt: "Certificate folder path ? (eg. www/monsite.fr)"

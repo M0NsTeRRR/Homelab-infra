@@ -8,10 +8,7 @@ User=nginx_exporter
 Group=nginx_exporter
 ExecStart=/usr/local/bin/nginx-exporter \
     -nginx.scrape-uri=http://127.0.0.1:8090/stub_status \
-    -web.listen-address=:9113 \
-    -web.secured-metrics=true \
-    -web.ssl-server-cert=/etc/ssl/certs/nginx-exporter.crt \
-    -web.ssl-server-key=/etc/ssl/certs/nginx-exporter.pem
+    -web.listen-address=127.0.0.1:9113
 RestartSec=10
 Restart=always
 

@@ -5,8 +5,8 @@ server {
 
   server_name {{ item.server_name }};
 
-  ssl_certificate /etc/ssl/certs/{{ item.name }}.crt;
-  ssl_certificate_key /etc/ssl/certs/{{ item.name }}.pem;
+  ssl_certificate /etc/nginx/ssl/{{ item.server_name }}.crt;
+  ssl_certificate_key /etc/nginx/ssl/{{ item.server_name }}.pem;
 
   # HSTS
   add_header Strict-Transport-Security "max-age=63072000" always;
@@ -24,8 +24,8 @@ server {
   add_header Cross-Origin-Resource-Policy "same-origin" always;
 
 
-  access_log /var/log/nginx/{{ item.name }}.access.log;
-  error_log /var/log/nginx/{{ item.name }}.error.log warn;
+  access_log /var/log/nginx/{{ item.server_name }}.access.log;
+  error_log /var/log/nginx/{{ item.server_name }}.error.log warn;
 
   {% for location in item.locations %}
   location {{ location.location }} {

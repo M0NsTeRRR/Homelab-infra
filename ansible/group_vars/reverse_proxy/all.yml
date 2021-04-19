@@ -1,8 +1,8 @@
 ---
 caddy_email: "{{ email }}"
-caddy_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-caddy_exporter_local_path_certificate: "{{ certs_dir }}exporter/caddy-exporter/client.crt"
-caddy_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/caddy-exporter/client.pem"
+caddy_exporter_local_path_client_certificate: "{{ certs_dir }}ca.crt"
+caddy_exporter_certificate_name: "{{ inventory_hostname }}.crt"
+caddy_exporter_certificate_key_name: "{{ inventory_hostname }}.pem"
 caddy_domains:
   - names:
       - wiki.unicornafk.fr

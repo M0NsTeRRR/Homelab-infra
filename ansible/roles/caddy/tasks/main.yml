@@ -51,36 +51,23 @@
     - enable caddy.service
     - restart caddy.service
 
-- name: Copy certificate to remote location
-  ansible.builtin.copy:
-    src: "{{ caddy_exporter_local_path_certificate }}"
-    dest: "/etc/ssl/certs/caddy_exporter.crt"
+- name: "Create {{ item }} folder"
+  ansible.builtin.file:
+    state: directory
+    name: "{{ item }}"
     owner: caddy
     group: caddy
-  notify: restart caddy.service
-
-- name: Copy certificate key to remote location
-  ansible.builtin.copy:
-    src: "{{ caddy_exporter_local_path_certificate_key }}"
-    dest: "/etc/ssl/certs/caddy_exporter.pem"
-    owner: caddy
-    group: caddy
-  notify: restart caddy.service
+  with_items:
+    - /etc/caddy/ssl
+    - /etc/caddy/conf.d
 
 - name: Add CA cert
   ansible.builtin.template:
-    src: "{{ caddy_exporter_local_path_ca_certificate }}"
-    dest: /etc/caddy/ca.crt
+    src: "{{ caddy_exporter_local_path_client_certificate }}"
+    dest: /etc/caddy/ssl/client.crt
     owner: caddy
     group: caddy
   notify: restart caddy.service
-
-- name: Create /etc/caddy/conf.d folder
-  ansible.builtin.file:
-    state: directory
-    name: /etc/caddy/conf.d
-    owner: caddy
-    group: caddy
 
 - name: Configure default Caddy config
   ansible.builtin.template:

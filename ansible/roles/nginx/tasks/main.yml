@@ -35,20 +35,6 @@
   notify:
     - restart nginx
 
-- name: Copy certificate to remote location
-  ansible.builtin.copy:
-    src: "{{ item.local_path_ssl_certificate }}"
-    dest: "/etc/ssl/certs/{{ item.name }}.crt"
-  with_items: "{{ nginx_configuration }}"
-  notify: restart nginx
-
-- name: Copy certificate key to remote location
-  ansible.builtin.copy:
-    src: "{{ item.local_path_ssl_certificate_key }}"
-    dest: "/etc/ssl/certs/{{ item.name }}.pem"
-  with_items: "{{ nginx_configuration }}"
-  notify: restart nginx
-
 - name: Setup configurations
   ansible.builtin.include_tasks: configure.yml
   with_items: "{{ nginx_configuration }}"

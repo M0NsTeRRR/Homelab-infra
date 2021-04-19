@@ -39,15 +39,15 @@
 - name: Configure wiki.js
   ansible.builtin.template:
     src: config.yml.j2
-    dest: /opt/wikijs/config.yml
+    dest: /etc/wikijs/config.yml
   notify:
     - restart wikijs.service
 
 - name: Fix perms on wikijs data folder
   ansible.builtin.file:
-    name: "/opt/wikijs/data"
-    owner: "wikijs"
-    group: "wikijs"
+    name: /opt/wikijs/data
+    owner: wikijs
+    group: wikijs
 
 - name: Create systemd service file
   ansible.builtin.template:

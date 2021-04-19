@@ -54,46 +54,30 @@
     (item.generate_pkcs12 and self_signed_pkcs12_missing) or
     self_signed_cert_expired)
 
-- name: Create remote folder for certificates
-  ansible.builtin.file:
-    path: "{{ directory }}"
-    state: directory
-  with_items:
-    - "{{ item.private_key_remote_folder_path }}"
-    - "{{ item.cert_remote_folder_path }}"
+- name: Copy certificates to remote
+  ansible.builtin.include_tasks: copy_cert.yml
+  with_items: "{{ item.cert_remote_folder }}"
   loop_control:
-    loop_var: directory
-
-- name: "Copy {{ ca_certificates_organization_name }} certificates"
-  ansible.builtin.copy:
-    src: "{{ file.src }}"
-    dest: "{{ file.dst }}"
-    mode: "{{ file.mode }}"
-    owner: "{{ item.owner }}"
-    group: "{{ item.group }}"
+    loop_var: folder
   register: copy_files
-  with_items:
-    - { src: "/tmp/{{ item.common_name }}.crt", dst: "{{ item.cert_remote_folder_path }}/{{ item.common_name }}.crt", mode: "0640", upload: true }
-    - { src: "/tmp/{{ item.common_name }}.pem", dst: "{{ item.private_key_remote_folder_path }}/{{ item.common_name }}.pem", mode: "0600", upload: "{{ item.upload_pem }}" }
-    - { src: "/tmp/{{ item.common_name }}.p12", dst: "{{ item.private_key_remote_folder_path }}/{{ item.common_name }}.p12", mode: "0640", upload: "{{ item.generate_pkcs12 }}" }
-  loop_control:
-    loop_var: file
-  when: file.upload and
-    (item.force_renew or
+  when: item.force_renew or
     self_signed_cert_missing or
     (item.upload_pem and self_signed_private_key_missing) or
     (item.generate_pkcs12 and self_signed_pkcs12_missing) or
-    self_signed_cert_expired)
+    self_signed_cert_expired
 
 - name: Import SSL certificate to keystore
   community.general.java_cert:
-    pkcs12_path: "{{ item.private_key_remote_folder_path }}/{{ item.common_name }}.p12"
+    pkcs12_path: "{{ folder.path }}/{{ item.common_name }}.p12"
     pkcs12_password: "{{ item.pkcs12_passphrase }}"
     pkcs12_alias: "{{ item.pkcs12_friendly_name }}"
     keystore_path: "{{ item.keystore_path }}"
     keystore_pass: "{{ item.keystore_pass }}"
     keystore_create: yes
     state: present
+  with_items: "{{ item.cert_remote_folder }}"
+  loop_control:
+    loop_var: folder
   when: item.generate_pkcs12 and
     (item.force_renew or
     self_signed_cert_missing or

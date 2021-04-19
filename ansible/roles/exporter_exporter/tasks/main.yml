@@ -52,41 +52,37 @@
 
 - name: Create exporter_exporter folder
   ansible.builtin.file:
-    name: /etc/exporter_exporter
+    name: "{{ item }}"
     state: directory
     owner: exporter-exporter
     group: exporter-exporter
-
-- name: Copy certificate to remote location
-  ansible.builtin.copy:
-    src: "{{ exporter_exporter_local_path_certificate }}"
-    dest: "/etc/ssl/certs/exporter_exporter.crt"
-    owner: exporter-exporter
-    group: exporter-exporter
-  notify: restart exporter-exporter.service
-
-- name: Copy certificate key to remote location
-  ansible.builtin.copy:
-    src: "{{ exporter_exporter_local_path_certificate_key }}"
-    dest: "/etc/ssl/certs/exporter_exporter.pem"
-    owner: exporter-exporter
-    group: exporter-exporter
-  notify: restart exporter-exporter.service
+  with_items:
+    - /etc/exporter_exporter/ssl
+    - /etc/exporter_exporter/expexp.d
 
 - name: Add CA cert
   ansible.builtin.template:
-    src: "{{ exporter_exporter_local_path_ca_certificate }}"
-    dest: /etc/exporter_exporter/ca.crt
+    src: "{{ exporter_exporter_local_path_client_certificate }}"
+    dest: /etc/exporter_exporter/ssl/ca.crt
+    owner: exporter-exporter
+    group: exporter-exporter
+  notify: restart exporter-exporter.service
+
+- name: Create empty expexp.yaml
+  ansible.builtin.template:
+    src: expexp.yaml.j2
+    dest: /etc/exporter_exporter/expexp.yaml
     owner: exporter-exporter
     group: exporter-exporter
   notify: restart exporter-exporter.service
 
 - name: Configure exporter_exporter
   ansible.builtin.template:
-    src: exporter_exporter.yml.j2
-    dest: "/etc/exporter_exporter/expexp.yaml"
+    src: module.yaml.j2
+    dest: "/etc/exporter_exporter/expexp.d/{{ item.name }}.yaml"
     owner: exporter-exporter
     group: exporter-exporter
+  with_items: "{{ exporter_exporter_nodes }}"
   notify: restart exporter-exporter.service
 
 - name: Create systemd service file

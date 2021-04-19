@@ -2,9 +2,9 @@
 # caddy_version:
 caddy_package_state: latest
 caddy_email: email@example.com
-caddy_exporter_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
-caddy_exporter_local_path_certificate: "/etc/ssl/certs/caddy_exporter.crt"
-caddy_exporter_local_path_certificate_key: "/etc/ssl/certs/caddy_exporter.pem"
+caddy_exporter_local_path_client_certificate: ./client.crt
+caddy_exporter_certificate_name: "cert.crt"
+caddy_exporter_certificate_key_name: "cert.pem"
 caddy_domains: []
 
 

@@ -3,7 +3,7 @@ country: FR
 timezone: Europe/Paris
 organization: unicornafk
 as: 212510
-certs_dir: ../../../certs/
+certs_dir: ../../../ssl/
 email: ludovic-ortega@adminafk.fr
 monitoring_email: monitoring@unicornafk.fr
 admin_email: admin@unicornafk.fr
@@ -57,3 +57,6 @@ reverse_zones:
 unifi_controller:
   ipv4: 192.168.20.50
   ipv6: 2a0c:b641:02c0:120::50
+exporter_exporter_local_path_client_certificate: "{{ certs_dir }}exporter/client.crt"
+exporter_exporter_certificate_name: "{{ inventory_hostname }}.crt"
+exporter_exporter_certificate_key_name: "{{ inventory_hostname }}.pem"

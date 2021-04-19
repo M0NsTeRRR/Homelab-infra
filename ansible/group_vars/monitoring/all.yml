@@ -13,9 +13,6 @@ vmware_exporter_vcenter_hostname: "{{ vcenter_hostname }}"
 vmware_exporter_vcenter_username: "{{ vcenter_username }}"
 vmware_exporter_vcenter_password: "{{ vcenter_password }}"
 
-unifi_poller_url: https://unifi.unicornafk.fr:8443
-unifi_poller_user: unifipoller
-
 snmp_exporter_user: "{{ snmp_user }}"
 snmp_exporter_pass: "{{ snmp_pass }}"
 snmp_exporter_private: "{{ snmp_private }}"
@@ -34,16 +31,11 @@ alertmanager_receivers_webhooks:
 alertmanager_webhook_free_server:
   address: ":9234"
 
-prometheus_certs_dir: "{{ certs_dir }}exporter/"
-prometheus_clients_certs:
-  - node-exporter
-  - kea-exporter
-  - powerdns-exporter
-  - wireguard-exporter
-  - rpki-exporter
-  - caddy-exporter
-  - nginx-exporter
-  - monitoring-exporter
+prometheus_ssl_ca_local_path: "{{ certs_dir }}ca.crt"
+prometheus_ssl_exporter_certificate_name: "{{ inventory_hostname }}.crt"
+prometheus_ssl_exporter_certificate_key_name: "{{ inventory_hostname }}.pem"
+prometheus_ssl_client_cert_local_path: "{{ certs_dir }}exporter/client.crt"
+prometheus_ssl_client_key_local_path: "{{ certs_dir }}exporter/client.pem"
 prometheus_targets:
   blackbox_http:
     - https://vcenter.unicornafk.fr
@@ -73,7 +65,7 @@ prometheus_targets:
   vmware_exporter:
     - "{{ vmware_exporter_vcenter_hostname }}"
   unifi_poller:
-    - "{{ unifi_poller_url }}"
+    - unifi.unicornafk.fr:9998
   ipmi:
     - ipmi3.unicornafk.fr
     - ipmi4.unicornafk.fr
@@ -91,49 +83,49 @@ prometheus_targets:
   snmp_qnap:
     - 192.168.50.42
   node_exporter:
-    - rpki1.unicornafk.fr:9100
-    - rpki2.unicornafk.fr:9100
-    - rr1.unicornafk.fr:9100
-    - rr2.unicornafk.fr:9100
-    - pi1.unicornafk.fr:9100
-    - blog.unicornafk.fr:9100
-    - dhcp1.unicornafk.fr:9100
-    - dhcp2.unicornafk.fr:9100
-    - dns1.unicornafk.fr:9100
-    - dns2.unicornafk.fr:9100
-    - git.unicornafk.fr:9100
-    - ipam.unicornafk.fr:9100
-    - log.unicornafk.fr:9100
-    - monitoring.unicornafk.fr:9100
-    - reverse-proxy.unicornafk.fr:9100
-    - website.unicornafk.fr:9100
-    - unifi.unicornafk.fr:9100
-    - vpn.unicornafk.fr:9100
-    - wiki.unicornafk.fr:9100
-    - lb1.dmz.unicornafk.fr:9100
-    - lb2.dmz.unicornafk.fr:9100
-    - lb3.dmz.unicornafk.fr:9100
-    - etcd1.dmz.unicornafk.fr:9100
-    - etcd2.dmz.unicornafk.fr:9100
-    - etcd3.dmz.unicornafk.fr:9100
-    - master1.dmz.unicornafk.fr:9100
-    - master2.dmz.unicornafk.fr:9100
-    - master3.dmz.unicornafk.fr:9100
-    - worker1.dmz.unicornafk.fr:9100
-    - worker2.dmz.unicornafk.fr:9100
-    - worker3.dmz.unicornafk.fr:9100
+    - rpki1.unicornafk.fr:9998
+    - rpki2.unicornafk.fr:9998
+    - rr1.unicornafk.fr:9998
+    - rr2.unicornafk.fr:9998
+    - pi1.unicornafk.fr:9998
+    - blog.unicornafk.fr:9998
+    - dhcp1.unicornafk.fr:9998
+    - dhcp2.unicornafk.fr:9998
+    - dns1.unicornafk.fr:9998
+    - dns2.unicornafk.fr:9998
+    - git.unicornafk.fr:9998
+    - ipam.unicornafk.fr:9998
+    - log.unicornafk.fr:9998
+    - monitoring.unicornafk.fr:9998
+    - reverse-proxy.unicornafk.fr:9998
+    - website.unicornafk.fr:9998
+    - unifi.unicornafk.fr:9998
+    - vpn.unicornafk.fr:9998
+    - wiki.unicornafk.fr:9998
+    - lb1.dmz.unicornafk.fr:9998
+    - lb2.dmz.unicornafk.fr:9998
+    - lb3.dmz.unicornafk.fr:9998
+    - etcd1.dmz.unicornafk.fr:9998
+    - etcd2.dmz.unicornafk.fr:9998
+    - etcd3.dmz.unicornafk.fr:9998
+    - master1.dmz.unicornafk.fr:9998
+    - master2.dmz.unicornafk.fr:9998
+    - master3.dmz.unicornafk.fr:9998
+    - worker1.dmz.unicornafk.fr:9998
+    - worker2.dmz.unicornafk.fr:9998
+    - worker3.dmz.unicornafk.fr:9998
   nginx:
-    - dns1.unicornafk.fr:9113
-    - dns2.unicornafk.fr:9113
-    - dhcp1.unicornafk.fr:9113
-    - dhcp2.unicornafk.fr:9113
-    - ipam.unicornafk.fr:9113
-    - blog.unicornafk.fr:9113
-    - log.unicornafk.fr:9113
-    - monitoring.unicornafk.fr:9113
-    - website.unicornafk.fr:9113
-    - rpki1.unicornafk.fr:9113
-    - rpki2.unicornafk.fr:9113
+    - dns1.unicornafk.fr:9998
+    - dns2.unicornafk.fr:9998
+    - dhcp1.unicornafk.fr:9998
+    - dhcp2.unicornafk.fr:9998
+    - ipam.unicornafk.fr:9998
+    - blog.unicornafk.fr:9998
+    - log.unicornafk.fr:9998
+    - monitoring.unicornafk.fr:9998
+    - website.unicornafk.fr:9998
+    - rpki1.unicornafk.fr:9998
+    - rpki2.unicornafk.fr:9998
   wireguard:
     - vpn.unicornafk.fr:9998
   kea_dhcp:
@@ -159,34 +151,21 @@ prometheus_targets:
     - rpki2.unicornafk.fr:9998
 
 nginx_configuration:
-  - name: "grafana"
+  - server_name: "{{ inventory_hostname }}"
     locations:
       - location: /
-        proxy_pass: "http://127.0.0.1:3000"
+        proxy_pass: http://127.0.0.1:3000
     enable_content_security: false
     http_redirection: true
     ssl_port: "443"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
-    server_name: "{{ ansible_fqdn }}"
-  - name: "prometheus"
+  - server_name: prometheus.unicornafk.fr
     locations:
       - location: /
-        proxy_pass: "http://127.0.0.1:9090"
+        proxy_pass: http://127.0.0.1:9090
     enable_content_security: true
-    http_redirection: false
-    ssl_port: "9091"
-    local_path_ssl_certificate: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.crt"
-    local_path_ssl_certificate_key: "{{ certs_dir }}www/{{ ansible_fqdn }}/client.pem"
-    server_name: "{{ ansible_fqdn }}"
+    http_redirection: true
+    ssl_port: 443
 
-nginx_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-nginx_exporter_local_path_certificate: "{{ certs_dir }}exporter/nginx-exporter/client.crt"
-nginx_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/nginx-exporter/client.pem"
-
-exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-exporter_exporter_local_path_certificate: "{{ certs_dir }}exporter/monitoring-exporter/client.crt"
-exporter_exporter_local_path_certificate_key: "{{ certs_dir }}exporter/monitoring-exporter/client.pem"
 exporter_exporter_nodes:
   - name: blackbox
     port: 9115
@@ -197,11 +176,40 @@ exporter_exporter_nodes:
   - name: tplink_plug
     port: 9233
     path: /scrape
-  - name: unifi_poller
-    port: 9130
-    path: /scrape
   - name: vmware
     port: 9272
   - name: ipmi
     port: 9290
     path: /ipmi
+  - name: nginx
+    port: 9113
+
+self_signed_certs:
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/nginx/ssl, owner: root, group: root }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - nginx
+    force_renew: false
+  - common_name: prometheus.unicornafk.fr
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
+    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/nginx/ssl, owner: root, group: root }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - nginx
+    force_renew: false

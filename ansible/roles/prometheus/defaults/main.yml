@@ -1,8 +1,9 @@
 ---
 prometheus_version: 2.26.0
 prometheus_force_install: false
-prometheus_certs_dir:
-prometheus_clients_certs: []
+prometheus_ssl_ca_local_path: /etc/ssl/ca.crt
+prometheus_ssl_client_cert_local_path: /etc/ssl/client.crt
+prometheus_ssl_client_key_local_path: /etc/ssl/client.pem
 prometheus_targets: {}
 
 

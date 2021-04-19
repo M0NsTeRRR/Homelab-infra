@@ -5,7 +5,7 @@ nginx_configuration: []
 
 
 # nginx_configuration:
-#   - name: "{{ inventory_hostname }}"
+#   - server_name: "{{ inventory_hostname }}"
 #     - location: /
 #        proxy_pass: "http://127.0.0.1:8080"
 #        proxy_headers:
@@ -15,6 +15,3 @@ nginx_configuration: []
 #     enable_content_security: true
 #     http_redirection: true
 #     ssl_port: "443"
-#     local_path_ssl_certificate: "../../../certs/ca.crt"
-#     local_path_ssl_certificate_key: "../../../certs/ca.pem"
-#     server_name: "{{ inventory_hostname }}"

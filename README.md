@@ -24,6 +24,8 @@ Install ansible galaxy dependencies `ansible-galaxy install -r requirements.yml`
 
 fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`
 
+#### Set environment variable `ANSIBLE_VAULT_PASS` like `export ANSIBLE_VAULT_PASS='password'`
+
 ### Playbooks to add fingerprint on know_hosts
 `ansible-playbook -i hosts playbooks/add-ssh-keys.yml`
 
@@ -41,9 +43,9 @@ Port 8888 used for debian build
 Port 8889 used for ubuntu build  
 
 Open both ports on windows firewall  
-Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenport=<WINDOWS PORT> listenaddress=<WINDOWS IP> connectport=<WSL PORT> connectaddress=<WSL IP>`  
+Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=<WSL IP> listenport=<WINDOWS PORT> connectport=<WSL PORT>`  
 Replace <IP> with the LAN IP of your PC and <PORT> with [8888, 8889]  
-To delete the rules `netsh interface portproxy del v4tov4 listenport=<PORT> listenaddress=<IP>`
+To delete the rules `netsh interface portproxy del v4tov4 listenaddress=<IP> listenport=<PORT>`
 
 Supported distributions :
 
@@ -84,4 +86,4 @@ Copyright © Ludovic Ortega, 2021
 
 Contributor(s):
 
--Ortega Ludovic - mastership@hotmail.fr
+-Ortega Ludovic - ludovic.ortega@adminafk.fr

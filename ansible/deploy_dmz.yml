@@ -8,6 +8,7 @@
     - powerdns_authoritative
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure DHCP servers
   hosts: dhcp
@@ -19,6 +20,7 @@
     - kea_exporter
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Git
   hosts: git
@@ -35,6 +37,8 @@
     - netbox
     - netbox_sync
     - nginx_exporter
+    - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Wiki
   hosts: wiki
@@ -45,6 +49,8 @@
     - postgresql
     - wikijs
     - nginx_exporter
+    - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Blog
   hosts: blog
@@ -54,6 +60,8 @@
     - nodejs
     - ghost
     - nginx_exporter
+    - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Log
   hosts: log
@@ -62,6 +70,8 @@
     - nginx
     - graylog
     - nginx_exporter
+    - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Monitoring
   hosts: monitoring
@@ -80,6 +90,7 @@
     - tplink_plug_exporter
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Website
   hosts: website
@@ -90,6 +101,8 @@
     - nodejs
     - hyperglass
     - nginx_exporter
+    - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Reverse-proxy
   hosts: reverse_proxy
@@ -106,6 +119,7 @@
     - rpki_rtr_server
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure kubernetes loadbalancers
   hosts: kubernetes:&lb

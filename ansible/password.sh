@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo $main_password
+echo $ANSIBLE_VAULT_PASS

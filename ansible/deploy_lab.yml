@@ -4,4 +4,6 @@
   become: yes
   roles:
     - unifi
+    - unifi_poller
+    - exporter_exporter
     - self_signed_cert

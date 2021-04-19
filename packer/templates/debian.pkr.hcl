@@ -8,7 +8,7 @@ variable "http_port" {
   default = 8888
 }
 
-variable "main_password" {
+variable "ssh_new_password" {
   type      = string
   default   = ""
   sensitive = true
@@ -97,8 +97,8 @@ build {
   sources = ["source.vsphere-iso.debian"]
 
   provisioner "ansible" {
-    ansible_env_vars = ["ANSIBLE_HOST_KEY_CHECKING=False", "ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3", "ANSIBLE_USER=${var.ssh_username}", "ANSIBLE_SSH_PASS=${var.ssh_password}", "ANSIBLE_BECOME_PASS=${var.ssh_password}"]
-    extra_arguments  = ["--extra-vars", "main_password=${var.main_password} main_user=${var.ssh_username}", "--vault-password-file", "password.sh"]
+    ansible_env_vars = ["ANSIBLE_CONFIG=../ansible/ansible.cfg", "ANSIBLE_HOST_KEY_CHECKING=False", "ANSIBLE_USER=${var.ssh_username}", "ANSIBLE_SSH_PASS=${var.ssh_password}", "ANSIBLE_BECOME_PASS=${var.ssh_password}"]
+    extra_arguments  = ["--extra-vars", "main_password=${var.ssh_new_password} main_user=${var.ssh_username}"]
     playbook_file    = "../ansible/deploy_packer.yml"
   }
 

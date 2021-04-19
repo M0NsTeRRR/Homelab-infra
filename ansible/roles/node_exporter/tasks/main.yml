@@ -1,10 +1,4 @@
 ---
-- name: Allow node-exporter
-  community.general.ufw:
-    rule: allow
-    port: "9100"
-    proto: tcp
-
 - name: Install pip3
   ansible.builtin.apt:
     name: python3-pip
@@ -47,35 +41,6 @@
     remote_src: yes
   notify: restart node-exporter.service
   when: not node_exporter.stat.exists or node_exporter_force_install
-
-- name: Create node-exporter configuration directory
-  ansible.builtin.file:
-    dest: /etc/node-exporter/
-    state: directory
-
-- name: Copy certificate to remote location
-  ansible.builtin.copy:
-    src: "{{ node_exporter_local_path_certificate }}"
-    dest: "/etc/ssl/certs/node-exporter.crt"
-  notify: restart node-exporter.service
-
-- name: Copy certificate key to remote location
-  ansible.builtin.copy:
-    src: "{{ node_exporter_local_path_certificate_key }}"
-    dest: "/etc/ssl/certs/node-exporter.pem"
-  notify: restart node-exporter.service
-
-- name: Add ca.crt
-  ansible.builtin.copy:
-    src: "{{ node_exporter_local_path_ca_certificate }}"
-    dest: /etc/node-exporter/ca.crt
-  notify: restart node-exporter.service
-
-- name: Configure node-exporter
-  ansible.builtin.template:
-    src: web-config.yml.j2
-    dest: /etc/node-exporter/web-config.yml
-  notify: restart node-exporter.service
 
 - name: Create systemd service file
   ansible.builtin.template:

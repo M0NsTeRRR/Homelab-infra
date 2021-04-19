@@ -1,7 +1,18 @@
 ---
-- name: 'Provision Image'
+- name: Provision Image
   hosts: default
   become: true
+  vars:
+    ca_certificates_organization_name: "{{ organization }}"
+    ca_certificates_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+    rsyslog_server: log.unicornafk.fr
+    rsyslog_port: 1514
+    rsyslog_local_path_ca_certificate: "{{ certs_dir }}rsyslog-server/client.crt"
+    rsyslog_local_path_certificate: "{{ certs_dir }}rsyslog-client/client.crt"
+    rsyslog_local_path_certificate_key: "{{ certs_dir }}rsyslog-client/client.pem"
+    systemd_timesyncd_ntp:
+      - ntp1.unicornafk.fr
+      - ntp2.unicornafk.fr
   roles:
     - modprobe
     - grub
@@ -20,10 +31,10 @@
   pre_tasks:
     - name: Update and upgrade all packages
       apt:
-        upgrade: 'yes'
-        update_cache: 'yes'
-        autoclean: 'yes'
-        autoremove: 'yes'
+        upgrade: yes'
+        update_cache: yes
+        autoclean: yes
+        autoremove: yes
 
     - name: Include utils
       include_tasks: playbooks/utils.yml

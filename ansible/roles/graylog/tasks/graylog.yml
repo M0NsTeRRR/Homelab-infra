@@ -46,23 +46,27 @@
       - { regexp: '^(#)?transport_email_web_interface_url =', line: 'transport_email_web_interface_url = https://{{ ansible_hostname }}' }
   notify: restart graylog-server
 
+- name: Create /etc/graylog/ssl folder
+  ansible.builtin.file:
+    state: directory
+    name: /etc/graylog/ssl
+
+- name: Add ca.crt
+  copy:
+    src: "{{ graylog_local_path_ca_certificate }}"
+    dest: /etc/graylog/ssl/ca.crt
+  notify: restart graylog-server
 
 - name: Copy certificate to remote location
   copy:
-    src: "{{ rsyslog_local_path_certificate }}"
-    dest: "/etc/ssl/certs/graylog.crt"
+    src: "{{ graylog_local_path_certificate }}"
+    dest: /etc/graylog/ssl/client.crt
   notify: restart graylog-server
 
 - name: Copy certificate key to remote location
   copy:
-    src: "{{ rsyslog_local_path_certificate_key }}"
-    dest: "/etc/ssl/certs/graylog.pem"
-  notify: restart graylog-server
-
-- name: Add ca.crt
-  copy:
-    src: "{{ rsyslog_local_path_ca_certificate }}"
-    dest: /etc/graylog/ca.crt
+    src: "{{ graylog_local_path_certificate_key }}"
+    dest: /etc/graylog/ssl/client.pem
   notify: restart graylog-server
 
 - name: Flush handlers

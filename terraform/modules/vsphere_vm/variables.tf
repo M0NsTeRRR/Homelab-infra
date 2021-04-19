@@ -1,3 +1,13 @@
+variable "terraform_root_dir" {
+  description = "Terraform root directory"
+  type = string
+}
+
+variable "ansible_vault_pass" {
+  description = "Ansible vault pass"
+  type = string
+}
+
 variable "vsphere_datacenter" {
   description = "vSphere datacenter"
   type = string

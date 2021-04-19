@@ -19,10 +19,12 @@ do
     read -p 'Distribution: ' distribution
     read -sp 'Vcenter password: ' vcenter_password
     printf "\n"
-    read -sp 'VM password: ' main_password
+    read -sp 'VM new password: ' ssh_new_password
+    printf "\n"
+    read -sp 'Ansible vault password: ' ANSIBLE_VAULT_PASS
     printf "\n"
 
-    export main_password
+    export ANSIBLE_VAULT_PASS
 
     packer build \
       -var "host_ip=$host_ip" \
@@ -31,20 +33,18 @@ do
       -var "vcenter_password=$vcenter_password" \
       -var "ssh_username=$ssh_username" \
       -var "ssh_password=$ssh_password" \
-      -var "main_password=$main_password" \
+      -var "ssh_new_password=$ssh_new_password" \
       -timestamp-ui \
       templates/"$distribution".pkr.hcl
 		break
 		;;
 	2)
-    read -sp 'VM password: ' main_password
+    read -sp 'VM new password: ' ssh_new_password
     printf "\n"
-
-    export main_password
 
     packer build \
       -var "username=$ssh_username" \
-      -var "password=$main_password" \
+      -var "password=$ssh_new_password" \
       -timestamp-ui \
       templates/raspi.pkr.hcl
 		break

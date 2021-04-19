@@ -7,5 +7,7 @@ locals {
 
   vm_user          = ""
   vm_password      = ""
+
+  ansible_vault_pass = ""
 }
 
