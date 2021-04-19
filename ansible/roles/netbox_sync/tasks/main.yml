@@ -49,6 +49,8 @@
   ansible.builtin.template:
     src: netbox-sync.service.j2
     dest: /etc/systemd/system/netbox-sync.service
+  notify:
+    - daemon-reload
 
 - name: Configure netbox-sync.timer
   ansible.builtin.template:

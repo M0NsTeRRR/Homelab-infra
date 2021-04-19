@@ -44,7 +44,6 @@
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
   notify:
-    - daemon-reload
     - restart docker
 
 - name: Flush handlers

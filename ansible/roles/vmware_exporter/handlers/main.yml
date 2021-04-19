@@ -1,4 +1,8 @@
 ---
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
 - name: restart vmware-exporter.service
   ansible.builtin.systemd:
     name: vmware-exporter.service
@@ -8,7 +12,3 @@
   ansible.builtin.systemd:
     name: vmware-exporter.service
     enabled: yes
-
-- name: daemon-reload
-  ansible.builtin.systemd:
-    daemon_reload: yes

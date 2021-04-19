@@ -100,5 +100,6 @@
     src: hyperglass.service.j2
     dest: /etc/systemd/system/hyperglass.service
   notify:
+    - daemon-reload
     - enable hyperglass.service
     - restart hyperglass.service
