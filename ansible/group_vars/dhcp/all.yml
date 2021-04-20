@@ -136,7 +136,7 @@ exporter_exporter_nodes:
     port: 9113
 
 nginx_configuration:
-  - server_name: "{{ hostvars[inventory_hostname].hostname }}, inventory_hostname, hostvars[inventory_hostname].ipv6"
+  - server_name: "{{ inventory_hostname }}, {{ lookup('dig', inventory_hostname) }}, {{ lookup('dig', inventory_hostname, 'qtype=AAAA' ) }}"
     locations:
       - location: /
         proxy_pass: http://127.0.0.1:8000
