@@ -1,0 +1,18 @@
+---
+- name: Get certificate info
+  community.crypto.x509_certificate_info:
+    path: "{{ item.cert_remote_folder[0].path }}/{{ item.common_name }}.crt"
+  register: self_signed_cert_tlsa_info
+
+- name: "PATCH TLSA entry {{ item.common_name }}."
+  ansible.builtin.uri:
+    url: "https://{{ self_signed_cert_pdns.hostname }}/api/v1/servers/localhost/zones/{{ item.tlsa.pdns_zone }}."
+    method: PATCH
+    return_content: yes
+    body_format: json
+    validate_certs: no
+    body: "{{ lookup('template', 'pdns_tlsa.json.j2') }}"
+    status_code: 204
+    headers:
+      Content-Type: application/json
+      X-Api-Key: "{{ self_signed_cert_pdns.api_key }}"

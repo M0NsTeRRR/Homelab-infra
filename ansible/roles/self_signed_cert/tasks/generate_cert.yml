@@ -108,3 +108,7 @@
     - "/tmp/{{ item.common_name }}.p12"
   loop_control:
     loop_var: file
+
+- name: Update Pdns TLSA entry
+  ansible.builtin.include_tasks: pdns_tlsa.yml
+  when: self_signed_cert_pdns

@@ -1,5 +1,6 @@
 ---
 self_signed_certs: []
+self_signed_cert_pdns: {}
 
 
 # self_signed_certs:
@@ -19,3 +20,11 @@ self_signed_certs: []
 #     restart_systemd_services:
 #       - app
 #     force_renew: true
+#     tlsa:
+#       proto: tcp
+#       port: 443
+#       pdns_zone: example.com
+
+# self_signed_cert_pdns
+#  hostname: dns1.example.com
+#  api_key: azertyuiop
