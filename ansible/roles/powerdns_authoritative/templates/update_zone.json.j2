@@ -18,7 +18,18 @@
       ],
       "ttl": "3600",
       "type": "NS"
-    }{% for host in powerdns_authoritative_records %}{% if host.a is defined and item in host.hostname %},
+    }{% if powerdns_caa | length %},
+    {
+      "name": "{{ item }}.",
+      "changetype": "REPLACE",
+      "records": [
+        {% for host in powerdns_caa %}
+        { "content": "0 issuewild \"{{ host.caa }}\"", "disabled": false }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ],
+      "ttl": "3600",
+      "type": "CAA"
+    }{% endif %}{% for host in powerdns_authoritative_records %}{% if host.a is defined and item in host.hostname %},
     {
       "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
@@ -54,18 +65,18 @@
         ],
         "ttl": 3600,
         "type": "CNAME"
-    }{% endif %}{% if host.rdns and host.a is defined and item in host.a|ipaddr("revdns") %},
+    }{% endif %}{% if host.rdns is defined and host.a is defined and item in host.a|ansible.netcommon.ipaddr("revdns") %},
     {
-      "name": "{{ host.a|ipaddr('revdns') }}",
+      "name": "{{ host.a|ansible.netcommon.ipaddr('revdns') }}",
       "changetype": "REPLACE",
       "records": [
         { "content": "{{ host.hostname }}", "disabled": false }
       ],
       "ttl": "3600",
       "type": "PTR"
-    }{% endif %}{% if host.rdns and host.aaaa is defined and item in host.aaaa|ipaddr("revdns") %},
+    }{% endif %}{% if host.rdns is defined and host.aaaa is defined and item in host.aaaa|ansible.netcommon.ipaddr("revdns") %},
     {
-      "name": "{{ host.aaaa|ipaddr('revdns') }}",
+      "name": "{{ host.aaaa|ansible.netcommon.ipaddr('revdns') }}",
       "changetype": "REPLACE",
       "records": [
         { "content": "{{ host.hostname }}", "disabled": false }

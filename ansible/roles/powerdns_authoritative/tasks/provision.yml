@@ -1,4 +1,8 @@
 ---
+- name: Set DNS CAA entries
+  set_fact:
+    powerdns_caa: "{{ powerdns_authoritative_records | selectattr('caa', 'defined') | list }}"
+  
 - name: "Check if zone {{ item }}. exist"
   ansible.builtin.uri:
     url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones/{{ item }}."
