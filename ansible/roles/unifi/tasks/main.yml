@@ -70,11 +70,26 @@
     update_cache: yes
     state: "{{ unifi_mongodb_force_install }}"
 
-- name: Install unifi
+- name: Add Unifi Apt signing key
+  ansible.builtin.apt_key:
+    id: "{{ unifi_repository_key }}"
+    url: https://dl.ui.com/unifi/unifi-repo.gpg
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add Unifi Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb https://www.ui.com/downloads/unifi/debian stable ubiquiti"
+    state: present
+    filename: unifi
+
+- name: Install Unifi
   ansible.builtin.apt:
-    deb: 'https://dl.ui.com/unifi/{{ unifi_version }}/unifi_sysvinit_all.deb'
-  when: "'unifi' not in ansible_facts.packages or unifi_force_install"
-  notify: restart unifi
+    name: "unifi{% if unifi_version is defined %}={{ unifi_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ unifi_package_state }}"
+  notify: enable unifi
 
 - name: Configure Unifi
   ansible.builtin.lineinfile:
