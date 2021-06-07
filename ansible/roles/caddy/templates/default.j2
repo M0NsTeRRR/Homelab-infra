@@ -16,6 +16,8 @@
 (defaultheaders) {
     -Server
     Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;"
+    Feature-Policy "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'self'; speaker 'none'; usb 'none'; vr 'none';"
+    Expect-CT "max-age=604800"
 }
 
 :9982 {

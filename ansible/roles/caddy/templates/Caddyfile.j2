@@ -9,6 +9,7 @@
       header_up {{ headerName }} {{ headerValue }}
       {% endfor %}
       {% endif %}
+      header_up Set-Cookie {% for domain in item.names %}{{ domain }}{% if not loop.last %} {% endif %}{% endfor %}
     }
 
     header {

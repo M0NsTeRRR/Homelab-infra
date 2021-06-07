@@ -19,6 +19,8 @@ server {
   add_header Cross-Origin-Embedder-Policy "same-origin" always;
   add_header Cross-Origin-Opener-Policy "same-origin" always;
   add_header Cross-Origin-Resource-Policy "same-origin" always;
+  add_header Expect-CT "enforce, max-age=604800";
+  add_header Set-Cookie "Path=/; HttpOnly; Secure";
 
 
   access_log /var/log/nginx/{{ item.server_name }}.access.log;
