@@ -1,8 +1,8 @@
 locals {
   network = {
-    name    = "VPN"
-    netmask = "24"
-    gateway = "192.168.70.2"
+    name     = "VPN"
+    netmask  = "24"
+    gateway  = "192.168.70.2"
     netmask6 = "64"
     gateway6 = "2a0c:b641:02c0:170::2"
   }

@@ -9,8 +9,8 @@ locals {
 
   powerdns_api_key = local.account_vars.locals.powerdns_api_key
 
-  vm_user            = local.account_vars.locals.vm_user
-  vm_password        = local.account_vars.locals.vm_password
+  vm_user     = local.account_vars.locals.vm_user
+  vm_password = local.account_vars.locals.vm_password
 
   ansible_vault_pass = local.account_vars.locals.ansible_vault_pass
 
@@ -32,7 +32,7 @@ terraform {
   required_providers {
     vsphere = {
       source  = "hashicorp/vsphere"
-      version = "~> 1.25.0"
+      version = "~> 2.0.1"
     }
     powerdns = {
       source  = "pan-net/powerdns"

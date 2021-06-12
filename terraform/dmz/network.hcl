@@ -1,8 +1,8 @@
 locals {
   network = {
-    name    = "DMZ"
-    netmask = "24"
-    gateway = "192.168.10.2"
+    name     = "DMZ"
+    netmask  = "24"
+    gateway  = "192.168.10.2"
     netmask6 = "64"
     gateway6 = "2a0c:b641:02c0:110::2"
   }
