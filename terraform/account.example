@@ -5,9 +5,8 @@ locals {
 
   powerdns_api_key = ""
 
-  vm_user          = ""
-  vm_password      = ""
+  vm_user     = ""
+  vm_password = ""
 
   ansible_vault_pass = ""
 }
-
