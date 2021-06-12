@@ -20,4 +20,4 @@ jobs:
     - name: Lint VPN Terraform Template
       run: terragrunt run-all validate --terragrunt-working-dir terraform/vpn
     - name: Check fmt
-      run: terragrunt hclfmt --terragrunt-check
+      run: terragrunt hclfmt --terragrunt-working-dir terraform --terragrunt-check
