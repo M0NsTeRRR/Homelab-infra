@@ -10,7 +10,7 @@ jobs:
     - name: Setup Terragrunt
       uses: autero1/action-terragrunt@v1.0.0
       with:
-        terragrunt_version: 0.28.16
+        terragrunt_version: 0.30.3
     - name: Create an empty account.hcl
       run: mv terraform/account.example terraform/account.hcl
     - name: Lint DMZ Terraform Template
@@ -19,3 +19,5 @@ jobs:
       run: terragrunt run-all validate --terragrunt-working-dir terraform/lab
     - name: Lint VPN Terraform Template
       run: terragrunt run-all validate --terragrunt-working-dir terraform/vpn
+    - name: Check fmt
+      run: terragrunt hclfmt --terragrunt-check
