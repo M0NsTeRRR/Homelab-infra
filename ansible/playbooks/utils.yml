@@ -24,6 +24,11 @@
     name: debsums
     state: present
 
+- name: Install curl
+  ansible.builtin.apt:
+    name: curl
+    state: present
+
 - name: Install cloud-initramfs-growroot
   ansible.builtin.apt:
     name: cloud-initramfs-growroot
