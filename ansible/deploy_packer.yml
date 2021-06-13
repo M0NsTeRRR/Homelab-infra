@@ -30,17 +30,17 @@
     - ca_certificates
   pre_tasks:
     - name: Update and upgrade all packages
-      apt:
-        upgrade: yes'
+      ansible.builtin.apt:
+        upgrade: yes
         update_cache: yes
         autoclean: yes
         autoremove: yes
 
     - name: Include utils
-      include_tasks: playbooks/utils.yml
+      ansible.builtin.include_tasks: playbooks/utils.yml
   tasks:
     - name: "Update {{ main_user }} password"
-      user:
+      ansible.builtin.user:
         name: "{{ main_user }}"
         password: "{{ main_password | password_hash('sha512') }}"
         update_password: always
