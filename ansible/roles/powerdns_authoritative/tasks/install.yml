@@ -134,9 +134,9 @@
     line: "{{ item.line }}"
     state: "present"
   with_items:
-      - { regexp: '^(# )?master=', line: 'master=yes' }
-      - { regexp: '^(# )?superslave=', line: 'superslave=no' }
-      - { regexp: '^(# )?slave=', line: 'slave=no' }
+      - { regexp: '^(# )?primary=', line: 'primary=yes' }
+      - { regexp: '^(# )?autosecondary=', line: 'autosecondary=no' }
+      - { regexp: '^(# )?secondary=', line: 'secondary=no' }
   when: inventory_hostname == play_hosts[0]
   notify: restart pdns
 
@@ -147,9 +147,9 @@
     line: "{{ item.line }}"
     state: "present"
   with_items:
-      - { regexp: '^(# )?master=', line: 'master=no' }
-      - { regexp: '^(# )?superslave=', line: 'superslave=yes' }
-      - { regexp: '^(# )?slave=', line: 'slave=yes' }
+      - { regexp: '^(# )?primary=', line: 'primary=no' }
+      - { regexp: '^(# )?autosecondary=', line: 'autosecondary=yes' }
+      - { regexp: '^(# )?secondary=', line: 'secondary=yes' }
   when: inventory_hostname != play_hosts[0]
   notify: restart pdns
 
