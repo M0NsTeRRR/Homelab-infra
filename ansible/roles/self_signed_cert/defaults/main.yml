@@ -17,6 +17,8 @@ self_signed_cert_pdns: {}
 #     pkcs12_passphrase: password
 #     upload_pem: true
 #     generate_pkcs12: true
+#     subject_alt_name:
+#       - NS:example.com
 #     restart_systemd_services:
 #       - app
 #     force_renew: true

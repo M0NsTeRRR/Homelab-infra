@@ -6,7 +6,7 @@
 
 - name: "PATCH TLSA entry {{ item.common_name }}."
   ansible.builtin.uri:
-    url: "https://{{ self_signed_cert_pdns.hostname }}/api/v1/servers/localhost/zones/{{ item.tlsa.pdns_zone }}."
+    url: "https://{{ self_signed_cert_pdns.hostname }}/api/v1/servers/localhost/zones/{{ tlsa.pdns_zone }}."
     method: PATCH
     return_content: yes
     body_format: json
@@ -16,3 +16,6 @@
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ self_signed_cert_pdns.api_key }}"
+  with_items: "{{ item.tlsa }}"
+  loop_control:
+    loop_var: tlsa

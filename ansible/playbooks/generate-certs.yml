@@ -67,7 +67,7 @@
         organization_name: "{{ organization }}"
         email_address: "{{ admin_email }}"
         common_name: "{{ common_name }}"
-        subject_alt_name: "DNS:{{ common_name }},IP:{{ lookup('dig', common_name) }},IP:{{ lookup('dig', common_name, 'qtype=AAAA') }}"
+        subject_alt_name: "DNS:{{ common_name }},IP:{{ lookup('community.general.dig', common_name) }},IP:{{ lookup('community.general.dig', common_name, 'qtype=AAAA') }}"
 
     - name: Generate client OpenSSL certificate signed with our CA
       community.crypto.x509_certificate:
