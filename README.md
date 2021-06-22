@@ -6,7 +6,7 @@ This is my Homelab infrastructure.
 
 # Requirements
 
-- Ansible (version >= 2.10)
+- Ansible (version >= 2.11)
 	- Python3 and Pip
 - Packer (version >= 1.7)
     - Packer builder arm
