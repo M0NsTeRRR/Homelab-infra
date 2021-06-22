@@ -62,7 +62,7 @@
 
 - name: Add CA cert
   ansible.builtin.template:
-    src: "{{ exporter_exporter_local_path_client_certificate }}"
+    src: "{{ exporter_exporter_local_path_ca_certificate }}"
     dest: /etc/exporter_exporter/ssl/ca.crt
     owner: exporter-exporter
     group: exporter-exporter
