@@ -5,6 +5,9 @@
 [dhcp]
 dhcp[1:2].unicornafk.fr
 
+[consul]
+consul[1:3].unicornafk.fr
+
 [reverse_proxy]
 reverse-proxy.unicornafk.fr
 
