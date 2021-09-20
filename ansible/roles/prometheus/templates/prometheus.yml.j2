@@ -14,6 +14,31 @@ rule_files:
   - /etc/alertmanager/rules/*
 
 scrape_configs:
+  - job_name: consul
+    consul_sd_configs:
+      {% for consul in prometheus_consul.servers %}
+      - server: {{ consul.server }}
+        datacenter: {{ consul.datacenter }}
+        scheme: https
+        tls_config:
+          ca_file: /etc/consul.d/ssl/ca.crt
+          cert_file: /etc/consul.d/ssl/{{ inventory_hostname }}.crt
+          key_file: /etc/consul.d/ssl/{{ inventory_hostname }}.pem
+      {% endfor %}
+    scheme: https
+      tls_config:
+        ca_file: /etc/prometheus/ssl/ca.crt
+        cert_file: /etc/prometheus/ssl/client.crt
+        key_file: /etc/prometheus/ssl/client.crt
+    tags:
+      - monitoring
+    relabel_configs:
+      - source_labels: [__meta_consul_service]
+        target_label: job
+      - source_labels: [__meta_consul_service]
+        target_label: __scheme__
+        replacement: https
+
   - job_name: blackbox_http
     metrics_path: /proxy
     params:

@@ -1,6 +1,7 @@
 ---
-prometheus_version: 2.28.0
+prometheus_version: 2.29.2
 prometheus_force_install: false
+prometheus_external_url: https://www.example.com
 prometheus_ssl_ca_local_path: /etc/ssl/ca.crt
 prometheus_ssl_client_cert_local_path: /etc/ssl/client.crt
 prometheus_ssl_client_key_local_path: /etc/ssl/client.pem
@@ -14,3 +15,7 @@ prometheus_targets: {}
 #   blackbox:
 #     - https://ipam.unicornafk.fr
 #     - https://git.unicornafk.fr
+# prometheus_consul:
+#   servers:
+#     - server: https://example.fr:8501
+#       datacenter: dc
