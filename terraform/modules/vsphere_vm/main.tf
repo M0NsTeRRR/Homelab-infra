@@ -27,6 +27,44 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
+resource "powerdns_record" "dns_A" {
+  zone    = "${var.domain}."
+  name    = "${var.vm_name}.${var.domain}."
+  type    = "A"
+  ttl     = 3600
+  records = [var.vm_ip]
+}
+
+resource "powerdns_record" "dns_AAAA" {
+  zone    = "${var.domain}."
+  name    = "${var.vm_name}.${var.domain}."
+  type    = "AAAA"
+  ttl     = 3600
+  records = [var.vm_ip6]
+}
+
+resource "powerdns_record" "dns_PTR_ipv4" {
+  zone    = "${var.reverse_zone}."
+  name    = "${join(".", reverse(split(".", var.vm_ip)))}.in-addr.arpa."
+  type    = "PTR"
+  ttl     = 3600
+  records = ["${var.vm_name}.${var.domain}."]
+}
+
+data "external" "reverse_ptr_ipv6" {
+  program = ["python3", "${path.module}/reverse_ptr_ipv6.py", var.vm_ip6]
+}
+
+resource "powerdns_record" "dns_PTR_ipv6" {
+  zone    = "${var.reverse_zone6}."
+  name    = data.external.reverse_ptr_ipv6.result.reversed
+  type    = "PTR"
+  ttl     = 3600
+  records = ["${var.vm_name}.${var.domain}."]
+
+  depends_on = [data.external.reverse_ptr_ipv6]
+}
+
 resource "vsphere_virtual_machine" "vm" {
   name             = var.vm_name
   datastore_id     = data.vsphere_datastore.datastore.id
@@ -93,44 +131,8 @@ resource "vsphere_virtual_machine" "vm" {
     working_dir = "${var.terraform_root_dir}/../ansible"
     command = "ANSIBLE_VAULT_PASS=${var.ansible_vault_pass} ansible-playbook -i ${var.vm_ip}, deploy_terraform.yml --extra-vars 'ansible_user=${var.vm_user} ansible_ssh_pass=${var.vm_password} inventory_hostname=${var.vm_name}.${var.domain}' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
   }
-}
 
-resource "powerdns_record" "dns_A" {
-  zone    = "${var.domain}."
-  name    = "${var.vm_name}.${var.domain}."
-  type    = "A"
-  ttl     = 3600
-  records = [var.vm_ip]
-}
-
-resource "powerdns_record" "dns_AAAA" {
-  zone    = "${var.domain}."
-  name    = "${var.vm_name}.${var.domain}."
-  type    = "AAAA"
-  ttl     = 3600
-  records = [var.vm_ip6]
-}
-
-resource "powerdns_record" "dns_PTR_ipv4" {
-  zone    = "${var.reverse_zone}."
-  name    = "${join(".", reverse(split(".", var.vm_ip)))}.in-addr.arpa."
-  type    = "PTR"
-  ttl     = 3600
-  records = ["${var.vm_name}.${var.domain}."]
-}
-
-data "external" "reverse_ptr_ipv6" {
-  program = ["python3", "${path.module}/reverse_ptr_ipv6.py", var.vm_ip6]
-}
-
-resource "powerdns_record" "dns_PTR_ipv6" {
-  zone    = "${var.reverse_zone6}."
-  name    = data.external.reverse_ptr_ipv6.result.reversed
-  type    = "PTR"
-  ttl     = 3600
-  records = ["${var.vm_name}.${var.domain}."]
-
-  depends_on = [data.external.reverse_ptr_ipv6]
+  depends_on = [powerdns_record.dns_A, powerdns_record.dns_AAAA, powerdns_record.dns_PTR_ipv4, powerdns_record.dns_PTR_ipv6]
 }
 
 data "external" "sshfp" {
