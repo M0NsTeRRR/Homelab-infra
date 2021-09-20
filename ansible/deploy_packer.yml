@@ -10,9 +10,7 @@
     rsyslog_local_path_ca_certificate: "{{ certs_dir }}rsyslog-server/client.crt"
     rsyslog_local_path_certificate: "{{ certs_dir }}rsyslog-client/client.crt"
     rsyslog_local_path_certificate_key: "{{ certs_dir }}rsyslog-client/client.pem"
-    systemd_timesyncd_ntp:
-      - ntp1.unicornafk.fr
-      - ntp2.unicornafk.fr
+    systemd_timesyncd_ntp: "{{ ntp_servers.hosts }}"
   roles:
     - modprobe
     - grub
