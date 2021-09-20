@@ -3,25 +3,44 @@
   hosts: all
   become: true
   vars:
-    certs_dir: "../ssl/"
-    exporter_exporter_nodes:
-      - name: node_exporter
-        port: 9100
+    certs_dir_playbook_path: "{{ playbook_dir }}/../ssl/"
     self_signed_certs:
       - common_name: "{{ inventory_hostname }}"
         country: "{{ country }}"
         organization: "{{ organization }}"
         admin_email: "{{ admin_email }}"
-        ca_cert_local_path: "{{ certs_dir }}ca.crt"
-        ca_private_local_path: "{{ certs_dir }}ca.pem"
+        ca_cert_local_path: "{{ certs_dir_playbook_path }}ca.crt"
+        ca_private_local_path: "{{ certs_dir_playbook_path }}ca.pem"
         cert_remote_folder:
           - { path: /etc/exporter_exporter/ssl, owner: exporter-exporter, group: exporter-exporter }
+          - { path: /etc/consul.d/ssl, owner: consul, group: consul }
         ownca_not_after: +90d
         upload_pem: true
         generate_pkcs12: false
+        subject_alt_name:
+          - "DNS:{% if consul_server %}server{% else %}client{% endif %}.{{ consul_datacenter }}.consul"
         systemd_services:
+          - consul
           - exporter-exporter
-        force_renew: false
+        force_renew: true
+    exporter_exporter_nodes:
+      - name: node_exporter
+        port: 9100
+    consul_ca_filename: "/etc/consul.d/ssl/ca.crt"
+    consul_cert_file_filename: "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+    consul_key_file_filename: "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+    consul_services:
+      - name: node-exporter
+        port: 9998
+        tags:
+          - monitoring
+          - prometheus
+        checks:
+          - args:
+              - curl
+              - http://localhost:9100
+            interval: 10s
   roles:
-    - exporter_exporter
     - self_signed_cert
+    - exporter_exporter
+    - consul

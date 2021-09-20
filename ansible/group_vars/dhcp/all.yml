@@ -35,6 +35,9 @@ kea_ipv4_subnets:
         end: 192.168.50.240
     router: 192.168.50.2
     reservations:
+      - hostname: grandstream1
+        hw_address: c0:74:ad:36:a5:bb
+        ip_address: 192.168.50.81
       - hostname: samsung-tv
         hw_address: 44:5c:e9:9d:8b:28
         ip_address: 192.168.50.91
@@ -64,7 +67,10 @@ kea_ipv4_subnets:
       - start: 192.168.60.201
         end: 192.168.60.240
     router: 192.168.60.2
-    reservations: []
+    reservations:
+      - hostname: serveur-thomas
+        hw_address: 1c:83:41:28:95:c4
+        ip_address: 192.168.60.201
 kea_ipv6_subnets:
   - subnet: 2a0c:b641:02c0:110::/64
     pools:
@@ -95,6 +101,9 @@ kea_ipv6_subnets:
       - start: 2a0c:b641:02c0:150::201
         end: 2a0c:b641:02c0:150::240
     reservations:
+      - hostname: grandstream1
+        hw_address: c0:74:ad:36:a5:bb
+        ip_address: 2a0c:b641:02c0:150::81
       - hostname: samsung-tv
         hw_address: 44:5c:e9:9d:8b:28
         ip_address: 2a0c:b641:02c0:150::91
@@ -123,17 +132,42 @@ kea_ipv6_subnets:
     pools:
       - start: 2a0c:b641:02c0:160::201
         end: 2a0c:b641:02c0:160::240
-    reservations: []
+    reservations:
+      - hostname: serveur-thomas
+        hw_address: 1c:83:41:28:95:c4
+        ip_address: 2a0c:b641:02c0:150::201
 kea_ipv4_ntp_servers: "{{ ntp_servers.ipv4 }}"
 kea_ipv6_ntp_servers: "{{ ntp_servers.ipv6 }}"
 kea_ipv4_unifi_controller: "{{ unifi_controller.ipv4 }}"
 kea_ipv6_unifi_controller: "{{ unifi_controller.ipv6 }}"
 
 exporter_exporter_nodes:
-  - name: kea_dhcp
+  - name: kea-dhcp-exporter
     port: 9546
-  - name: nginx
+  - name: nginx-exporter
     port: 9113
+
+consul_services:
+  - name: kea-dhcp-exporter
+    port: 9998
+    tags:
+      - monitoring
+      - prometheus
+    checks:
+      - args:
+          - curl
+          - http://127.0.0.1:9546/metrics
+        interval: 10s
+  - name: nginx-exporter
+    port: 9998
+    tags:
+      - monitoring
+      - prometheus
+    checks:
+      - args:
+          - curl
+          - http://127.0.0.1:9113/metrics
+        interval: 10s
 
 nginx_configuration:
   - server_name: "{{ inventory_hostname }}, {{ lookup('dig', inventory_hostname) }}, {{ lookup('dig', inventory_hostname, 'qtype=AAAA' ) }}"
@@ -149,8 +183,8 @@ self_signed_certs:
     country: "{{ country }}"
     organization: "{{ organization }}"
     admin_email: "{{ admin_email }}"
-    ca_cert_local_path: "{{ role_path }}/{{ certs_dir }}ca.crt"
-    ca_private_local_path: "{{ role_path }}/{{ certs_dir }}ca.pem"
+    ca_cert_local_path: "{{ certs_dir_role_path }}ca.crt"
+    ca_private_local_path: "{{ certs_dir_role_path }}ca.pem"
     cert_remote_folder:
       - { path: /etc/nginx/ssl, owner: root, group: root }
     ownca_not_after: +90d
@@ -159,3 +193,7 @@ self_signed_certs:
     restart_systemd_services:
       - nginx
     force_renew: false
+    tlsa:
+      - proto: tcp
+        port: 443
+        pdns_zone: "{{ inventory_hostname.split('.')[-2:] | join('.') }}"

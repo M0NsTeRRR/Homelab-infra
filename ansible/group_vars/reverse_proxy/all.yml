@@ -31,3 +31,30 @@ caddy_domains:
     backend_url: https://lg.as212510.unicornafk.fr
     proxy_headers:
       Host: lg.as212510.unicornafk.fr
+  - names:
+      - alissiacoaching.fr
+    backend_url: http://thomas.unicornafk.fr
+    proxy_headers:
+      Host: alissiacoaching.fr
+  - names:
+      - www.alissiacoaching.fr
+    backend_url: http://thomas.unicornafk.fr
+    proxy_headers:
+      Host: www.alissiacoaching.fr
+  - names:
+      - bdd.alissiacoaching.fr
+    backend_url: http://thomas.unicornafk.fr
+    proxy_headers:
+      Host: alissiacoaching.fr
+
+consul_services:
+  - name: caddy-exporter
+    port: 9982
+    tags:
+      - monitoring
+      - prometheus
+    checks:
+      - args:
+          - curl
+          - /metrics
+        interval: 10s

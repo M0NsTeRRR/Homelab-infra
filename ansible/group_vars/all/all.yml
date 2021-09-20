@@ -4,12 +4,16 @@ timezone: Europe/Paris
 organization: unicornafk
 as: 212510
 certs_dir: ../../../ssl/
+certs_dir_role_path: "{{ role_path }}/../../../ssl/"
 email: ludovic-ortega@adminafk.fr
 monitoring_email: monitoring@unicornafk.fr
 admin_email: admin@unicornafk.fr
 smtp_provider_host: mail.gandi.net
 smtp_provider_port: 587
 ntp_servers:
+  hosts:
+    - ntp1.unicornafk.fr
+    - ntp2.unicornafk.fr
   ipv4:
     - 192.168.10.23
     - 192.168.10.24
@@ -57,6 +61,11 @@ reverse_zones:
 unifi_controller:
   ipv4: 192.168.20.50
   ipv6: 2a0c:b641:02c0:120::50
+exporter_exporter_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
 exporter_exporter_local_path_client_certificate: "{{ certs_dir }}exporter/client.crt"
 exporter_exporter_certificate_name: "{{ inventory_hostname }}.crt"
 exporter_exporter_certificate_key_name: "{{ inventory_hostname }}.pem"
+consul_datacenter: "homelab"
+consul_server: "{{ 'consul' in group_names }}"
+consul_retry_join: "{{ groups['consul'] }}"
+consul_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
