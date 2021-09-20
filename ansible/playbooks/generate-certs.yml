@@ -4,6 +4,7 @@
   connection: local
   vars:
     certs_dir: "../../ssl/"
+    orgnization: 
   vars_prompt:
     - name: "certificate_folder_path"
       prompt: "Certificate folder path ? (eg. www/monsite.fr)"
@@ -28,7 +29,7 @@
         country_name: "{{ country }}"
         organization_name: "{{ organization }}"
         email_address: "{{ admin_email }}"
-        common_name: "{{ common_name }}"
+        common_name: "{{ organization }}"
         basic_constraints:
           - CA:TRUE
           - pathlen:1
