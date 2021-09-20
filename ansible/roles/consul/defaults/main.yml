@@ -11,3 +11,14 @@ consul_retry_join:
   - 192.168.0.1
   - 192.168.0.2
 consul_server: false
+consul_services: {}
+
+# consul_services:
+#   - name: service
+#     port: 9000
+#     tags:
+#       - redis
+#     checks:
+#       - args:
+#         - /usr/local/bin/check_redis.py
+#         interval: 10s

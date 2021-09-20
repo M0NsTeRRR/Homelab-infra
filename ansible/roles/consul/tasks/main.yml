@@ -81,6 +81,15 @@
     group: consul
   notify: restart consul.service
 
+- name: Configure consul services
+  ansible.builtin.template:
+    src: service.hcl.j2
+    dest: "/etc/consul.d/{{ item.name }}.service.hcl"
+    owner: consul
+    group: consul
+  with_items: "{{ consul_services }}"
+  notify: restart consul.service
+
 - name: Create systemd service file
   ansible.builtin.template:
     src: consul.service.j2
