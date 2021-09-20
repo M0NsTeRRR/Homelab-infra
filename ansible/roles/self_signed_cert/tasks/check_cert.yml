@@ -35,6 +35,12 @@
   ansible.builtin.set_fact:
     self_signed_pkcs12_missing: "{{ self_signed_pkcs12_stat.results | selectattr('stat.exists','equalto', False) | list | count > 0 }}"
 
+- name: Install pexpect python package
+  ansible.builtin.pip:
+    name: cryptography
+    state: present
+  when: not self_signed_cert_missing
+
 - name: Get information on certificate
   community.crypto.x509_certificate_info:
     path: "{{ cert.stat.path }}"
@@ -42,6 +48,12 @@
   loop_control:
     loop_var: cert
   register: self_signed_cert_info
+  when: not self_signed_cert_missing
+
+- name: Uninstall pexpect python package
+  ansible.builtin.pip:
+    name: cryptography
+    state: absent
   when: not self_signed_cert_missing
 
 - name: Check if a cert is expired

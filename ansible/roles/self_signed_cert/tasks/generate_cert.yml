@@ -25,7 +25,7 @@
     organization_name: "{{ item.organization }}"
     email_address: "{{ item.admin_email }}"
     common_name: "{{ item.common_name }}"
-    subject_alt_name: "DNS:{{ item.common_name }},IP:{{ lookup('community.general.dig', item.common_name) }},IP:{{ lookup('community.general.dig', item.common_name, 'qtype=AAAA') }}{{ subject_alt_name }}"
+    subject_alt_name: "DNS:{{ item.common_name }},IP:{{ lookup('community.general.dig', item.common_name) }},IP:{{ lookup('community.general.dig', item.common_name, 'qtype=AAAA') }},{{ subject_alt_name }}"
   delegate_to: localhost
   become: false
   when: item.force_renew or
