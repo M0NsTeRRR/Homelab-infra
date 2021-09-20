@@ -1,6 +1,6 @@
 {% for domain in item.names %}{{ domain }}{% if not loop.last %}, {% endif %}{% endfor %} {
     reverse_proxy {{ item.backend_url }} {
-      {% if field.startswith('https') %}
+      {% if item.backend_url.startswith('https') %}
           transport http {
             tls
           }
