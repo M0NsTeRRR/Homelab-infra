@@ -15,7 +15,7 @@
 
 - name: Add golift Apt signing key
   ansible.builtin.apt_key:
-    id: C22AE0CFDE7064F2
+    id: 552A075A7B63AC7A6116E93708653AE3B7E40B70
     url: https://packagecloud.io/golift/pkgs/gpgkey
     state: present
   retries: 3
@@ -25,7 +25,7 @@
   ansible.builtin.apt_repository:
     repo: "deb https://packagecloud.io/golift/pkgs/ubuntu focal main"
     state: present
-    filename: golift.list
+    filename: golift
 
 - name: Install unifi-poller
   ansible.builtin.apt:
