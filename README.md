@@ -50,7 +50,7 @@ To delete the rules `netsh interface portproxy del v4tov4 listenaddress=<IP> lis
 Supported distributions :
 
 **VM**
-- Debian (10.9.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-10.9.0-amd64-netinst.iso)
+- Debian (11.0.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.0.0-amd64-netinst.iso)
 - Ubuntu (20.04.2) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.2/release/ubuntu-20.04.2-legacy-server-amd64.iso)
 
 **Raspberry Pi (v3/v4)**
