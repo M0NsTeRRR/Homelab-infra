@@ -4,9 +4,8 @@ After=network-online.target
 
 [Service]
 Type=simple
-WorkingDirectory=/etc/node-exporter
 ExecStart=/usr/local/bin/node-exporter \
-    --web.listen-address="127.0.0.1:9100"
+    --web.listen-address="localhost:9100"
 RestartSec=10
 Restart=always
 
