@@ -6,14 +6,15 @@ This is my Homelab infrastructure.
 
 # Requirements
 
-- Ansible (version >= 2.11)
-	- Python3 and Pip
+- Ansible (version >= 5.0.0)
+  - Python3 and Pip
 - Packer (version >= 1.7)
-    - Packer builder arm
-- Terraform (version >= 1.0)
-	- Terragrunt (version >= 0.35)
+  - Packer builder arm
+- Terraform (version >= 1.1)
+  - Terragrunt (version >= 0.35)
 
 # Ansible
+
 `cd ansible`  
 
 Fill certs folders
@@ -27,12 +28,15 @@ fill all `secrets.yml` based on `secrets.example` in each subdirectory of `group
 #### Set environment variable `ANSIBLE_VAULT_PASS` like `export ANSIBLE_VAULT_PASS='password'`
 
 ### Playbooks to add fingerprint on know_hosts
+
 `ansible-playbook -i hosts playbooks/add-ssh-keys.yml`
 
 ### Playbooks to create client certificate signed by a CA
+
 `ansible-playbook -i hosts playbooks/generate-certs.yml`
 
 ### Playbooks to deploy a zone
+
 `ansible-playbook -i hosts deploy_<zone>.yml`  
 Replace `<zone>` by the appropriate zone name
 
@@ -50,16 +54,20 @@ To delete the rules `netsh interface portproxy del v4tov4 listenaddress=<IP> lis
 Supported distributions :
 
 **VM**
-- Debian (11.0.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.0.0-amd64-netinst.iso)
-- Ubuntu (20.04.2) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.2/release/ubuntu-20.04.2-legacy-server-amd64.iso)
+
+- Debian (11.1.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.1.0-amd64-netinst.iso)
+- Ubuntu (20.04.3) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.3/release/ubuntu-20.04.3-legacy-server-amd64.iso)
 
 **Raspberry Pi (v3/v4)**
-- Ubuntu (20.04.2) - [iso](https://cdimage.ubuntu.com/releases/20.04.2/release/ubuntu-20.04.2-preinstalled-server-arm64+raspi.img.xz)
+
+- Ubuntu (20.04.2) - [iso](https://cdimage.ubuntu.com/releases/20.04.3/release/ubuntu-20.04.3-preinstalled-server-arm64+raspi.img.xz)
 
 ### Create template
+
 `./build.sh` (sudo permission required for Raspberry Pi choice only)
 
 # Terraform
+
 `cd terraform`  
 
 Install dependencies `pip3 install paramiko`
@@ -69,9 +77,11 @@ fill `account.hcl` based on `account.example`
 **Command must be run in one of this directories (dmz/lab/vpn)**
 
 ### Create an execution plan
+
 `terragrunt run-all plan`
 
 ### Deploy/update infrastructure
+
 `terragrunt run-all apply`
 
 # Licence
