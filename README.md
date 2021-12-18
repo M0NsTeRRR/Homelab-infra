@@ -11,7 +11,7 @@ This is my Homelab infrastructure.
 - Packer (version >= 1.7)
     - Packer builder arm
 - Terraform (version >= 1.0)
-	- Terragrunt (version >= 0.30)
+	- Terragrunt (version >= 0.35)
 
 # Ansible
 `cd ansible`  

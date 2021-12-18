@@ -13,6 +13,12 @@ powerdns_authoritative_records:
   - caa: "letsencrypt.org"
   - caa: "sectigo.com"
   # unicornafk.fr
+  # cloud
+  - hostname: mutu1.unicornafk.fr.
+    a: 116.203.39.236
+    aaaa: 2a01:4f8:c0c:e770::
+    rdns: true
+  # lan
   - hostname: rr1.unicornafk.fr.
     a: 192.168.5.13
     aaaa: 2a0c:b641:02c0:105::d
