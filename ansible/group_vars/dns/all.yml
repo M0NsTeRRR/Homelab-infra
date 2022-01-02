@@ -16,7 +16,7 @@ powerdns_authoritative_records:
   # cloud
   - hostname: mutu1.unicornafk.fr.
     a: 116.203.39.236
-    aaaa: 2a01:4f8:c0c:e770::
+    aaaa: "2a01:4f8:c0c:e770::"
     rdns: true
   # lan
   - hostname: rr1.unicornafk.fr.
