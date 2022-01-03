@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Ludovic Ortega
-  description: Install and configure RIPE NCC rpki_rtr_server
+  description: Install and configure routinator
   company: Ludovic Ortega
   license: CeCILL
   min_ansible_version: 2.11

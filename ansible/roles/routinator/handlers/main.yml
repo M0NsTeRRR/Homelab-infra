@@ -1,0 +1,14 @@
+---
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: enable routinator
+  ansible.builtin.systemd:
+    name: routinator
+    enabled: yes
+
+- name: restart routinator
+  ansible.builtin.systemd:
+    name: routinator
+    state: restarted

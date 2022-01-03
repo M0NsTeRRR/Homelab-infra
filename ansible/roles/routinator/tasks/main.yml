@@ -1,0 +1,74 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "3323"
+    proto: tcp
+
+- name: Add routinator group
+  ansible.builtin.group:
+    name: routinator
+    system: yes
+    state: present
+
+- name: Add routinator user
+  ansible.builtin.user:
+    name: routinator
+    system: yes
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: routinator
+
+- name: Add routinator Apt signing key
+  ansible.builtin.apt_key:
+    id: "{{ routinator_repository_key }}"
+    url: https://packages.nlnetlabs.nl/aptkey.asc
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add routinator Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://packages.nlnetlabs.nl/linux/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
+    state: present
+    filename: routinator
+
+- name: Install routinator
+  ansible.builtin.apt:
+    name: "routinator{% if routinator_version is defined %}={{ routinator_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ routinator_package_state }}"
+  notify:
+    - enable routinator
+    - restart routinator
+
+- name: Configure routinator
+  ansible.builtin.template:
+    src: routinator.conf.j2
+    dest: /etc/routinator/routinator.conf
+    owner: routinator
+    group: routinator
+    mode: 0644
+  notify: restart routinator
+
+- name: Check if routinator has been initialized
+  ansible.builtin.stat:
+    path: /var/lib/routinator/tals
+  register: check_routinator_init
+
+- name: Init routinator
+  ansible.builtin.command: routinator --config /etc/routinator/routinator.conf init --rir-tals --accept-arin-rpa
+  when: not check_routinator_init.stat.exists
+  notify: restart routinator
+
+- name: Fix perms on routinator configuration
+  ansible.builtin.file:
+    name: "{{ item }}"
+    owner: routinator
+    group: routinator
+    state: directory
+    recurse: yes
+  with_items:
+    - /var/lib/routinator
+    - /etc/routinator
+  notify: restart routinator
