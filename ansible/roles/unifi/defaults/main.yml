@@ -2,6 +2,3 @@
 # unifi_version:
 unifi_package_state: latest
 unifi_repository_key: 06E85760C0A52C50
-unifi_mongodb_repo_version: 3.6
-# unifi_mongodb_version:
-unifi_mongodb_force_install: latest

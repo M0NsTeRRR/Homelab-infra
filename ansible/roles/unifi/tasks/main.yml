@@ -26,49 +26,11 @@
     name: gnupg-agent
     state: present
 
-- name: Install pip3
-  ansible.builtin.apt:
-    name: python3-pip
-    state: present
-
-- name: Install pyOpenSSL
-  ansible.builtin.pip:
-    name: pyOpenSSL
-
-- name: Add MongoDB Apt signing key
-  ansible.builtin.apt_key:
-    id: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
-    url: https://www.mongodb.org/static/pgp/server-3.6.asc
-    state: present
-  retries: 3
-  delay: 3
-
-- name: Add MongoDB Apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] http://repo.mongodb.org/apt/{{ ansible_distribution|lower }} xenial/mongodb-org/{{ unifi_mongodb_repo_version }} multiverse"
-    state: present
-    filename: mongodb-org
-
-- name: Install libssl1.0.0
-  ansible.builtin.apt:
-    deb: http://security.ubuntu.com/ubuntu/pool/main/o/openssl1.0/libssl1.0.0_1.0.2n-1ubuntu5.6_amd64.deb
-
 - name: Install openjdk-8-jre
   ansible.builtin.apt:
     name: openjdk-8-jre-headless
     update_cache: yes
     state: present
-
-- name: Install mongodb-org
-  ansible.builtin.apt:
-    pkg:
-      - "mongodb-org{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
-      - "mongodb-org-server{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
-      - "mongodb-org-shell{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
-      - "mongodb-org-mongos{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
-      - "mongodb-org-tools{% if unifi_mongodb_version is defined %}={{ unifi_mongodb_version }}{% endif %}"
-    update_cache: yes
-    state: "{{ unifi_mongodb_force_install }}"
 
 - name: Add Unifi Apt signing key
   ansible.builtin.apt_key:
@@ -89,7 +51,6 @@
     name: "unifi{% if unifi_version is defined %}={{ unifi_version }}{% endif %}"
     update_cache: yes
     state: "{{ unifi_package_state }}"
-  notify: enable unifi
 
 - name: Configure Unifi
   ansible.builtin.lineinfile:
