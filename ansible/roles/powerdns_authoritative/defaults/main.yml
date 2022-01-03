@@ -1,5 +1,5 @@
 ---
-powerdns_authoritative_repo_version: 45
+powerdns_authoritative_repo_version: 46
 # powerdns_authoritative_version:
 powerdns_authoritative_repository_key: FD380FBB
 powerdns_authoritative_package_state: latest

@@ -1,5 +1,5 @@
 ---
-powerdns_recursor_repo_version: 45
+powerdns_recursor_repo_version: 46
 # powerdns_recursor_version:
 powerdns_recursor_repository_key: FD380FBB
 powerdns_recursor_package_state: latest

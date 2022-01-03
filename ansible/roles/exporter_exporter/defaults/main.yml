@@ -1,5 +1,5 @@
 ---
-exporter_exporter_version: 0.4.2
+exporter_exporter_version: 0.4.5
 exporter_exporter_force_install: false
 exporter_exporter_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
 exporter_exporter_certificate_name: "cert.crt"
