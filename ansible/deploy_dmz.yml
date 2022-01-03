@@ -1,4 +1,10 @@
 ---
+- name: All
+  hosts: all
+  become: yes
+  roles:
+    - consul
+
 - name: Configure DNS servers
   hosts: dns
   become: yes
@@ -114,11 +120,7 @@
   hosts: rpki
   become: yes
   roles:
-    - self_signed_cert
-    - nginx
-    - rpki_validator_3
-    - rpki_rtr_server
-    - nginx_exporter
+    - routinator
     - exporter_exporter
 
 - name: Configure kubernetes loadbalancers

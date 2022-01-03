@@ -26,9 +26,6 @@
     exporter_exporter_nodes:
       - name: node-exporter
         port: 9100
-    consul_ca_filename: "/etc/consul.d/ssl/ca.crt"
-    consul_cert_file_filename: "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
-    consul_key_file_filename: "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
     consul_services:
       - name: node-exporter
         port: 9998

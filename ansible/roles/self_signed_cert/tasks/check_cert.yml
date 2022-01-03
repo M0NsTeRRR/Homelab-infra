@@ -35,7 +35,7 @@
   ansible.builtin.set_fact:
     self_signed_pkcs12_missing: "{{ self_signed_pkcs12_stat.results | selectattr('stat.exists','equalto', False) | list | count > 0 }}"
 
-- name: Install pexpect python package
+- name: Install cryptography python package
   ansible.builtin.pip:
     name: cryptography
     state: present
@@ -50,7 +50,7 @@
   register: self_signed_cert_info
   when: not self_signed_cert_missing
 
-- name: Uninstall pexpect python package
+- name: Uninstall cryptography python package
   ansible.builtin.pip:
     name: cryptography
     state: absent

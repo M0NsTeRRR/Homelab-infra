@@ -6,7 +6,11 @@ service {
         {% for tag in item.tags %}
         "{{ tag }}"{% if not loop.last %}, {% endif %}{% endfor %}
     ]
-    meta {{ item.meta | to_json }}
+    meta {
+        {% for key, value in item.meta.items() %}
+        {{ key }} = "{{ value }}"
+        {% endfor %}
+    }
 
     {% if 'checks' in item %}{% for check in item.checks %}check {
         args = [
