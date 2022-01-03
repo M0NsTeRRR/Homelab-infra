@@ -48,13 +48,21 @@ caddy_domains:
       Host: alissiacoaching.fr
 
 consul_services:
-  - name: caddy-exporter
+  - name: caddy
     port: 9982
     tags:
       - monitoring
       - prometheus
+    meta:
+      prometheus_metrics_path: /metrics
     checks:
       - args:
-          - curl
-          - /metrics
+          - "curl"
+          - "--cacert"
+          - "/etc/consul.d/ssl/ca.crt"
+          - "--key"
+          - "/etc/ssl/certs/caddy_exporter.pem"
+          - "--cert"
+          - "/etc/ssl/certs/caddy_exporter.crt"
+          - "https://{{ inventory_hostname }}:9982/metrics"
         interval: 10s

@@ -18,6 +18,8 @@ consul_services: {}
 #     port: 9000
 #     tags:
 #       - redis
+#     meta:
+#       prometheus_param_module: node-exporter
 #     checks:
 #       - args:
 #         - /usr/local/bin/check_redis.py

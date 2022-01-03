@@ -115,3 +115,23 @@
     owner: prometheus
     group: prometheus
   notify: restart prometheus.service
+
+- name: Copy consul.crt to prometheus
+  ansible.builtin.copy:
+    src: "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+    dest: /etc/prometheus/ssl/consul.crt
+    owner: prometheus
+    group: prometheus
+    mode: 0740
+    remote_src: yes
+  notify: restart prometheus.service
+
+- name: Copy consul.pem to prometheus
+  ansible.builtin.copy:
+    src: "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+    dest: /etc/prometheus/ssl/consul.pem
+    owner: prometheus
+    group: prometheus
+    mode: 0700
+    remote_src: yes
+  notify: restart prometheus.service

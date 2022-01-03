@@ -81,81 +81,18 @@ prometheus_targets:
     - 192.168.40.4
   snmp_qnap_exporter:
     - 192.168.50.42
-  node_exporter:
-    - rpki1.unicornafk.fr:9998
-    - rpki2.unicornafk.fr:9998
-    - rr1.unicornafk.fr:9998
-    - rr2.unicornafk.fr:9998
-    - pi1.unicornafk.fr:9998
-    - blog.unicornafk.fr:9998
-    - dhcp1.unicornafk.fr:9998
-    - dhcp2.unicornafk.fr:9998
-    - dns1.unicornafk.fr:9998
-    - dns2.unicornafk.fr:9998
-    - git.unicornafk.fr:9998
-    - ipam.unicornafk.fr:9998
-    - log.unicornafk.fr:9998
-    - monitoring.unicornafk.fr:9998
-    - reverse-proxy.unicornafk.fr:9998
-    - website.unicornafk.fr:9998
-    - unifi.unicornafk.fr:9998
-    - vpn.unicornafk.fr:9998
-    - wiki.unicornafk.fr:9998
-    - lb1.dmz.unicornafk.fr:9998
-    - lb2.dmz.unicornafk.fr:9998
-    - lb3.dmz.unicornafk.fr:9998
-    - etcd1.dmz.unicornafk.fr:9998
-    - etcd2.dmz.unicornafk.fr:9998
-    - etcd3.dmz.unicornafk.fr:9998
-    - master1.dmz.unicornafk.fr:9998
-    - master2.dmz.unicornafk.fr:9998
-    - master3.dmz.unicornafk.fr:9998
-    - worker1.dmz.unicornafk.fr:9998
-    - worker2.dmz.unicornafk.fr:9998
-    - worker3.dmz.unicornafk.fr:9998
-  nginx_exporter:
-    - dns1.unicornafk.fr:9998
-    - dns2.unicornafk.fr:9998
-    - dhcp1.unicornafk.fr:9998
-    - dhcp2.unicornafk.fr:9998
-    - ipam.unicornafk.fr:9998
-    - blog.unicornafk.fr:9998
-    - log.unicornafk.fr:9998
-    - monitoring.unicornafk.fr:9998
-    - website.unicornafk.fr:9998
-    - rpki1.unicornafk.fr:9998
-    - rpki2.unicornafk.fr:9998
-  wireguard_exporter:
-    - vpn.unicornafk.fr:9998
-  kea_dhcp_exporter:
-    - dhcp1.unicornafk.fr:9998
-    - dhcp2.unicornafk.fr:9998
-  powerdns_authoritative_exporter:
-    - dns1.unicornafk.fr:9998
-    - dns2.unicornafk.fr:9998
-  powerdns_recursor_exporter:
-    - dns1.unicornafk.fr:9998
-    - dns2.unicornafk.fr:9998
-  caddy_exporter:
-    - reverse-proxy.unicornafk.fr:9982
   tplink_plug_exporter:
     - hs110-rack1.unicornafk.fr
     - hs110-rack2.unicornafk.fr
     - hs110-chambre1.unicornafk.fr
-  rpki_validator_3_exporter:
-    - rpki1.unicornafk.fr:9998
-    - rpki2.unicornafk.fr:9998
-  rpki_rtr_server_exporter:
-    - rpki1.unicornafk.fr:9998
-    - rpki2.unicornafk.fr:9998
 
 prometheus_consul:
   servers:
-    - server: https://consul1.unicornafk.fr:8501
+    - server: consul1.unicornafk.fr:8501
       datacenter: homelab
-    - server: https://consul2.unicornafk.fr:8501
+    - server: consul2.unicornafk.fr:8501
       datacenter: homelab
-    - server: https://consul3.unicornafk.fr:8501
+    - server: consul3.unicornafk.fr:8501
       datacenter: homelab
 
 nginx_configuration:
@@ -193,65 +130,24 @@ exporter_exporter_nodes:
     port: 9113
 
 consul_services:
-  - name: blackbox-exporter
-    port: 9998
-    tags:
-      - monitoring
-      - prometheus
-    checks:
-      - args:
-          - curl
-          - http://127.0.0.1:9115
-        interval: 10s
-  - name: snmp-exporter
-    port: 9998
-    tags:
-      - monitoring
-      - prometheus
-    checks:
-      - args:
-          - curl
-          - http://127.0.0.1:9116
-        interval: 10s
-  - name: tplink-plug-exporter
-    port: 9998
-    tags:
-      - monitoring
-      - prometheus
-    checks:
-      - args:
-          - curl
-          - http://127.0.0.1:9233/scrape?target=127.0.0.1
-        interval: 10s
-  - name: vmware-exporter
-    port: 9998
-    tags:
-      - monitoring
-      - prometheus
-    checks:
-      - args:
-          - curl
-          - http://127.0.0.1:9272
-        interval: 10s
-  - name: ipmi-exporter
-    port: 9998
-    tags:
-      - monitoring
-      - prometheus
-    checks:
-      - args:
-          - curl
-          - http://127.0.0.1:9290
-        interval: 10s
   - name: nginx-exporter
     port: 9998
     tags:
       - monitoring
       - prometheus
+    meta:
+      prometheus_metrics_path: /proxy
+      prometheus_param_module: nginx-exporter
     checks:
       - args:
-          - curl
-          - http://127.0.0.1:9113
+          - "curl"
+          - "--cacert"
+          - "/etc/consul.d/ssl/ca.crt"
+          - "--key"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+          - "--cert"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+          - "https://{{ inventory_hostname }}:9998/proxy?module=nginx-exporter"
         interval: 10s
 
 self_signed_certs:

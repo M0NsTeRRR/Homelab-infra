@@ -43,10 +43,19 @@ consul_services:
     tags:
       - monitoring
       - prometheus
+    meta:
+      prometheus_metrics_path: /proxy
+      prometheus_param_module: nginx-exporter
     checks:
       - args:
-          - curl
-          - http://127.0.0.1:9113
+          - "curl"
+          - "--cacert"
+          - "/etc/consul.d/ssl/ca.crt"
+          - "--key"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+          - "--cert"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+          - "https://{{ inventory_hostname }}:9998/proxy?module=nginx-exporter"
         interval: 10s
 
 self_signed_certs:

@@ -12,30 +12,57 @@ consul_services:
     tags:
       - monitoring
       - prometheus
+    meta:
+      prometheus_metrics_path: /proxy
+      prometheus_param_module: rpki-rtr-server-exporter
     checks:
       - args:
-          - curl
-          - http://127.0.0.1:8081
+          - "curl"
+          - "--cacert"
+          - "/etc/consul.d/ssl/ca.crt"
+          - "--key"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+          - "--cert"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+          - "https://{{ inventory_hostname }}:9998/proxy?module=rpki-rtr-server-exporter"
         interval: 10s
   - name: rpki-validator-3-exporter
     port: 9998
     tags:
       - monitoring
       - prometheus
+    meta:
+      prometheus_metrics_path: /proxy
+      prometheus_param_module: rpki-validator-3-exporter
     checks:
       - args:
-          - curl
-          - http://127.0.0.1:8080
+          - "curl"
+          - "--cacert"
+          - "/etc/consul.d/ssl/ca.crt"
+          - "--key"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+          - "--cert"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+          - "https://{{ inventory_hostname }}:9998/proxy?module=rpki-validator-3-exporter"
         interval: 10s
   - name: nginx-exporter
     port: 9998
     tags:
       - monitoring
       - prometheus
+    meta:
+      prometheus_metrics_path: /proxy
+      prometheus_param_module: nginx-exporter
     checks:
       - args:
-          - curl
-          - http://127.0.0.1:9113
+          - "curl"
+          - "--cacert"
+          - "/etc/consul.d/ssl/ca.crt"
+          - "--key"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+          - "--cert"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+          - "https://{{ inventory_hostname }}:9998/proxy?module=nginx-exporter"
         interval: 10s
 
 nginx_configuration:

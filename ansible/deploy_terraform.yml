@@ -24,7 +24,7 @@
           - exporter-exporter
         force_renew: true
     exporter_exporter_nodes:
-      - name: node_exporter
+      - name: node-exporter
         port: 9100
     consul_ca_filename: "/etc/consul.d/ssl/ca.crt"
     consul_cert_file_filename: "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
@@ -35,11 +35,20 @@
         tags:
           - monitoring
           - prometheus
-        checks:
-          - args:
-              - curl
-              - http://localhost:9100
-            interval: 10s
+        meta:
+          prometheus_metrics_path: /proxy
+          prometheus_param_module: node-exporter
+    checks:
+      - args:
+          - "curl"
+          - "--cacert"
+          - "/etc/consul.d/ssl/ca.crt"
+          - "--key"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+          - "--cert"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+          - "https://{{ inventory_hostname }}:9998/proxy?module=node-exporter"
+        interval: 10s
   roles:
     - self_signed_cert
     - exporter_exporter
