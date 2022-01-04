@@ -50,7 +50,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "useradd -m -p $(openssl passwd -crypt ${var.password}) ${var.username}",
+      "useradd -m -p $(openssl passwd -6 ${var.password}) -s /bin/bash ${var.username}",
       "usermod -aG sudo ${var.username}",
       "touch /boot/ssh"
     ]
