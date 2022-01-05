@@ -4,10 +4,10 @@
     name: golang
     state: present
 
-- name: Create wireguard-exporter folder
+- name: Create wireguard_exporter folder
   ansible.builtin.file:
     state: directory
-    name: /opt/exporter/wireguard/build
+    name: /opt/wireguard_exporter
 
 - name: Check if wireguard-exporter is already installed
   ansible.builtin.stat:
@@ -23,7 +23,7 @@
 - name: Extract wireguard-exporter files
   ansible.builtin.unarchive:
     src: /tmp/wireguard-exporter.tar.gz
-    dest: /opt/exporter/wireguard/build
+    dest: /opt/wireguard_exporter/wireguard/build
     remote_src: yes
     list_files: yes
     extra_opts: ['--strip-components=1']
@@ -32,12 +32,12 @@
 - name: Compile sources
   ansible.builtin.shell: /usr/bin/go build -o /opt/exporter/wireguard/build/cmd/wireguard_exporter
   args:
-    chdir: /opt/exporter/wireguard/build/cmd/wireguard_exporter
+    chdir: /opt/wireguard_exporter/wireguard/build/cmd/wireguard_exporter
   when: not wireguard_exporter.stat.exists or wireguard_exporter_force_install
 
 - name: Copy wireguard-exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: /opt/exporter/wireguard/build/cmd/wireguard_exporter/wireguard_exporter
+    src: /opt/wireguard_exporter/wireguard/build/cmd/wireguard_exporter/wireguard_exporter
     dest: /usr/local/bin/wireguard_exporter
     mode: 0700
     remote_src: yes

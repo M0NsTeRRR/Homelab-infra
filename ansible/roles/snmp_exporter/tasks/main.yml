@@ -1,8 +1,8 @@
 ---
-- name: Create snmp-exporter folder
+- name: Create snmp_exporter folder
   ansible.builtin.file:
     state: directory
-    name: /opt/exporter/snmp-exporter
+    name: /opt/snmp_exporter
 
 - name: Check if snmp-exporter is already installed
   ansible.builtin.stat:
@@ -18,14 +18,14 @@
 - name: Extract binary of snmp-exporter
   ansible.builtin.unarchive:
     src: /tmp/snmp-exporter.tar.gz
-    dest: /opt/exporter/snmp-exporter
+    dest: /opt/snmp_exporter
     remote_src: yes
     extra_opts: [--strip-components=1]
   when: not snmp_exporter.stat.exists or snmp_exporter_force_install
 
 - name: Copy snmp-exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: /opt/exporter/snmp-exporter/snmp_exporter
+    src: /opt/snmp_exporter/snmp_exporter
     dest: /usr/local/bin/snmp-exporter
     owner: prometheus
     group: prometheus

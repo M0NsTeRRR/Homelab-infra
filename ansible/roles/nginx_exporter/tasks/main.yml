@@ -13,14 +13,14 @@
     shell: /usr/sbin/nologin
     group: nginx_exporter
 
-- name: Create nginx-exporter folder
+- name: "Create {{ item }} folder"
   ansible.builtin.file:
     name: "{{ item }}"
     state: directory
     owner: nginx_exporter
     group: nginx_exporter
   with_items:
-    - /opt/exporter/nginx-exporter
+    - /opt/nginx_exporter
     - /etc/nginx-exporter
 
 - name: Check if nginx-exporter is already installed
@@ -37,7 +37,7 @@
 - name: Extract nginx-prometheus-exporter binary
   ansible.builtin.unarchive:
     src: /tmp/nginx-prometheus-exporter.tar.gz
-    dest: /tmp
+    dest: /opt/nginx_exporter
     remote_src: yes
     list_files: yes
   register: archive_contents
@@ -45,7 +45,7 @@
 
 - name: Copy nginx-exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: /opt/exporter/nginx-exporter/exporter
+    src: /opt/nginx_exporter/exporter
     dest: /usr/local/bin/nginx-exporter
     owner: nginx_exporter
     group: nginx_exporter

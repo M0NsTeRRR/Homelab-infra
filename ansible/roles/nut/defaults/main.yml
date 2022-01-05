@@ -1,0 +1,15 @@
+---
+# nut_version:
+nut_package_state: latest
+nut_ups: []
+
+# nut_ups:
+#   - name: eaton
+#     driver: usbhid-ups
+#     port: auto
+#     desc: "my description"
+# nut_users:
+#   - name: admin
+#     password: mypass
+#     actions: SET
+#     instcmds: ALL

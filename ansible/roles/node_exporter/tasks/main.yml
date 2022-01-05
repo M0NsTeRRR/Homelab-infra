@@ -1,8 +1,8 @@
 ---
-- name: Create node-exporter folder
+- name: Create node_exporter folder
   ansible.builtin.file:
     state: directory
-    name: /opt/exporter/node-exporter
+    name: /opt/node_exporter
 
 - name: Check if node-exporter is already installed
   ansible.builtin.stat:
@@ -18,7 +18,7 @@
 - name: Extract latest binary of node-exporter
   ansible.builtin.unarchive:
     src: /tmp/node-exporter.tar.gz
-    dest: /opt/exporter/node-exporter
+    dest: /opt/node_exporter
     remote_src: yes
     list_files: yes
   register: archive_contents
@@ -26,7 +26,7 @@
 
 - name: Copy node-exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: "/opt/exporter/node-exporter/{{ archive_contents.files[0] }}node_exporter"
+    src: "/opt/node_exporter/{{ archive_contents.files[0] }}node_exporter"
     dest: /usr/local/bin/node-exporter
     mode: 0700
     remote_src: yes

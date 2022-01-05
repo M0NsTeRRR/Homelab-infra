@@ -1,4 +1,9 @@
 ---
+- name: Create blackbox_exporter folder
+  ansible.builtin.file:
+    state: directory
+    name: /opt/blackbox_exporter
+
 - name: Check if blackbox-exporter is already installed
   ansible.builtin.stat:
     path: /usr/local/bin/blackbox_exporter
@@ -13,7 +18,7 @@
 - name: Extract blackbox-exporter binary
   ansible.builtin.unarchive:
     src: /tmp/blackbox-exporter.tar.gz
-    dest: /tmp
+    dest: /opt/blackbox_exporter
     remote_src: yes
     list_files: yes
   register: archive_contents
@@ -21,7 +26,7 @@
 
 - name: Copy blackbox-exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: /tmp/{{ archive_contents.files[0] }}blackbox_exporter
+    src: /opt/blackbox_exporter/{{ archive_contents.files[0] }}blackbox_exporter
     dest: /usr/local/bin/blackbox_exporter
     owner: prometheus
     group: prometheus

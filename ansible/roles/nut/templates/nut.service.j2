@@ -1,0 +1,16 @@
+[Unit]
+Description=Network UPS Tools - power devices information server
+After=network-online.target
+
+[Service]
+Type=forking
+PIDFile=/run/nut/upsd.pid
+WorkingDirectory=/etc/nut
+User=nut
+Group=nut
+ExecStart=/sbin/upsd
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

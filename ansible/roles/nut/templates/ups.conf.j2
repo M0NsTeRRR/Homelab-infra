@@ -1,0 +1,6 @@
+{% for ups in nut_ups %}
+[{{ ups.name }}]
+    driver = {{ ups.driver }}
+    port = {% if "port" in ups %}{{ ups.port }}{% else %}auto{% endif %}
+    desc = {% if "desc" in ups %}"{{ ups.desc }}"{% else %}""{% endif %}
+{% endfor %}

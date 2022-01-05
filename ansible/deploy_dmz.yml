@@ -9,24 +9,31 @@
   hosts: dns
   become: yes
   roles:
-    - self_signed_cert
     - nginx
     - powerdns_recursor
     - powerdns_authoritative
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure DHCP servers
   hosts: dhcp
   become: yes
   roles:
-    - self_signed_cert
     - ntp
     - nginx
     - kea_dhcp
     - kea_exporter
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
+
+- name: Configure UPS
+  hosts: ups
+  become: yes
+  roles:
+    - nut
+    - nut_exporter
 
 - name: Configure Git
   hosts: git
@@ -38,52 +45,51 @@
   hosts: ipam
   become: yes
   roles:
-    - self_signed_cert
     - nginx
     - postgresql
     - netbox
     - netbox_sync
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Wiki
   hosts: wiki
   become: yes
   roles:
-    - self_signed_cert
     - nginx
     - nodejs
     - postgresql
     - wikijs
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Blog
   hosts: blog
   become: yes
   roles:
-    - self_signed_cert
     - nginx
     - nodejs
     - ghost
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Log
   hosts: log
   become: yes
   roles:
-    - self_signed_cert
     - nginx
     - graylog
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Monitoring
   hosts: monitoring
   become: yes
   roles:
-    - self_signed_cert
     - nginx
     - prometheus
     - alertmanager
@@ -97,18 +103,19 @@
     - tplink_plug_exporter
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Website
   hosts: website
   become: yes
   roles:
-    - self_signed_cert
     - nginx
     - as212510_net
     - nodejs
     - hyperglass
     - nginx_exporter
     - exporter_exporter
+    - self_signed_cert
 
 - name: Configure Reverse-proxy
   hosts: reverse_proxy

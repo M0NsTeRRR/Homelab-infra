@@ -1,0 +1,24 @@
+---
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: restart nut.service
+  ansible.builtin.systemd:
+    name: nut.service
+    state: restarted
+
+- name: enable nut.service
+  ansible.builtin.systemd:
+    name: nut.service
+    enabled: yes
+
+- name: restart nut-driver.service
+  ansible.builtin.systemd:
+    name: nut-driver.service
+    state: restarted
+
+- name: enable nut-driver.service
+  ansible.builtin.systemd:
+    name: nut-driver.service
+    enabled: yes

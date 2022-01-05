@@ -1,0 +1,49 @@
+---
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+
+- name: Create nut_exporter folder
+  ansible.builtin.file:
+    state: directory
+    name: /opt/nut_exporter
+
+- name: Check if nut_exporter is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/nut_exporter
+  register: nut_exporter
+
+- name: "Download nut_exporter {{ nut_exporter_version }}"
+  ansible.builtin.get_url:
+    url: https://github.com/DRuggeri/nut_exporter/releases/download/v{{ nut_exporter_version }}/nut_exporter-v{{ nut_exporter_version }}-linux-{{ arch }}
+    dest: /opt/nut_exporter/nut_exporter
+  when: not nut_exporter.stat.exists or nut_exporter_force_install
+
+- name: Copy nut_exporter binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: /opt/nut_exporter/nut_exporter
+    dest: /usr/local/bin/nut_exporter
+    mode: 0700
+    remote_src: yes
+  when: not nut_exporter.stat.exists or nut_exporter_force_install
+  notify: restart nut_exporter.service
+
+- name: Create nut_exporter configuration directory
+  ansible.builtin.file:
+    dest: /etc/nut_exporter/
+    state: directory
+
+- name: Configure nut_exporter
+  ansible.builtin.template:
+    src: nut.env.j2
+    dest: /etc/nut_exporter/nut.env
+  notify: restart nut_exporter.service
+
+- name: Create systemd service file
+  ansible.builtin.template:
+    src: nut_exporter.service.j2
+    dest: /etc/systemd/system/nut_exporter.service
+  notify:
+    - daemon-reload
+    - enable nut_exporter.service
+    - restart nut_exporter.service

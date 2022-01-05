@@ -19,6 +19,13 @@
     shell: /usr/sbin/nologin
     group: exporter-exporter
 
+- name: Create exporter_exporter folder
+  ansible.builtin.file:
+    state: directory
+    name: /opt/exporter_exporter
+    owner: exporter-exporter
+    group: exporter-exporter
+
 - name: Check if exporter_exporter is already installed
   ansible.builtin.stat:
     path: /usr/local/bin/exporter_exporter
@@ -33,7 +40,7 @@
 - name: Extract exporter_exporter binary
   ansible.builtin.unarchive:
     src: /tmp/exporter_exporter.tar.gz
-    dest: /tmp
+    dest: /opt/exporter_exporter
     remote_src: yes
     list_files: yes
   register: archive_contents
@@ -41,7 +48,7 @@
 
 - name: Copy exporter_exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: /tmp/{{ archive_contents.files[0] }}exporter_exporter
+    src: /opt/exporter_exporter/{{ archive_contents.files[0] }}exporter_exporter
     dest: /usr/local/bin/exporter_exporter
     owner: exporter-exporter
     group: exporter-exporter

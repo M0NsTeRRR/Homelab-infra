@@ -1,0 +1,14 @@
+---
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: restart nut_exporter.service
+  ansible.builtin.systemd:
+    name: nut_exporter.service
+    state: restarted
+
+- name: enable nut_exporter.service
+  ansible.builtin.systemd:
+    name: nut_exporter.service
+    enabled: yes

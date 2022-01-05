@@ -1,0 +1,31 @@
+---
+nut_ups:
+  - name: eaton_rack
+    driver: usbhid-ups
+    port: auto
+    desc: ""
+
+exporter_exporter_nodes:
+  - name: nut-exporter
+    port: 9199
+
+consul_services:
+  - name: nut-exporter
+    port: 9998
+    tags:
+      - monitoring
+      - prometheus
+    meta:
+      prometheus_metrics_path: /proxy
+      prometheus_param_module: nut-exporter
+    checks:
+      - args:
+          - "curl"
+          - "--cacert"
+          - "/etc/consul.d/ssl/ca.crt"
+          - "--key"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.pem"
+          - "--cert"
+          - "/etc/consul.d/ssl/{{ inventory_hostname }}.crt"
+          - "https://{{ inventory_hostname }}:9998/proxy?module=nut-exporter"
+        interval: 10s

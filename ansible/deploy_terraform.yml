@@ -47,6 +47,6 @@
           - "https://{{ inventory_hostname }}:9998/proxy?module=node-exporter"
         interval: 10s
   roles:
-    - self_signed_cert
     - exporter_exporter
     - consul
+    - self_signed_cert

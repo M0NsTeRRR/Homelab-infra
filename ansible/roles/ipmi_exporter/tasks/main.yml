@@ -4,10 +4,10 @@
     name: freeipmi-tools
     state: present
 
-- name: Create ipmi-exporter folder
+- name: Create ipmi_exporter folder
   ansible.builtin.file:
     state: directory
-    name: /opt/exporter/ipmi-exporter
+    name: /opt/ipmi_exporter
 
 - name: Check if ipmi-exporter is already installed
   ansible.builtin.stat:
@@ -23,14 +23,14 @@
 - name: Extract binary of ipmi-exporter
   ansible.builtin.unarchive:
     src: /tmp/ipmi-exporter.tar.gz
-    dest: /opt/exporter/ipmi-exporter
+    dest: /opt/ipmi_exporter
     remote_src: yes
     extra_opts: [--strip-components=1]
   when: not ipmi_exporter.stat.exists or ipmi_exporter_force_install
 
 - name: Copy ipmi-exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: "/opt/exporter/ipmi-exporter/ipmi_exporter"
+    src: "/opt/ipmi_exporter/ipmi_exporter"
     dest: /usr/local/bin/ipmi-exporter
     mode: 0700
     remote_src: yes

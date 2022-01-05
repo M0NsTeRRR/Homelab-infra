@@ -1,4 +1,9 @@
 ---
+- name: Create tplink_plug_exporter folder
+  ansible.builtin.file:
+    state: directory
+    name: /opt/tplink_plug_exporter/nut_exporter
+
 - name: Check if tplink-plug-exporter is already installed
   ansible.builtin.stat:
     path: /usr/local/bin/tplink_plug_exporter
@@ -13,13 +18,13 @@
 - name: Extract tplink-plug-exporter binary
   ansible.builtin.unarchive:
     src: /tmp/tplink-plug-exporter.tar.gz
-    dest: /tmp
+    dest: /opt/tplink_plug_exporter
     remote_src: yes
   when: not tplink_plug_exporter.stat.exists or tplink_plug_exporter_force_install
 
 - name: Copy tplink-plug-exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: /tmp/tplink-plug-exporter
+    src: /opt/tplink_plug_exporter/tplink-plug-exporter
     dest: /usr/local/bin/tplink_plug_exporter
     owner: prometheus
     group: prometheus

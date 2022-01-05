@@ -1,0 +1,54 @@
+---
+- name: Add nut group
+  ansible.builtin.group:
+    name: nut
+    system: yes
+    state: present
+
+- name: Add nut user
+  ansible.builtin.user:
+    name: nut
+    system: yes
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: nut
+
+- name: Install nut
+  ansible.builtin.apt:
+    name: "nut{% if nut_version is defined %}={{ nut_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ nut_package_state }}"
+
+- name: Configure nut
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "/etc/nut/{{ item.dest }}"
+    owner: nut
+    group: nut
+    mode: 0640
+  with_items:
+    - { src: "nut.conf.j2", dest: "nut.conf" }
+    - { src: "ups.conf.j2", dest: "ups.conf" }
+    - { src: "upsd.conf.j2", dest: "upsd.conf" }
+    - { src: "upsd.users.j2", dest: "upsd.users" }
+  notify:
+    - restart nut.service
+    - restart nut-driver.service
+
+- name: Create systemd service file
+  ansible.builtin.template:
+    src: nut.service.j2
+    dest: /etc/systemd/system/nut.service
+  notify:
+    - daemon-reload
+    - enable nut.service
+    - restart nut.service
+
+- name: Create systemd service file
+  ansible.builtin.template:
+    src: nut-driver.service.j2
+    dest: /etc/systemd/system/nut-driver.service
+  notify:
+    - daemon-reload
+    - enable nut-driver.service
+    - restart nut-driver.service
