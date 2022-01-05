@@ -83,6 +83,10 @@ powerdns_authoritative_records:
     a: 192.168.20.51
     aaaa: 2a0c:b641:02c0:120::51
     rdns: true
+  - hostname: pi1.unicornafk.fr.
+    a: 192.168.20.32
+    aaaa: 2a0c:b641:02c0:120::32
+    rdns: true
   - hostname: sw1.unicornafk.fr.
     a: 192.168.40.2
     aaaa: 2a0c:b641:02c0:140::2
@@ -145,10 +149,6 @@ powerdns_authoritative_records:
       - algorithm: 1
         type: 2
         fingerprint: 9C38D77335D3F325E5E22C79CAFD4A342D70112165598C5614B98BB04AA4D443
-    rdns: true
-  - hostname: pi1.unicornafk.fr.
-    a: 192.168.40.32
-    aaaa: 2a0c:b641:02c0:140::32
     rdns: true
   - hostname: ipmi3.unicornafk.fr.
     a: 192.168.40.53
