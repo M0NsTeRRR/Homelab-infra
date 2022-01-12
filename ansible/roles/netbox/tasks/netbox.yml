@@ -65,26 +65,26 @@
       - setuptools
 
 - name: Install netbox python packages
-  pip:
+  ansible.builtin.pip:
     requirements: /opt/netbox/requirements.txt
     virtualenv: /opt/netbox/venv
 
 - name: Configure netbox
-  template:
+  ansible.builtin.template:
     src: configuration.py.j2
     dest: /opt/netbox/netbox/netbox/configuration.py
   notify:
     - restart netbox.service
 
 - name: Migrate netbox database
-  shell:
+  ansible.builtin.shell:
     cmd: |
       . /opt/netbox/venv/bin/activate
       python3 manage.py migrate
     chdir: /opt/netbox/netbox/
 
 - name: Create a netbox super user
-  shell:
+  ansible.builtin.shell:
     cmd: |
       . /opt/netbox/venv/bin/activate
       python3 manage.py createsuperuser --no-input
@@ -97,26 +97,26 @@
   ignore_errors: yes
 
 - name: Check if user was created
-  fail:
+  ansible.builtin.fail:
     msg: "{{ netbox_user.stderr }}"
   when: 'netbox_user.rc == 1 and "That username is already taken" not in netbox_user.stderr'
 
 - name: Collect netbox static files
-  shell:
+  ansible.builtin.shell:
     cmd: |
       . /opt/netbox/venv/bin/activate
       python3 manage.py collectstatic --no-input
     chdir: /opt/netbox/netbox/
 
 - name: Configure gunicorn
-  template:
+  ansible.builtin.template:
     src: gunicorn.py.j2
     dest: /opt/netbox/gunicorn.py
   notify:
     - restart netbox.service
 
 - name: Create netbox.service
-  copy:
+  ansible.builtin.copy:
     src: /opt/netbox/contrib/netbox.service
     dest: /etc/systemd/system/netbox.service
     remote_src: yes
@@ -125,7 +125,7 @@
     - enable netbox.service
 
 - name: Create netbox-rq.service
-  copy:
+  ansible.builtin.copy:
     src: /opt/netbox/contrib/netbox-rq.service
     dest: /etc/systemd/system/netbox-rq.service
     remote_src: yes

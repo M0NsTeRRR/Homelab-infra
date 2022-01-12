@@ -4,9 +4,14 @@
     path: /usr/local/bin/alertmanager
   register: alertmanager
 
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not alertmanager.stat.exists or alertmanager_force_install
+
 - name: "Download alertmanager version {{ alertmanager_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
+    url: "https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-{{ arch }}.tar.gz"
     dest: /tmp/alertmanager.tar.gz
   when: not alertmanager.stat.exists or alertmanager_force_install
 

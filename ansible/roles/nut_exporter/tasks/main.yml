@@ -1,8 +1,4 @@
 ---
-- name: Detect machine architecture
-  ansible.builtin.set_fact:
-    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
-
 - name: Create nut_exporter folder
   ansible.builtin.file:
     state: directory
@@ -12,6 +8,11 @@
   ansible.builtin.stat:
     path: /usr/local/bin/nut_exporter
   register: nut_exporter
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not nut_exporter.stat.exists or nut_exporter_force_install
 
 - name: "Download nut_exporter {{ nut_exporter_version }}"
   ansible.builtin.get_url:

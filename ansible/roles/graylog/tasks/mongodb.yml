@@ -9,7 +9,7 @@
 
 - name: Add mongodb Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/{{ graylog_mongodb_repo_version }} multiverse"
+    repo: "deb https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/{{ graylog_mongodb_repo_version }} multiverse"
     state: present
     filename: mongodb
 

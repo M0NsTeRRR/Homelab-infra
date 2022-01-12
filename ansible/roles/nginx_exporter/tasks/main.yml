@@ -28,9 +28,14 @@
     path: /usr/local/bin/nginx-exporter
   register: nginx_exporter
 
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not nginx_exporter.stat.exists or nginx_exporter_force_install
+
 - name: "Download nginx-exporter binary version {{ nginx_exporter_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v{{ nginx_exporter_version }}/nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_amd64.tar.gz"
+    url: "https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v{{ nginx_exporter_version }}/nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_{{ arch }}.tar.gz"
     dest: /tmp/nginx-prometheus-exporter.tar.gz
   when: not nginx_exporter.stat.exists or nginx_exporter_force_install
 

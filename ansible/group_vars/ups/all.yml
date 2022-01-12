@@ -8,6 +8,7 @@ nut_ups:
 exporter_exporter_nodes:
   - name: nut-exporter
     port: 9199
+    path: "/ups_metrics"
 
 consul_services:
   - name: nut-exporter

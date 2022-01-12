@@ -31,9 +31,14 @@
     path: /usr/local/bin/exporter_exporter
   register: exporter_exporter
 
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not exporter_exporter.stat.exists or exporter_exporter_force_install
+
 - name: "Download exporter_exporter version {{ exporter_exporter_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/QubitProducts/exporter_exporter/releases/download/v{{ exporter_exporter_version }}/exporter_exporter-{{ exporter_exporter_version }}.linux-amd64.tar.gz"
+    url: "https://github.com/QubitProducts/exporter_exporter/releases/download/v{{ exporter_exporter_version }}/exporter_exporter-{{ exporter_exporter_version }}.linux-{{ arch }}.tar.gz"
     dest: /tmp/exporter_exporter.tar.gz
   when: not exporter_exporter.stat.exists or exporter_exporter_force_install
 

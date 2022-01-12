@@ -9,9 +9,14 @@
     path: /usr/local/bin/snmp-exporter
   register: snmp_exporter
 
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not snmp_exporter.stat.exists or snmp_exporter_force_install
+
 - name: "Download snmp-exporter {{ snmp_exporter_version }}"
   ansible.builtin.get_url:
-    url: https://github.com/prometheus/snmp_exporter/releases/download/v{{ snmp_exporter_version }}/snmp_exporter-{{ snmp_exporter_version }}.linux-amd64.tar.gz
+    url: https://github.com/prometheus/snmp_exporter/releases/download/v{{ snmp_exporter_version }}/snmp_exporter-{{ snmp_exporter_version }}.linux-{{ arch }}.tar.gz
     dest: /tmp/snmp-exporter.tar.gz
   when: not snmp_exporter.stat.exists or snmp_exporter_force_install
 

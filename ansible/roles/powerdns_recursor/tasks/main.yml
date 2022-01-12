@@ -39,7 +39,7 @@
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-rec-{{ powerdns_recursor_repo_version }} main"
+    repo: "deb http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-rec-{{ powerdns_recursor_repo_version }} main"
     state: present
     filename: pdns-rec
 

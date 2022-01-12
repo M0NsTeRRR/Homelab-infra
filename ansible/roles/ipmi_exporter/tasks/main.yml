@@ -14,9 +14,14 @@
     path: /usr/local/bin/ipmi-exporter
   register: ipmi_exporter
 
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not ipmi_exporter.stat.exists or ipmi_exporter_force_install
+
 - name: "Download ipmi-exporter {{ ipmi_exporter_version }}"
   ansible.builtin.get_url:
-    url: https://github.com/soundcloud/ipmi_exporter/releases/download/v{{ ipmi_exporter_version }}/ipmi_exporter-v{{ ipmi_exporter_version }}.linux-amd64.tar.gz
+    url: https://github.com/soundcloud/ipmi_exporter/releases/download/v{{ ipmi_exporter_version }}/ipmi_exporter-v{{ ipmi_exporter_version }}.linux-{{ arch }}.tar.gz
     dest: /tmp/ipmi-exporter.tar.gz
   when: not ipmi_exporter.stat.exists or ipmi_exporter_force_install
 

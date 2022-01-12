@@ -46,7 +46,7 @@
 
 - name: Add Consul Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    repo: "deb https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
     state: present
     filename: consul
 

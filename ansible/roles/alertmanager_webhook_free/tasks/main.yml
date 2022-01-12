@@ -18,9 +18,14 @@
     path: /usr/local/bin/alertmanager-webhook-free
   register: alertmanager_webhook_free
 
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not alertmanager_webhook_free.stat.exists or alertmanager_webhook_free_force_install
+
 - name: "Download alertmanager_webhook_free binary version {{ alertmanager_webhook_free_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/M0NsTeRRR/alertmanager-webhook-free/releases/download/v{{ alertmanager_webhook_free_version }}/alertmanager-webhook-free_{{ alertmanager_webhook_free_version }}_linux_amd64.tar.gz"
+    url: "https://github.com/M0NsTeRRR/alertmanager-webhook-free/releases/download/v{{ alertmanager_webhook_free_version }}/alertmanager-webhook-free_{{ alertmanager_webhook_free_version }}_linux_{{ arch }}.tar.gz"
     dest: /tmp/alertmanager_webhook_free.tar.gz
   when: not alertmanager_webhook_free.stat.exists or alertmanager_webhook_free_force_install
 

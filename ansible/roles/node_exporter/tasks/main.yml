@@ -9,9 +9,14 @@
     path: /usr/local/bin/node-exporter
   register: node_exporter
 
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not node_exporter.stat.exists or node_exporter_force_install
+
 - name: Download last version of node-exporter
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-amd64.tar.gz"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-{{ arch }}.tar.gz"
     dest: /tmp/node-exporter.tar.gz
   when: not node_exporter.stat.exists or node_exporter_force_install
 

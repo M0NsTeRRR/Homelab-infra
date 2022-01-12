@@ -18,9 +18,14 @@
     path: /usr/local/bin/as212510.net
   register: as212510_net
 
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not as212510_net.stat.exists or as212510_net_force_install
+
 - name: "Download as212510_net binary version {{ as212510_net_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/M0NsTeRRR/as212510.net/releases/download/v{{ as212510_net_version }}/as212510.net_{{ as212510_net_version }}_linux_amd64.tar.gz"
+    url: "https://github.com/M0NsTeRRR/as212510.net/releases/download/v{{ as212510_net_version }}/as212510.net_{{ as212510_net_version }}_linux_{{ arch }}.tar.gz"
     dest: /tmp/as212510_net.tar.gz
   when: not as212510_net.stat.exists or as212510_net_force_install
 
