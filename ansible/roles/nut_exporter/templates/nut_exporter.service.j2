@@ -7,8 +7,8 @@ Type=simple
 WorkingDirectory=/etc/nut_exporter
 EnvironmentFile=/etc/nut_exporter/nut.env
 ExecStart=/usr/local/bin/nut_exporter \
-    --nut.server="127.0.0.1"
-    --web.listen-address=:9199 \
+    --nut.server="127.0.0.1" \
+    --web.listen-address=:9199
 RestartSec=10
 Restart=always
 
