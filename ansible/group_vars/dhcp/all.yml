@@ -146,6 +146,7 @@ kea_ipv4_ntp_servers: "{{ ntp_servers.ipv4 }}"
 kea_ipv6_ntp_servers: "{{ ntp_servers.ipv6 }}"
 kea_ipv4_unifi_controller: "{{ unifi_controller.ipv4 }}"
 kea_ipv6_unifi_controller: "{{ unifi_controller.ipv6 }}"
+kea_local_path_ca_certificate: "{{ exporter_exporter_local_path_ca_certificate }}"
 
 exporter_exporter_nodes:
   - name: kea-dhcp-exporter
@@ -194,7 +195,10 @@ consul_services:
         interval: 10s
 
 nginx_configuration:
-  - server_name: "{{ inventory_hostname }}, {{ lookup('dig', inventory_hostname) }}, {{ lookup('dig', inventory_hostname, 'qtype=AAAA' ) }}"
+  - server_name: "{{ inventory_hostname }}"
+    additional_server_name:
+      - "{{ lookup('dig', inventory_hostname) }}"
+      - "{{ lookup('dig', inventory_hostname, 'qtype=AAAA' ) }}"
     locations:
       - location: /
         proxy_pass: http://127.0.0.1:8000
@@ -211,6 +215,7 @@ self_signed_certs:
     ca_private_local_path: "{{ certs_dir_role_path }}ca.pem"
     cert_remote_folder:
       - { path: /etc/nginx/ssl, owner: root, group: root }
+      - { path: /etc/kea/ssl, owner: root, group: root }
     ownca_not_after: +90d
     upload_pem: true
     generate_pkcs12: false

@@ -63,3 +63,16 @@
     src: kea-ctrl-agent.conf.j2
     dest: /etc/kea/kea-ctrl-agent.conf
   notify: restart kea-ctrl-agent
+
+- name: Create ssl folder
+  ansible.builtin.file:
+    name: /etc/kea/ssl
+    state: directory
+
+- name: Add CA cert
+  ansible.builtin.template:
+    src: "{{ kea_local_path_ca_certificate }}"
+    dest: /etc/kea/ssl/ca.crt
+  notify: 
+    - restart kea-dhcp4-server
+    - restart kea-dhcp6-server

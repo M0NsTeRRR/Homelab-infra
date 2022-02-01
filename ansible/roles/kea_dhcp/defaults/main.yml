@@ -13,6 +13,7 @@ kea_ipv4_ntp_servers: []
 kea_ipv6_ntp_servers: []
 kea_ipv4_unifi_controller:
 kea_ipv6_unifi_controller:
+kea_local_path_ca_certificate: ""
 
 
 # kea_dns_domains:

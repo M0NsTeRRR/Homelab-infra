@@ -2,6 +2,9 @@
     "Dhcp6": {
         "hooks-libraries": [
             {
+                "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_stat_cmds.so"
+            },
+            {
                 "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_lease_cmds.so",
                 "parameters": { }
             },
@@ -10,16 +13,20 @@
                 "parameters": {
                     "high-availability": [{
                         "this-server-name": "{{ ansible_fqdn }}",
-                        "mode": "hot-standby",
+                        "mode": "load-balancing",
                         "heartbeat-delay": 10000,
                         "max-response-delay": 10000,
                         "max-ack-delay": 5000,
-                        "max-unacked-clients": 5,
+                        "max-unacked-clients": 0,
+                        "delayed-updates-limit": 100,
+                        "trust-anchor": "/etc/kea/ssl/ca.pem",
+                        "cert-file": "/etc/kea/ssl/{{ inventory_hostname }}.crt",
+                        "key-file": "/etc/kea/ssl/{{ inventory_hostname }}.pem",
                         "peers": [
                             {% for host in ansible_play_hosts %}{
                                 "name": "{{ host }}",
                                 "url": "https://[{{ lookup('dig', host, 'qtype=AAAA' )}}]/",
-                                "role": "{% if host == ansible_play_hosts[0] %}primary{% elif host == ansible_play_hosts[1] %}standby{% else %}backup{% endif %}",
+                                "role": "{% if host == ansible_play_hosts[0] %}primary{% elif host == ansible_play_hosts[1] %}secondary{% else %}backup{% endif %}",
                                 "auto-failover": true
                             }{% if not loop.last %},{% endif %}
                             {% endfor %}
