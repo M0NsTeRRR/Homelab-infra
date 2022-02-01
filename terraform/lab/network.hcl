@@ -4,7 +4,7 @@ locals {
     netmask  = "24"
     gateway  = "192.168.20.2"
     netmask6 = "64"
-    gateway6 = "2a0c:b641:02c0:120::2"
+    gateway6 = "2a0c:b641:2c0:120::2"
   }
   domain        = "lab.unicornafk.fr"
   reverse_zone  = "20.168.192.in-addr.arpa"

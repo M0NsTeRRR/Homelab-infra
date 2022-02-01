@@ -22,7 +22,7 @@ inputs = {
   }
 
   vm_ip  = "192.168.20.50"
-  vm_ip6 = "2a0c:b641:02c0:120::50"
+  vm_ip6 = "2a0c:b641:2c0:120::50"
 
   domain = "unicornafk.fr"
 }

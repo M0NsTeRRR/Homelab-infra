@@ -93,7 +93,7 @@ resource "vsphere_virtual_machine" "vm" {
   dynamic "network_interface" {
     for_each = {for network in var.networks:  network.name => network}
     content {
-      network_id = data.vsphere_network.additional_network[each.key].id
+      network_id = data.vsphere_network.additional_network[network_interface.key].id
     }
   }
 
@@ -123,10 +123,10 @@ resource "vsphere_virtual_machine" "vm" {
       dynamic "network_interface" {
         for_each     = {for network in var.networks:  network.name => network}
         content {
-          ipv4_address = each.value.ip
-          ipv4_netmask = each.value.netmask
-          ipv6_address = each.value.ipv6
-          ipv6_netmask = each.value.netmask6
+          ipv4_address = network_interface.value.ip
+          ipv4_netmask = network_interface.value.netmask
+          ipv6_address = network_interface.value.ipv6
+          ipv6_netmask = network_interface.value.netmask6
         }
       }
 

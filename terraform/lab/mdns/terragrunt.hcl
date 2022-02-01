@@ -26,20 +26,20 @@ inputs = {
       name     = "HOME"
       ip       = "192.168.50.51"
       netmask  = "24"
-      ipv6     = "2a0c:b641:02c0:150::51"
+      ipv6     = "2a0c:b641:2c0:150::51"
       netmask6 = "64"
     },
     {
       name     = "GUEST"
       ip       = "192.168.60.51"
       netmask  = "24"
-      ipv6      = "2a0c:b641:02c0:160::51"
+      ipv6      = "2a0c:b641:2c0:160::51"
       netmask6 = "64"
     }
   ]
 
   vm_ip  = "192.168.20.51"
-  vm_ip6 = "2a0c:b641:02c0:120::51"
+  vm_ip6 = "2a0c:b641:2c0:120::51"
 
   domain = "unicornafk.fr"
 }
