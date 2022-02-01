@@ -47,7 +47,7 @@ variable "distribution" {
 
 variable "version" {
   type    = string
-  default = "11.0.0"
+  default = "11.2.0"
 }
 
 source "vsphere-iso" "debian" {

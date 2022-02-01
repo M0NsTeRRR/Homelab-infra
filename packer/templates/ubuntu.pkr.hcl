@@ -47,7 +47,7 @@ variable "distribution" {
 
 variable "version" {
   type    = string
-  default = "20.04.1"
+  default = "20.04.3"
 }
 
 source "vsphere-iso" "ubuntu" {

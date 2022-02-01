@@ -55,12 +55,12 @@ Supported distributions :
 
 **VM**
 
-- Debian (11.1.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.1.0-amd64-netinst.iso)
+- Debian (11.2.0) - [iso](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.2.0-amd64-netinst.iso)
 - Ubuntu (20.04.3) - [iso](http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04.3/release/ubuntu-20.04.3-legacy-server-amd64.iso)
 
 **Raspberry Pi (v3/v4)**
 
-- Ubuntu (20.04.2) - [iso](https://cdimage.ubuntu.com/releases/20.04.3/release/ubuntu-20.04.3-preinstalled-server-arm64+raspi.img.xz)
+- Ubuntu (20.04.3) - [iso](https://cdimage.ubuntu.com/releases/20.04.3/release/ubuntu-20.04.3-preinstalled-server-arm64+raspi.img.xz)
 
 ### Create template
 

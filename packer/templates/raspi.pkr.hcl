@@ -11,7 +11,7 @@ variable "username" {
 
 variable "version" {
   type    = string
-  default = "20.04.2"
+  default = "20.04.3"
 }
 
 source "arm" "ubuntu" {
