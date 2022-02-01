@@ -1,0 +1,5 @@
+---
+# avahi_daemon_version:
+avahi_daemon_package_state: latest
+# avahi_utils_version:
+avahi_utils_package_state: latest

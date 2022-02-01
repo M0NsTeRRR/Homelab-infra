@@ -1,0 +1,27 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "5353"
+    proto: udp
+
+- name: Install avahi-daemon
+  ansible.builtin.apt:
+    name: "avahi-daemon{% if avahi_daemon_version is defined %}={{ avahi_daemon_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ avahi_daemon_package_state }}"
+
+- name: Install avahi-utils
+  ansible.builtin.apt:
+    name: "avahi-utils{% if avahi_utils_version is defined %}={{ avahi_utils_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ avahi_utils_package_state }}"
+
+- name: Forward auditd logs to local rsyslog
+  ansible.builtin.lineinfile:
+    dest: "/etc/avahi/avahi-daemon.conf"
+    regexp: "^(# )?enable-reflector="
+    line: "enable-reflector=yes"
+    state: "present"
+  notify:
+    - restart avahi-daemon

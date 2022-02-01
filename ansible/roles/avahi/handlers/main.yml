@@ -1,0 +1,5 @@
+---
+- name: restart avahi-daemon
+  ansible.builtin.systemd:
+    name: avahi-daemon
+    state: restarted
