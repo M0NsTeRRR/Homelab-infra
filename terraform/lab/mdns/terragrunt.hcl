@@ -33,7 +33,7 @@ inputs = {
       name     = "GUEST"
       ip       = "192.168.60.51"
       netmask  = "24"
-      ipv6      = "2a0c:b641:2c0:160::51"
+      ipv6     = "2a0c:b641:2c0:160::51"
       netmask6 = "64"
     }
   ]
