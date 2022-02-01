@@ -94,12 +94,24 @@ variable "disk" {
 }
 
 variable "network" {
-  description = "Network name"
+  description = "Default Network config"
   type        = object({
-    name     = string
-    netmask  = string
-    gateway  = string
-    netmask6 = string
-    gateway6 = string
+    name      = string
+    netmask   = string
+    gateway   = string
+    netmask6  = string
+    gateway6  = string
   })
+}
+
+variable "networks" {
+  description = "List of Network name"
+  type       = list(object({
+    name     = string
+    ip       = string
+    netmask  = string
+    ipv6     = string
+    netmask6 = string
+  }))
+  default = []
 }

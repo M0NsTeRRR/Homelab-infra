@@ -22,8 +22,16 @@ data "vsphere_datastore" "datastore" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
+# default interface
 data "vsphere_network" "network" {
   name          = var.network.name
+  datacenter_id = data.vsphere_datacenter.dc.id
+}
+
+# additional interface
+data "vsphere_network" "additional_network" {
+  for_each      = {for network in var.networks:  network.name => network}
+  name          = each.value.name
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -76,8 +84,17 @@ resource "vsphere_virtual_machine" "vm" {
   num_cpus = var.hardware.num_cpus
   memory   = var.hardware.memory
 
+  # default interface
   network_interface {
     network_id = data.vsphere_network.network.id
+  }
+
+  # additional interface
+  dynamic "network_interface" {
+    for_each = {for network in var.networks:  network.name => network}
+    content {
+      network_id = data.vsphere_network.additional_network[each.key].id
+    }
   }
 
   disk {
@@ -94,11 +111,23 @@ resource "vsphere_virtual_machine" "vm" {
         domain    = var.domain
       }
 
+      # default interface
       network_interface {
         ipv4_address = var.vm_ip
         ipv4_netmask = var.network.netmask
         ipv6_address = var.vm_ip6
         ipv6_netmask = var.network.netmask6
+      }
+
+      # additional interface
+      dynamic "network_interface" {
+        for_each     = {for network in var.networks:  network.name => network}
+        content {
+          ipv4_address = each.value.ip
+          ipv4_netmask = each.value.netmask
+          ipv6_address = each.value.ipv6
+          ipv6_netmask = each.value.netmask6
+        }
       }
 
       dns_server_list = var.dns.server_list
