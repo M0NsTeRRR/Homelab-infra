@@ -8,23 +8,40 @@
     - "67"
     - "547"
 
+- name: Add ISC cloudsmith Apt signing key
+  ansible.builtin.apt_key:
+    id: "32D53EC4807EC10E"
+    url: "https://dl.cloudsmith.io/public/isc/kea-2-1/gpg.32D53EC4807EC10E.key"
+    state: present
+  retries: 3
+  delay: 3
+
+- name: Add PowerDNS Apt repository
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: isc-kea-dhcp
+  with_items:
+    - "deb https://dl.cloudsmith.io/public/isc/kea-2-1/deb/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} main"
+    - "deb-src https://dl.cloudsmith.io/public/isc/kea-2-1/deb/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} main"
+
 - name: Install kea-dhcp4-server
   ansible.builtin.apt:
-    name: "kea-dhcp4-server{% if kea_dhcp4_server_version is defined %}={{ kea_dhcp4_server_version }}{% endif %}"
+    name: "isc-kea-dhcp4-server{% if kea_dhcp4_server_version is defined %}={{ kea_dhcp4_server_version }}{% endif %}"
     update_cache: yes
     state: "{{ kea_dhcp4_server_package_state }}"
   notify: enable kea-dhcp4-server
 
 - name: Install kea-dhcp6-server
   ansible.builtin.apt:
-    name: "kea-dhcp6-server{% if kea_dhcp6_server_version is defined %}={{ kea_dhcp6_server_version }}{% endif %}"
+    name: "isc-kea-dhcp6-server{% if kea_dhcp6_server_version is defined %}={{ kea_dhcp6_server_version }}{% endif %}"
     update_cache: yes
     state: "{{ kea_dhcp6_server_package_state }}"
   notify: enable kea-dhcp6-server
 
 - name: Install kea-ctrl-agent
   ansible.builtin.apt:
-    name: "kea-ctrl-agent{% if kea_ctrl_agent_version is defined %}={{ kea_ctrl_agent_version }}{% endif %}"
+    name: "isc-kea-ctrl-agent{% if kea_ctrl_agent_version is defined %}={{ kea_ctrl_agent_version }}{% endif %}"
     update_cache: yes
     state: "{{ kea_ctrl_agent_package_state }}"
   notify: enable kea-ctrl-agent
