@@ -1,61 +1,23 @@
-variable "host_ip" {
-  type    = string
-  default = ""
+packer {
+  required_version = ">=1.7.9"
+  required_plugins {
+    vsphere = {
+      version = ">=v1.0.3"
+      source  = "github.com/hashicorp/vsphere"
+    }
+  }
 }
 
-variable "http_port" {
-  type    = number
-  default = 8888
-}
-
-variable "ssh_new_password" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
-variable "ssh_password" {
-  type    = string
-  default = ""
-}
-
-variable "ssh_username" {
-  type    = string
-  default = ""
-}
-
-variable "vcenter_password" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
-variable "vcenter_server" {
-  type    = string
-  default = ""
-}
-
-variable "vcenter_username" {
-  type    = string
-  default = ""
-}
-
-variable "distribution" {
-  type    = string
-  default = "debian"
-}
-
-variable "version" {
-  type    = string
-  default = "11.2.0"
-}
-
-source "vsphere-iso" "debian" {
+source "vsphere-iso" "ubuntu" {
   CPUs                 = 1
   RAM                  = 1024
   boot_command         = [
     "<esc><wait>",
-    "auto url=http://${var.host_ip}:{{ .HTTPPort }}/debian.cfg",
+    "<esc><wait>",
+    "<enter><wait>",
+    "/install/vmlinuz initrd=/install/initrd.gz",
+    " auto=true priority=critical",
+    " url=http://${var.host_ip}:{{ .HTTPPort }}/preseed.cfg",
     "<enter>"
   ]
   boot_wait            = "10s"
@@ -65,15 +27,17 @@ source "vsphere-iso" "debian" {
   datacenter           = "Homelab"
   datastore            = "SERVER3-RAID1"
   disk_controller_type = ["pvscsi"]
-  guest_os_type        = "debian10_64Guest"
+  guest_os_type        = "ubuntu64Guest"
   host                 = "server3.unicornafk.fr"
   http_bind_address    = "0.0.0.0"
-  http_directory       = "preseed"
   http_port_max        = var.http_port
   http_port_min        = var.http_port
+  http_content        = {
+    "/preseed.cfg" = templatefile("../../preseed/ubuntu.cfg", { build_fullname = var.ssh_fullname, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted })
+  }
   insecure_connection  = true
-  iso_checksum         = "file:https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS"
-  iso_url              = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-${var.version}-amd64-netinst.iso"
+  iso_checksum         = "file:http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/SHA256SUMS"
+  iso_url              = "http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/ubuntu-${var.version}-legacy-server-amd64.iso"
   network_adapters {
     network      = "LAB"
     network_card = "vmxnet3"
@@ -94,7 +58,7 @@ source "vsphere-iso" "debian" {
 }
 
 build {
-  sources = ["source.vsphere-iso.debian"]
+  sources = ["source.vsphere-iso.ubuntu"]
 
   provisioner "ansible" {
     ansible_env_vars = ["ANSIBLE_CONFIG=../ansible/ansible.cfg", "ANSIBLE_HOST_KEY_CHECKING=False", "ANSIBLE_USER=${var.ssh_username}", "ANSIBLE_SSH_PASS=${var.ssh_password}", "ANSIBLE_BECOME_PASS=${var.ssh_password}"]

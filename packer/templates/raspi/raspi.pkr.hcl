@@ -1,19 +1,3 @@
-variable "password" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
-variable "username" {
-  type    = string
-  default = ""
-}
-
-variable "version" {
-  type    = string
-  default = "20.04.3"
-}
-
 source "arm" "ubuntu" {
   file_urls = ["http://cdimage.ubuntu.com/releases/${var.version}/release/ubuntu-${var.version}-preinstalled-server-arm64+raspi.img.xz"]
   file_checksum_url = "http://cdimage.ubuntu.com/releases/${var.version}/release/SHA256SUMS"
@@ -50,7 +34,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "useradd -m -p $(openssl passwd -6 ${var.password}) -s /bin/bash ${var.username}",
+      "useradd -m -p ${var.password} -s /bin/bash ${var.username} -c ${var.fullname}",
       "usermod -aG sudo ${var.username}",
       "touch /boot/ssh"
     ]

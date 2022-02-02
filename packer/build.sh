@@ -3,6 +3,7 @@ export PACKER_CACHE_DIR=packer_cache
 
 set -e
 
+ssh_fullname="ludovic ortega"
 ssh_username=lortega
 ssh_password=ludovic
 
@@ -31,11 +32,13 @@ do
       -var "vcenter_server=$vcenter_server" \
       -var "vcenter_username=$vcenter_username" \
       -var "vcenter_password=$vcenter_password" \
+      -var "ssh_fullname=$ssh_fullname" \
       -var "ssh_username=$ssh_username" \
       -var "ssh_password=$ssh_password" \
+      -var "ssh_password_encrypted=$(mkpasswd -m sha-512 --rounds=4096 '$ssh_password')" \
       -var "ssh_new_password=$ssh_new_password" \
       -timestamp-ui \
-      templates/"$distribution".pkr.hcl
+      templates/"$distribution"
 		break
 		;;
 	2)
@@ -43,6 +46,7 @@ do
     printf "\n"
 
     packer build \
+      -var "fullname=$ssh_fullname" \
       -var "username=$ssh_username" \
       -var "password=$ssh_new_password" \
       -timestamp-ui \
