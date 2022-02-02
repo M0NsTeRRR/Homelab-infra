@@ -9,9 +9,9 @@ packer {
 }
 
 source "vsphere-iso" "debian" {
-  CPUs                 = 1
-  RAM                  = 1024
-  boot_command         = [
+  CPUs = 1
+  RAM  = 1024
+  boot_command = [
     "<esc><wait>",
     "auto url=http://${var.host_ip}:{{ .HTTPPort }}/preseed.cfg",
     "<enter>"
@@ -28,12 +28,12 @@ source "vsphere-iso" "debian" {
   http_bind_address    = "0.0.0.0"
   http_port_max        = var.http_port
   http_port_min        = var.http_port
-  http_content        = {
+  http_content = {
     "/preseed.cfg" = templatefile("../../preseed/debian.cfg", { build_fullname = var.ssh_fullname, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted })
   }
-  insecure_connection  = true
-  iso_checksum         = "file:https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS"
-  iso_url              = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-${var.version}-amd64-netinst.iso"
+  insecure_connection = true
+  iso_checksum        = "file:https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS"
+  iso_url             = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-${var.version}-amd64-netinst.iso"
   network_adapters {
     network      = "LAB"
     network_card = "vmxnet3"
