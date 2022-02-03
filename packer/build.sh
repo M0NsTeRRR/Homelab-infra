@@ -35,7 +35,7 @@ do
       -var "ssh_fullname=$ssh_fullname" \
       -var "ssh_username=$ssh_username" \
       -var "ssh_password=$ssh_password" \
-      -var "ssh_password_encrypted=$(mkpasswd -m sha-512 --rounds=4096 '$ssh_password')" \
+      -var "ssh_password_encrypted=$(mkpasswd -m md5 $ssh_password)" \
       -var "ssh_new_password=$ssh_new_password" \
       -timestamp-ui \
       templates/"$distribution"
