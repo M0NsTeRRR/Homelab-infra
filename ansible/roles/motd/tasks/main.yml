@@ -1,7 +1,8 @@
 ---
-- name: Install figlet and lolcat
+- name: Install required packages
   ansible.builtin.apt:
-    pkg:
+    name:
+      - update-notifier-common
       - figlet
       - lolcat
     state: present
