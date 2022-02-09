@@ -1,6 +1,6 @@
 .idea
 packer_cache/
-.terraform
+.terraform.lock.hcl
 .terragrunt-cache
 terraform/account.hcl
 secrets.yml
