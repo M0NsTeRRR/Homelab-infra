@@ -45,7 +45,7 @@ kea_ipv4_subnets:
         hw_address: 44:5c:e9:9d:8b:28
         ip_address: 192.168.50.91
       - hostname: nvidia-shield
-        hw_address: 48:b0:2d:2d:9c:09
+        hw_address: 48:b0:2d:2c:15:69
         ip_address: 192.168.50.92
       - hostname: hs110-rack1
         hw_address: 98:DA:C4:BE:E8:89
@@ -65,6 +65,9 @@ kea_ipv4_subnets:
       - hostname: xiaomi-gateway
         hw_address: 64:90:c1:7a:e2:c0
         ip_address: 192.168.50.113
+      - hostname: xiaomi-light-bar
+        hw_address: b4:60:ed:45:50:00
+        ip_address: 192.168.50.114
   - subnet: 192.168.60.0/24
     pools:
       - start: 192.168.60.201
@@ -114,7 +117,7 @@ kea_ipv6_subnets:
         hw_address: 44:5c:e9:9d:8b:28
         ip_address: 2a0c:b641:02c0:150::91
       - hostname: nvidia-shield
-        hw_address: 48:b0:2d:2d:9c:09
+        hw_address: 48:b0:2d:2c:15:69
         ip_address: 2a0c:b641:02c0:150::92
       - hostname: hs110-rack1
         hw_address: 98:DA:C4:BE:E8:89
@@ -134,6 +137,9 @@ kea_ipv6_subnets:
       - hostname: xiaomi-gateway
         hw_address: 64:90:c1:7a:e2:c0
         ip_address: 2a0c:b641:02c0:150::113
+      - hostname: xiaomi-light-bar
+        hw_address: b4:60:ed:45:50:00
+        ip_address: 2a0c:b641:02c0:150::114
   - subnet: 2a0c:b641:02c0:160::/64
     pools:
       - start: 2a0c:b641:02c0:160::201

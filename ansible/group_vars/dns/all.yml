@@ -87,6 +87,10 @@ powerdns_authoritative_records:
     a: 192.168.20.32
     aaaa: 2a0c:b641:02c0:120::32
     rdns: true
+  - hostname: home-assistant.unicornafk.fr.
+    a: 192.168.20.33
+    aaaa: 2a0c:b641:02c0:120::33
+    rdns: true
   - hostname: sw1.unicornafk.fr.
     a: 192.168.40.2
     aaaa: 2a0c:b641:02c0:140::2
@@ -201,6 +205,10 @@ powerdns_authoritative_records:
   - hostname: xiaomi-gateway.unicornafk.fr.
     a: 192.168.50.113
     aaaa: 2a0c:b641:02c0:150::113
+    rdns: true
+  - hostname: xiaomi-light-bar.unicornafk.fr.
+    a: 192.168.50.114
+    aaaa: 2a0c:b641:02c0:150::114
     rdns: true
   - hostname: thomas.unicornafk.fr.
     a: 192.168.60.201
