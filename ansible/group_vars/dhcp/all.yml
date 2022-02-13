@@ -60,7 +60,7 @@ kea_ipv4_subnets:
         hw_address: 04:cf:8c:b5:1e:17
         ip_address: 192.168.50.111
       - hostname: xiaomi-vaccum
-        hw_address: 4a:b9:8b:13:55:65
+        hw_address: 64:90:c1:6a:f0:98
         ip_address: 192.168.50.112
       - hostname: xiaomi-gateway
         hw_address: 64:90:c1:7a:e2:c0
