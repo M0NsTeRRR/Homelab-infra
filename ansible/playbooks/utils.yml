@@ -14,6 +14,11 @@
     name: sysstat
     state: present
 
+- name: Install ncdu
+  ansible.builtin.apt:
+    name: ncdu
+    state: present
+
 - name: Install apt-show-versions
   ansible.builtin.apt:
     name: apt-show-versions
