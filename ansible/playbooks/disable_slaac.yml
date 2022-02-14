@@ -17,11 +17,19 @@
       notify: reboot the host
       when: ansible_distribution == "Debian"
 
-    - name: Disable SLAAC
+    - name: Disable RA
       ansible.builtin.lineinfile:
         dest: /etc/netplan/99-netcfg-vmware.yaml
         regexp: '^\s\s\s\sens[0-9]+:\s\s\s\s\s(accept-ra:)?'
         line: '      accept-ra: no'
+      notify: netplan apply
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Disable SLAAC
+      ansible.builtin.lineinfile:
+        dest: /etc/netplan/99-netcfg-vmware.yaml
+        regexp: '^\s\s\s\sens[0-9]+:\s\s\s\s\s(ipv6-privacy:)?'
+        line: '      ipv6-privacy: true'
       notify: netplan apply
       when: ansible_distribution == "Ubuntu"
 
