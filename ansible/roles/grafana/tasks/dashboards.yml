@@ -1,6 +1,6 @@
 ---
-- name: "Create {{ item | basename | replace('.j2', '') }} grafana dashboards"
+- name: "Create {{ item | basename }} grafana dashboards"
   ansible.builtin.template:
     src: "{{ item }}"
-    dest: "/var/lib/grafana/dashboards/{{ item | basename | replace('.j2', '') }}"
-  with_fileglob: templates/dashboards/*.j2
+    dest: "/var/lib/grafana/dashboards/{{ item | basename }}"
+  with_fileglob: files/dashboards/*

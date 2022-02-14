@@ -62,8 +62,8 @@
   notify: restart ghost.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: ghost.service.j2
+  ansible.builtin.copy:
+    src: ghost.service
     dest: /etc/systemd/system/ghost.service
   notify:
     - daemon-reload

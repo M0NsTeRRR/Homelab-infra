@@ -65,8 +65,8 @@
   notify: restart alertmanager_webhook_free.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: alertmanager_webhook_free.service.j2
+  ansible.builtin.copy:
+    src: alertmanager_webhook_free.service
     dest: /etc/systemd/system/alertmanager_webhook_free.service
   notify:
     - daemon-reload

@@ -16,8 +16,8 @@
     state: "{{ pacemaker_crmsh_package_state }}"
 
 - name: Configure haproxy ocf ressource
-  ansible.builtin.template:
-    src: haproxy.j2
+  ansible.builtin.copy:
+    src: haproxy
     dest: /usr/lib/ocf/resource.d/heartbeat/haproxy
     mode: 0744
   notify:

@@ -69,8 +69,8 @@
   notify: restart frr
 
 - name: Configure vtysh
-  ansible.builtin.template:
-    src: vtysh.conf.j2
+  ansible.builtin.copy:
+    src: vtysh.conf
     dest: /etc/frr/vtysh.conf
     owner: frr
     group: frr

@@ -65,6 +65,14 @@
     virtualenv: /opt/hyperglass/venv
   notify: restart hyperglass.service
 
+- name: Configure commands
+  ansible.builtin.copy:
+    src: commands.yaml
+    dest: /etc/hyperglass/commands.yaml
+    owner: hyperglass
+    group: hyperglass
+  notify: restart hyperglass.service
+
 - name: "Configure {{ item }}"
   ansible.builtin.template:
     src: "{{ item }}.yaml.j2"
@@ -75,7 +83,6 @@
   with_items:
     - hyperglass
     - devices
-    - commands
     - greeting
 
 - name: Build ui
@@ -96,8 +103,8 @@
     - /opt/hyperglass
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: hyperglass.service.j2
+  ansible.builtin.copy:
+    src: hyperglass.service
     dest: /etc/systemd/system/hyperglass.service
   notify:
     - daemon-reload

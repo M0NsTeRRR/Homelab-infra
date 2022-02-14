@@ -41,8 +41,8 @@
   notify: restart nut_exporter.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: nut_exporter.service.j2
+  ansible.builtin.copy:
+    src: nut_exporter.service
     dest: /etc/systemd/system/nut_exporter.service
   notify:
     - daemon-reload

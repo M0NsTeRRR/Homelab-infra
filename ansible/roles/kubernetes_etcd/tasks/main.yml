@@ -6,8 +6,8 @@
     proto: tcp
 
 - name: Configure etcd service manager
-  ansible.builtin.template:
-    src: 20-etcd-service-manager.conf.j2
+  ansible.builtin.copy:
+    src: 20-etcd-service-manager.conf
     dest: /etc/systemd/system/kubelet.service.d/20-etcd-service-manager.conf
   notify: restart kubelet
 

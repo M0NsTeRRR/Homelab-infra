@@ -20,7 +20,7 @@
     state: "{{ nut_package_state }}"
 
 - name: Configure nut
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "/etc/nut/{{ item.dest }}"
     owner: nut
@@ -28,16 +28,28 @@
     mode: 0640
   with_items:
     - { src: "nut.conf.j2", dest: "nut.conf" }
-    - { src: "ups.conf.j2", dest: "ups.conf" }
     - { src: "upsd.conf.j2", dest: "upsd.conf" }
+  notify:
+    - restart nut.service
+    - restart nut-driver.service
+
+- name: Configure nut
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "/etc/nut/{{ item.dest }}"
+    owner: nut
+    group: nut
+    mode: 0640
+  with_items:
+    - { src: "ups.conf.j2", dest: "ups.conf" }
     - { src: "upsd.users.j2", dest: "upsd.users" }
   notify:
     - restart nut.service
     - restart nut-driver.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: nut.service.j2
+  ansible.builtin.copy:
+    src: nut.service
     dest: /etc/systemd/system/nut.service
   notify:
     - daemon-reload
@@ -45,8 +57,8 @@
     - restart nut.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: nut-driver.service.j2
+  ansible.builtin.copy:
+    src: nut-driver.service
     dest: /etc/systemd/system/nut-driver.service
   notify:
     - daemon-reload

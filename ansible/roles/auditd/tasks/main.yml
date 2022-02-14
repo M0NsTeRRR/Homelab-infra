@@ -8,8 +8,8 @@
     - restart auditd
 
 - name: Configure auditd rules
-  ansible.builtin.template:
-    src: audit.rules.j2
+  ansible.builtin.copy:
+    src: audit.rules
     dest: /etc/audit/rules.d/audit.rules
   notify:
     - restart auditd

@@ -88,8 +88,8 @@
   notify: restart as212510_net.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: as212510_net.service.j2
+  ansible.builtin.copy:
+    src: as212510_net.service
     dest: /etc/systemd/system/as212510_net.service
   notify:
     - daemon-reload

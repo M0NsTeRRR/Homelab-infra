@@ -39,8 +39,8 @@
   when: not node_exporter.stat.exists or node_exporter_force_install
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: node-exporter.service.j2
+  ansible.builtin.copy:
+    src: node-exporter.service
     dest: /etc/systemd/system/node-exporter.service
   notify:
     - daemon-reload

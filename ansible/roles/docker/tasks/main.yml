@@ -40,8 +40,8 @@
     state: "{{ docker_containerd_io_package_state }}"
 
 - name: Setup daemon
-  ansible.builtin.template:
-    src: daemon.json.j2
+  ansible.builtin.copy:
+    src: daemon.json
     dest: /etc/docker/daemon.json
   notify:
     - restart docker

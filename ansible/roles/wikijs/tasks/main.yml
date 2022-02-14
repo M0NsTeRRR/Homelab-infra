@@ -50,8 +50,8 @@
     group: wikijs
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: wikijs.service.j2
+  ansible.builtin.copy:
+    src: wikijs.service
     dest: /etc/systemd/system/wikijs.service
   notify:
     - daemon-reload

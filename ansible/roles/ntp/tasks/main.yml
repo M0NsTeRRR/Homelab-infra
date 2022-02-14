@@ -12,8 +12,8 @@
     state: "{{ ntp_package_state }}"
 
 - name: Configure ntp server
-  ansible.builtin.template:
-    src: ntp.conf.j2
+  ansible.builtin.copy:
+    src: ntp.conf
     dest: /etc/ntp.conf
     owner: root
     group: root

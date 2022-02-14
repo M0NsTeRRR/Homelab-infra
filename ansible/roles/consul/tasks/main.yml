@@ -91,8 +91,8 @@
   notify: restart consul.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: consul.service.j2
+  ansible.builtin.copy:
+    src: consul.service
     dest: /etc/systemd/system/consul.service
   notify:
     - daemon-reload

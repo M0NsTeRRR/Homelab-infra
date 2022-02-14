@@ -46,14 +46,14 @@
     state: directory
 
 - name: Configure blackbox-exporter
-  ansible.builtin.template:
-    src: blackbox.yml.j2
+  ansible.builtin.copy:
+    src: blackbox.yml
     dest: /etc/blackbox_exporter/blackbox.yml
   notify: restart blackbox-exporter.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: blackbox-exporter.service.j2
+  ansible.builtin.copy:
+    src: blackbox-exporter.service
     dest: /etc/systemd/system/blackbox-exporter.service
   notify:
     - daemon-reload

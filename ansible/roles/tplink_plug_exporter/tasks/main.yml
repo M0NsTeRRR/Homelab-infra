@@ -34,8 +34,8 @@
   when: not tplink_plug_exporter.stat.exists or tplink_plug_exporter_force_install
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: tplink-plug-exporter.service.j2
+  ansible.builtin.copy:
+    src: tplink-plug-exporter.service
     dest: /etc/systemd/system/tplink-plug-exporter.service
   notify:
     - daemon-reload

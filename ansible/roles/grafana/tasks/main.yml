@@ -42,17 +42,17 @@
     state: directory
 
 - name: Configure dashboards
-  ansible.builtin.template:
+  ansible.builtin.copy:
     group: grafana
     mode: 0640
-    src: dashboards.yml.j2
+    src: dashboards.yml
     dest: /etc/grafana/provisioning/dashboards/dashboards.yml
 
 - name: Configure datasources
-  ansible.builtin.template:
+  ansible.builtin.copy:
     group: grafana
     mode: 0640
-    src: datasources.yml.j2
+    src: datasources.yml
     dest: /etc/grafana/provisioning/datasources/datasources.yml
 
 - name: Configure notifiers

@@ -1,6 +1,6 @@
 ---
-- name: "Create {{ item | basename | replace('.j2', '') }} alertmanager rules"
-  ansible.builtin.template:
+- name: "Create {{ item | basename }} alertmanager rules"
+  ansible.builtin.copy:
     src: "{{ item }}"
-    dest: "/etc/alertmanager/rules/{{ item | basename | replace('.j2', '') }}"
-  with_fileglob: templates/rules/*.j2
+    dest: "/etc/alertmanager/rules/{{ item | basename }}"
+  with_fileglob: files/rules/*

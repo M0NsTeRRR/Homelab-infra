@@ -59,8 +59,8 @@
   notify: restart kea-dhcp6-server
 
 - name: Configure kea-ctrl-agent
-  ansible.builtin.template:
-    src: kea-ctrl-agent.conf.j2
+  ansible.builtin.copy:
+    src: kea-ctrl-agent.conf
     dest: /etc/kea/kea-ctrl-agent.conf
   notify: restart kea-ctrl-agent
 

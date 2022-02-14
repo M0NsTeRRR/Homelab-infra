@@ -81,8 +81,8 @@
   notify: restart exporter-exporter.service
 
 - name: Create empty expexp.yaml
-  ansible.builtin.template:
-    src: expexp.yaml.j2
+  ansible.builtin.copy:
+    src: expexp.yaml
     dest: /etc/exporter_exporter/expexp.yaml
     owner: exporter-exporter
     group: exporter-exporter

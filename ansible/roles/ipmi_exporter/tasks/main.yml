@@ -54,8 +54,8 @@
   notify: restart ipmi-exporter.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: ipmi-exporter.service.j2
+  ansible.builtin.copy:
+    src: ipmi-exporter.service
     dest: /etc/systemd/system/ipmi-exporter.service
   notify:
     - daemon-reload

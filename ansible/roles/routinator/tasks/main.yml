@@ -43,8 +43,8 @@
     - restart routinator
 
 - name: Configure routinator
-  ansible.builtin.template:
-    src: routinator.conf.j2
+  ansible.builtin.copy:
+    src: routinator.conf
     dest: /etc/routinator/routinator.conf
     owner: routinator
     group: routinator

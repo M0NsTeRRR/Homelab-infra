@@ -45,8 +45,8 @@
     filename: pdns-auth
 
 - name: Configure apt preferences
-  ansible.builtin.template:
-    src: apt-preferences.j2
+  ansible.builtin.copy:
+    src: apt-preferences
     dest: /etc/apt/preferences.d/pdns
     owner: root
     group: root

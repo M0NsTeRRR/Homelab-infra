@@ -54,8 +54,8 @@
   notify: restart alertmanager.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: alertmanager.service.j2
+  ansible.builtin.copy:
+    src: alertmanager.service
     dest: /etc/systemd/system/alertmanager.service
   notify:
     - daemon-reload

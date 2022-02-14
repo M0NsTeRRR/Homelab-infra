@@ -41,8 +41,8 @@
   when: '"br_netfilter" not in status_br_netfilter.stdout'
 
 - name: Enable the br_netfilter module at boot
-  ansible.builtin.template:
-    src: br_netfilter.conf.j2
+  ansible.builtin.copy:
+    src: br_netfilter.conf
     dest: /etc/modprobe.d/br_netfilter.conf
 
 - name: Add kubernetes Apt signing key

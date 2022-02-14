@@ -56,8 +56,8 @@
   notify: restart wireguard-exporter.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: wireguard-exporter.service.j2
+  ansible.builtin.copy:
+    src: wireguard-exporter.service
     dest: /etc/systemd/system/wireguard-exporter.service
   notify:
     - daemon-reload

@@ -46,15 +46,15 @@
     dest: /opt/netbox-sync/settings.ini
 
 - name: Configure netbox-sync.service
-  ansible.builtin.template:
-    src: netbox-sync.service.j2
+  ansible.builtin.copy:
+    src: netbox-sync.service
     dest: /etc/systemd/system/netbox-sync.service
   notify:
     - daemon-reload
 
 - name: Configure netbox-sync.timer
-  ansible.builtin.template:
-    src: netbox-sync.timer.j2
+  ansible.builtin.copy:
+    src: netbox-sync.timer
     dest: /etc/systemd/system/netbox-sync.timer
   notify:
     - daemon-reload

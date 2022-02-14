@@ -60,8 +60,8 @@
   when: not nginx_exporter.stat.exists or nginx_exporter_force_install
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: nginx-exporter.service.j2
+  ansible.builtin.copy:
+    src: nginx-exporter.service
     dest: /etc/systemd/system/nginx-exporter.service
   notify:
     - daemon-reload

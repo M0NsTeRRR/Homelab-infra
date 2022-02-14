@@ -51,8 +51,8 @@
   notify: restart snmp-exporter.service
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: snmp-exporter.service.j2
+  ansible.builtin.copy:
+    src: snmp-exporter.service
     dest: /etc/systemd/system/snmp-exporter.service
   notify:
     - daemon-reload

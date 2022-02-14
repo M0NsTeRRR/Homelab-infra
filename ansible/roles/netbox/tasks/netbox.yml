@@ -109,8 +109,8 @@
     chdir: /opt/netbox/netbox/
 
 - name: Configure gunicorn
-  ansible.builtin.template:
-    src: gunicorn.py.j2
+  ansible.builtin.copy:
+    src: gunicorn.py
     dest: /opt/netbox/gunicorn.py
   notify:
     - restart netbox.service

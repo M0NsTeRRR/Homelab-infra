@@ -20,8 +20,8 @@
     virtualenv: /opt/kea_exporter/venv
 
 - name: Create systemd service file
-  ansible.builtin.template:
-    src: kea-exporter.service.j2
+  ansible.builtin.copy:
+    src: kea-exporter.service
     dest: /etc/systemd/system/kea-exporter.service
   notify:
     - daemon-reload
