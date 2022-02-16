@@ -44,6 +44,7 @@
       - { regexp: '^(#)?transport_email_use_tls =', line: 'transport_email_use_tls = {{ graylog_transport_email_use_tls }}' }
       - { regexp: '^(#)?transport_email_use_ssl =', line: 'transport_email_use_ssl = {{ graylog_transport_email_use_ssl }}' }
       - { regexp: '^(#)?transport_email_web_interface_url =', line: 'transport_email_web_interface_url = https://{{ ansible_hostname }}' }
+      - { regexp: '^(#)?mongodb_uri =', line: 'mongodb_uri = mongodb://{{ graylog_mongodb_username }}:{{ graylog_mongodb_password }}@localhost/graylog' }
   notify: restart graylog-server
 
 - name: Create /etc/graylog/ssl folder

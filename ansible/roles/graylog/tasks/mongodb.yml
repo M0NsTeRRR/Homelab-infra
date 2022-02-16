@@ -1,4 +1,9 @@
 ---
+- name: Install required packages
+  ansible.builtin.apt:
+    name: pymongo
+    state: present
+
 - name: Add mongodb Apt signing key
   ansible.builtin.apt_key:
     id: 20691EEC35216C63CAF66CE1656408E390CFB1F5
@@ -18,6 +23,25 @@
     name: "mongodb-org{% if graylog_mongodb_version is defined %}={{ graylog_mongodb_version }}{% endif %}"
     update_cache: yes
     state: "{{ graylog_mongodb_package_state }}"
+  notify:
+    - enable mongod
+    - restart mongod
+
+- name: Create mongodb user
+  community.mongodb.mongodb_user:
+    database: graylog
+    name: "{{ graylog_mongodb_username }}"
+    password: "{{ graylog_mongodb_password }}"
+    roles: readWrite,dbAdmin
+    state: present
+  notify:
+    - enable mongod
+    - restart mongod
+
+- name: Create mongod.conf
+  ansible.builtin.copy:
+    src: mongod.conf
+    dest: /etc/mongod.conf
   notify:
     - enable mongod
     - restart mongod
