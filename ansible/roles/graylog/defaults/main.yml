@@ -23,6 +23,8 @@ graylog_transport_email_subject_prefix: '[graylog]'
 graylog_transport_email_from_email: graylog@example.com
 graylog_transport_email_use_tls: true
 graylog_transport_email_use_ssl: false
+graylog_mongodb_username: graylog
+graylog_mongodb_password: password
 
 graylog_local_path_ca_certificate: /etc/ssl/ca.crt
 graylog_local_path_certificate: /etc/ssl/client.pem
