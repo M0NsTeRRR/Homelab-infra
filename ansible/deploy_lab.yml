@@ -8,7 +8,6 @@
     - exporter_exporter
     - self_signed_cert
 
----
 - name: Configure MDNS server
   hosts: mdns
   become: yes
