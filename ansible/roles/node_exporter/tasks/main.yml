@@ -2,7 +2,7 @@
 - name: Create node_exporter folder
   ansible.builtin.file:
     state: directory
-    name: /opt/node_exporter
+    name: /opt/node_exporter/textfile_collector
 
 - name: Check if node-exporter is already installed
   ansible.builtin.stat:

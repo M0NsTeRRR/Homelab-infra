@@ -5,7 +5,8 @@ After=network-online.target
 [Service]
 Type=simple
 ExecStart=/usr/local/bin/node-exporter \
-    --web.listen-address="localhost:9100"
+    --web.listen-address="localhost:9100" \
+    --collector.textfile.directory="/opt/node_exporter/textfile_collector"
 RestartSec=10
 Restart=always
 
