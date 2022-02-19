@@ -1,0 +1,78 @@
+---
+- name: Add runrestic group
+  ansible.builtin.group:
+    name: runrestic
+    system: yes
+    state: present
+
+- name: Add runrestic user
+  ansible.builtin.user:
+    name: runrestic
+    system: yes
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: runrestic
+
+- name: Create runrestic build directory
+  ansible.builtin.file:
+    dest: /opt/runrestic/
+    state: directory
+    owner: runrestic
+    group: runrestic
+
+- name: Install restic
+  ansible.builtin.apt:
+    name: "restic{% if runrestic_restic_version is defined %}={{ runrestic_restic_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ runrestic_restic_package_state }}"
+
+- name: Install pip3
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+
+- name: Install virtualenv
+  ansible.builtin.pip:
+    name: virtualenv
+
+- name: Install runrestic
+  ansible.builtin.pip:
+    name: "runrestic{% if runrestic_version is defined %}={{ runrestic_version }}{% endif %}"
+    state: "{{ runrestic_package_state }}"
+    virtualenv: /opt/runrestic/venv
+
+- name: Create runrestic configuration directory
+  ansible.builtin.file:
+    dest: /etc/runrestic/
+    state: directory
+    owner: runrestic
+    group: runrestic
+
+- name: Configure runrestic
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "/etc/runrestic/{{ item.runrestic_name | lower | replace(' ', '_') }}.toml"
+    owner: runrestic
+    group: runrestic
+  with_items: runrestic_configs
+  notify: restart runrestic.service
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: runrestic.service
+    dest: /etc/systemd/system/runrestic@.service
+  register: runrestic_service
+  notify:
+    - daemon-reload
+    - enable runrestic@.service
+
+- name: Create systemd timer file
+  ansible.builtin.copy:
+    src: runrestic.timer
+    dest: /etc/systemd/system/runrestic@.timer
+  register: runrestic_timer
+  notify:
+    - daemon-reload
+    - enable runrestic@.timer
+    - enable runrestic@instance.timer
+    - restart runrestic@instance.timer

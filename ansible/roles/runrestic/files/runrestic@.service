@@ -1,0 +1,13 @@
+[Unit]
+Description=runrestic allows you to backup datas
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=runrestic
+Group=runrestic
+RemainAfterExit=true
+ExecStart=/opt/runrestic/venv/bin/runrestic \
+    -c /etc/runrestic/%i.toml
+[Install]
+WantedBy=multi-user.target

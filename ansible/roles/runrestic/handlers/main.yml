@@ -1,0 +1,26 @@
+---
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: enable runrestic@.service
+  ansible.builtin.systemd:
+    name: runrestic@.service
+    enabled: yes
+
+- name: enable runrestic@.timer
+  ansible.builtin.systemd:
+    name: runrestic@.timer
+    enabled: yes
+
+- name: enable runrestic@instance.timer
+  ansible.builtin.systemd:
+    name: "runrestic@{{ item.runrestic_name | lower | replace(' ', '_') }}.timer"
+    enabled: yes
+  with_items: runrestic_config
+
+- name: restart runrestic@instance.timer
+  ansible.builtin.systemd:
+    name: "runrestic@{{ item.runrestic_name | lower | replace(' ', '_') }}.timer"
+    state: restarted
+  with_items: runrestic_config

@@ -1,0 +1,62 @@
+name = "{{ item.name }}"
+
+repositories = [
+    {% for repository in item.repositories %}
+    {{ repository }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+]
+
+[execution]
+parallel = true
+retry_count = 10
+retry_backoff = "1:00 exponential"
+
+[environment]
+RESTIC_PASSWORD = "{{ item.password }}"
+
+[backup]
+sources = [
+    {% for source in item.sources %}
+    {{ source }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+]
+
+exclude_patterns = [
+    {% for exclude in item.exclude_patterns %}
+    {{ exclude }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+]
+exclude_files = [
+    {% for exclude in item.exclude_files %}
+    {{ exclude }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+]
+exclude_if_present = [
+    {% for exclude in item.exclude_if_present %}
+    {{ exclude }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+]
+
+pre_hooks = [
+    {% for hook in item.pre_hooks %}
+    {{ hook }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+]
+post_hooks = [
+    {% for hook in item.post_hooks %}
+    {{ hook }}{% if not loop.last %},{% endif %}
+    {% endfor %}
+]
+
+[prune]
+keep-last =  3
+keep-hourly =  5
+keep-weekly = 10
+keep-monthly = 30
+group-by = "host,paths"
+
+[check]
+checks = ["check-unused", "read-data"]
+
+[metrics.prometheus]
+path = "/opt/node_exporter/textfile_collector/runrestic_{{ item.name | lower | replace(' ', '_') }}.prom"

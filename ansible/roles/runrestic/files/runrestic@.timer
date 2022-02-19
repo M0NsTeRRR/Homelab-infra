@@ -1,0 +1,11 @@
+[Unit]
+Description=Run runrestic backup
+
+[Timer]
+Unit=runrestic@%i.service
+OnBootSec=5min
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
