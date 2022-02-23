@@ -11,6 +11,9 @@ consul[1:3].unicornafk.fr
 [reverse_proxy]
 reverse-proxy.unicornafk.fr
 
+[oxidized]
+oxidized.unicornafk.fr
+
 [ipam]
 ipam.unicornafk.fr
 

@@ -1,0 +1,14 @@
+---
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: restart oxidized.service
+  ansible.builtin.systemd:
+    name: oxidized.service
+    state: restarted
+
+- name: enable oxidized.service
+  ansible.builtin.systemd:
+    name: oxidized.service
+    enabled: yes

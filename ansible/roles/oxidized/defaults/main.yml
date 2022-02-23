@@ -1,0 +1,11 @@
+---
+oxidized_version: 0.28.0
+oxidized_script_version: 0.6.0
+oxidized_web_version: 0.13.1
+oxidized_username:
+oxidized_password:
+oxidized_routers: []
+
+# oxidized_routers:
+#   - name: router1.local
+#     model: ios

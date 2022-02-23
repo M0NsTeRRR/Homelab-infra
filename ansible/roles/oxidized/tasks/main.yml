@@ -1,0 +1,76 @@
+---
+- name: Add oxidized group
+  ansible.builtin.group:
+    name: oxidized
+    system: yes
+    state: present
+
+- name: Add oxidized user
+  ansible.builtin.user:
+    name: oxidized
+    system: yes
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: oxidized
+
+- name: Add universe Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
+    state: present
+
+- name: Install required packages by Docker
+  ansible.builtin.apt:
+    pkg:
+      - ruby
+      - ruby-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - pkg-config
+      - cmake
+      - libssh2-1-dev
+      - libicu-dev
+      - zlib1g-dev
+      - g++
+    update_cache: yes
+    state: present
+
+- name: Install oxidized
+  community.general.gem:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - { name: oxidized, version: "{{ oxidized_version }}" }
+    - { name: oxidized-script, version: "{{ oxidized_script_version }}" }
+    - { name: oxidized-web, version: "{{ oxidized_web_version }}" }
+
+- name: Create oxidized config directory
+  ansible.builtin.file:
+    dest: /etc/oxidized
+    state: directory
+    owner: oxidized
+    group: oxidized
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: oxidized.service
+    dest: /etc/systemd/system/oxidized.service
+  notify:
+    - daemon-reload
+    - enable oxidized.service
+    - restart oxidized.service
+
+- name: Configure oxidized
+  ansible.builtin.template:
+    src: config.j2
+    dest: /etc/oxidized/config
+    owner: oxidized
+    group: oxidized
+  notify: restart oxidized.service
+
+- name: Configure router database
+  ansible.builtin.template:
+    src: router.db.j2
+    dest: /etc/oxidized/router.db
+    owner: oxidized
+    group: oxidized
+  notify: restart oxidized.service

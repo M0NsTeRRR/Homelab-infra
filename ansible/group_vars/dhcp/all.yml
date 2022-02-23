@@ -68,6 +68,9 @@ kea_ipv4_subnets:
       - hostname: xiaomi-light-bar
         hw_address: b4:60:ed:45:50:00
         ip_address: 192.168.50.114
+      - hostname: xiaomi-led-chambre1
+        hw_address: 58:b6:23:ed:62:ce
+        ip_address: 192.168.50.115
   - subnet: 192.168.60.0/24
     pools:
       - start: 192.168.60.201
@@ -140,6 +143,9 @@ kea_ipv6_subnets:
       - hostname: xiaomi-light-bar
         hw_address: b4:60:ed:45:50:00
         ip_address: 2a0c:b641:02c0:150::114
+      - hostname: xiaomi-led-chambre1
+        hw_address: 58:b6:23:ed:62:ce
+        ip_address: 2a0c:b641:02c0:150::115
   - subnet: 2a0c:b641:02c0:160::/64
     pools:
       - start: 2a0c:b641:02c0:160::201

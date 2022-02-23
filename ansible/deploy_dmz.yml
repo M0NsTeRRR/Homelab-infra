@@ -35,6 +35,12 @@
     - nut
     - nut_exporter
 
+- name: Configure Oxidized
+  hosts: git
+  become: yes
+  roles:
+    - oxidized
+
 - name: Configure Git
   hosts: git
   become: yes
