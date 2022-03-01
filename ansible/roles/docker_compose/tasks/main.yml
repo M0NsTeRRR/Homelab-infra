@@ -1,0 +1,17 @@
+---
+- name: Check if docker-compose is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/docker-compose
+  register: docker_compose
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{{ ansible_architecture }}"
+  when: not docker_compose.stat.exists or docker_compose
+
+- name: Download last version of docker-compose
+  ansible.builtin.get_url:
+    url: "https://github.com/docker/compose/releases/download/v{{ docker_compose_version }}/docker-compose-{{ ansible_system | lower }}-{{ arch }}"
+    dest: /usr/local/bin/docker-compose
+    mode: 0700
+  when: not docker_compose.stat.exists or docker_compose_force_install

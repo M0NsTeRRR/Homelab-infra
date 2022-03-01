@@ -29,9 +29,9 @@
 
 - name: Install docker-ce-cli
   ansible.builtin.apt:
-    name: "docker-ce-cli{% if docker_ce_cli_package_state_version is defined %}={{ docker_ce_cli_package_state_version }}{% endif %}"
+    name: "docker-ce-cli{% if docker_ce_cli_version is defined %}={{ docker_ce_cli_version }}{% endif %}"
     update_cache: yes
-    state: "{{ docker_ce_cli_package_state_package_state }}"
+    state: "{{ docker_ce_cli_package_state }}"
 
 - name: Install containerd.io
   ansible.builtin.apt:
