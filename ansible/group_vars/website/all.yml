@@ -65,10 +65,8 @@ self_signed_certs:
     admin_email: "{{ admin_email }}"
     ca_cert_local_path: "{{ certs_dir_role_path }}ca.crt"
     ca_private_local_path: "{{ certs_dir_role_path }}ca.pem"
-    cert_remote_folder_path:
-      - /etc/nginx/ssl
-    private_key_remote_folder_path:
-      - /etc/nginx/ssl
+    cert_remote_folder:
+      - { path: /etc/nginx/ssl, owner: root, group: root }
     owner: root
     group: root
     ownca_not_after: +90d

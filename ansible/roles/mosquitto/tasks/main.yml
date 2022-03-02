@@ -1,0 +1,85 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "8883"
+    proto: tcp
+
+- name: Add mosquitto group
+  ansible.builtin.group:
+    name: mosquitto
+    system: yes
+    state: present
+
+- name: Add mosquitto user
+  ansible.builtin.user:
+    name: mosquitto
+    system: yes
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: mosquitto
+
+- name: Install mosquitto
+  ansible.builtin.apt:
+    name: "mosquitto{% if mosquitto_version is defined %}={{ mosquitto_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ mosquitto_package_state }}"
+  notify: enable mosquitto
+
+- name: Create mosquitto ssl folder
+  ansible.builtin.file:
+    state: directory
+    name: /etc/mosquitto/ssl
+    owner: mosquitto
+    group: mosquitto
+
+- name: Add CA cert
+  ansible.builtin.template:
+    src: "{{ mosquitto_local_path_ca_certificate }}"
+    dest: /etc/mosquitto/ssl/ca.crt
+    owner: mosquitto
+    group: mosquitto
+  notify: restart mosquitto.service
+
+- name: Copy certificate to remote location
+  ansible.builtin.copy:
+    src: "{{ mosquitto_local_path_certificate }}"
+    dest: /etc/mosquitto/ssl/client.crt
+    owner: zigbee2mqtt
+    group: zigbee2mqtt
+  notify: restart mosquitto.service
+
+- name: Copy certificate key to remote location
+  ansible.builtin.copy:
+    src: "{{ mosquitto_local_path_certificate_key }}"
+    dest: /etc/mosquitto/ssl/client.pem
+    owner: zigbee2mqtt
+    group: zigbee2mqtt
+  notify: restart mosquitto.service
+
+- name: Create mosquitto.conf
+  ansible.builtin.copy:
+    src: mosquitto.conf
+    dest: /etc/mosquitto/conf.d/mosquitto.conf
+    owner: mosquitto
+    group: mosquitto
+  notify: restart mosquitto.service
+
+- name: Change ownership to mosquitto
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: mosquitto
+    group: mosquitto
+  with_items:
+   - /var/lib/mosquitto
+   - /etc/mosquitto
+  notify: restart mosquitto.service
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: mosquitto.service
+    dest: /etc/systemd/system/mosquitto.service
+  notify:
+    - daemon-reload
+    - enable mosquitto.service
+    - restart mosquitto.service

@@ -65,5 +65,8 @@ master[1:3].dmz.unicornafk.fr
 [worker]
 worker[1:3].dmz.unicornafk.fr
 
+[zigbee2mqtt]
+pi1.unicornafk.fr
+
 [ups]
 pi1.unicornafk.fr

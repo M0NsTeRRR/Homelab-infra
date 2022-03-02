@@ -1,0 +1,6 @@
+---
+# mosquitto_version:
+mosquitto_package_state: latest
+mosquitto_local_path_ca_certificate: '/etc/ssl/ca.crt'
+mosquitto_local_path_certificate: '/etc/ssl/client.crt'
+mosquitto_local_path_certificate_key: '/etc/ssl/client.pem'
