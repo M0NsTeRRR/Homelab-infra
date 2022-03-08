@@ -41,25 +41,9 @@
     group: mosquitto
   notify: restart mosquitto.service
 
-- name: Copy certificate to remote location
-  ansible.builtin.copy:
-    src: "{{ mosquitto_local_path_certificate }}"
-    dest: /etc/mosquitto/ssl/client.crt
-    owner: zigbee2mqtt
-    group: zigbee2mqtt
-  notify: restart mosquitto.service
-
-- name: Copy certificate key to remote location
-  ansible.builtin.copy:
-    src: "{{ mosquitto_local_path_certificate_key }}"
-    dest: /etc/mosquitto/ssl/client.pem
-    owner: zigbee2mqtt
-    group: zigbee2mqtt
-  notify: restart mosquitto.service
-
 - name: Create mosquitto.conf
-  ansible.builtin.copy:
-    src: mosquitto.conf
+  ansible.builtin.template:
+    src: mosquitto.conf.j2
     dest: /etc/mosquitto/conf.d/mosquitto.conf
     owner: mosquitto
     group: mosquitto

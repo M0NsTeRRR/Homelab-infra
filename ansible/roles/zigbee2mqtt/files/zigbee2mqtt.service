@@ -1,0 +1,15 @@
+[Unit]
+Description=zigbee2mqtt
+After=network.target
+
+[Service]
+Type=simple
+User=zigbee2mqtt
+Group=zigbee2mqtt
+ExecStart=/usr/bin/npm start
+WorkingDirectory=/opt/zigbee2mqtt
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

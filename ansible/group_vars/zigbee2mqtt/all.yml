@@ -1,0 +1,29 @@
+---
+nodejs_version: 12
+nodejs_package_state: latest
+mosquitto_local_path_ca_certificate: '{{ certs_dir }}ca.crt'
+zigbee2mqtt_ssl_ca_local_path: '{{ certs_dir }}ca.crt'
+zigbee2mqtt_ssl_client_cert_local_path: '{{ certs_dir }}mosquitto/client.crt'
+zigbee2mqtt_ssl_client_key_local_path: '{{ certs_dir }}mosquitto/client.pem'
+
+self_signed_certs:
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ certs_dir_role_path }}ca.crt"
+    ca_private_local_path: "{{ certs_dir_role_path }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/mosquitto/ssl, owner: mosquitto, group: mosquitto }
+    owner: mosquitto
+    group: mosquitto
+    ownca_not_after: +3650d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - mosquitto
+    force_renew: false
+    tlsa:
+      - proto: tcp
+        port: 8883
+        pdns_zone: "{{ inventory_hostname.split('.')[-2:] | join('.') }}"

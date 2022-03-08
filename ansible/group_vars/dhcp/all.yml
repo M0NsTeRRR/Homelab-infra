@@ -120,7 +120,7 @@ kea_ipv6_subnets:
         hw_address: 44:5c:e9:9d:8b:28
         ip_address: 2a0c:b641:02c0:150::91
       - hostname: nvidia-shield
-        hw_address: 48:b0:2d:2c:15:69
+        hw_address: 48:b0:2d:2d:9c:09
         ip_address: 2a0c:b641:02c0:150::92
       - hostname: hs110-rack1
         hw_address: 98:DA:C4:BE:E8:89

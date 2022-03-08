@@ -1,0 +1,19 @@
+mqtt:
+  base_topic: '{{ zigbee2mqtt_mqtt_base_topic }}'
+  server: '{{ zigbee2mqtt_mqtt_server }}'
+  ca: '/opt/zigbee2mqtt/data/ca.crt'
+  cert: '/opt/zigbee2mqtt/data/client.crt'
+  key: '/opt/zigbee2mqtt/data/client.pem'
+
+serial:
+  port: /dev/ttyACM0
+
+permit_join: false
+
+homeassistant: true
+
+advanced:
+  network_key: '!secret network_key'
+  log_output:
+    - console
+    - syslog

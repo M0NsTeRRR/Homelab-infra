@@ -1,0 +1,10 @@
+---
+zigbee2mqtt_version: 1.24.0
+zigbee2mqtt_force_install: false
+
+zigbee2mqtt_mqtt_base_topic: zigbee2mqtt
+zigbee2mqtt_mqtt_server: 'mqtts://localhost'
+zigbee2mqtt_ssl_ca_local_path: '/etc/ssl/certs/ca.crt'
+zigbee2mqtt_ssl_client_cert_local_path: '/etc/ssl/certs/client.crt'
+zigbee2mqtt_ssl_client_key_local_path: '/etc/ssl/certs/client.pem'
+zigbee2mqtt_network_key: [ 1, 3, 5, 7, 9, 11, 13, 15, 0, 2, 4, 6, 8, 10, 12, 13 ]

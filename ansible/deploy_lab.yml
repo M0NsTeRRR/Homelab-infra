@@ -8,6 +8,15 @@
     - exporter_exporter
     - self_signed_cert
 
+- name: Configure zigbee2mqtt server
+  hosts: zigbee2mqtt
+  become: yes
+  roles:
+    - nodejs
+    - mosquitto
+    - zigbee2mqtt
+    - self_signed_cert
+
 - name: Configure MDNS server
   hosts: mdns
   become: yes

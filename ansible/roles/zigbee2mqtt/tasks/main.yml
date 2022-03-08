@@ -1,0 +1,107 @@
+---
+- name: Add zigbee2mqtt group
+  ansible.builtin.group:
+    name: zigbee2mqtt
+    system: yes
+    state: present
+
+- name: Add zigbee2mqtt user
+  ansible.builtin.user:
+    name: zigbee2mqtt
+    system: yes
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: zigbee2mqtt
+    groups:
+      - dialout
+
+- name: Install required packages
+  ansible.builtin.apt:
+    name:
+      - git
+      - make
+      - g++
+      - gcc
+    state: present
+
+- name: Create zigbee2mqtt folder
+  ansible.builtin.file:
+    state: directory
+    name: /opt/zigbee2mqtt
+
+- name: Check if zigbee2mqtt is already installed
+  ansible.builtin.stat:
+    path: /opt/zigbee2mqtt/data/configuration.yaml
+  register: zigbee2mqtt
+
+- name: "Download zigbee2mqtt version {{ zigbee2mqtt_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/Koenkk/zigbee2mqtt/archive/{{ zigbee2mqtt_version }}.tar.gz"
+    dest: /tmp/zigbee2mqtt.tar.gz
+  when: not zigbee2mqtt.stat.exists or zigbee2mqtt_force_install
+
+- name: Extract zigbee2mqtt files
+  ansible.builtin.unarchive:
+    src: /tmp/zigbee2mqtt.tar.gz
+    dest: /opt/zigbee2mqtt
+    owner: zigbee2mqtt
+    group: zigbee2mqtt
+    remote_src: yes
+    list_files: yes
+    extra_opts: ['--strip-components=1']
+  when: not zigbee2mqtt.stat.exists or zigbee2mqtt_force_install
+
+- name: Run npm ci
+  community.general.npm:
+    ci: yes
+    path: /opt/zigbee2mqtt
+  become_user: zigbee2mqtt
+  when: not zigbee2mqtt.stat.exists or zigbee2mqtt_force_install
+
+- name: Change ownership to zigbee2mqtt
+  ansible.builtin.file:
+    path: /opt/zigbee2mqtt
+    owner: zigbee2mqtt
+    group: zigbee2mqtt
+
+- name: Add CA cert
+  ansible.builtin.template:
+    src: "{{ zigbee2mqtt_ssl_ca_local_path }}"
+    dest: /opt/zigbee2mqtt/data/ca.crt
+    owner: zigbee2mqtt
+    group: zigbee2mqtt
+  notify: restart zigbee2mqtt.service
+
+- name: Add client.crt
+  ansible.builtin.template:
+    src: "{{ zigbee2mqtt_ssl_client_cert_local_path }}"
+    dest: /opt/zigbee2mqtt/data/client.crt
+    owner: zigbee2mqtt
+    group: zigbee2mqtt
+  notify: restart zigbee2mqtt.service
+
+- name: Add client.pem
+  ansible.builtin.template:
+    src: "{{ zigbee2mqtt_ssl_client_key_local_path }}"
+    dest: /opt/zigbee2mqtt/data/client.pem
+    owner: zigbee2mqtt
+    group: zigbee2mqtt
+  notify: restart zigbee2mqtt.service
+
+- name: Configure zigbee2mqtt
+  ansible.builtin.template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: 'configuration.yaml.j2', dest: '/opt/zigbee2mqtt/data/configuration.yaml' }
+    - { src: 'secret.yaml.j2', dest: '/opt/zigbee2mqtt/data/secret.yaml' }
+  notify: restart zigbee2mqtt.service
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: zigbee2mqtt.service
+    dest: /etc/systemd/system/zigbee2mqtt.service
+  notify:
+    - daemon-reload
+    - enable zigbee2mqtt.service
+    - restart zigbee2mqtt.service
