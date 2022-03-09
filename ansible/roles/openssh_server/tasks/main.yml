@@ -1,4 +1,10 @@
 ---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+
 - name: Install openssh-server
   ansible.builtin.apt:
     name: "openssh-server{% if openssh_server_version is defined %}={{ openssh_server_version }}{% endif %}"

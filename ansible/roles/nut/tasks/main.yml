@@ -1,4 +1,10 @@
 ---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "3493"
+    proto: tcp
+
 - name: Add nut group
   ansible.builtin.group:
     name: nut

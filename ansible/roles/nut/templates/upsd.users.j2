@@ -1,6 +1,6 @@
 {% for user in nut_users %}
 [{{ user.name }}]
     password = {{ user.password }}
-    actions = {{ user.actions }}
-    instcmds = {{ user.instcmds }}
+    {% if user.actions is defined %}actions = {{ user.actions }}{% endif %}
+    {% if user.instcmds is defined %}instcmds = {{ user.instcmds }}{% endif %}
 {% endfor %}
