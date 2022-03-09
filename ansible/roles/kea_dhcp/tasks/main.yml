@@ -70,7 +70,7 @@
     state: directory
 
 - name: Add CA cert
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ kea_local_path_ca_certificate }}"
     dest: /etc/kea/ssl/ca.crt
   notify: 

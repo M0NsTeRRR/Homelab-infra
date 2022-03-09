@@ -65,7 +65,7 @@
     group: zigbee2mqtt
 
 - name: Add CA cert
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ zigbee2mqtt_ssl_ca_local_path }}"
     dest: /opt/zigbee2mqtt/data/ca.crt
     owner: zigbee2mqtt
@@ -73,7 +73,7 @@
   notify: restart zigbee2mqtt.service
 
 - name: Add client.crt
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ zigbee2mqtt_ssl_client_cert_local_path }}"
     dest: /opt/zigbee2mqtt/data/client.crt
     owner: zigbee2mqtt
@@ -81,7 +81,7 @@
   notify: restart zigbee2mqtt.service
 
 - name: Add client.pem
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ zigbee2mqtt_ssl_client_key_local_path }}"
     dest: /opt/zigbee2mqtt/data/client.pem
     owner: zigbee2mqtt

@@ -6,11 +6,6 @@
     state: "{{ rsyslog_gnutls_package_state }}"
 
 - name: Copy certificate to remote location
-  ansible.builtin.file:
-    path: /etc/rsyslog.d/ssl/client.crt
-    state: directory
-
-- name: Copy certificate to remote location
   ansible.builtin.copy:
     src: "{{ rsyslog_local_path_certificate }}"
     dest: /etc/rsyslog.d/ssl/client.crt

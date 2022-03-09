@@ -62,7 +62,7 @@
     - /etc/caddy/conf.d
 
 - name: Add CA cert
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ caddy_exporter_local_path_client_certificate }}"
     dest: /etc/caddy/ssl/client.crt
     owner: caddy

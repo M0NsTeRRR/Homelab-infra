@@ -79,10 +79,10 @@
     - { "host": "{{ inventory_hostname }}", "path": "/home/{{ ansible_user }}/kubeadm-config.yaml"}
 
 - name: Clean files on localhost
-  become: no
   ansible.builtin.file:
     path: /tmp/pki.tgz
     state: absent
+  become: no
   delegate_to: localhost
 
 - name: Copy admin.conf on localhost

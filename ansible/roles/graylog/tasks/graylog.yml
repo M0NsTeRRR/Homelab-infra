@@ -53,28 +53,28 @@
     name: /etc/graylog/ssl
 
 - name: Add ca.crt
-  copy:
+  ansible.builtin.copy:
     src: "{{ graylog_local_path_ca_certificate }}"
     dest: /etc/graylog/ssl/ca.crt
   notify: restart graylog-server
 
 - name: Copy certificate to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ graylog_local_path_certificate }}"
     dest: /etc/graylog/ssl/client.crt
   notify: restart graylog-server
 
 - name: Copy certificate key to remote location
-  copy:
+  ansible.builtin.copy:
     src: "{{ graylog_local_path_certificate_key }}"
     dest: /etc/graylog/ssl/client.pem
   notify: restart graylog-server
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Wait graylog-server restart
-  uri:
+  ansible.builtin.uri:
     url: "https://{{ inventory_hostname }}"
     status_code: 200
     validate_certs: no

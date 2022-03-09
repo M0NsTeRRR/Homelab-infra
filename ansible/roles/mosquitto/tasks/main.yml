@@ -34,7 +34,7 @@
     group: mosquitto
 
 - name: Add CA cert
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ mosquitto_local_path_ca_certificate }}"
     dest: /etc/mosquitto/ssl/ca.crt
     owner: mosquitto

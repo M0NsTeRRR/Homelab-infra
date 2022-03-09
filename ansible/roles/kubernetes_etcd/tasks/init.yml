@@ -81,9 +81,9 @@
   with_items: "{{ ansible_play_hosts }} + {{ ansible_play_hosts | map('regex_replace', '(.*)', '\\1.tgz') | list }}"
 
 - name: Clean files on localhost
-  become: no
   ansible.builtin.file:
     path: /tmp/{{ item }}
     state: absent
+  become: no
   delegate_to: localhost
   with_items: "{{ ansible_play_hosts | map('regex_replace', '(.*)', '\\1.tgz') | list }}"

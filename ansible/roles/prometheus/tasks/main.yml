@@ -98,7 +98,7 @@
     group: prometheus
 
 - name: Add ca.crt
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ prometheus_ssl_ca_local_path }}"
     dest: /etc/prometheus/ssl/ca.crt
     owner: prometheus
@@ -106,7 +106,7 @@
   notify: restart prometheus.service
 
 - name: Add client.crt
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ prometheus_ssl_client_cert_local_path }}"
     dest: /etc/prometheus/ssl/client.crt
     owner: prometheus
@@ -114,7 +114,7 @@
   notify: restart prometheus.service
 
 - name: Add client.pem
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ prometheus_ssl_client_key_local_path }}"
     dest: /etc/prometheus/ssl/client.pem
     owner: prometheus

@@ -73,7 +73,7 @@
     - /etc/exporter_exporter/expexp.d
 
 - name: Add CA cert
-  ansible.builtin.template:
+  ansible.builtin.copy:
     src: "{{ exporter_exporter_local_path_ca_certificate }}"
     dest: /etc/exporter_exporter/ssl/ca.crt
     owner: exporter-exporter

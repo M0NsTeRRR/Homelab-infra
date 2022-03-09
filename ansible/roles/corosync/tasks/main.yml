@@ -62,10 +62,10 @@
   notify: restart corosync
 
 - name: Cleaning /tmp/authkey file for security reason
-  become: no
   ansible.builtin.file:
     path: /tmp/authkey
     state: absent
+  become: no
   delegate_to: localhost
 
 - name: Configure corosync
