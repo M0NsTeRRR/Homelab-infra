@@ -214,6 +214,10 @@ powerdns_authoritative_records:
     a: 192.168.50.115
     aaaa: 2a0c:b641:02c0:150::115
     rdns: true
+  - hostname: xiaomi-led-bar.unicornafk.fr.
+    a: 192.168.50.116
+    aaaa: 2a0c:b641:02c0:150::116
+    rdns: true
   - hostname: thomas.unicornafk.fr.
     a: 192.168.60.201
     aaaa: 2a0c:b641:02c0:160::201
