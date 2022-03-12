@@ -1,0 +1,14 @@
+---
+- name: daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: yes
+
+- name: restart bluetooth
+  ansible.builtin.systemd:
+    name: bluetooth
+    state: restarted
+
+- name: enable bluetooth
+  ansible.builtin.systemd:
+    name: bluetooth
+    enabled: yes

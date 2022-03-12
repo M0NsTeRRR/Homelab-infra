@@ -1,0 +1,34 @@
+---
+- name: Install bluetooth
+  ansible.builtin.apt:
+    name: "bluetooth{% if bluetooth_version is defined %}={{ bluetooth_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ bluetooth_package_state }}"
+  notify:
+    - daemon-reload
+    - enable bluetooth
+    - restart bluetooth
+
+- name: Install bluez
+  ansible.builtin.apt:
+    name: "bluez{% if bluetooth_bluez_version is defined %}={{ bluetooth_bluez_version }}{% endif %}"
+    update_cache: yes
+    state: "{{ bluetooth_bluez_package_state }}"
+
+- name: Create usercfg.txt
+  ansible.builtin.copy:
+    src: usercfg.txt.j2
+    dest: /boot/firmware/usercfg.txt
+  when: "{{ bluetooth_raspberrypi }}"
+
+- name: Attempting reboot
+  ansible.builtin.reboot:
+  async: 1200
+  poll: 0
+  when: "{{ bluetooth_raspberrypi }}"
+
+- name: Waiting for resurection
+  ansible.builtin.wait_for_connection:
+    delay: 60
+    timeout: 300
+  when: "{{ bluetooth_raspberrypi }}"

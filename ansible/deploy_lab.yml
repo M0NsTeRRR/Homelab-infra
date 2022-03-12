@@ -12,6 +12,7 @@
   hosts: zigbee2mqtt
   become: yes
   roles:
+    - bluetooth
     - nodejs
     - mosquitto
     - zigbee2mqtt

@@ -1,0 +1,6 @@
+---
+# bluetooth_version:
+bluetooth_package_state: latest
+# bluetooth_bluez_version:
+bluetooth_bluez_package_state: latest
+bluetooth_raspberrypi: true
