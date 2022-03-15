@@ -74,6 +74,12 @@ kea_ipv4_subnets:
       - hostname: xiaomi-led-bar
         hw_address: 58:b6:23:ed:8a:df
         ip_address: 192.168.50.116
+      - hostname: xiaomi-lamp-salon
+        hw_address: ec:4d:3e:56:b5:9d
+        ip_address: 192.168.50.117
+      - hostname: xiaomi-lamp-cuisine
+        hw_address: b4:60:ed:13:99:f9
+        ip_address: 192.168.50.118
   - subnet: 192.168.60.0/24
     pools:
       - start: 192.168.60.201
@@ -152,6 +158,12 @@ kea_ipv6_subnets:
       - hostname: xiaomi-led-bar
         hw_address: 58:b6:23:ed:8a:df
         ip_address: 2a0c:b641:02c0:150::116
+      - hostname: xiaomi-lamp-salon
+        hw_address: ec:4d:3e:56:b5:9d
+        ip_address: 2a0c:b641:02c0:150::117
+      - hostname: xiaomi-lamp-cuisine
+        hw_address: b4:60:ed:13:99:f9
+        ip_address: 2a0c:b641:02c0:150::118
   - subnet: 2a0c:b641:02c0:160::/64
     pools:
       - start: 2a0c:b641:02c0:160::201
