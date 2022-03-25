@@ -62,8 +62,8 @@ kea_ipv4_subnets:
       - hostname: xiaomi-vaccum
         hw_address: 64:90:c1:6a:f0:98
         ip_address: 192.168.50.112
-      - hostname: xiaomi-gateway
-        hw_address: 64:90:c1:7a:e2:c0
+      - hostname: xiaomi-bulb-salon
+        hw_address: EC:4D:3E:28:C2:23
         ip_address: 192.168.50.113
       - hostname: xiaomi-light-bar
         hw_address: b4:60:ed:45:50:00
@@ -80,6 +80,9 @@ kea_ipv4_subnets:
       - hostname: xiaomi-lamp-cuisine
         hw_address: b4:60:ed:13:99:f9
         ip_address: 192.168.50.118
+      - hostname: xiaomi-bulb-entree
+        hw_address: EC:4D:3E:2A:C7:18
+        ip_address: 192.168.50.119
   - subnet: 192.168.60.0/24
     pools:
       - start: 192.168.60.201
@@ -146,8 +149,8 @@ kea_ipv6_subnets:
       - hostname: xiaomi-vaccum
         hw_address: 64:90:c1:6a:f0:98
         ip_address: 2a0c:b641:02c0:150::112
-      - hostname: xiaomi-gateway
-        hw_address: 64:90:c1:7a:e2:c0
+      - hostname: xiaomi-bulb-salon
+        hw_address: EC:4D:3E:28:C2:23
         ip_address: 2a0c:b641:02c0:150::113
       - hostname: xiaomi-light-bar
         hw_address: b4:60:ed:45:50:00
@@ -164,6 +167,9 @@ kea_ipv6_subnets:
       - hostname: xiaomi-lamp-cuisine
         hw_address: b4:60:ed:13:99:f9
         ip_address: 2a0c:b641:02c0:150::118
+      - hostname: xiaomi-bulb-entree
+        hw_address: EC:4D:3E:2A:C7:18
+        ip_address: 2a0c:b641:02c0:150::119
   - subnet: 2a0c:b641:02c0:160::/64
     pools:
       - start: 2a0c:b641:02c0:160::201
