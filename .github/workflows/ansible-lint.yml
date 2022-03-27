@@ -22,4 +22,4 @@ jobs:
           ansible/playbooks/generate-certs.yml
           ansible/playbooks/lvm_resize.yml
           ansible/playbooks/utils.yml
-        args: "-x 204 -x 301 -x 305 -x 401"
+        args: "-i ansible/hosts -x 204 -x 301 -x 305 -x 401"
