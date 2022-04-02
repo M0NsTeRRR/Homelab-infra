@@ -1,6 +1,6 @@
 source "arm" "ubuntu" {
-  file_urls             = ["http://cdimage.ubuntu.com/releases/${var.version}/release/ubuntu-${var.version}-preinstalled-server-arm64+raspi.img.xz"]
-  file_checksum_url     = "http://cdimage.ubuntu.com/releases/${var.version}/release/SHA256SUMS"
+  file_urls             = ["https://cdimage.ubuntu.com/releases/${var.version}/release/ubuntu-${var.version}-preinstalled-server-arm64+raspi.img.xz"]
+  file_checksum_url     = "https://cdimage.ubuntu.com/releases/${var.version}/release/SHA256SUMS"
   file_checksum_type    = "sha256"
   file_target_extension = "xz"
   file_unarchive_cmd    = ["xz", "--decompress", "$ARCHIVE_PATH"]
@@ -34,7 +34,7 @@ build {
 
   provisioner "shell" {
     inline = [
-      "useradd -m -p ${var.password} -s /bin/bash ${var.username} -c ${var.fullname}",
+      "useradd -m -p ${var.password} -s /bin/bash ${var.username} -c '${var.fullname}'",
       "usermod -aG sudo ${var.username}",
       "touch /boot/ssh"
     ]

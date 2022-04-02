@@ -6,12 +6,12 @@ This is my Homelab infrastructure.
 
 # Requirements
 
-- Ansible (version >= 5.0.0)
+- Ansible core (version >= 2.12)
   - Python3 and Pip
-- Packer (version >= 1.7)
+- Packer (version >= 1.8)
   - Packer builder arm
 - Terraform (version >= 1.1)
-  - Terragrunt (version >= 0.35)
+  - Terragrunt (version >= 0.36)
 
 # Ansible
 
@@ -63,7 +63,7 @@ Supported distributions :
 
 **Raspberry Pi (v3/v4)**
 
-- Ubuntu (20.04.3) - [iso](https://cdimage.ubuntu.com/releases/20.04.3/release/ubuntu-20.04.3-preinstalled-server-arm64+raspi.img.xz)
+- Ubuntu (20.04.4) - [iso](https://cdimage.ubuntu.com/releases/20.04.4/release/ubuntu-20.04.4-preinstalled-server-arm64+raspi.img.xz)
 
 ### Create template
 

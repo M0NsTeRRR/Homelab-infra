@@ -50,7 +50,7 @@ do
       -var "username=$ssh_username" \
       -var "password=$ssh_new_password" \
       -timestamp-ui \
-      templates/raspi.pkr.hcl
+      templates/raspi
 		break
 		;;
   *)

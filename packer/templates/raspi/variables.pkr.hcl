@@ -16,5 +16,5 @@ variable "username" {
 
 variable "version" {
   type    = string
-  default = "20.04.3"
+  default = "20.04.4"
 }
