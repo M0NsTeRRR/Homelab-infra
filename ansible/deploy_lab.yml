@@ -8,6 +8,13 @@
     - exporter_exporter
     - self_signed_cert
 
+- name: Configure UPS
+  hosts: ups
+  become: yes
+  roles:
+    - nut
+    - nut_exporter
+
 - name: Configure zigbee2mqtt server
   hosts: zigbee2mqtt
   become: yes
