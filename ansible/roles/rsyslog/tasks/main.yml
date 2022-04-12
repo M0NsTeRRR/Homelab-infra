@@ -5,6 +5,11 @@
     update_cache: yes
     state: "{{ rsyslog_gnutls_package_state }}"
 
+- name: Create remote folder for certificates
+  ansible.builtin.file:
+    path: /etc/rsyslog.d/ssl
+    state: directory
+
 - name: Copy certificate to remote location
   ansible.builtin.copy:
     src: "{{ rsyslog_local_path_certificate }}"
