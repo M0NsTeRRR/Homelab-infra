@@ -24,7 +24,7 @@
     name: "mosquitto{% if mosquitto_version is defined %}={{ mosquitto_version }}{% endif %}"
     update_cache: yes
     state: "{{ mosquitto_package_state }}"
-  notify: enable mosquitto
+  notify: enable mosquitto.service
 
 - name: Create mosquitto ssl folder
   ansible.builtin.file:
