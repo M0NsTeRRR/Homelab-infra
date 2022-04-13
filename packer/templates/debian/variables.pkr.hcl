@@ -57,5 +57,15 @@ variable "distribution" {
 
 variable "version" {
   type    = string
-  default = "11.2.0"
+  default = "11.3.0"
+}
+
+variable "iso_url" {
+  type    = string
+  default = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-11.3.0-amd64-netinst.iso"
+}
+
+variable "iso_checksum" {
+  type    = string
+  default = "file:https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS"
 }

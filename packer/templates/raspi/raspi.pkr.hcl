@@ -1,6 +1,6 @@
 source "arm" "ubuntu" {
-  file_urls             = ["https://cdimage.ubuntu.com/releases/${var.version}/release/ubuntu-${var.version}-preinstalled-server-arm64+raspi.img.xz"]
-  file_checksum_url     = "https://cdimage.ubuntu.com/releases/${var.version}/release/SHA256SUMS"
+  file_urls             = [var.file_url]
+  file_checksum_url     = var.file_checksum_url
   file_checksum_type    = "sha256"
   file_target_extension = "xz"
   file_unarchive_cmd    = ["xz", "--decompress", "$ARCHIVE_PATH"]

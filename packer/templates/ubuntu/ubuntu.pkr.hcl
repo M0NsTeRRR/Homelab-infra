@@ -12,15 +12,12 @@ source "vsphere-iso" "ubuntu" {
   CPUs = 1
   RAM  = 1024
   boot_command = [
-    "<esc><wait>",
-    "<esc><wait>",
-    "<enter><wait>",
-    "/install/vmlinuz initrd=/install/initrd.gz",
-    " auto=true priority=critical",
-    " url=http://${var.host_ip}:{{ .HTTPPort }}/preseed.cfg",
-    "<enter>"
+    "<enter><enter><f6><esc><wait>",
+    " ip=${var.vm_ip}::${var.vm_gateway_ip}:${var.vm_netmask}::::${var.vm_dns_ip}",
+    " autoinstall ds=nocloud-net;seedfrom=http://${var.host_ip}:{{.HTTPPort}}/",
+    " --- <enter>"
   ]
-  boot_wait            = "10s"
+  boot_wait            = "5s"
   cluster              = "HA"
   convert_to_template  = "true"
   cpu_cores            = 1
@@ -33,27 +30,29 @@ source "vsphere-iso" "ubuntu" {
   http_port_max        = var.http_port
   http_port_min        = var.http_port
   http_content = {
-    "/preseed.cfg" = templatefile("../../preseed/ubuntu.cfg", { build_fullname = var.ssh_fullname, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted })
+    "/meta-data" = file("../../cloud-config/meta-data")
+    "/user-data" = templatefile("../../cloud-config/user-data", { build_fullname = var.ssh_fullname, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted })
   }
   insecure_connection = true
-  iso_checksum        = "file:http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/SHA256SUMS"
-  iso_url             = "http://cdimage.ubuntu.com/ubuntu-legacy-server/releases/20.04/release/ubuntu-${var.version}-legacy-server-amd64.iso"
+  iso_checksum        = var.iso_checksum
+  iso_url             = var.iso_url
+  remove_cdrom        = true
   network_adapters {
     network      = "LAB"
     network_card = "vmxnet3"
   }
   notes        = "${var.distribution}-${var.version}, generated on {{ isotime \"2006-01-02T15:04:05Z\" }}"
   password     = var.vcenter_password
+  ssh_username = var.ssh_username
   ssh_password = var.ssh_password
   ssh_timeout  = "30m"
-  ssh_username = var.ssh_username
   storage {
     disk_size             = 10000
     disk_thin_provisioned = true
   }
   username       = var.vcenter_username
   vcenter_server = var.vcenter_server
-  vm_name        = "packer-${var.distribution}"
+  vm_name        = "packer-${var.distribution}-${var.version}"
   vm_version     = 14
 }
 

@@ -32,8 +32,9 @@ source "vsphere-iso" "debian" {
     "/preseed.cfg" = templatefile("../../preseed/debian.cfg", { build_fullname = var.ssh_fullname, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted })
   }
   insecure_connection = true
-  iso_checksum        = "file:https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS"
-  iso_url             = "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-${var.version}-amd64-netinst.iso"
+  iso_checksum        = var.iso_checksum
+  iso_url             = var.iso_url
+  remove_cdrom        = true
   network_adapters {
     network      = "LAB"
     network_card = "vmxnet3"
@@ -49,7 +50,7 @@ source "vsphere-iso" "debian" {
   }
   username       = var.vcenter_username
   vcenter_server = var.vcenter_server
-  vm_name        = "packer-${var.distribution}"
+  vm_name        = "packer-${var.distribution}-${var.version}"
   vm_version     = 14
 }
 
