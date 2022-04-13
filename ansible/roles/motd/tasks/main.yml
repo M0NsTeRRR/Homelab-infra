@@ -2,7 +2,7 @@
 - name: Install required packages
   ansible.builtin.apt:
     name:
-      - update-notifier-common
+      - apt-config-auto-update
       - figlet
       - lolcat
     state: present
