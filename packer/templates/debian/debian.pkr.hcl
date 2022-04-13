@@ -39,7 +39,7 @@ source "vsphere-iso" "debian" {
     network      = "LAB"
     network_card = "vmxnet3"
   }
-  notes        = "${var.distribution}-${var.version}, generated on {{ isotime \"2006-01-02T15:04:05Z\" }}"
+  notes        = "${var.distribution}-${var.version}, generated on {{ timestamp }}"
   password     = var.vcenter_password
   ssh_password = var.ssh_password
   ssh_timeout  = "30m"
