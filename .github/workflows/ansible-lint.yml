@@ -7,19 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: copy .ansible-lint
+      shell: bash
+      run: |
+        cp ansible/.ansible-lint .
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@main
       with:
-        targets: |
-          ansible/deploy_dmz.yml
-          ansible/deploy_lab.yml
-          ansible/deploy_packer.yml
-          ansible/deploy_routing.yml
-          ansible/deploy_terraform.yml
-          ansible/deploy_vpn.yml
-          ansible/playbooks/add-ssh-keys.yml
-          ansible/playbooks/disable_slaac.yml
-          ansible/playbooks/generate-certs.yml
-          ansible/playbooks/lvm_resize.yml
-          ansible/playbooks/utils.yml
-        args: "-i ansible/hosts -x 204 -x 301 -x 305 -x 401"
+        path: "ansible/"
