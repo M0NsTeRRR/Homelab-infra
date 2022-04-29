@@ -33,16 +33,13 @@
     state: present
 
 - name: Add Unifi Apt signing key
-  ansible.builtin.apt_key:
-    id: "{{ unifi_repository_key }}"
+  ansible.builtin.get_url:
     url: https://dl.ui.com/unifi/unifi-repo.gpg
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/unifi.gpg
 
 - name: Add Unifi Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://www.ui.com/downloads/unifi/debian stable ubiquiti"
+    repo: "deb [signed-by=/usr/share/keyrings/unifi.gpg] https://www.ui.com/downloads/unifi/debian stable ubiquiti"
     state: present
     filename: unifi
 

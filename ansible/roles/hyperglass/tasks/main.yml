@@ -14,16 +14,13 @@
     group: hyperglass
 
 - name: Add Yarn Apt signing key
-  ansible.builtin.apt_key:
-    id: 72ECF46A56B4AD39C907BBB71646B01B86E50310
+  ansible.builtin.get_url:
     url: https://dl.yarnpkg.com/debian/pubkey.gpg
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/yarn.gpg
 
 - name: Add Yarn Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://dl.yarnpkg.com/debian/ stable main"
+    repo: "deb [signed-by=/usr/share/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main"
     state: present
     filename: yarn
 

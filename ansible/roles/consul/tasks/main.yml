@@ -37,16 +37,13 @@
     state: present
 
 - name: Add Consul Apt signing key
-  ansible.builtin.apt_key:
-    id: E8A032E094D8EB4EA189D270DA418C88A3219F7B
+  ansible.builtin.get_url:
     url: https://apt.releases.hashicorp.com/gpg
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/consul.gpg
 
 - name: Add Consul Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    repo: "deb [signed-by=/usr/share/keyrings/consul.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
     state: present
     filename: consul
 

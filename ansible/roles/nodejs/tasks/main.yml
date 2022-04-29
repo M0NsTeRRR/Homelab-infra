@@ -7,18 +7,17 @@
     state: present
 
 - name: Add Nodesource apt key
-  ansible.builtin.apt_key:
-    id: 9FD3B784BC1C6FC31A8A0A1C1655A0AB68576280
+  ansible.builtin.get_url:
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
-    state: present
+    dest: /usr/share/keyrings/nodejs.gpg
 
 - name: Add NodeSource repositories for Node.js
   ansible.builtin.apt_repository:
     repo: "{{ item }}"
     state: present
   with_items:
-    - "deb https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
-    - "deb-src https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
+    - "deb [signed-by=/usr/share/keyrings/nodejs.gpg] https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
+    - "deb-src [signed-by=/usr/share/keyrings/nodejs.gpg] https://deb.nodesource.com/node_{{ nodejs_version }}.x {{ ansible_distribution_release }} main"
 
 - name: Install nodejs
   ansible.builtin.apt:

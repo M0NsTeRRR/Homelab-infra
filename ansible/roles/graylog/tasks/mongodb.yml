@@ -5,16 +5,13 @@
     state: present
 
 - name: Add mongodb Apt signing key
-  ansible.builtin.apt_key:
-    id: 20691EEC35216C63CAF66CE1656408E390CFB1F5
+  ansible.builtin.get_url:
     url: https://www.mongodb.org/static/pgp/server-4.4.asc
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/mongodb.asc
 
 - name: Add mongodb Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/{{ graylog_mongodb_repo_version }} multiverse"
+    repo: "deb [signed-by=/usr/share/keyrings/mongodb.asc] https://repo.mongodb.org/apt/{{ ansible_distribution|lower }} {{ ansible_distribution_release|lower }}/mongodb-org/{{ graylog_mongodb_repo_version }} multiverse"
     state: present
     filename: mongodb
 

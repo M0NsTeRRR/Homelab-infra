@@ -1,15 +1,12 @@
 ---
 - name: Add graylog Apt signing key
-  ansible.builtin.apt_key:
-    id: 28AB6EB572779C2AD196BE22D44C1D8DB1606F22
+  ansible.builtin.get_url:
     url: https://packages.graylog2.org/repo/debian/keyring.gpg
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/graylog.gpg
 
 - name: Add graylog Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://packages.graylog2.org/repo/debian/ stable {{ graylog_server_repo_version }}"
+    repo: "deb [signed-by=/usr/share/keyrings/graylog.gpg] https://packages.graylog2.org/repo/debian/ stable {{ graylog_server_repo_version }}"
     state: present
     filename: graylog
 

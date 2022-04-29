@@ -31,16 +31,13 @@
     state: present
 
 - name: Add PowerDNS Apt signing key
-  ansible.builtin.apt_key:
-    id: "{{ powerdns_authoritative_repository_key }}"
+  ansible.builtin.get_url:
     url: "https://repo.powerdns.com/{{ powerdns_authoritative_repository_key }}-pub.asc"
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/powerdns_authoritative.gpg
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb http://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-auth-{{ powerdns_authoritative_repo_version }} main"
+    repo: "deb [signed-by=/usr/share/keyrings/powerdns_authoritative.gpg] https://repo.powerdns.com/{{ ansible_distribution|lower }} {{ ansible_distribution_release }}-auth-{{ powerdns_authoritative_repo_version }} main"
     state: present
     filename: pdns-auth
 

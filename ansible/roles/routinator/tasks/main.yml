@@ -20,16 +20,13 @@
     group: routinator
 
 - name: Add routinator Apt signing key
-  ansible.builtin.apt_key:
-    id: "{{ routinator_repository_key }}"
+  ansible.builtin.get_url:
     url: https://packages.nlnetlabs.nl/aptkey.asc
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/routinator.gpg
 
 - name: Add routinator Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://packages.nlnetlabs.nl/linux/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
+    repo: "deb [signed-by=/usr/share/keyrings/routinator.gpg] https://packages.nlnetlabs.nl/linux/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
     state: present
     filename: routinator
 

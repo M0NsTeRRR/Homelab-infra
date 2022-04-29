@@ -14,16 +14,13 @@
   delay: 3
 
 - name: Add golift Apt signing key
-  ansible.builtin.apt_key:
-    id: 552A075A7B63AC7A6116E93708653AE3B7E40B70
+  ansible.builtin.get_url:
     url: https://packagecloud.io/golift/pkgs/gpgkey
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/unifi_poller.gpg
 
 - name: Add golift Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb https://packagecloud.io/golift/pkgs/ubuntu focal main"
+    repo: "deb [signed-by=/usr/share/keyrings/unifi_poller.gpg] https://packagecloud.io/golift/pkgs/ubuntu focal main"
     state: present
     filename: golift
 

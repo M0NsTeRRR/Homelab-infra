@@ -46,16 +46,13 @@
     dest: /etc/modprobe.d/br_netfilter.conf
 
 - name: Add kubernetes Apt signing key
-  ansible.builtin.apt_key:
-    id: 54A647F9048D5688D7DA2ABE6A030B21BA07F4FB
+  ansible.builtin.get_url:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-    state: present
-  retries: 3
-  delay: 3
+    dest: /usr/share/keyrings/kubernetes.gpg
 
 - name: Add kubernetes Apt repository
   ansible.builtin.apt_repository:
-    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    repo: deb [signed-by=/usr/share/keyrings/kubernetes.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
     state: present
     filename: kubernetes
 

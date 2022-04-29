@@ -23,22 +23,18 @@
   register: gitlab
 
 - name: Add Gitlab Apt signing key
-  ansible.builtin.apt_key:
-    url: https://packages.gitlab.com/gpg.key
-    state: present
-  retries: 3
-  delay: 3
-
-- name: Download GitLab script
   ansible.builtin.get_url:
-    url: https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh
-    dest: /tmp/gitlab.deb.sh
-    mode: 0744
-  when: not gitlab.stat.exists or gitlab_force_install
+    url: https://packages.gitlab.com/gpg.key
+    dest: /usr/share/keyrings/gitlab.gpg
 
-- name: Install GitLab repository
-  ansible.builtin.command: bash /tmp/gitlab.deb.sh
-  when: not gitlab.stat.exists or gitlab_force_install
+- name: Add Gitlab Apt repository
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: gitlab
+  with_items:
+    - "deb [signed-by=/usr/share/keyrings/gitlab.gpg] deb https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
+    - "deb-src [signed-by=/usr/share/keyrings/gitlab.gpg] https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
 
 - name: Install GitLab
   ansible.builtin.apt:
