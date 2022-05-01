@@ -1,0 +1,70 @@
+---
+- name: Install pip3
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+
+- name: Install virtualenv
+  ansible.builtin.pip:
+    name: virtualenv
+
+- name: Create Netbox Device Type Import build directory
+  ansible.builtin.file:
+    dest: /opt/netbox_device_lib_import/
+    state: directory
+
+- name: Check if Netbox Device Type Import is already installed
+  ansible.builtin.stat:
+    path: /opt/netbox_device_lib_import/nb-dt-import.py
+  register: netbox_device_lib_import
+
+- name: Download Netbox Device Type Import
+  ansible.builtin.get_url:
+    url: https://github.com/minitriga/Netbox-Device-Type-Library-Import/archive/refs/heads/master.tar.gz
+    dest: /tmp/netbox_device_lib_import.tar.gz
+  when: not netbox_device_lib_import.stat.exists or netbox_device_lib_import_force_install
+
+- name: Extract Netbox Device Type Import files
+  ansible.builtin.unarchive:
+    src: /tmp/netbox_device_lib_import.tar.gz
+    dest: /opt/netbox_device_lib_import
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+  when: not netbox_device_lib_import.stat.exists or netbox_device_lib_import_force_install
+
+- name: Install Netbox Device Type Import python packages
+  ansible.builtin.pip:
+    requirements: /opt/netbox_device_lib_import/requirements.txt
+    virtualenv: /opt/netbox_device_lib_import/venv
+
+- name: Add Netbox Device Type Import group
+  ansible.builtin.group:
+    name: netbox_device_lib_import
+    system: yes
+    state: present
+
+- name: Add Netbox Device Type Import user
+  ansible.builtin.user:
+    name: netbox_device_lib_import
+    system: yes
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: netbox_device_lib_import
+
+- name: Fix permissions on /opt/netbox_device_lib_import/
+  ansible.builtin.file:
+    path: /opt/netbox_device_lib_import/
+    owner: netbox_device_lib_import
+    group: netbox_device_lib_import
+
+- name: Configure Netbox Device Type Import
+  ansible.builtin.template:
+    src: .env.j2
+    dest: /opt/netbox_device_lib_import/.env
+
+- name: Execute Netbox Device Type Import
+  ansible.builtin.shell:
+    cmd: |
+      . /opt/netbox_device_lib_import/venv/bin/activate
+      python3 nb-dt-import.py {{ netbox_device_lib_import_custom_params }}
+    chdir: /opt/netbox_device_lib_import/

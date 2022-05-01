@@ -1,0 +1,6 @@
+---
+netbox_device_lib_import_force_install: false
+netbox_device_lib_import_netbox_url: https://example.fr
+netbox_device_lib_import_netbox_token: aaaaaaaaa
+netbox_device_lib_import_netbox_ignore_ssl: false
+netbox_device_lib_import_custom_params: "--vendors apc,juniper"

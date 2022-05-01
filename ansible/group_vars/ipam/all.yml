@@ -6,6 +6,11 @@ netbox_sync_custom_dns_servers: "{{ groups['dns'] }}"
 netbox_sync_vcenter_hostname: "{{ vcenter_hostname }}"
 netbox_sync_vcenter_port: "{{ vcenter_port }}"
 
+netbox_device_lib_import_force_install: false
+netbox_device_lib_import_netbox_url: "https://{{ netbox_sync_netbox_hostname }}/"
+netbox_device_lib_import_netbox_ignore_ssl: false
+netbox_device_lib_import_custom_params: "--slugs ccr2004-1g-12s-plus2sx srx300 s3900-24t4s icx6650-64 icx7150-c12p dell_poweredge_r320"
+
 nginx_configuration:
   - server_name: "{{ inventory_hostname }}"
     locations:
