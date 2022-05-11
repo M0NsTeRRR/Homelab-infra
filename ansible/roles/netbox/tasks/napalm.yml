@@ -1,0 +1,13 @@
+---
+- name: Install Napalm
+  ansible.builtin.pip:
+    name: "napalm{% if netbox_napalm_version is defined %}={{ netbox_napalm_version }}{% endif %}"
+    state: "{{ netbox_napalm_package_state }}"
+    virtualenv: /opt/netbox/venv
+
+- name: Install Napalm drivers
+  ansible.builtin.pip:
+    name: "{{ items.name }}{% if items.version is defined %}={{ items.version }}{% endif %}"
+    state: "{{ items.state }}"
+    virtualenv: /opt/netbox/venv
+  with_items: "{{ netbox_napalm_drivers }}"

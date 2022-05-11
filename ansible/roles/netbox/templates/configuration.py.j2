@@ -179,8 +179,8 @@ MAX_PAGE_SIZE = 1000
 METRICS_ENABLED = True
 
 # Credentials that NetBox will uses to authenticate to devices when connecting via NAPALM.
-NAPALM_USERNAME = ''
-NAPALM_PASSWORD = ''
+NAPALM_USERNAME = '{{ netbox_napalm_username }}'
+NAPALM_PASSWORD = '{{ netbox_napalm_password }}'
 
 # NAPALM timeout (in seconds). (Default: 30)
 NAPALM_TIMEOUT = 30

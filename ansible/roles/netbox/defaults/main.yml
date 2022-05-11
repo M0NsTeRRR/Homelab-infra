@@ -6,3 +6,13 @@ netbox_redis_package_state: latest
 netbox_postgresql_password: password
 netbox_superuser_password: password
 netbox_secret_key: secret_key
+# netbox_napalm_version:
+netbox_napalm_package_state: latest
+netbox_napalm_username: username
+netbox_napalm_password: password
+netbox_napalm_drivers: {}
+
+# netbox_napalm_drivers:
+#   - name: napalm-ros
+#     state: present
+#     version: 1.0.1

@@ -47,6 +47,7 @@
     - nginx
     - postgresql
     - netbox
+    - netbox_device_lib_import
     - netbox_sync
     - nginx_exporter
     - exporter_exporter

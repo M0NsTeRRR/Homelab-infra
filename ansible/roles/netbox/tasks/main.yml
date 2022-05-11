@@ -2,5 +2,8 @@
 - name: Install and configure redis
   ansible.builtin.include_tasks: redis.yml
 
+- name: Install and configure napalm
+  ansible.builtin.include_tasks: napalm.yml
+
 - name: Install and configure netbox
   ansible.builtin.include_tasks: netbox.yml

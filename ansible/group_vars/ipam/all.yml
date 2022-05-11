@@ -11,6 +11,12 @@ netbox_device_lib_import_netbox_url: "https://{{ netbox_sync_netbox_hostname }}/
 netbox_device_lib_import_netbox_ignore_ssl: false
 netbox_device_lib_import_custom_params: "--slugs ccr2004-1g-12s-plus2sx srx300 s3900-24t4s icx6650-64 icx7150-c12p dell_poweredge_r320"
 
+netbox_napalm_drivers:
+  - name: napalm-ros
+    state: latest
+  - name: napalm-ruckus-fastiron
+    state: latest
+
 nginx_configuration:
   - server_name: "{{ inventory_hostname }}"
     locations:
