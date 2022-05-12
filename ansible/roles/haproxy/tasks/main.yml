@@ -4,6 +4,7 @@
     rule: allow
     port: "{{ haproxy_lb_port }}"
     proto: tcp
+    comment: "haproxy"
 
 - name: Install Haproxy
   ansible.builtin.apt:

@@ -4,6 +4,7 @@
     rule: allow
     port: "5405"
     proto: udp
+    comment: "Corosync"
 
 - name: Install Corosync
   ansible.builtin.apt:

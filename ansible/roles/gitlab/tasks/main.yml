@@ -1,12 +1,14 @@
 ---
-- name: Open required ports
+- name: "Open port {{ item.port }}/{{ item.proto }}"
   community.general.ufw:
     rule: allow
-    port: "{{ item }}"
-    proto: tcp
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
   with_items:
-    - "80"
-    - "443"
+    - { port: "80", proto: tcp, comment: "HTTP Gitlab" }
+    - { port: "443", proto: tcp, comment: "HTTPS Gitlab" }
+    - { port: "443", proto: udp, comment: "HTTP3 Gitlab" }
 
 - name: Install required packages
   ansible.builtin.apt:

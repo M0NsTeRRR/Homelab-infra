@@ -4,6 +4,7 @@
     rule: allow
     port: "53"
     proto: "{{ item }}"
+    comment: "DNS Powerdns recursor"
   with_items:
     - udp
     - tcp

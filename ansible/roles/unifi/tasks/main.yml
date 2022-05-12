@@ -8,18 +8,19 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
   with_items:
-    - { port: 3478, proto: udp }
-    - { port: 5514, proto: tcp }
-    - { port: 8080, proto: tcp }
-    - { port: 8443, proto: tcp }
-    - { port: 8880, proto: tcp }
-    - { port: 8843, proto: tcp }
-    - { port: 6789, proto: tcp }
-    - { port: 27117, proto: tcp }
-    - { port: 5656:5699, proto: udp }
-    - { port: 10001, proto: udp }
-    - { port: 1900, proto: udp }
+    - { port: 3478, proto: udp, comment: "Unifi STUN" }
+    - { port: 5514, proto: tcp, comment: "Unifi syslog" }
+    - { port: 8080, proto: tcp, comment: "Unifi device/app communication" }
+    - { port: 8443, proto: tcp, comment: "Unifi HTTPS" }
+    - { port: 8880, proto: tcp, comment: "Unifi HTTP portal" }
+    - { port: 8843, proto: tcp, comment: "Unifi HTTPS portal" }
+    - { port: 6789, proto: tcp, comment: "Unifi mobile speedtest" }
+    - { port: 27117, proto: tcp, comment: "Unifi local-bound database communication" }
+    - { port: 5656:5699, proto: udp, comment: "Unifi AP-EDU broadcasting" }
+    - { port: 10001, proto: udp, comment: "Unifi device discovery" }
+    - { port: 1900, proto: udp, comment: "Unifi make application discoverable on L2 network" }
 
 - name: Install gnupg-agent
   ansible.builtin.apt:

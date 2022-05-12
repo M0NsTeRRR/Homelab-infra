@@ -4,6 +4,7 @@
     rule: allow
     port: "22"
     proto: tcp
+    comment: "SSH"
 
 - name: Install openssh-server
   ansible.builtin.apt:

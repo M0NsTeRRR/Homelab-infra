@@ -4,6 +4,7 @@
     rule: allow
     port: "5353"
     proto: udp
+    comment: "MDNS Avahi"
 
 - name: Install avahi-daemon
   ansible.builtin.apt:

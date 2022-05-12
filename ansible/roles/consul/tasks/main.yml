@@ -4,16 +4,17 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
   when: "{{ item.to_open }}"
   with_items:
-    - { port: "8600", proto: tcp, to_open: true }
-    - { port: "8600", proto: udp, to_open: true }
-    - { port: "8501", proto: tcp, to_open: true }
-    - { port: "8301", proto: tcp, to_open: true }
-    - { port: "8301", proto: udp, to_open: true }
-    - { port: "8302", proto: tcp, to_open: "{{ consul_server }}" }
-    - { port: "8302", proto: udp, to_open: "{{ consul_server }}" }
-    - { port: "8300", proto: tcp, to_open: "{{ consul_server }}" }
+    - { port: "8600", proto: tcp, to_open: true, comment: "Consul DNS" }
+    - { port: "8600", proto: udp, to_open: true, comment: "Consul DNS" }
+    - { port: "8501", proto: tcp, to_open: true, comment: "Consul HTTPS API" }
+    - { port: "8301", proto: tcp, to_open: true, comment: "Consul LAN Serf" }
+    - { port: "8301", proto: udp, to_open: true, comment: "Consul LAN Serf" }
+    - { port: "8302", proto: tcp, to_open: "{{ consul_server }}", comment: "Consul WAN Serf" }
+    - { port: "8302", proto: udp, to_open: "{{ consul_server }}", comment: "Consul WAN Serf" }
+    - { port: "8300", proto: tcp, to_open: "{{ consul_server }}", comment: "Consul RPC server" }
 
 - name: Add consul group
   ansible.builtin.group:

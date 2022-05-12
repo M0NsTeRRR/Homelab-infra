@@ -4,6 +4,7 @@
     rule: allow
     port: "51820"
     proto: udp
+    comment: "Wireguard"
 
 - name: Install qrencode
   ansible.builtin.apt:

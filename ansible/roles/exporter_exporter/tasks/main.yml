@@ -4,6 +4,7 @@
     rule: allow
     port: "9998"
     proto: tcp
+    comment: "exporter exporter"
 
 - name: Add exporter-exporter group
   ansible.builtin.group:

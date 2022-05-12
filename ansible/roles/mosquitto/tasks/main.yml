@@ -4,6 +4,7 @@
     rule: allow
     port: "8883"
     proto: tcp
+    comment: "mosquitto"
 
 - name: Add mosquitto group
   ansible.builtin.group:

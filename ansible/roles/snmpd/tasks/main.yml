@@ -4,6 +4,7 @@
     rule: allow
     port: "161"
     proto: udp
+    comment: "SNMP"
 
 - name: Install snmpd
   ansible.builtin.apt:

@@ -5,11 +5,12 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
   when: item.open
   with_items:
-    - { port: "179", proto: tcp, open: "{{ frr_daemons.bgpd }}" }
-    - { port: "646", proto: tcp, open: "{{ frr_daemons.ldpd }}" }
-    - { port: "646", proto: udp, open: "{{ frr_daemons.ldpd }}" }
+    - { port: "179", proto: tcp, open: "{{ frr_daemons.bgpd }}", comment: "BGP FRR" }
+    - { port: "646", proto: tcp, open: "{{ frr_daemons.ldpd }}", comment: "LDP FRR" }
+    - { port: "646", proto: udp, open: "{{ frr_daemons.ldpd }}", comment: "LDP FRR" }
 
 - name: Enable IPv4 forwarding
   ansible.posix.sysctl:

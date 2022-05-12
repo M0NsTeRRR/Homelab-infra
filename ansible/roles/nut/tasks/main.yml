@@ -4,6 +4,7 @@
     rule: allow
     port: "3493"
     proto: tcp
+    comment: "nut"
 
 - name: Add nut group
   ansible.builtin.group:

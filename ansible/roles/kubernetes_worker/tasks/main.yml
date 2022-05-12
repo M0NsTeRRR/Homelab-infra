@@ -4,11 +4,12 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
   with_items:
-    - { "port": "6783", "proto": "any" }
-    - { "port": "6784", "proto": "udp" }
-    - { "port": "10250", "proto": "tcp" }
-    - { "port": "30000:32767", "proto": "tcp" }
+    - { port: "6783", proto: "any", comment: "kubernetes weaves" }
+    - { port: "6784", proto: "udp", comment: "kubernetes weaves" }
+    - { port: "10250", proto: "tcp", comment: "kubernetes kubelet API" }
+    - { port: "30000:32767", proto: "tcp", comment: "kubernetes NodePort service" }
 
 - name: Check if kubelet.conf exists
   ansible.builtin.stat:

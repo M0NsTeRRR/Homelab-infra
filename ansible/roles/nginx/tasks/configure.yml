@@ -4,6 +4,7 @@
     rule: allow
     port: "80"
     proto: tcp
+    comment: "HTTP Nginx"
   when: item.http_redirection
 
 - name: "Open port {{ item.ssl_port }}"
@@ -11,6 +12,7 @@
     rule: allow
     port: "{{ item.ssl_port }}"
     proto: tcp
+    comment: "HTTPS Nginx"
 
 - name: Configure Nginx
   ansible.builtin.template:

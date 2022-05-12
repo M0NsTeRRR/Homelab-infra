@@ -4,6 +4,7 @@
     rule: allow
     port: "53000"
     proto: "{{ item }}"
+    comment: "Powerdns authoritative"
   with_items:
     - udp
     - tcp

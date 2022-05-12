@@ -4,12 +4,14 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
   with_items:
-    - { "port": "6443", "proto": "tcp" }
-    - { "port": "6783", "proto": "any" }
-    - { "port": "6784", "proto": "udp" }
-    - { "port": "2379:2380", "proto": "tcp" }
-    - { "port": "10250:10252", "proto": "tcp" }
+    - { port: "6443", proto: "tcp", comment: "kubernetes API server" }
+    - { port: "6783", proto: "any", comment: "kubernetes weaves" }
+    - { port: "6784", proto: "udp", comment: "kubernetes weaves" }
+    - { port: "2379:2380", proto: "tcp", comment: "kubernetes etcd" }
+    - { port: "10250", proto: "tcp", comment: "kubernetes kubelet API" }
+    - { port: "10251:10252", proto: "tcp", comment: "kubernetes kubeadm health check" }
 
 - name: Check if kubeadm has already run
   ansible.builtin.stat:

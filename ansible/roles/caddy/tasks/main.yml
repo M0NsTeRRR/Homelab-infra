@@ -4,11 +4,12 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
   with_items:
-    - { port: "80", proto: tcp }
-    - { port: "443", proto: tcp }
-    - { port: "443", proto: udp }
-    - { port: "9982", proto: tcp }
+    - { port: "80", proto: tcp, comment: "HTTP Caddy" }
+    - { port: "443", proto: tcp, comment: "HTTPS Caddy" }
+    - { port: "443", proto: udp, comment: "HTTP3 Caddy" }
+    - { port: "9982", proto: tcp, comment: "Caddy metrics" }
 
 - name: Add caddy group
   ansible.builtin.group:

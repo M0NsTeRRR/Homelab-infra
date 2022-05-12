@@ -4,6 +4,7 @@
     rule: allow
     port: "2379:2380"
     proto: tcp
+    comment: "kubernetes etcd"
 
 - name: Configure etcd service manager
   ansible.builtin.copy:

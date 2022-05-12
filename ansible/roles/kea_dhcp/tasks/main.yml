@@ -2,11 +2,12 @@
 - name: Open required ports
   community.general.ufw:
     rule: allow
-    port: "{{ item }}"
+    port: "{{ item.port }}"
     proto: udp
+    comment: "{{ item.comment }}"
   with_items:
-    - "67"
-    - "547"
+    - { port: "67", comment: "DHCP Kea-dhcp" }
+    - { port: "547", comment: "DHCPv6 Kea-dhcp" }
 
 - name: Add ISC cloudsmith Apt signing key
   ansible.builtin.get_url:

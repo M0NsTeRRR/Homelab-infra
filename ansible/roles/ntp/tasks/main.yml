@@ -4,6 +4,7 @@
     rule: allow
     port: "123"
     proto: udp
+    comment: "NTP"
 
 - name: Install ntp
   ansible.builtin.apt:
