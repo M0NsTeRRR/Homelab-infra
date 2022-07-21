@@ -1,0 +1,17 @@
+---
+- name: All
+  hosts: cloud
+  become: yes
+  vars:
+    ca_certificates_organization_name: "{{ organization }}"
+    ca_certificates_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+  roles:
+    - auditd
+    - sysctl
+    - ufw
+    - motd
+    - node_exporter
+    - user
+    - openssh_server
+    - fail2ban
+    - ca_certificates
