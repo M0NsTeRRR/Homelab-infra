@@ -7,7 +7,7 @@ locals {
   vsphere_user     = local.account_vars.locals.vsphere_user
   vsphere_password = local.account_vars.locals.vsphere_password
 
-  powerdns_api_key = local.account_vars.locals.powerdns_api_key
+  powerdns_api_key    = local.account_vars.locals.powerdns_api_key
   powerdns_server_url = local.account_vars.locals.powerdns_server_url
 
   vm_user     = local.account_vars.locals.vm_user
