@@ -8,6 +8,7 @@ locals {
   vsphere_password = local.account_vars.locals.vsphere_password
 
   powerdns_api_key = local.account_vars.locals.powerdns_api_key
+  powerdns_server_url = local.account_vars.locals.powerdns_server_url
 
   vm_user     = local.account_vars.locals.vm_user
   vm_password = local.account_vars.locals.vm_password
@@ -32,11 +33,11 @@ terraform {
   required_providers {
     vsphere = {
       source  = "hashicorp/vsphere"
-      version = "~> 2.0.2"
+      version = "~> 2.2.0"
     }
     powerdns = {
       source  = "pan-net/powerdns"
-      version = "~> 1.4.1"
+      version = "~> 1.5.0"
     }
   }
 }
@@ -49,7 +50,7 @@ provider "vsphere" {
 
 provider "powerdns" {
   api_key    = "${local.powerdns_api_key}"
-  server_url = "https://dns1.unicornafk.fr"
+  server_url = "${local.powerdns_server_url}"
 }
 EOF
 }

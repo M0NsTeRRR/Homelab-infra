@@ -10,8 +10,8 @@ This is my Homelab infrastructure.
   - Python3 and Pip
 - Packer (version >= 1.8)
   - Packer builder arm
-- Terraform (version >= 1.1)
-  - Terragrunt (version >= 0.36)
+- Terraform (version >= 1.2)
+  - Terragrunt (version >= 0.38)
 
 # Ansible
 
