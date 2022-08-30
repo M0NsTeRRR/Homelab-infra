@@ -3,7 +3,7 @@ locals {
   vsphere_user     = ""
   vsphere_password = ""
 
-  powerdns_api_key = ""
+  powerdns_api_key    = ""
   powerdns_server_url = ""
 
   vm_user     = ""
