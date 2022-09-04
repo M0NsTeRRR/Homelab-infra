@@ -10,6 +10,9 @@ locals {
   powerdns_api_key    = local.account_vars.locals.powerdns_api_key
   powerdns_server_url = local.account_vars.locals.powerdns_server_url
 
+  discord_token          = local.account_vars.locals.discord_token
+  discord_log_channel_id = local.account_vars.locals.discord_log_channel_id
+
   vm_user     = local.account_vars.locals.vm_user
   vm_password = local.account_vars.locals.vm_password
 
@@ -39,6 +42,10 @@ terraform {
       source  = "pan-net/powerdns"
       version = "~> 1.5.0"
     }
+    discord = {
+      source  = "transneptune/discord"
+      version = "~> 0.0.1"
+    }
   }
 }
 
@@ -51,6 +58,10 @@ provider "vsphere" {
 provider "powerdns" {
   api_key    = "${local.powerdns_api_key}"
   server_url = "${local.powerdns_server_url}"
+}
+
+provider "discord" {
+  token = "${local.discord_token}"
 }
 EOF
 }

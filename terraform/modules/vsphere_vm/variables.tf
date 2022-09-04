@@ -8,6 +8,11 @@ variable "ansible_vault_pass" {
   type = string
 }
 
+variable "discord_log_channel_id" {
+  description = "Discord log channel id"
+  type = string
+}
+
 variable "vsphere_datacenter" {
   description = "vSphere datacenter"
   type = string

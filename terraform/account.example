@@ -6,6 +6,9 @@ locals {
   powerdns_api_key    = ""
   powerdns_server_url = ""
 
+  discord_token          = ""
+  discord_log_channel_id = ""
+
   vm_user     = ""
   vm_password = ""
 

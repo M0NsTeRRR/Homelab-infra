@@ -179,3 +179,46 @@ resource "powerdns_record" "dns_SSHFP" {
 
   depends_on = [data.external.sshfp]
 }
+
+resource discord_message vm_update {
+    channel_id = var.discord_log_channel_id
+    embed {
+        title = "Terraform VM"
+
+        fields {
+            name = "Name"
+            value = "${var.vm_name}.${var.domain}."
+            inline = false
+        }
+
+        fields {
+            name = "IPv4"
+            value = "${var.vm_ip}/${var.network.netmask}"
+            inline = true
+        }
+
+        fields {
+            name = "IPv6"
+            value = "${var.vm_ip6}/${var.network.netmask6}"
+            inline = false
+        }
+
+        fields {
+            name = "vCPU"
+            value = var.hardware.num_cpus
+            inline = true
+        }
+
+        fields {
+            name = "Memory"
+            value = var.hardware.memory
+            inline = true
+        }
+        
+        fields {
+            name = "Disk size"
+            value = var.disk.size
+            inline = false
+        }
+    }
+}
