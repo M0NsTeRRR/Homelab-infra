@@ -87,6 +87,10 @@ powerdns_authoritative_records:
     a: 192.168.10.60
     aaaa: 2a0c:b641:02c0:110::60
     rdns: false
+  - hostname: htb.unicornafk.fr.
+    a: 192.168.10.70
+    aaaa: 2a0c:b641:02c0:110::70
+    rdns: true
   - hostname: ap1.unicornafk.fr.
     a: 192.168.20.51
     aaaa: 2a0c:b641:02c0:120::51

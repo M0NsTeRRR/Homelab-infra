@@ -32,20 +32,10 @@ caddy_domains:
     proxy_headers:
       Host: lg.as212510.unicornafk.fr
   - names:
-      - alissiacoaching.fr
+      - cloud.thegamemasters.fr
     backend_url: http://thomas.unicornafk.fr
     proxy_headers:
-      Host: alissiacoaching.fr
-  - names:
-      - www.alissiacoaching.fr
-    backend_url: http://thomas.unicornafk.fr
-    proxy_headers:
-      Host: www.alissiacoaching.fr
-  - names:
-      - bdd.alissiacoaching.fr
-    backend_url: http://thomas.unicornafk.fr
-    proxy_headers:
-      Host: alissiacoaching.fr
+      Host: cloud.thegamemasters.fr
 
 consul_services:
   - name: caddy
