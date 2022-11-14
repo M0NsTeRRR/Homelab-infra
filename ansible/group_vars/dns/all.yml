@@ -90,6 +90,10 @@ powerdns_authoritative_records:
   - hostname: htb.unicornafk.fr.
     a: 192.168.10.70
     aaaa: 2a0c:b641:02c0:110::70
+    sshfp:
+      - algorithm: 4
+        type: 2
+        fingerprint: bfdcb168b6ef56fb6057a1bf20b2c01755e6fc5c3aa2a71c4ecf7ea85fdd8462
     rdns: true
   - hostname: ap1.unicornafk.fr.
     a: 192.168.20.51
