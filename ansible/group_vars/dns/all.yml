@@ -95,12 +95,12 @@ powerdns_authoritative_records:
         type: 2
         fingerprint: bfdcb168b6ef56fb6057a1bf20b2c01755e6fc5c3aa2a71c4ecf7ea85fdd8462
   - hostname: adrien-minecraft.unicornafk.fr.
-    a: 192.168.10.71
-    aaaa: 2a0c:b641:02c0:110::71
+    a: 192.168.10.69
+    aaaa: 2a0c:b641:02c0:110::69
     sshfp:
       - algorithm: 4
         type: 2
-        fingerprint: e70a8df64264eeb91dbd54d64a4651f6584ded58977a2c9eb86a086a6b95286c
+        fingerprint: 48f294129340346f4c81e16d5b3a41d445ff751eab4a12dee028af59c237e61e
     rdns: true
   - hostname: ap1.unicornafk.fr.
     a: 192.168.20.51
