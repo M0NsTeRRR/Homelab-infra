@@ -1,10 +1,5 @@
 {
     email {{ caddy_email }}
-    servers {
-		protocol {
-			experimental_http3
-		}
-	}
 }
 
 # Add gzip compression to requests
@@ -15,9 +10,15 @@
 # Add forward headers to requests
 (defaultheaders) {
     -Server
-    Strict-Transport-Security "max-age=31536000; includeSubDomains; preload;"
-    Feature-Policy "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'self'; speaker 'none'; usb 'none'; vr 'none';"
-    Expect-CT "max-age=604800"
+    header_up Host {host}
+    header_up X-Real-IP {remote}
+    header_up X-Forwarded-Port {remote_port}
+    header_up X-Url-Scheme {scheme}
+    header_up X-Forwarded-Host {host}
+    Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    Feature-Policy "accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; encrypted-media 'none'; fullscreen 'self'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; >    Expect-CT "max-age=604800"
+    X-Frame-Options DENY
+    Content-Security-Policy "frame-ancestors 'none'"
 }
 
 :9982 {
