@@ -1,6 +1,9 @@
 [cloud]
-mutu1.unicornafk.fr
-mutu2.unicornafk.fr
+vps1.unicornafk.fr
+vps2.unicornafk.fr
+
+[status]
+vps1.unicornafk.fr
 
 [dns]
 192.168.10.21 ipv6=2a0c:b641:02c0:110::21 hostname=dns1.unicornafk.fr.

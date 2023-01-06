@@ -1,0 +1,9 @@
+---
+caddy_email: "{{ email }}"
+caddy_exporter_local_path_client_certificate: "{{ certs_dir }}ca.crt"
+caddy_exporter_certificate_name: "{{ inventory_hostname }}.crt"
+caddy_exporter_certificate_key_name: "{{ inventory_hostname }}.pem"
+caddy_domains:
+  - names:
+      - status.unicornafk.fr
+    backend_url: http://localhost:3001

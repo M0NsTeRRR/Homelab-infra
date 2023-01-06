@@ -14,7 +14,7 @@ powerdns_authoritative_records:
   - caa: "sectigo.com"
   # unicornafk.fr
   # cloud
-  - hostname: mutu1.unicornafk.fr.
+  - hostname: vps1.unicornafk.fr.
     a: 116.203.39.236
     aaaa: "2a01:4f8:c0c:e770::"
     rdns: true
@@ -22,14 +22,14 @@ powerdns_authoritative_records:
       - algorithm: 4
         type: 2
         fingerprint: 5fa48b5319751e1bca0e4807ef938a91b0bd8707c08419003c6182f5cb679035
-  - hostname: mutu2.unicornafk.fr.
+  - hostname: vps2.unicornafk.fr.
     a: 141.145.202.105
     aaaa: "2603:c027:c000:c200::10"
     rdns: true
     sshfp:
       - algorithm: 4
         type: 2
-        fingerprint: 135489e8929b35b709c45e29a3782cd577e40fb9993a962731f68d5ebc0564ef
+        fingerprint: a9759105bf5a6bde1555cf2d30e2049b3e63dc81c899dc5c1dec28cd02a9e88f
   # lan
   - hostname: rr1.unicornafk.fr.
     a: 192.168.5.13

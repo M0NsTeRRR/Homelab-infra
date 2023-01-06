@@ -15,3 +15,9 @@
     - openssh_server
     - fail2ban
     - ca_certificates
+
+- name: Configure status
+  hosts: dns
+  become: yes
+  roles:
+    - caddy
