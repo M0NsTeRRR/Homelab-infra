@@ -6,7 +6,7 @@
 
 - name: Add mongodb Apt signing key
   ansible.builtin.get_url:
-    url: https://www.mongodb.org/static/pgp/server-4.4.asc
+    url: https://www.mongodb.org/static/pgp/server-{{ graylog_mongodb_repo_version }}.asc
     dest: /usr/share/keyrings/mongodb.asc
 
 - name: Add mongodb Apt repository
