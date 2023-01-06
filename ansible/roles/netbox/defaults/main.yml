@@ -1,5 +1,5 @@
 ---
-netbox_version: 3.1.4
+netbox_version: 3.4.2
 netbox_force_install: false
 # netbox_redis_version:
 netbox_redis_package_state: latest
