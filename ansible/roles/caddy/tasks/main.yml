@@ -69,7 +69,7 @@
 
 - name: Configure default Caddy config
   ansible.builtin.template:
-    src: default.j2
+    src: Caddyfile.j2
     dest: /etc/caddy/Caddyfile
     owner: caddy
     group: caddy
@@ -78,7 +78,7 @@
 
 - name: Configure Caddy
   ansible.builtin.template:
-    src: Caddyfile.j2
+    src: site.conf.j2
     dest: "/etc/caddy/conf.d/{{ item.names[0] }}.conf"
     owner: caddy
     group: caddy
