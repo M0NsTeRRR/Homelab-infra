@@ -1,10 +1,12 @@
 global:
+  {%- if alertmanager_receivers_emails -%}
   smtp_smarthost: '{{ alertmanager_smtp_smarthost }}'
   smtp_from: '{{ alertmanager_smtp_from }}'
   smtp_require_tls: {{ alertmanager_smtp_require_tls }}
   smtp_hello: '{{ alertmanager_smtp_hello }}'
   smtp_auth_username: '{{ alertmanager_smtp_auth_username }}'
   smtp_auth_password: '{{ alertmanager_smtp_auth_password }}'
+  {%- endif -%}
 
 route:
   receiver: 'alert'
@@ -14,12 +16,23 @@ route:
 
 receivers:
 - name: 'alert'
+  {%- if alertmanager_receivers_emails -%}
   email_configs:
-  {% for email in alertmanager_receivers_emails %}
+  {% for email in alertmanager_receivers_emails -%}
   - to: '{{ email }}'
-  {% endfor %}
+  {%- endfor %}
+  {%- endif -%}
 
   webhook_configs:
-  {% for webhook in alertmanager_receivers_webhooks %}
+  {%- if alertmanager_receivers_webhooks -%}
+  {% for webhook in alertmanager_receivers_webhooks -%}
   - url: '{{ webhook }}'
-  {% endfor %}
+  {% -endfor %}
+  {%- endif -%}
+
+  discord_configs:
+  {%- if alertmanager_receivers_discords -%}
+  {% for webhook_url in alertmanager_receivers_discords -%}
+  - webhook_url: '{{ webhook_url }}'
+  {%- endfor %}
+  {%- endif -%}

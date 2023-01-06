@@ -23,8 +23,7 @@ alertmanager_smtp_require_tls: "true"
 alertmanager_smtp_hello: alertmanager
 alertmanager_smtp_auth_username: "{{ monitoring_email }}"
 alertmanager_smtp_auth_password: "{{ smtp_monitoring_password }}"
-alertmanager_receivers_emails:
-  - "{{ email }}"
+alertmanager_receivers_emails: []
 alertmanager_receivers_webhooks:
   - "http://127.0.0.1:9234"
 

@@ -1,5 +1,5 @@
 ---
-alertmanager_version: 0.21.0
+alertmanager_version: 0.25.0
 alertmanager_force_install: false
 alertmanager_smtp_smarthost: smtp.example.com:587
 alertmanager_smtp_from: "[MONITORING]"
@@ -8,3 +8,5 @@ alertmanager_smtp_hello: alertmanager
 alertmanager_smtp_auth_username: username
 alertmanager_smtp_auth_password: password
 alertmanager_receivers_email: email@example.com
+alertmanager_receivers_webhooks: []
+alertmanager_receivers_discords: []
