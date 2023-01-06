@@ -17,7 +17,10 @@
     - ca_certificates
 
 - name: Configure status
-  hosts: dns
+  hosts: status
   become: yes
   roles:
+    - self_signed_cert
+    - nodejs
+    - uptime_kuma
     - caddy

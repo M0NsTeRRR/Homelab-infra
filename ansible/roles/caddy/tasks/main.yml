@@ -36,8 +36,8 @@
     state: present
     filename: caddy-stable
   with_items:
-    - "deb [signed-by=/usr/share/keyrings/caddy.gpg] https://dl.cloudsmith.io/public/caddy/testing/deb/debian any-version main"
-    - "deb-src [signed-by=/usr/share/keyrings/caddy.gpg] https://dl.cloudsmith.io/public/caddy/testing/deb/debian any-version main"
+    - "deb [signed-by=/usr/share/keyrings/caddy.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+    - "deb-src [signed-by=/usr/share/keyrings/caddy.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
 
 - name: Install Caddy
   ansible.builtin.apt:

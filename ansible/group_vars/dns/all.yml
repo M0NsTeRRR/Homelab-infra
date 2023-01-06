@@ -285,6 +285,9 @@ powerdns_authoritative_records:
   - hostname: lg.as212510.unicornafk.fr.
     cname: website.unicornafk.fr.
     rdns: false
+  - hostname: status.unicornafk.fr.
+    cname: vps1.unicornafk.fr.
+    rdns: false
 
 exporter_exporter_nodes:
   - name: powerdns-recursor-exporter

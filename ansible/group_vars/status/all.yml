@@ -1,4 +1,26 @@
 ---
+nodejs_version: 18
+
+self_signed_certs:
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    admin_email: "{{ admin_email }}"
+    ca_cert_local_path: "{{ certs_dir_role_path }}ca.crt"
+    ca_private_local_path: "{{ certs_dir_role_path }}ca.pem"
+    cert_remote_folder:
+      - { path: /etc/caddy/ssl, owner: caddy, group: caddy }
+    ownca_not_after: +90d
+    upload_pem: true
+    generate_pkcs12: false
+    restart_systemd_services:
+      - caddy
+    force_renew: false
+    tlsa:
+      - proto: tcp
+        port: 443
+        pdns_zone: "{{ inventory_hostname.split('.')[-2:] | join('.') }}"
+
 caddy_email: "{{ email }}"
 caddy_exporter_local_path_client_certificate: "{{ certs_dir }}ca.crt"
 caddy_exporter_certificate_name: "{{ inventory_hostname }}.crt"
