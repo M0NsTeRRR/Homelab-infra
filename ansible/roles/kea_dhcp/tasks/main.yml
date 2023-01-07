@@ -12,7 +12,7 @@
 - name: Add ISC cloudsmith Apt signing key
   ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/isc/kea-2-1/gpg.32D53EC4807EC10E.key
-    dest: /usr/share/keyrings/kea.gpg
+    dest: /usr/share/keyrings/kea.asc
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
@@ -20,8 +20,8 @@
     state: present
     filename: isc-kea-dhcp
   with_items:
-    - "deb [signed-by=/usr/share/keyrings/kea.gpg] https://dl.cloudsmith.io/public/isc/kea-2-1/deb/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} main"
-    - "deb-src [signed-by=/usr/share/keyrings/kea.gpg] https://dl.cloudsmith.io/public/isc/kea-2-1/deb/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} main"
+    - "deb [signed-by=/usr/share/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/kea-2-1/deb/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} main"
+    - "deb-src [signed-by=/usr/share/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/kea-2-1/deb/{{ ansible_distribution|lower }} {{ ansible_distribution_release }} main"
 
 - name: Install kea-dhcp4-server
   ansible.builtin.apt:

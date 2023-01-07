@@ -16,11 +16,11 @@
 - name: Add Yarn Apt signing key
   ansible.builtin.get_url:
     url: https://dl.yarnpkg.com/debian/pubkey.gpg
-    dest: /usr/share/keyrings/yarn.gpg
+    dest: /usr/share/keyrings/yarn.asc
 
 - name: Add Yarn Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main"
+    repo: "deb [signed-by=/usr/share/keyrings/yarn.asc] https://dl.yarnpkg.com/debian/ stable main"
     state: present
     filename: yarn
 

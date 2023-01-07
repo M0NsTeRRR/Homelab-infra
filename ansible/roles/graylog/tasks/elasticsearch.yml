@@ -2,11 +2,11 @@
 - name: Add elasticsearch Apt signing key
   ansible.builtin.get_url:
     url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
-    dest: /usr/share/keyrings/elasticsearch.gpg
+    dest: /usr/share/keyrings/elasticsearch.asc
 
 - name: Add elastic Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/elasticsearch.gpg] https://artifacts.elastic.co/packages/oss-{{ graylog_elasticsearch_repo_version }}.x/apt stable main"
+    repo: "deb [signed-by=/usr/share/keyrings/elasticsearch.asc] https://artifacts.elastic.co/packages/oss-{{ graylog_elasticsearch_repo_version }}.x/apt stable main"
     state: present
     filename: elastic
 

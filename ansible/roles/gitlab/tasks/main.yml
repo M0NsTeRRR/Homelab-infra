@@ -27,7 +27,7 @@
 - name: Add Gitlab Apt signing key
   ansible.builtin.get_url:
     url: https://packages.gitlab.com/gpg.key
-    dest: /usr/share/keyrings/gitlab.gpg
+    dest: /usr/share/keyrings/gitlab.asc
 
 - name: Add Gitlab Apt repository
   ansible.builtin.apt_repository:
@@ -35,8 +35,8 @@
     state: present
     filename: gitlab
   with_items:
-    - "deb [signed-by=/usr/share/keyrings/gitlab.gpg] deb https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
-    - "deb-src [signed-by=/usr/share/keyrings/gitlab.gpg] https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
+    - "deb [signed-by=/usr/share/keyrings/gitlab.asc] deb https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
+    - "deb-src [signed-by=/usr/share/keyrings/gitlab.asc] https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main"
 
 - name: Install GitLab
   ansible.builtin.apt:

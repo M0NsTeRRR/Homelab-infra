@@ -10,11 +10,11 @@
 - name: Add Grafana Apt signing key
   ansible.builtin.get_url:
     url: https://packages.grafana.com/gpg.key
-    dest: /usr/share/keyrings/grafana.gpg
+    dest: /usr/share/keyrings/grafana.asc
 
 - name: Add Grafana Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/grafana.gpg] https://packages.grafana.com/oss/deb stable main"
+    repo: "deb [signed-by=/usr/share/keyrings/grafana.asc] https://packages.grafana.com/oss/deb stable main"
     state: present
     filename: grafana
 

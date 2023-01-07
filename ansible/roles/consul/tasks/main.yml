@@ -40,11 +40,11 @@
 - name: Add Consul Apt signing key
   ansible.builtin.get_url:
     url: https://apt.releases.hashicorp.com/gpg
-    dest: /usr/share/keyrings/consul.gpg
+    dest: /usr/share/keyrings/consul.asc
 
 - name: Add Consul Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/consul.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    repo: "deb [signed-by=/usr/share/keyrings/consul.asc] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
     state: present
     filename: consul
 

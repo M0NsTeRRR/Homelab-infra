@@ -28,7 +28,7 @@
 - name: Add Caddy Apt signing key
   ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
-    dest: /usr/share/keyrings/caddy.gpg
+    dest: /usr/share/keyrings/caddy.asc
 
 - name: Add Caddy Apt repository
   ansible.builtin.apt_repository:
@@ -36,8 +36,8 @@
     state: present
     filename: caddy-stable
   with_items:
-    - "deb [signed-by=/usr/share/keyrings/caddy.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
-    - "deb-src [signed-by=/usr/share/keyrings/caddy.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+    - "deb [signed-by=/usr/share/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+    - "deb-src [signed-by=/usr/share/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
 
 - name: Install Caddy
   ansible.builtin.apt:

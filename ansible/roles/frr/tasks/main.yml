@@ -32,10 +32,10 @@
 - name: Add FRR Apt signing key
   ansible.builtin.get_url:
     url: https://deb.frrouting.org/frr/keys.asc
-    dest: /usr/share/keyrings/frr.gpg
+    dest: /usr/share/keyrings/frr.asc
 - name: Add FRR Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/frr.gpg] https://deb.frrouting.org/frr {{ ansible_distribution_release|lower }} frr-stable"
+    repo: "deb [signed-by=/usr/share/keyrings/frr.asc] https://deb.frrouting.org/frr {{ ansible_distribution_release|lower }} frr-stable"
     state: present
     filename: frr
 
