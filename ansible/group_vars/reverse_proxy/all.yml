@@ -31,11 +31,6 @@ caddy_domains:
     backend_url: https://lg.as212510.unicornafk.fr
     proxy_headers:
       Host: lg.as212510.unicornafk.fr
-  - names:
-      - cloud.thegamemasters.fr
-    backend_url: http://thomas.unicornafk.fr
-    proxy_headers:
-      Host: cloud.thegamemasters.fr
 
 consul_services:
   - name: caddy
