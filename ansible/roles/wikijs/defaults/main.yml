@@ -1,5 +1,5 @@
 ---
-wiki_js_version: 2.5.268
+wiki_js_version: 2.5.295
 wiki_js_force_install: false
 wiki_js_postgresql_db: wikijs
 wiki_js_postgresql_user: wikijs
