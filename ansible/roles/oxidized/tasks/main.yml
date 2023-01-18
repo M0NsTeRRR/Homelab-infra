@@ -18,7 +18,7 @@
     repo: "deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe"
     state: present
 
-- name: Install required packages by Docker
+- name: Install required packages to build oxidized
   ansible.builtin.apt:
     pkg:
       - ruby
