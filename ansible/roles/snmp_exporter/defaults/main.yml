@@ -1,5 +1,5 @@
 ---
-snmp_exporter_version: 0.20.0
+snmp_exporter_version: 0.21.0
 snmp_exporter_force_install: false
 snmp_exporter_user: user
 snmp_exporter_pass: pass
