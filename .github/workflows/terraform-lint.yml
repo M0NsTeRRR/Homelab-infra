@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup Terragrunt
-      uses: autero1/action-terragrunt@v1.2.0
+      uses: autero1/action-terragrunt@v1.3.0
       with:
         terragrunt_version: latest
     - name: Create an empty account.hcl
