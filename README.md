@@ -1,3 +1,5 @@
+## This project has been replaced by -> https://github.com/M0NsTeRRR/homelabv3-infra
+
 This is my Homelab infrastructure.
 
 ![Ansible Lint](https://github.com/M0NsTeRRR/Homelab-infra/workflows/Ansible%20Lint/badge.svg)
